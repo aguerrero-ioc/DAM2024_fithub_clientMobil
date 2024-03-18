@@ -24,8 +24,13 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe que representa l'activitat de login a l'aplicació FitHub.
+ * Aquesta classe permet als usuaris iniciar sessió, recuperar contrasenyes i registrar-se.
+ * Autor: Antonio Guerrero
+ */
 public class LoginActivity extends AppCompatActivity {
-    private static final String IP = "127.0.0.1";
+    private static final String IP = "192.168.0.47";
     private static final int PORT = 8080;
 
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -78,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         tvRecuperarContrasenya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implementar la lògica per recuperar la contrasenya
+                // Informar pendent implementar
                 Toast.makeText(context, "Implementar recuperació de contrasenya", Toast.LENGTH_SHORT).show();
             }
         });
@@ -86,29 +91,36 @@ public class LoginActivity extends AppCompatActivity {
         tvRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implementar la lògica per registrar nous usuaris
+                // Informar pendent implementar
                 Toast.makeText(context, "Implementar registre d'usuaris", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
-    // Mètode per iniciar la sessió
+    /**
+     * Mètode per iniciar sessió.
+     * @param nomUsuari El nom d'usuari.
+     * @param contrasenya La contrasenya.
+     */
     public void login(final String nomUsuari, final String contrasenya) {
-        // Construir la sol·licitud en el nou format
+        // Construir la petició en el nou format
         String peticio = "login," + nomUsuari + "," + contrasenya;
-        // Enviar la sol·licitud al servidor
-        enviarSolicitudAlServidor(peticio);
+        // Enviar la petició al servidor
+        enviarPeticioAlServidor(peticio);
     }
 
 
-    // Mètode per enviar la sol·licitud al servidor
-    public void enviarSolicitudAlServidor(final String peticio) {
+    /**
+     * Mètode per enviar la petició d'inici de sessió al servidor.
+     * @param peticio La petició d'inici de sessió.
+     */
+    public void enviarPeticioAlServidor(final String peticio) {
         // URL del servidor
         String url = "http://" + IP + ":" + PORT;
 
-        // Crear una sol·licitud HTTP POST
-        StringRequest solicitudString = new StringRequest(Request.Method.POST, url,
+        // Crear una petició HTTP POST
+        StringRequest peticioString = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String resposta) {
@@ -119,30 +131,33 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Gestionar els errors de la sol·licitud
-                        Log.e(TAG, "Error en la sol·licitud: " + error.getMessage());
-                        Toast.makeText(context, "Error en la sol·licitud", Toast.LENGTH_SHORT).show();
+                        // Gestionar els errors de la petició
+                        Log.e(TAG, "Error en la petició: " + error.getMessage());
+                        Toast.makeText(context, "Error en la petició", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                // Col·locar els paràmetres en un mapa perquè Volley els enviï en el cos de la sol·licitud
+                // Col·locar els paràmetres en un mapa perquè Volley els enviï en el cos de la petició
                 Map<String, String> params = new HashMap<>();
                 params.put("peticio", peticio);
                 return params;
             }
         };
 
-        // Enviar la sol·licitud utilitzant la classe ConnexioServidor existent
-        ConnexioServidor.obtenirInstancia(context).enviarSolicitud(solicitudString);
+        // Enviar la petició utilitzant la classe ConnexioServidor existent
+        ConnexioServidor.obtenirInstancia(context).enviarPeticio(peticioString);
     }
 
 
-    // Mètode per gestionar la resposta de l'inici de sessió
+    /**
+     * Mètode per gestionar la resposta del servidor després de l'inici de sessió.
+     * @param resposta La resposta del servidor.
+     */
     private void gestionarRespostaLogin(String resposta) {
-        if (resposta.equals("usuari") || resposta.equals("administrador")) {
-            String idUsuari = new UserActivity().obtenirIdUsuari(context);
-            if (resposta.equals("usuari")) {
+        if (resposta.equals("client") || resposta.equals("administrador")) {
+            String idUsuari = new ClientActivity().obtenirIdUsuari(context);
+            if (resposta.equals("client")) {
                 iniciaActivitatUsuari(idUsuari);
             } else {
                 iniciaActivitatAdmin(idUsuari);
@@ -153,15 +168,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-    // Mètode per iniciar l'activitat d'usuari
+    /**
+     * Mètode per iniciar l'activitat de client.
+     * @param idUsuari L'ID de l'usuari.
+     */
     private void iniciaActivitatUsuari(String idUsuari) {
-        Intent intent = new Intent(context, UserActivity.class);
+        Intent intent = new Intent(context, ClientActivity.class);
         context.startActivity(intent);
         finish();
     }
 
-    // Mètode per iniciar l'activitat d'administrador
+
+    /**
+     * Mètode per iniciar l'activitat d'administrador.
+     * @param idUsuari L'ID de l'usuari.
+     */
     private void iniciaActivitatAdmin(String idUsuari) {
         Intent intent = new Intent(context, AdminActivity.class);
         context.startActivity(intent);

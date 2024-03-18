@@ -12,8 +12,13 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Classe que gestiona la connexió amb el servidor utilitzant la biblioteca Volley.
+ * Aquesta classe proporciona funcionalitats per enviar peticions al servidor i gestionar les respostes.
+ * Autor: Antonio Guerrero
+ */
 public class ConnexioServidor {
-    private static final String IP = "127.0.0.1";
+    private static final String IP = "192.168.0.47";
     private static final int PORT = 8080;
 
     private static ConnexioServidor instancia;
@@ -26,7 +31,11 @@ public class ConnexioServidor {
         cuaPeticions = obtenirCuaPeticions();
     }
 
-    // Mètode per a obtenir la instància única de ConnexioServidor
+    /**
+     * Mètode per obtenir la instància única de ConnexioServidor.
+     * @param context Context de l'aplicació.
+     * @return La instància única de ConnexioServidor.
+     */
     public static synchronized ConnexioServidor obtenirInstancia(Context context) {
         if (instancia == null) {
             instancia = new ConnexioServidor(context);
@@ -42,36 +51,64 @@ public class ConnexioServidor {
         return cuaPeticions;
     }
 
-    //Mètode per a afegir una petició a la cua de peticions
+    /**
+     * Mètode per afegir una petició a la cua de peticions de Volley.
+     * @param peticio La petició a afegir a la cua.
+     * @param <T> El tipus de la petició.
+     */
     public <T> void afegirAPeticions(Request<T> peticio) {
         obtenirCuaPeticions().add(peticio);
     }
 
-    // Mètode per a enviar una sol·licitud al servidor
-    public void enviarSolicitud(StringRequest solicitud) {
-        afegirAPeticions(solicitud);
+    /**
+     * Mètode per enviar una petició al servidor.
+     * @param peticio La petició a enviar.
+     */
+    public void enviarPeticio(StringRequest peticio) {
+        afegirAPeticions(peticio);
     }
 
-    // Mètode per a construir la URL a partir del endpoint proporcionat
+    /**
+     * Mètode per construir la URL a partir de l'endpoint proporcionat.
+     * @param endpoint L'endpoint de la URL.
+     * @return La URL completa.
+     */
     public String construirUrl(String endpoint) {
         return "http://" + IP + ":" + PORT + "/" + endpoint;
     }
 
+    /**
+     * Interfície per gestionar les respostes de les peticions a Volley.
+     */
     public interface VolleyCallback {
+        /**
+         * Mètode cridat quan la petició s'ha completat amb èxit.
+         * @param response La resposta del servidor.
+         */
         void onSuccess(JSONObject response);
+
+        /**
+         * Mètode cridat quan hi ha hagut un error durant la petició.
+         * @param error El missatge d'error.
+         */
         void onError(VolleyError error);
     }
 
-    // Mètode per a tancar la sessió de l'usuari (en cas de ser necessari)
+    /**
+     * Mètode per tancar la sessió de l'usuari al servidor.
+     * @param userId L'identificador de l'usuari.
+     * @param logoutUrl La URL de tancament de sessió.
+     * @param callback El callback per gestionar la resposta del servidor.
+     */
     public void logout(String userId, String logoutUrl, final VolleyCallback callback) {
         JSONObject requestData = new JSONObject();
         try {
             requestData.put("user_id", userId);
-         } catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        // Fer una sol·licitud POST al servidor per a informar del tancament de sessió
+        // Fer una petició POST al servidor per a informar del tancament de sessió
         JsonObjectRequest logoutRequest = new JsonObjectRequest(Request.Method.POST, logoutUrl, requestData,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -85,7 +122,7 @@ public class ConnexioServidor {
             }
         });
 
-        // Afegir a sol·licitud a la cua de sol·licituds
+        // Afegir a petició a la cua de peticions
         afegirAPeticions(logoutRequest);
     }
 }

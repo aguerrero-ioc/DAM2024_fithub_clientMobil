@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray"
-    tools:context=".UserActivity">
+    tools:context=".ClientActivity">
 
     <!-- Títol de l'aplicació -->
     <TextView
@@ -44,7 +44,7 @@
 
         <!-- Títol de la gestio -->
         <TextView
-            android:id="@+id/text_titol_reserves"
+            android:id="@+id/text_titol_gestions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gestionar"

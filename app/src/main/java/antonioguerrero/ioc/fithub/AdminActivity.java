@@ -12,6 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Classe que gestiona l'activitat de l'administrador.
+ * Autor: Antonio Guerrero
+ */
 public class AdminActivity extends AppCompatActivity {
 
     private LinearLayout layoutPerfilMenu; // Per mostrar/ocultar el menú desplegable
@@ -104,14 +108,24 @@ public class AdminActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Realitza una acció de gestió específica.
+     * @param nomActivitat Nom de l'activitat a gestionar.
+     */
     private void ferGestio(String nomActivitat) {
         Toast.makeText(AdminActivity.this, "Has escollit: " + nomActivitat, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Acció que es realitza en seleccionar la opció 1 del perfil.
+     */
     public void opcioPerfil1Clicked() {
         Toast.makeText(AdminActivity.this, "Opció 1 seleccionada", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Acció que es realitza en seleccionar la opció de tancar sessió.
+     */
     private void opcioLogoutClicked() {
         // Redirigir a la pantalla d'inici de sessió
         Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
@@ -119,21 +133,38 @@ public class AdminActivity extends AppCompatActivity {
         finish(); // Finalitzar l'activitat actual
     }
 
-    // Mètode per obtenir el nom de l'usuari
+    /**
+     * Mètode per obtenir el nom de l'usuari.
+     * @param context Context de l'aplicació.
+     * @return El nom de l'usuari.
+     */
     public static String obtenirNomUsuari(Context context) {
         SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        return preferencies.getString("nomUsuari", "");
+        String nomUsuari = preferencies.getString("nomUsuari", "");
+        return nomUsuari;
     }
 
-    // Mètode per obtenir l'ID de l'usuari
+    /**
+     * Mètode per obtenir l'ID de l'usuari.
+     * Aquest mètode recupera l'ID de l'usuari emmagatzemat a les preferències compartides.
+     * @param context El context de l'aplicació.
+     * @return L'ID de l'usuari.
+     */
     public static String obtenirIdUsuari(Context context) {
         SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        return preferencies.getString("idUsuari", "");
+        String idUsuari = preferencies.getString("idUsuari", "");
+        return idUsuari;
     }
 
-    // Mètode per obtenir el tipus de client
+    /**
+     * Mètode per obtenir el tipus de client.
+     * Aquest mètode recupera el tipus de client emmagatzemat a les preferències compartides.
+     * @param context El context de l'aplicació.
+     * @return El tipus de client.
+     */
     public static String obtenirTipusClient(Context context) {
         SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        return preferencies.getString("tipusClient", "");
+        String tipusClient = preferencies.getString("tipusClient", "");
+        return tipusClient;
     }
 }
