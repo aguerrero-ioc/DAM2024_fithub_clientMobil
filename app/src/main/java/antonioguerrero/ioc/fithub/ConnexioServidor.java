@@ -54,6 +54,7 @@ public class ConnexioServidor {
             String missatge = params[0];
             try {
                 Socket socket = new Socket(SERVER_IP, SERVER_PORT);
+
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

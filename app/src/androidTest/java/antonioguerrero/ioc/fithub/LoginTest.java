@@ -24,7 +24,7 @@ public class LoginTest {
             new ActivityScenarioRule<>(LoginActivity.class);
 
     /**
-     * Prova de login (inici de sessió) reeixit per a un client.
+     * Prova de login (inici de sessió) correcte per a un client.
      * Autor: Antonio Guerrero
      */
     @Test
@@ -39,7 +39,7 @@ public class LoginTest {
     }
 
     /**
-     * Prova de login (inici de sessió) reeixit per a un administrador.
+     * Prova de login (inici de sessió) correcte per a un administrador.
      * Autor: Antonio Guerrero
      */
     @Test

@@ -57,7 +57,20 @@ public class LoginActivity extends AppCompatActivity implements ConnexioServidor
         btnLogin.setOnClickListener(v -> {
             String nomUsuari = etNomUsuari.getText().toString();
             String contrasenya = etContrasenya.getText().toString();
-            serverConnection.sendLoginRequest(nomUsuari, contrasenya);
+            // Verificar si s'han introduït els dos camps
+            if (nomUsuari.isEmpty() && contrasenya.isEmpty()) {
+                // Mostrar un missatge d'advertència per a tots dos camps buits
+                Toast.makeText(context, "Introdueix el nom d'usuari i la contrasenya", Toast.LENGTH_SHORT).show();
+            } else if (nomUsuari.isEmpty()) {
+                // Mostrar un missatge d'advertència si falta el nom d'usuari
+                Toast.makeText(context, "Introdueix el nom d'usuari", Toast.LENGTH_SHORT).show();
+            } else if (contrasenya.isEmpty()) {
+                // Mostrar un missatge d'advertència si falta la contrasenya
+                Toast.makeText(context, "Introdueix la contrasenya", Toast.LENGTH_SHORT).show();
+            } else {
+                // Si s'han introduït tots dos camps, enviar la sol·licitud al servidor
+                serverConnection.sendLoginRequest(nomUsuari, contrasenya);
+            }
         });
 
         // Configurar el CheckBox per mostrar/ocultar la contrasenya

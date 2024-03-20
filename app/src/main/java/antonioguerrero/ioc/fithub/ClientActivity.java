@@ -89,7 +89,7 @@ public class ClientActivity extends AppCompatActivity {
         });
 
         // Inicialitzar el botó de perfil
-        ImageButton botoPerfil = findViewById(R.id.boto_perfil);
+        ImageButton botoPerfil = findViewById(R.id.boto_perfil_client);
         layoutMenuPerfil = findViewById(R.id.layoutPerfilMenu);
 
         // Configurar els listeners del botó de perfil
@@ -107,7 +107,7 @@ public class ClientActivity extends AppCompatActivity {
 
         // Trobar les referències als elements del menú
         TextView opcioPerfil1 = findViewById(R.id.opcio_perfil1);
-        TextView opcioLogout = findViewById(R.id.opcio_logout);
+        TextView opcioLogout = findViewById(R.id.opcio_logout_client);
 
         // Configurar els listeners dels elements del menú
         opcioPerfil1.setOnClickListener(new View.OnClickListener() {

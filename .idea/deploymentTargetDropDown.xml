@@ -5,7 +5,10 @@
       <entry key="LoginTest">
         <State />
       </entry>
-      <entry key="LogoutTest">
+      <entry key="LogoutAdminTest">
+        <State />
+      </entry>
+      <entry key="LogoutClientTest">
         <State />
       </entry>
       <entry key="app">
