@@ -1,11 +1,10 @@
 package antonioguerrero.ioc.fithub;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -16,70 +15,64 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Classe que representa l'activitat de login a l'aplicació FitHub.
+ *
  * Aquesta classe permet als usuaris iniciar sessió, recuperar contrasenyes i registrar-se.
- * Autor: Antonio Guerrero
+ *
+ * @author Antonio Guerrero
+ * @version 1.0
  */
-public class LoginActivity extends AppCompatActivity {
-    private static final String IP = "192.168.0.47";
-    private static final int PORT = 8080;
-
-    private static final String TAG = LoginActivity.class.getSimpleName();
+public class LoginActivity extends AppCompatActivity implements ConnexioServidor.OnServerResponseListener {
 
     private EditText etNomUsuari, etContrasenya;
+    private Button btnLogin;
     private CheckBox checkMostrarContrasenya;
     private TextView tvRecuperarContrasenya, tvRegistrar;
-    private Button btnIniciarSessio;
 
-    private SharedPreferences preferencies;
     private Context context;
+    private ConnexioServidor serverConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_login);
+        setContentView(R.layout.activity_login);
 
+        // Inicialitzar el context
         context = this;
-        preferencies = getSharedPreferences("Preferencies", Context.MODE_PRIVATE);
 
+        // Referenciar els elements de la interfície d'usuari
         etNomUsuari = findViewById(R.id.et_nomusuari);
         etContrasenya = findViewById(R.id.et_contrasenya);
+        btnLogin = findViewById(R.id.btn_login);
         checkMostrarContrasenya = findViewById(R.id.check_mostrar_contrasenya);
         tvRecuperarContrasenya = findViewById(R.id.tv_oblidat_contrasenya);
         tvRegistrar = findViewById(R.id.tv_registre);
-        btnIniciarSessio = findViewById(R.id.btn_login);
 
-        btnIniciarSessio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String nomUsuari = etNomUsuari.getText().toString().trim();
-                String contrasenya = etContrasenya.getText().toString().trim();
-                login(nomUsuari, contrasenya);
-            }
+        // Inicialitzar la connexió amb el servidor
+        serverConnection = new ConnexioServidor(this);
+
+        // Configurar el clic del botó d'inici de sessió
+        btnLogin.setOnClickListener(v -> {
+            String nomUsuari = etNomUsuari.getText().toString();
+            String contrasenya = etContrasenya.getText().toString();
+            serverConnection.sendLoginRequest(nomUsuari, contrasenya);
         });
 
+        // Configurar el CheckBox per mostrar/ocultar la contrasenya
         checkMostrarContrasenya.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // Si el CheckBox está marcado, mostrar la contraseña
                     etContrasenya.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 } else {
-                    // Si el CheckBox no está marcado, ocultar la contraseña
                     etContrasenya.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             }
         });
 
+        // Configurar el clic del TextView per la recuperació de contrasenya
         tvRecuperarContrasenya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Configurar el clic del TextView per al registre d'usuaris
         tvRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,95 +91,52 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
     /**
-     * Mètode per iniciar sessió.
-     * @param nomUsuari El nom d'usuari.
-     * @param contrasenya La contrasenya.
+     * Mètode que gestiona la resposta del servidor després de l'intent d'inici de sessió.
+     * Aquest mètode serà cridat pel servidor per informar sobre l'estat de l'autenticació.
+     *
+     * @param resposta Resposta del servidor, que pot ser l'èxit de l'autenticació o un error.
      */
-    public void login(final String nomUsuari, final String contrasenya) {
-        // Construir la petició en el nou format
-        String peticio = "login," + nomUsuari + "," + contrasenya;
-        // Enviar la petició al servidor
-        enviarPeticioAlServidor(peticio);
-    }
-
-
-    /**
-     * Mètode per enviar la petició d'inici de sessió al servidor.
-     * @param peticio La petició d'inici de sessió.
-     */
-    public void enviarPeticioAlServidor(final String peticio) {
-        // URL del servidor
-        String url = "http://" + IP + ":" + PORT;
-
-        // Crear una petició HTTP POST
-        StringRequest peticioString = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String resposta) {
-                        // Gestionar la resposta del servidor
-                        gestionarRespostaLogin(resposta);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Gestionar els errors de la petició
-                        Log.e(TAG, "Error en la petició: " + error.getMessage());
-                        Toast.makeText(context, "Error en la petició", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                // Col·locar els paràmetres en un mapa perquè Volley els enviï en el cos de la petició
-                Map<String, String> params = new HashMap<>();
-                params.put("peticio", peticio);
-                return params;
-            }
-        };
-
-        // Enviar la petició utilitzant la classe ConnexioServidor existent
-        ConnexioServidor.obtenirInstancia(context).enviarPeticio(peticioString);
-    }
-
-
-    /**
-     * Mètode per gestionar la resposta del servidor després de l'inici de sessió.
-     * @param resposta La resposta del servidor.
-     */
-    private void gestionarRespostaLogin(String resposta) {
-        if (resposta.equals("client") || resposta.equals("administrador")) {
-            String idUsuari = new ClientActivity().obtenirIdUsuari(context);
-            if (resposta.equals("client")) {
-                iniciaActivitatUsuari(idUsuari);
+    @Override
+    public void onServerResponse(String resposta){
+        Log.d("LoginActivity", "Resposta del servidor: " + resposta);
+        if (resposta != null) {
+            String[] parts = resposta.split(",");
+            if (parts.length == 3) {
+                String tipoUsuari = parts[1]; 
+                Log.d("LoginActivity", "Tipus d'usuari: " + tipoUsuari);
+                obrirActivitat(tipoUsuari);
             } else {
-                iniciaActivitatAdmin(idUsuari);
+                // Resposta del servidor incorrecta
+                Toast.makeText(this, "Credencials incorrectes", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(context, "Usuari o contrasenya incorrectes", Toast.LENGTH_SHORT).show();
+            // Error de connexió
+            Toast.makeText(this, "Error de connexió", Toast.LENGTH_SHORT).show();
         }
     }
 
-
     /**
-     * Mètode per iniciar l'activitat de client.
-     * @param idUsuari L'ID de l'usuari.
+     * Mètode que obre l'activitat corresponent segons el tipus d'usuari autenticat.
+     *
+     * @param tipusUsuari Tipus d'usuari autenticat (client o administrador).
      */
-    private void iniciaActivitatUsuari(String idUsuari) {
-        Intent intent = new Intent(context, ClientActivity.class);
-        context.startActivity(intent);
-        finish();
-    }
-
-
-    /**
-     * Mètode per iniciar l'activitat d'administrador.
-     * @param idUsuari L'ID de l'usuari.
-     */
-    private void iniciaActivitatAdmin(String idUsuari) {
-        Intent intent = new Intent(context, AdminActivity.class);
-        context.startActivity(intent);
-        finish();
+    private void obrirActivitat(String tipusUsuari) {
+        // Obrir l'activitat corresponent segons el tipus d'usuari
+        Intent intent;
+        if (tipusUsuari.equals("client")) {
+            // Usuari tipus client
+            intent = new Intent(LoginActivity.this, ClientActivity.class);
+            startActivity(intent);
+            Toast.makeText(LoginActivity.this, "Benvingut, client", Toast.LENGTH_SHORT).show();
+        } else if (tipusUsuari.equals("admin")) {
+            // Usuari tipus admin
+            intent = new Intent(LoginActivity.this, AdminActivity.class);
+            startActivity(intent);
+            Toast.makeText(LoginActivity.this, "Benvingut, administrador", Toast.LENGTH_SHORT).show();
+        } else {
+            // Tipus d'usuari desconegut
+            Toast.makeText(LoginActivity.this, "No s'ha pogut iniciar sessió. Tipus d'usuari desconegut.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

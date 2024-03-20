@@ -7,8 +7,11 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+
 
 /**
  * Aquesta classe conté les proves d'acceptació per al procés de logout (tancament de sessió).

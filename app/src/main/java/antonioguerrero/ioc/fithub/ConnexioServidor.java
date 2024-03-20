@@ -1,128 +1,101 @@
 package antonioguerrero.ioc.fithub;
 
-import android.content.Context;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.os.AsyncTask;
+import android.util.Log;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 /**
- * Classe que gestiona la connexió amb el servidor utilitzant la biblioteca Volley.
- * Aquesta classe proporciona funcionalitats per enviar peticions al servidor i gestionar les respostes.
- * Autor: Antonio Guerrero
+ * Classe que gestiona la connexió amb el servidor.
+ *
+ * Aquesta classe facilita la connexió amb el servidor per enviar peticions de login i escoltar les respostes.
+ * El servidor al qual es connecta està configurat amb l'adreça IP i el port especificats com a constants.
+ *
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class ConnexioServidor {
-    private static final String IP = "192.168.0.47";
-    private static final int PORT = 8080;
 
-    private static ConnexioServidor instancia;
-    private RequestQueue cuaPeticions;
-    private static Context context;
+    private static final String SERVER_IP = "192.168.0.252";
+    private static final int SERVER_PORT = 8080;
 
-    // Constructor privat per a evitar instàncies externes
-    private ConnexioServidor(Context context) {
-        this.context = context;
-        cuaPeticions = obtenirCuaPeticions();
+    private OnServerResponseListener listener;
+
+    /**
+     * Constructor de la classe ConnexioServidor.
+     *
+     * @param listener Listener per a les respostes del servidor
+     */
+    public ConnexioServidor(OnServerResponseListener listener) {
+        this.listener = listener;
     }
 
     /**
-     * Mètode per obtenir la instància única de ConnexioServidor.
-     * @param context Context de l'aplicació.
-     * @return La instància única de ConnexioServidor.
+     * Envia una petició de login al servidor.
+     *
+     * @param nomUsuari   Nom d'usuari
+     * @param contrasenya Contrasenya de l'usuari
      */
-    public static synchronized ConnexioServidor obtenirInstancia(Context context) {
-        if (instancia == null) {
-            instancia = new ConnexioServidor(context);
-        }
-        return instancia;
-    }
-
-    // Mètode per a obtenir la cua de peticions de Volley
-    private RequestQueue obtenirCuaPeticions() {
-        if (cuaPeticions == null) {
-            cuaPeticions = Volley.newRequestQueue(context.getApplicationContext());
-        }
-        return cuaPeticions;
+    public void sendLoginRequest(String nomUsuari, String contrasenya) {
+        String missatge = "login," + nomUsuari + "," + contrasenya;
+        new ConnectToServerTask().execute(missatge);
     }
 
     /**
-     * Mètode per afegir una petició a la cua de peticions de Volley.
-     * @param peticio La petició a afegir a la cua.
-     * @param <T> El tipus de la petició.
+     * Tasca asíncrona per connectar-se al servidor i enviar la petició de login.
      */
-    public <T> void afegirAPeticions(Request<T> peticio) {
-        obtenirCuaPeticions().add(peticio);
-    }
+    private class ConnectToServerTask extends AsyncTask<String, Void, String> {
 
-    /**
-     * Mètode per enviar una petició al servidor.
-     * @param peticio La petició a enviar.
-     */
-    public void enviarPeticio(StringRequest peticio) {
-        afegirAPeticions(peticio);
-    }
+        @Override
+        protected String doInBackground(String... params) {
+            String missatge = params[0];
+            try {
+                Socket socket = new Socket(SERVER_IP, SERVER_PORT);
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-    /**
-     * Mètode per construir la URL a partir de l'endpoint proporcionat.
-     * @param endpoint L'endpoint de la URL.
-     * @return La URL completa.
-     */
-    public String construirUrl(String endpoint) {
-        return "http://" + IP + ":" + PORT + "/" + endpoint;
-    }
+                // Llegir el handshake
+                String handshakeResponse = in.readLine();
+                Log.d("ConnexioServidor", "Resposta del handshake: " + handshakeResponse);
 
-    /**
-     * Interfície per gestionar les respostes de les peticions a Volley.
-     */
-    public interface VolleyCallback {
-        /**
-         * Mètode cridat quan la petició s'ha completat amb èxit.
-         * @param response La resposta del servidor.
-         */
-        void onSuccess(JSONObject response);
+                // Enviar la petició
+                out.println(missatge);
+                Log.d("ConnexioServidor", "Enviant petició de login: " + missatge);
 
-        /**
-         * Mètode cridat quan hi ha hagut un error durant la petició.
-         * @param error El missatge d'error.
-         */
-        void onError(VolleyError error);
-    }
+                // Llegir la resposta del servidor
+                String resposta = in.readLine();
 
-    /**
-     * Mètode per tancar la sessió de l'usuari al servidor.
-     * @param userId L'identificador de l'usuari.
-     * @param logoutUrl La URL de tancament de sessió.
-     * @param callback El callback per gestionar la resposta del servidor.
-     */
-    public void logout(String userId, String logoutUrl, final VolleyCallback callback) {
-        JSONObject requestData = new JSONObject();
-        try {
-            requestData.put("user_id", userId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                out.close();
+                in.close();
+                socket.close();
 
-        // Fer una petició POST al servidor per a informar del tancament de sessió
-        JsonObjectRequest logoutRequest = new JsonObjectRequest(Request.Method.POST, logoutUrl, requestData,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        callback.onSuccess(response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                callback.onError(error);
+                return resposta;
+            } catch (IOException e) {
+                Log.e("ConnexioServidor", "Error de connexió: " + e.getMessage());
+                return null;
             }
-        });
+        }
 
-        // Afegir a petició a la cua de peticions
-        afegirAPeticions(logoutRequest);
+        @Override
+        protected void onPostExecute(String resposta) {
+            if (listener != null) {
+                listener.onServerResponse(resposta);
+            }
+        }
+    }
+
+    /**
+     * Interfície per a escoltar les respostes del servidor.
+     */
+    public interface OnServerResponseListener {
+        /**
+         * Métode cridat quan s'ha rebut una resposta del servidor.
+         *
+         * @param resposta Resposta rebuda del servidor
+         */
+        void onServerResponse(String resposta);
     }
 }

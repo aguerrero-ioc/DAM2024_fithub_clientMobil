@@ -5,6 +5,12 @@
       <entry key="LoginTest">
         <State />
       </entry>
+      <entry key="LogoutTest">
+        <State />
+      </entry>
+      <entry key="app">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

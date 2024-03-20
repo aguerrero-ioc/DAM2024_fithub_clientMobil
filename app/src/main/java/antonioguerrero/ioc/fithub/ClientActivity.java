@@ -14,17 +14,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Classe que representa l'activitat del client a l'aplicació FitHub.
+ *
  * Aquesta classe permet als clients realitzar diverses operacions com fer reserves i gestionar el seu perfil.
- * Autor: Antonio Guerrero
+ *
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class ClientActivity extends AppCompatActivity {
 
-    private LinearLayout layoutPerfilMenu; // Per mostrar/ocultar el menú desplegable
+    private LinearLayout layoutMenuPerfil; // Per mostrar/ocultar el menú desplegable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_client);
+        setContentView(R.layout.activity_client);
 
         // Obtenir el nom, ID i tipus de client
         String nomUsuari = obtenirNomUsuari(this);
@@ -87,17 +90,17 @@ public class ClientActivity extends AppCompatActivity {
 
         // Inicialitzar el botó de perfil
         ImageButton botoPerfil = findViewById(R.id.boto_perfil);
-        layoutPerfilMenu = findViewById(R.id.layoutPerfilMenu);
+        layoutMenuPerfil = findViewById(R.id.layoutPerfilMenu);
 
         // Configurar els listeners del botó de perfil
         botoPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Mostrar/ocultar el menú desplegable en fer clic al botó de perfil
-                if (layoutPerfilMenu.getVisibility() == View.VISIBLE) {
-                    layoutPerfilMenu.setVisibility(View.GONE);
+                if (layoutMenuPerfil.getVisibility() == View.VISIBLE) {
+                    layoutMenuPerfil.setVisibility(View.GONE);
                 } else {
-                    layoutPerfilMenu.setVisibility(View.VISIBLE);
+                    layoutMenuPerfil.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -110,14 +113,14 @@ public class ClientActivity extends AppCompatActivity {
         opcioPerfil1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                opcioPerfil1Clicked();
+                opcioPerfil1Clicat();
             }
         });
 
         opcioLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                opcioLogoutClicked();
+                opcioTancarSessioClicat();
             }
         });
     }
@@ -133,7 +136,7 @@ public class ClientActivity extends AppCompatActivity {
     /**
      * Mètode que s'executa quan l'usuari fa clic a l'opció 1 del perfil.
      */
-    public void opcioPerfil1Clicked() {
+    public void opcioPerfil1Clicat() {
         Toast.makeText(ClientActivity.this, "Opció 1 seleccionada", Toast.LENGTH_SHORT).show();
     }
 
@@ -141,7 +144,7 @@ public class ClientActivity extends AppCompatActivity {
      * Mètode que s'executa quan l'usuari fa clic a l'opció de tancar la sessió.
      * Aquest mètode redirigeix l'usuari a la pantalla d'inici de sessió i finalitza l'activitat actual.
      */
-    public void opcioLogoutClicked() {
+    public void opcioTancarSessioClicat() {
         // Redirigir a la pantalla d'inici de sessió
         Intent intent = new Intent(ClientActivity.this, LoginActivity.class);
         startActivity(intent);

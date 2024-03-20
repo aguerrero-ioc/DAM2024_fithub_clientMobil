@@ -13,17 +13,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * Classe que gestiona l'activitat de l'administrador.
- * Autor: Antonio Guerrero
+ * Classe que representa l'activitat del administrador a l'aplicacio FitHub.
+ *
+ * Aquesta classe permet a l'administrador realitzar diverses operacions com fer gestions i gestionar el seu perfil.
+ *
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class AdminActivity extends AppCompatActivity {
 
-    private LinearLayout layoutPerfilMenu; // Per mostrar/ocultar el menú desplegable
+    private LinearLayout layoutMenuPerfil; // Per mostrar/ocultar el menú desplegable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_admin);
+        setContentView(R.layout.activity_admin);
 
         // Obtenir el nom, ID i tipus de client
         String nomUsuari = obtenirNomUsuari(this);
@@ -42,47 +46,45 @@ public class AdminActivity extends AppCompatActivity {
         textViewTipusClient.setText(tipusClient);
 
         // Inicialitzar els botons de reserva d'activitats
-        Button botoReserva1 = findViewById(R.id.boto_gestio1);
-        Button botoReserva2 = findViewById(R.id.boto_gestio2);
-        Button botoReserva3 = findViewById(R.id.boto_gestio3);
-
+        Button botoGestio1 = findViewById(R.id.boto_gestio1);
+        Button botoGestio2 = findViewById(R.id.boto_gestio2);
+        Button botoGestio3 = findViewById(R.id.boto_gestio3);
 
         // Configurar els listeners pels botons de reserva d'activitats
-        botoReserva1.setOnClickListener(new View.OnClickListener() {
+        botoGestio1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ferGestio("Usuari");
             }
         });
 
-        botoReserva2.setOnClickListener(new View.OnClickListener() {
+        botoGestio2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ferGestio("Activitat");
             }
         });
 
-        botoReserva3.setOnClickListener(new View.OnClickListener() {
+        botoGestio3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ferGestio("Instal·lació");
             }
         });
 
-
         // Inicialitzar el botó de perfil
         ImageButton botoPerfil = findViewById(R.id.boto_perfil);
-        layoutPerfilMenu = findViewById(R.id.layoutPerfilMenu);
+        layoutMenuPerfil = findViewById(R.id.layoutPerfilMenu);
 
         // Configurar els listeners del botó de perfil
         botoPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Mostrar/ocultar el menú desplegable en fer clic al botó de perfil
-                if (layoutPerfilMenu.getVisibility() == View.VISIBLE) {
-                    layoutPerfilMenu.setVisibility(View.GONE);
+                if (layoutMenuPerfil.getVisibility() == View.VISIBLE) {
+                    layoutMenuPerfil.setVisibility(View.GONE);
                 } else {
-                    layoutPerfilMenu.setVisibility(View.VISIBLE);
+                    layoutMenuPerfil.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -109,7 +111,7 @@ public class AdminActivity extends AppCompatActivity {
 
 
     /**
-     * Realitza una acció de gestió específica.
+     * Realitza una acció de gestió escollida.
      * @param nomActivitat Nom de l'activitat a gestionar.
      */
     private void ferGestio(String nomActivitat) {
