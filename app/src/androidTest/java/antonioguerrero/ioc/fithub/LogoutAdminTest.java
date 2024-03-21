@@ -14,6 +14,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Test que verifica el procés de tancament de sessió per a l'administrador.
+ * @author Antonio Guerrero
  */
 @LargeTest
 public class LogoutAdminTest {

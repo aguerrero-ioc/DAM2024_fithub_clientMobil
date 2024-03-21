@@ -13,5 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
+
+
 rootProject.name = "fithub"
 include(":app")

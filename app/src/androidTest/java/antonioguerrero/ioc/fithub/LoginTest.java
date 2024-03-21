@@ -14,7 +14,7 @@ import org.junit.Test;
 
 /**
  * Aquesta classe conté les proves d'acceptació per al procés de login (inici de sessió).
- * Autor: Antonio Guerrero
+ * @author Antonio Guerrero
  */
 @LargeTest
 public class LoginTest {
@@ -25,7 +25,6 @@ public class LoginTest {
 
     /**
      * Prova de login (inici de sessió) correcte per a un client.
-     * Autor: Antonio Guerrero
      */
     @Test
     public void testLoginClientCorrecte() {
@@ -40,7 +39,6 @@ public class LoginTest {
 
     /**
      * Prova de login (inici de sessió) correcte per a un administrador.
-     * Autor: Antonio Guerrero
      */
     @Test
     public void testLoginAdminCorrecte() {
@@ -55,7 +53,6 @@ public class LoginTest {
 
     /**
      * Prova de login (inici de sessió) fallida.
-     * Autor: Antonio Guerrero
      */
     @Test
     public void testLoginIncorrecte() {
