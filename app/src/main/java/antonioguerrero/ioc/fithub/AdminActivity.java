@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import antonioguerrero.ioc.fithub.login.LoginActivity;
+
 /**
  * Classe que representa l'activitat del administrador a l'aplicacio FitHub.
  *

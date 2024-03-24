@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Imatge d'usuari -->
+    <FrameLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/imatge_borde">
+
+        <ImageView
+            android:id="@+id/iv_imatge_usuari"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_imatge_perfil" />
+
+    </FrameLayout>
+
+    <!-- Nom d'usuari -->
+    <TextView
+        android:id="@+id/tv_nom_usuari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/et_nom_usuari"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduïu el vostre nom"
+        android:inputType="textPersonName"
+        android:enabled="false" />
+
+    <!-- Data de Naixement -->
+    <TextView
+        android:id="@+id/tv_data_naixement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data de naixement:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/et_data_naixement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduïu la vostra data de naixement"
+        android:inputType="date"
+        android:enabled="false" />
+
+
+    <!-- Adreça -->
+    <TextView
+        android:id="@+id/tv_adreca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adreça:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/et_adreca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduïu la vostra adreça"
+        android:inputType="textPostalAddress"
+        android:enabled="false" />
+
+    <!-- Correu Electrònic -->
+    <TextView
+        android:id="@+id/tv_correu_usuari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correu electrònic:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/et_correu_usuari"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduïu el vostre correu electrònic"
+        android:inputType="textEmailAddress"
+        android:enabled="false" />
+
+
+    <!-- Telèfon de Contacte -->
+    <TextView
+        android:id="@+id/tv_telefon_contacte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Telèfon de contacte"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/et_telefon_contacte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduïu el vostre telèfon de contacte"
+        android:inputType="phone"
+        android:enabled="false" />
+
+    <!-- Data d'Inscripció -->
+    <TextView
+        android:id="@+id/tv_data_inscripcio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data d'inscripció:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/et_data_inscripcio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduïu la data d'inscripció"
+        android:inputType="date"
+        android:enabled="false" />
+
+    <!-- Botones -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btn_editar_perfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar Perfil"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btn_guardar_canvis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar Canvis"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:enabled="false" />
+
+    </LinearLayout>
+
+</LinearLayout>

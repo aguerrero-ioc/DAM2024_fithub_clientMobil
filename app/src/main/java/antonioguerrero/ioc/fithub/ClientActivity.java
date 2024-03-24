@@ -6,11 +6,19 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import antonioguerrero.ioc.fithub.login.LoginActivity;
+import antonioguerrero.ioc.fithub.missatges.MissatgesFragment;
+import antonioguerrero.ioc.fithub.missatges.MessageManager;
+import antonioguerrero.ioc.fithub.perfil.PerfilActivity;
 
 /**
  * Classe que representa l'activitat del client a l'aplicació FitHub.
@@ -23,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ClientActivity extends AppCompatActivity {
 
     private LinearLayout layoutMenuPerfil; // Per mostrar/ocultar el menú desplegable
+
+    private FrameLayout fragmentContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,10 @@ public class ClientActivity extends AppCompatActivity {
         Button botoReserva3 = findViewById(R.id.boto_reserva3);
         Button botoReserva4 = findViewById(R.id.boto_reserva4);
         Button botoReserva5 = findViewById(R.id.boto_reserva5);
+
+        // Referencias a los elementos del layout
+        layoutMenuPerfil = findViewById(R.id.layoutPerfilMenu);
+        fragmentContainer = findViewById(R.id.fragment_container);
 
         // Configurar els listeners pels botons de reserva d'activitats
         botoReserva1.setOnClickListener(new View.OnClickListener() {
@@ -88,20 +102,13 @@ public class ClientActivity extends AppCompatActivity {
             }
         });
 
-        // Inicialitzar el botó de perfil
+        // Configura el botó de perfil
         ImageButton botoPerfil = findViewById(R.id.boto_perfil_client);
-        layoutMenuPerfil = findViewById(R.id.layoutPerfilMenu);
 
-        // Configurar els listeners del botó de perfil
         botoPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Mostrar/ocultar el menú desplegable en fer clic al botó de perfil
-                if (layoutMenuPerfil.getVisibility() == View.VISIBLE) {
-                    layoutMenuPerfil.setVisibility(View.GONE);
-                } else {
-                    layoutMenuPerfil.setVisibility(View.VISIBLE);
-                }
+                toggleMenu();
             }
         });
 
@@ -123,12 +130,73 @@ public class ClientActivity extends AppCompatActivity {
                 opcioTancarSessioClicat();
             }
         });
+
+        // Enviar mensaje al servidor
+        enviarMensajeAlServidor("UsuarioActual", "Contenido del mensaje");
     }
 
+    // Método para enviar un mensaje al servidor
+    private void enviarMensajeAlServidor(String remitente, String contenido) {
+        String fecha = Utils.obtenirDataActual();
+        String hora = Utils.obtenirHoraActual();
+
+        MessageManager.enviarMissatge(remitente, contenido, fecha, hora, new MessageManager.ServerResponseListener() {
+            @Override
+            public void onServerResponse(String response) {
+                // Aquí maneja la respuesta del servidor, si es necesario
+            }
+        });
+    }
+
+    // Método para mostrar/ocultar el menú desplegable
+    public void toggleMenu() {
+        if (layoutMenuPerfil.getVisibility() == View.VISIBLE) {
+            layoutMenuPerfil.setVisibility(View.GONE);
+        } else {
+            layoutMenuPerfil.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // Método para mostrar el fragmento de mensajes cuando se hace clic en un botón
+    public void mostrarMensajesFragment(View view) {
+        // Crear una instancia del fragmento de mensajes
+        MissatgesFragment missatgesFragment = new MissatgesFragment();
+
+        // Obtener el FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Iniciar una transacción de fragmento
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        // Reemplazar el contenido del contenedor con el fragmento
+        transaction.replace(R.id.fragment_container, missatgesFragment);
+
+        // Añadir la transacción a la pila de retroceso
+        transaction.addToBackStack(null);
+
+        // Confirmar la transacción
+        transaction.commit();
+
+        // Mostrar el botón de ocultar mensajes
+        Button botonOcultarMensajes = findViewById(R.id.boton_ocultar_mensajes);
+        botonOcultarMensajes.setVisibility(View.VISIBLE);
+    }
+
+    public void ocultarMensajesFragment(View view) {
+        // Ocultar el fragmento de mensajes
+        getSupportFragmentManager().popBackStack();
+
+        // Ocultar el botón de ocultar mensajes
+        Button botonOcultarMensajes = findViewById(R.id.boton_ocultar_mensajes);
+        botonOcultarMensajes.setVisibility(View.GONE);
+    }
+
+
+
     /**
-     * Mètode per a realitzar una reserva d'una activitat.
-     * @param nomActivitat El nom de l'activitat a reservar.
-     */
+         * Mètode per a realitzar una reserva d'una activitat.
+         * @param nomActivitat El nom de l'activitat a reservar.
+         */
     private void ferReserva(String nomActivitat) {
         Toast.makeText(ClientActivity.this, "Activitat reservada: " + nomActivitat, Toast.LENGTH_SHORT).show();
     }
@@ -137,7 +205,8 @@ public class ClientActivity extends AppCompatActivity {
      * Mètode que s'executa quan l'usuari fa clic a l'opció 1 del perfil.
      */
     public void opcioPerfil1Clicat() {
-        Toast.makeText(ClientActivity.this, "Opció 1 seleccionada", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(ClientActivity.this, PerfilActivity.class);
+        startActivity(intent);
     }
 
     /**

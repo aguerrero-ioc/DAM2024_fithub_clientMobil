@@ -5,7 +5,7 @@
     android:background="@color/light_gray"
     tools:context=".ClientActivity">
 
-    <!-- Títol de l'aplicació -->
+    <!-- Título de la aplicación -->
     <TextView
         android:id="@+id/text_titol_aplicacio"
         android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <!-- Menú superior dret de l'usuari -->
+    <!-- Menú superior derecho del usuario -->
     <ImageButton
         android:id="@+id/boto_perfil_client"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         android:src="@drawable/ic_perfil"
         android:onClick="toggleMenu" />
 
-    <!-- Barra de títol -->
+    <!-- Barra de título -->
     <LinearLayout
         android:id="@+id/layout_titol"
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp">
 
-        <!-- Títol de l'activitat -->
+        <!-- Título de la actividad -->
         <TextView
             android:id="@+id/text_titol_reserves"
             android:layout_width="wrap_content"
@@ -65,9 +65,9 @@
         android:background="@drawable/menu_background"
         android:orientation="vertical"
         android:elevation="8dp"
-        android:visibility="gone"> <!-- Per defecte, menú ocult -->
+        android:visibility="gone"> <!-- Por defecto, menú oculto -->
 
-        <!-- Nom d'usuari -->
+        <!-- Nombre de usuario -->
         <TextView
             android:id="@+id/tv_usuari"
             android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
             android:textSize="18sp"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Tipus de client -->
+        <!-- Tipo de cliente -->
         <TextView
             android:id="@+id/tv_tipus_client"
             android:layout_width="wrap_content"
@@ -87,14 +87,14 @@
             android:textSize="18sp"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Barra de separació -->
+        <!-- Barra de separación -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/black"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Opcions del menú -->
+        <!-- Opciones del menú -->
         <TextView
             android:id="@+id/opcio_perfil1"
             android:layout_width="wrap_content"
@@ -114,8 +114,9 @@
             android:padding="10dp"/>
     </LinearLayout>
 
-    <!-- Botons de reserva de les activitats -->
+    <!-- Botones de reserva de las actividades -->
     <LinearLayout
+        android:id="@+id/layout_botons_reserva"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_titol"
@@ -184,4 +185,38 @@
             android:paddingEnd="20dp"
             android:paddingBottom="10dp"/>
     </LinearLayout>
+
+    <!-- Fragmento de mensajes -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_botons_reserva"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp">
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/boton_mostrar_mensajes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mostra missatges"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:onClick="mostrarMensajesFragment" />
+
+    <Button
+        android:id="@+id/boton_ocultar_mensajes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Oculta missatges"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        android:onClick="ocultarMensajesFragment" />
+
 </RelativeLayout>
+

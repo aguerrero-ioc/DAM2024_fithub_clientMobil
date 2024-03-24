@@ -12,6 +12,8 @@ import androidx.test.filters.LargeTest;
 import org.junit.Rule;
 import org.junit.Test;
 
+import antonioguerrero.ioc.fithub.login.LoginActivity;
+
 /**
  * Aquesta classe conté les proves d'acceptació per al procés de login (inici de sessió).
  * @author Antonio Guerrero
