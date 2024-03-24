@@ -131,7 +131,7 @@
         android:inputType="date"
         android:enabled="false" />
 
-    <!-- Botones -->
+    <!-- Botons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

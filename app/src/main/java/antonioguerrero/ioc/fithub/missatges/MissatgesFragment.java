@@ -13,14 +13,20 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 
+/**
+ * Fragment per mostrar missatges en un RecyclerView.
+ */
 public class MissatgesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private MissatgesAdapter adapter;
     private List<Missatge> mensajesList;
 
+    /**
+     * Constructor per defecte del Fragment MissatgesFragment.
+     */
     public MissatgesFragment() {
-        // Constructor vacío requerido
+        // Constructor buit
     }
 
     @Override
@@ -28,37 +34,48 @@ public class MissatgesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_missatges, container, false);
 
-        // Inicializar RecyclerView
+        // Inicialitzar RecyclerView
         recyclerView = rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mensajesList = new ArrayList<>();
 
-        // Inicializar adaptador
-        adapter = new MissatgesAdapter(getActivity(), mensajesList); // Pasar el contexto y la lista de mensajes al adaptador
+        // Inicialitzar adaptador
+        adapter = new MissatgesAdapter(getActivity(), mensajesList); // Passar el context i la llista de missatges a l'adaptador
         recyclerView.setAdapter(adapter);
 
-        // Agregar mensajes de ejemplo a la lista
-        mensajesList.add(new Missatge("Remitente 1", "Contenido 1", "Fecha 1"));
-        mensajesList.add(new Missatge("Remitente 2", "Contenido 2", "Fecha 2"));
-        mensajesList.add(new Missatge("Remitente 3", "Contenido 3", "Fecha 3"));
-
-        // Notificar al adaptador sobre el cambio en los datos
-        adapter.notifyDataSetChanged();
-
-        /*// Aquí deberías recuperar los mensajes de la base de datos y agregarlos a la lista de mensajes
-        cargarMensajesDesdeBaseDeDatos();*/
+        // Càrrega de missatges des del servidor
+        carregarMissatgesServidor();
 
         return rootView;
     }
 
-    // Método para cargar mensajes desde la base de datos
-    /*private void cargarMensajesDesdeBaseDeDatos() {
-        // Aquí deberías implementar la lógica para recuperar los mensajes de la base de datos
-        // Por ahora, solo agregaremos mensajes de ejemplo a la lista
-        mensajesList.add(new Missatge("Remitente 1", "Contenido 1", "Fecha 1"));
-        mensajesList.add(new Missatge("Remitente 2", "Contenido 2", "Fecha 2"));
-        mensajesList.add(new Missatge("Remitente 3", "Contenido 3", "Fecha 3"));
-        // Notificar al adaptador sobre el cambio en los datos
+    /**
+     * Mètode per carregar els missatges des del servidor.
+     */
+    private void carregarMissatgesServidor() {
+        // implementar la lògica per recuperar els missatges del servidor
+        // Per ara, afegirem missatges d'exemple a la llista
+        // Suposem que tens un mètode per obtenir una llista de missatges del servidor, anomenat obtenirMissatgesServidor()
+        List<Missatge> missatgesDelServidor = obtenirMissatgesServidor();
+
+        // Afegim els missatges obtinguts del servidor a la llista de missatges
+        mensajesList.addAll(missatgesDelServidor);
+
+        // Notificar a l'adaptador sobre el canvi en les dades
         adapter.notifyDataSetChanged();
-    }*/
+    }
+
+    /**
+     * Mètode per obtenir els missatges del servidor (exemple).
+     * @return Llista de missatges obtinguda del servidor.
+     */
+    private List<Missatge> obtenirMissatgesServidor() {
+        // Aquí hauries de fer la crida al servidor per obtenir els missatges reals
+        // Per ara, retornarem una llista de missatges d'exemple
+        List<Missatge> missatgesDelServidor = new ArrayList<>();
+        missatgesDelServidor.add(new Missatge("Remitente 1", "Contenido 1", "Fecha 1", "Hora 1"));
+        missatgesDelServidor.add(new Missatge("Remitente 2", "Contenido 2", "Fecha 2", "Hora 2"));
+        missatgesDelServidor.add(new Missatge("Remitente 3", "Contenido 3", "Fecha 3", "Hora 3"));
+        return missatgesDelServidor;
+    }
 }

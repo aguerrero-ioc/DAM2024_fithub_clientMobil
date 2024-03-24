@@ -198,17 +198,17 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/boton_mostrar_mensajes"
+        android:id="@+id/boto_mostrar_missatges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Mostra missatges"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:onClick="mostrarMensajesFragment" />
+        android:onClick="mostrarFragmentMissatges" />
 
     <Button
-        android:id="@+id/boton_ocultar_mensajes"
+        android:id="@+id/boto_ocultar_missatges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Oculta missatges"
@@ -216,7 +216,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:visibility="gone"
-        android:onClick="ocultarMensajesFragment" />
+        android:onClick="ocultarFragmentMissatges" />
 
 </RelativeLayout>
 

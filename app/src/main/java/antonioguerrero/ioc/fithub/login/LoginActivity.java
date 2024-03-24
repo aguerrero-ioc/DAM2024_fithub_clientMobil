@@ -119,9 +119,9 @@ public class LoginActivity extends AppCompatActivity implements ConnexioServidor
     public void onServerResponse(String resposta){
         Log.d("LoginActivity", "Resposta del servidor: " + resposta);
         if (resposta != null) {
-            String nomClient = Utils.obtenirNomClientActual(resposta);
-            String tipusUsuari = Utils.obtenirTipusUsuariActual(resposta);
-            if (!nomClient.isEmpty() && !tipusUsuari.isEmpty()) {
+            String nomUsuari = Utils.obtenirNomUsuari(resposta);
+            String tipusUsuari = Utils.obtenirTipusUsuari(resposta);
+            if (!nomUsuari.isEmpty() && !tipusUsuari.isEmpty()) {
                 Log.d("LoginActivity", "Tipus d'usuari: " + tipusUsuari);
                 obrirActivitat(tipusUsuari);
             } else {

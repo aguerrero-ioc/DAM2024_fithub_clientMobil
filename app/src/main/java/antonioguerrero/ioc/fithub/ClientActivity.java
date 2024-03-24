@@ -16,8 +16,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import antonioguerrero.ioc.fithub.login.LoginActivity;
+import antonioguerrero.ioc.fithub.missatges.GestorMissatges;
 import antonioguerrero.ioc.fithub.missatges.MissatgesFragment;
-import antonioguerrero.ioc.fithub.missatges.MessageManager;
+import antonioguerrero.ioc.fithub.missatges.GestorMissatges;
 import antonioguerrero.ioc.fithub.perfil.PerfilActivity;
 
 /**
@@ -131,24 +132,66 @@ public class ClientActivity extends AppCompatActivity {
             }
         });
 
-        // Enviar mensaje al servidor
-        enviarMensajeAlServidor("UsuarioActual", "Contenido del mensaje");
+        // Enviar missatge al servidor
+        enviarMissatgeAlServidor("UsuariActual", "Contingut del missatge");
+
+        // Rebre missatge del servidor
+        rebreMissatgeDelServidor();
     }
 
-    // Método para enviar un mensaje al servidor
-    private void enviarMensajeAlServidor(String remitente, String contenido) {
-        String fecha = Utils.obtenirDataActual();
+    /**
+     * Envia un missatge al servidor.
+     *
+     * @param remitent   El remitent del missatge.
+     * @param contingut  El contingut del missatge.
+     */
+    private void enviarMissatgeAlServidor(String remitent, String contingut) {
+        String data = Utils.obtenirDataActual();
         String hora = Utils.obtenirHoraActual();
 
-        MessageManager.enviarMissatge(remitente, contenido, fecha, hora, new MessageManager.ServerResponseListener() {
+        GestorMissatges.enviarMissatge(remitent, contingut, data, hora, new GestorMissatges.GestorRespostaServidor() {
             @Override
-            public void onServerResponse(String response) {
-                // Aquí maneja la respuesta del servidor, si es necesario
+            public void onServerResponse(String resposta) {
+                // Mostrar un Toast "Missatge enviat"
+                Toast.makeText(getApplicationContext(), "Missatge enviat", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Método para mostrar/ocultar el menú desplegable
+    /**
+     * Rep un missatge del servidor i el mostra en el fragment de missatges.
+     */
+    private void rebreMissatgeDelServidor() {
+        GestorMissatges.rebreMissatge(new GestorMissatges.GestorRespostaServidor() {
+            @Override
+            public void onServerResponse(String resposta) {
+                // Crear una instància del fragment de missatges
+                MissatgesFragment missatgesFragment = new MissatgesFragment();
+
+                // Passar el missatge rebut com a argument al fragment
+                Bundle args = new Bundle();
+                args.putString("missatge", resposta);
+                missatgesFragment.setArguments(args);
+
+                // Obtenir el FragmentManager
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                // Iniciar una transacció de fragment
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                // Reemplaçar el contingut del contenidor amb el fragment
+                transaction.replace(R.id.fragment_container, missatgesFragment);
+
+                // Afegir la transacció a la pila d'atràs
+                transaction.addToBackStack(null);
+
+                // Confirmar la transacció
+                transaction.commit();
+            }
+        });
+    }
+
+    // Mètode per mostrar o ocultar el menú desplegable
     public void toggleMenu() {
         if (layoutMenuPerfil.getVisibility() == View.VISIBLE) {
             layoutMenuPerfil.setVisibility(View.GONE);
@@ -157,46 +200,47 @@ public class ClientActivity extends AppCompatActivity {
         }
     }
 
-    // Método para mostrar el fragmento de mensajes cuando se hace clic en un botón
-    public void mostrarMensajesFragment(View view) {
-        // Crear una instancia del fragmento de mensajes
+    // Mètode per mostrar el fragment de missatges quan es fa clic en un botó
+    public void mostrarFragmentMissatges(View view) {
+        // Crear una instància del fragment de missatges
         MissatgesFragment missatgesFragment = new MissatgesFragment();
 
-        // Obtener el FragmentManager
+        // Obtenir el FragmentManager
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // Iniciar una transacción de fragmento
+        // Iniciar una transacció de fragment
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        // Reemplazar el contenido del contenedor con el fragmento
+        // Reemplaçar el contingut del contenidor amb el fragment
         transaction.replace(R.id.fragment_container, missatgesFragment);
 
-        // Añadir la transacción a la pila de retroceso
+        // Afegir la transacció a la pila d'atràs
         transaction.addToBackStack(null);
 
-        // Confirmar la transacción
+        // Confirmar la transacció
         transaction.commit();
 
-        // Mostrar el botón de ocultar mensajes
-        Button botonOcultarMensajes = findViewById(R.id.boton_ocultar_mensajes);
-        botonOcultarMensajes.setVisibility(View.VISIBLE);
+        // Mostrar el botó d'ocultar missatges
+        Button botonOcultarMissatges = findViewById(R.id.boto_ocultar_missatges);
+        botonOcultarMissatges.setVisibility(View.VISIBLE);
     }
 
-    public void ocultarMensajesFragment(View view) {
-        // Ocultar el fragmento de mensajes
+    public void ocultarFragmentMissatges(View view) {
+        // Ocultar el fragment de missatges
         getSupportFragmentManager().popBackStack();
 
-        // Ocultar el botón de ocultar mensajes
-        Button botonOcultarMensajes = findViewById(R.id.boton_ocultar_mensajes);
-        botonOcultarMensajes.setVisibility(View.GONE);
+        // Ocultar el botó d'ocultar missatges
+        Button botonOcultarMissatges = findViewById(R.id.boto_ocultar_missatges);
+        botonOcultarMissatges.setVisibility(View.GONE);
     }
+
 
 
 
     /**
-         * Mètode per a realitzar una reserva d'una activitat.
-         * @param nomActivitat El nom de l'activitat a reservar.
-         */
+     * Mètode per a realitzar una reserva d'una activitat.
+     * @param nomActivitat El nom de l'activitat a reservar.
+     */
     private void ferReserva(String nomActivitat) {
         Toast.makeText(ClientActivity.this, "Activitat reservada: " + nomActivitat, Toast.LENGTH_SHORT).show();
     }

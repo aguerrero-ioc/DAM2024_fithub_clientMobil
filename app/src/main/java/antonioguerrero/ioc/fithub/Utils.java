@@ -12,14 +12,14 @@ public class Utils {
     /**
      * Obté la data actual en format de cadena.
      *
-     * @return Data actual en format "yyyy-MM-dd"
+     * @return Data actual en format "dd-MM-yyyy"
      */
     public static String obtenirDataActual() {
         // Obté la data actual
         Date dataActual = Calendar.getInstance().getTime();
 
         // Formateja la data en el format desitjat
-        SimpleDateFormat formatData = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatData = new SimpleDateFormat("dd-MM-yyyy");
         return formatData.format(dataActual);
     }
 
@@ -38,12 +38,12 @@ public class Utils {
     }
 
     /**
-     * Obté el nom del client actual a partir de la resposta del servidor.
+     * Obté el nom del client a partir de la resposta del servidor.
      *
      * @param resposta Resposta del servidor
      * @return Nom del client actual
      */
-    public static String obtenirNomClientActual(String resposta) {
+    public static String obtenirNomUsuari(String resposta) {
         // Verifica si la resposta del servidor no és nul·la i té els paràmetres esperats
         if (resposta != null) {
             String[] parts = resposta.split(",");
@@ -58,12 +58,12 @@ public class Utils {
     }
 
     /**
-     * Obté el tipus d'usuari actual a partir de la resposta del servidor.
+     * Obté el tipus d'usuari a partir de la resposta del servidor.
      *
      * @param resposta Resposta del servidor
      * @return Tipus d'usuari actual
      */
-    public static String obtenirTipusUsuariActual(String resposta) {
+    public static String obtenirTipusUsuari(String resposta) {
         // Verifica si la resposta del servidor no és nul·la i té els paràmetres esperats
         if (resposta != null) {
             String[] parts = resposta.split(",");
