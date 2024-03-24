@@ -77,20 +77,18 @@ public class PerfilActivity extends AppCompatActivity {
         etDireccion.setEnabled(true);
         etCorreo.setEnabled(true);
         etTelefonoContacte.setEnabled(true);
-        etCognoms.setEnabled(true);
         etDataNaixement.setEnabled(true);
-        etDataInscripcio.setEnabled(true);
+        etDataInscripcio.setEnabled(false);
         btnGuardarCanvis.setEnabled(true);
     }
 
     // Método para deshabilitar la edición de los campos de texto
     private void deshabilitarEdicion() {
         etNombreUsuario.setEnabled(false);
+        etDataNaixement.setEnabled(false);
         etDireccion.setEnabled(false);
         etCorreo.setEnabled(false);
         etTelefonoContacte.setEnabled(false);
-        etCognoms.setEnabled(false);
-        etDataNaixement.setEnabled(false);
         etDataInscripcio.setEnabled(false);
         btnGuardarCanvis.setEnabled(false);
     }
