@@ -24,7 +24,7 @@ import antonioguerrero.ioc.fithub.usuari.PerfilActivity;
 
 /**
  * Classe que representa l'activitat del client a l'aplicació FitHub.
- *
+ * <p>
  * Aquesta classe permet als clients realitzar diverses operacions com fer reserves i gestionar el seu perfil.
  *
  * @author Antonio Guerrero
