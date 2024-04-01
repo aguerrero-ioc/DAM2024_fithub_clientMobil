@@ -17,6 +17,9 @@ import antonioguerrero.ioc.fithub.peticions.PeticioUsuari;
 
 /**
  * Classe que representa l'activitat del perfil de l'usuari a l'aplicació FitHub.
+ *
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class PerfilActivity extends AppCompatActivity implements ConnexioServidor.OnServerResponseListener {
 
@@ -104,7 +107,7 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
     }
 
     /**
-     * Mètode que maneja la resposta del servidor.
+     * Mètode que gestiona la resposta del servidor.
      */
     @Override
     public void onServerResponse(String resposta) {
@@ -112,55 +115,8 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
             // Processar la resposta del servidor aquí per mostrar les dades a PerfilActivity
             String[] parts = resposta.split(",");
             if (parts.length >= 10) {
-                // Crear un nuevo objeto Usuari
-                Usuari usuari = new Usuari();
-
-                // Iterar sobre los datos recibidos
-                for (String part : parts) {
-                    // Dividir la cadena en etiqueta y valor
-                    String[] keyValue = part.split(":");
-                    if (keyValue.length == 2) {
-                        String etiqueta = keyValue[0].trim();
-                        String valor = keyValue[1].trim();
-
-                        // Assignem el valor corresponent al camp adequat de l'objecte Usuari
-                        switch (etiqueta) {
-                            case "correu":
-                                usuari.setCorreu(valor);
-                                break;
-                            case "contrasenya":
-                                usuari.setContrasenya(valor);
-                                break;
-                            case "usuariID":
-                                usuari.setUsuariID(Integer.parseInt(valor));
-                                break;
-                            case "tipus":
-                                usuari.setTipus(valor);
-                                break;
-                            case "dataInscripcio":
-                                usuari.setDataInscripcio(valor);
-                                break;
-                            case "nom":
-                                usuari.setNom(valor);
-                                break;
-                            case "cognoms":
-                                usuari.setCognoms(valor);
-                                break;
-                            case "dataNaixement":
-                                usuari.setDataNaixement(valor);
-                                break;
-                            case "adreca":
-                                usuari.setAdreca(valor);
-                                break;
-                            case "telefon":
-                                usuari.setTelefon(valor);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-
+                // Crear un nou objecte Usuari
+                Usuari usuari = processarDadesUsuari(parts);
                 // Actualitzar la interfície d'usuari amb les dades de l'usuari
                 actualitzarUsuari(usuari);
             } else {
@@ -172,6 +128,59 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         }
     }
 
+    /**
+     * Mètode que processa les dades de l'usuari a partir de la resposta del servidor.
+     */
+    private Usuari processarDadesUsuari(String[] parts) {
+        Usuari usuari = new Usuari();
+
+        // Iterar sobre les dades rebudes
+        for (String part : parts) {
+            // Dividir la cadena en etiqueta i valor
+            String[] keyValue = part.split(":");
+            if (keyValue.length == 2) {
+                String etiqueta = keyValue[0].trim();
+                String valor = keyValue[1].trim();
+
+                // Assignar el valor corresponent al camp adequat de l'objecte Usuari
+                switch (etiqueta) {
+                    case "correu":
+                        usuari.setCorreu(valor);
+                        break;
+                    case "contrasenya":
+                        usuari.setContrasenya(valor);
+                        break;
+                    case "usuariID":
+                        usuari.setUsuariID(Integer.parseInt(valor));
+                        break;
+                    case "tipus":
+                        usuari.setTipus(valor);
+                        break;
+                    case "dataInscripcio":
+                        usuari.setDataInscripcio(valor);
+                        break;
+                    case "nom":
+                        usuari.setNom(valor);
+                        break;
+                    case "cognoms":
+                        usuari.setCognoms(valor);
+                        break;
+                    case "dataNaixement":
+                        usuari.setDataNaixement(valor);
+                        break;
+                    case "adreca":
+                        usuari.setAdreca(valor);
+                        break;
+                    case "telefon":
+                        usuari.setTelefon(valor);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return usuari;
+    }
 
 
     /**

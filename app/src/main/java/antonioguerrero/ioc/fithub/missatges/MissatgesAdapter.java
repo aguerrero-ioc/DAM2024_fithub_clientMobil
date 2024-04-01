@@ -14,6 +14,9 @@ import antonioguerrero.ioc.fithub.objectes.Missatge;
 
 /**
  * Adaptador per mostrar una llista de missatges en un RecyclerView.
+ *
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class MissatgesAdapter extends RecyclerView.Adapter<MissatgesAdapter.ViewHolder> {
 

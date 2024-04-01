@@ -123,12 +123,9 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.On
     public void onServerResponse(String resposta){
         Log.d("LoginActivity", "Resposta del servidor: " + resposta);
         if (resposta != null) {
-            String nomUsuari = Utils.obtenirNomUsuari(resposta);
             String tipusUsuari = Utils.obtenirTipusUsuari(resposta);
-            if (!nomUsuari.isEmpty() && !tipusUsuari.isEmpty()) {
+            if (!tipusUsuari.isEmpty()) {
                 Log.d("LoginActivity", "Tipus d'usuari: " + tipusUsuari);
-                // Enviem la petició al servidor per obtenir les dades de l'usuari
-                PeticioUsuari.consultarUsuari(nomUsuari);
                 // Obrir la activitat de l'usuari que correspongui
                 obrirActivitat(tipusUsuari);
             } else {
@@ -163,15 +160,6 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.On
             // Tipus d'usuari desconegut
             Toast.makeText(LoginActivity.this, "No s'ha pogut iniciar sessió. Tipus d'usuari desconegut.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void actualitzarUsuari(Usuari usuari) {
-        // Actualizar los campos del menú desplegable del perfil
-        TextView tvNomUsuari = findViewById(R.id.tv_usuari);
-        TextView tvTipusClient = findViewById(R.id.tv_tipus_client);
-
-        tvNomUsuari.setText(usuari.getNom());
-        tvTipusClient.setText(usuari.getTipus());
     }
 
 

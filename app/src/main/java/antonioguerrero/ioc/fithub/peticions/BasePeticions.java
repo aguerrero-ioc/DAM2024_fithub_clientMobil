@@ -1,13 +1,5 @@
 package antonioguerrero.ioc.fithub.peticions;
 
-import android.os.AsyncTask;
-import android.util.Log;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.Arrays;
-
 /**
  * Classe abstracta base per a les peticions al servidor.
  * Conté mètodes per establir la connexió amb el servidor i processar les respostes.

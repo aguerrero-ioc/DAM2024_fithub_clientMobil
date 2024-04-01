@@ -11,6 +11,9 @@ import java.net.URL;
 
 /**
  * Classe encarregada de gestionar l'enviament i recepció de missatges amb el servidor.
+ *
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class GestorMissatges {
 

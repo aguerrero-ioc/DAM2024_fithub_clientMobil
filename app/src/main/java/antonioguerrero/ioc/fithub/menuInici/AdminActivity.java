@@ -32,21 +32,8 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        // Obtenir el nom, ID i tipus de client
-        String nomUsuari = obtenirNomUsuari(this);
-        String idUsuari = obtenirIdUsuari(this);
-        String tipusClient = obtenirTipusClient(this);
-
-        // Concatenar el nom d'usuari i l'ID d'usuari
-        String textUsuari = nomUsuari + " (" + idUsuari + ")";
-
-        // Trobar el textViewUsuari i establir el text
-        TextView textViewUsuari = findViewById(R.id.tv_usuari);
-        textViewUsuari.setText(textUsuari);
-
-        // Trobar el textViewTipusClient i establir el text
-        TextView textViewTipusClient = findViewById(R.id.tv_tipus_client);
-        textViewTipusClient.setText(tipusClient);
+        // Actualitza les dades del usuari quan s'obre l'activitat
+        actualitzarDadesUsuari();;
 
         // Inicialitzar els botons de reserva d'activitats
         Button botoGestio1 = findViewById(R.id.boto_gestio1);
@@ -136,6 +123,27 @@ public class AdminActivity extends AppCompatActivity {
         Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
         startActivity(intent);
         finish(); // Finalitzar l'activitat actual
+    }
+
+    private void actualitzarDadesUsuari() {
+
+
+        // Obtenir el nom, ID i tipus de client
+        String nomUsuari = obtenirNomUsuari(this);
+        String idUsuari = obtenirIdUsuari(this);
+        String tipusClient = obtenirTipusClient(this);
+
+        // Concatenar el nom d'usuari i l'ID d'usuari
+        String textUsuari = nomUsuari + " (" + idUsuari + ")";
+
+        // Trobar el textViewUsuari i establir el text
+        TextView textViewUsuari = findViewById(R.id.tv_usuari);
+        textViewUsuari.setText(textUsuari);
+
+        // Trobar el textViewTipusClient i establir el text
+        TextView textViewTipusClient = findViewById(R.id.tv_tipus_client);
+        textViewTipusClient.setText(tipusClient);
+
     }
 
     /**

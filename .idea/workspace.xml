@@ -36,7 +36,7 @@
           <theme>@style/Theme.Fithub</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_recuperar_contrasenya.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_admin_dashboard.xml">
         <config>
           <theme>@style/Theme.Fithub</theme>
         </config>
@@ -51,13 +51,42 @@
           <theme>@style/Theme.Fithub</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/prova.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/drawer_menu.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
     </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86e27104-0ae9-4fa9-a015-cf2c88f3068c" name="Changes" comment="20240401 Implementació recuperar contrasenya, RegistreActivity, PerfilActivity, modificació ConnexioServidor, creacio de subcarpetes de peticions." />
+    <list default="true" id="86e27104-0ae9-4fa9-a015-cf2c88f3068c" name="Changes" comment="20240401 Implementació recuperar contrasenya, RegistreActivity, PerfilActivity, modificació ConnexioServidor, creacio de subcarpetes de peticions.">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menuInici/AdminActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menuInici/AdminActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menuInici/ClientActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menuInici/ClientActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/GestorMissatges.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/GestorMissatges.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/MissatgesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/MissatgesAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/MissatgesFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/MissatgesFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/BasePeticions.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/BasePeticions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioReserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioReserva.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioUsuari.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioUsuari.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/usuari/PerfilActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/usuari/PerfilActivity.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,7 +129,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="TEA3-SE_proves" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -151,7 +180,7 @@
       <recent name="antonioguerrero.ioc.fithub.peticions" />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.RegistreActivity">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="RegistreActivity" type="AndroidRunConfigurationType" factoryName="Android App" temporary="true">
       <module name="fithub.app.main" />
       <option name="DEPLOY" value="true" />
@@ -288,6 +317,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Android App.RegistreActivity" />
         <item itemvalue="Android App.RegistreActivity" />
       </list>
     </recent_temporary>

@@ -16,6 +16,9 @@ import antonioguerrero.ioc.fithub.objectes.Missatge;
 
 /**
  * Fragment per mostrar missatges en un RecyclerView.
+ *
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class MissatgesFragment extends Fragment {
 

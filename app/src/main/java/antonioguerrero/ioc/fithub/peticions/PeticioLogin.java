@@ -39,4 +39,6 @@ public class PeticioLogin extends BasePeticions {
         // Executa la tasca asíncrona per connectar-se al servidor i enviar la petició de login
         new ConnexioServidor.ConnectToServerTask().execute(missatge);
     }
+
+
 }
