@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
+import antonioguerrero.ioc.fithub.objectes.Missatge;
 
 /**
  * Adaptador per mostrar una llista de missatges en un RecyclerView.

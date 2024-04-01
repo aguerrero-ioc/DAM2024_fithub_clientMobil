@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
+import antonioguerrero.ioc.fithub.objectes.Missatge;
 
 /**
  * Fragment per mostrar missatges en un RecyclerView.
