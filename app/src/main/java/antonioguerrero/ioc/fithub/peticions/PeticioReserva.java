@@ -1,9 +1,18 @@
 package antonioguerrero.ioc.fithub.peticions;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.connexio.LoginActivity;
+import antonioguerrero.ioc.fithub.menuInici.AdminActivity;
+import antonioguerrero.ioc.fithub.menuInici.ClientActivity;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 /**
  * Classe per gestionar les peticions relacionades amb les reserves.
@@ -69,7 +78,7 @@ public class PeticioReserva extends BasePeticions {
      * @param idReserva L'ID de la reserva a consultar.
      */
     public void consultarReserva(int idReserva) {
-        String peticio = "(select,reserva," + idReserva;
+        String peticio = "select,reserva," + idReserva;
         new ConnexioServidor.ConnectToServerTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
@@ -82,7 +91,6 @@ public class PeticioReserva extends BasePeticions {
         String peticio = "delete,reserva," + idReserva;
         new ConnexioServidor.ConnectToServerTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
 
-        gestionarResposta(resposta);
     }
 
     @Override
@@ -90,14 +98,5 @@ public class PeticioReserva extends BasePeticions {
         // Aquest mètode no s'utilitza en aquesta classe ja que cada operació específica té el seu propi mètode.
     }
 
-    @Override
-    protected void gestionarResposta(String resposta) {
-        if (resposta != null && resposta.equals("confirmacio")) {
-            // Mostrar Toast de confirmación
-            Utils.Toast.makeText(context, "Operació realitzada amb èxit", Toast.LENGTH_SHORT).show();
-        } else {
-            // Mostrar Toast de error
-            Toast.makeText(context, "Error en l'operació", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 }

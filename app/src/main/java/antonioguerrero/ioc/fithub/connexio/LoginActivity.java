@@ -1,14 +1,10 @@
 package antonioguerrero.ioc.fithub.connexio;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,20 +14,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import antonioguerrero.ioc.fithub.menuInici.AdminActivity;
-import antonioguerrero.ioc.fithub.menuInici.ClientActivity;
-import antonioguerrero.ioc.fithub.R;
-import antonioguerrero.ioc.fithub.Utils;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.usuari.RegistreActivity;
+import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.PeticioLogin;
-import antonioguerrero.ioc.fithub.peticions.PeticioUsuari;
+import antonioguerrero.ioc.fithub.usuari.RegistreActivity;
 
 /**
  * Classe que representa l'activitat de login a l'aplicació FitHub.
- *
+ * <p>
  * Aquesta classe permet als usuaris iniciar sessió, recuperar contrasenyes i registrar-se.
  *
  * @author Antonio Guerrero
@@ -40,9 +33,6 @@ import antonioguerrero.ioc.fithub.peticions.PeticioUsuari;
 public class LoginActivity extends AppCompatActivity implements BasePeticions.OnServerResponseListener {
 
     private EditText etNomUsuari, etContrasenya;
-    private Button btnLogin;
-    private CheckBox checkMostrarContrasenya;
-    private TextView tvRecuperarContrasenya, tvRegistrar;
 
     private Context context;
 
@@ -57,10 +47,10 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.On
         // Referenciar els elements de la interfície d'usuari
         etNomUsuari = findViewById(R.id.et_nomusuari);
         etContrasenya = findViewById(R.id.et_contrasenya);
-        btnLogin = findViewById(R.id.btn_login);
-        checkMostrarContrasenya = findViewById(R.id.check_mostrar_contrasenya);
-        tvRecuperarContrasenya = findViewById(R.id.tv_oblidat_contrasenya);
-        tvRegistrar = findViewById(R.id.tv_registre);
+        Button btnLogin = findViewById(R.id.btn_login);
+        CheckBox checkMostrarContrasenya = findViewById(R.id.check_mostrar_contrasenya);
+        TextView tvRecuperarContrasenya = findViewById(R.id.tv_oblidat_contrasenya);
+        TextView tvRegistrar = findViewById(R.id.tv_registre);
 
         // Configurar el clic del botó d'inici de sessió
         btnLogin.setOnClickListener(v -> {
@@ -98,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.On
         tvRecuperarContrasenya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mostrarDialogoRecuperacionContrasenya();
+                mostrarDialegRecuperacioContrasenya();
             }
         });
 
@@ -113,62 +103,29 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.On
         });
     }
 
-    /**
-     * Mètode que gestiona la resposta del servidor després de l'intent d'inici de sessió.
-     * Aquest mètode serà cridat pel servidor per informar sobre l'estat de l'autenticació.
-     *
-     * @param resposta Resposta del servidor, que pot ser l'èxit de l'autenticació o un error.
-     */
-    @Override
-    public void onServerResponse(String resposta){
-        Log.d("LoginActivity", "Resposta del servidor: " + resposta);
-        if (resposta != null) {
-            String tipusUsuari = Utils.obtenirTipusUsuari(resposta);
-            if (!tipusUsuari.isEmpty()) {
-                Log.d("LoginActivity", "Tipus d'usuari: " + tipusUsuari);
-                // Obrir la activitat de l'usuari que correspongui
-                obrirActivitat(tipusUsuari);
-            } else {
-                // Resposta del servidor incorrecta
-                Toast.makeText(this, "Credencials incorrectes", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            // Error de connexió
-            Toast.makeText(this, "Error de connexió", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     /**
-     * Mètode que obre l'activitat corresponent segons el tipus d'usuari autenticat.
+     * Mètode per enviar una petició de login al servidor.
      *
-     * @param tipusUsuari Tipus d'usuari autenticat (client o administrador).
+     * @param nomUsuari Nom d'usuari per a l'inici de sessió
+     * @param contrasenya Contrasenya de l'usuari per a l'inici de sessió
      */
-    private void obrirActivitat(String tipusUsuari) {
-        // Obrir l'activitat corresponent segons el tipus d'usuari
-        Intent intent;
-        if (tipusUsuari.equals("client")) {
-            // Usuari tipus client
-            intent = new Intent(LoginActivity.this, ClientActivity.class);
-            startActivity(intent);
-            Toast.makeText(LoginActivity.this, "Benvingut, client", Toast.LENGTH_SHORT).show();
-        } else if (tipusUsuari.equals("admin")) {
-            // Usuari tipus admin
-            intent = new Intent(LoginActivity.this, AdminActivity.class);
-            startActivity(intent);
-            Toast.makeText(LoginActivity.this, "Benvingut, administrador", Toast.LENGTH_SHORT).show();
-        } else {
-            // Tipus d'usuari desconegut
-            Toast.makeText(LoginActivity.this, "No s'ha pogut iniciar sessió. Tipus d'usuari desconegut.", Toast.LENGTH_SHORT).show();
-        }
+    private void enviarPeticioLogin(String nomUsuari, String contrasenya) {
+        // Crear una nova instància de la petició de login
+        PeticioLogin peticioLogin = new PeticioLogin(context, nomUsuari, contrasenya);
+
+        // Executar la petició
+        peticioLogin.execute();
     }
+
 
 
     /**
      * Mètode per mostrar el diàleg de recuperació de contrasenya.
      */
-    public void mostrarDialogoRecuperacionContrasenya() {
+    public void mostrarDialegRecuperacioContrasenya() {
         // Inflar el disseny del diàleg
-        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_recuperar_contrasenya, null);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialeg_recuperar_contrasenya, null);
 
         // Obtindre referència del EditText del correu electrònic
         EditText etCorreu = dialogView.findViewById(R.id.et_correu_recuperacio);
@@ -216,18 +173,6 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.On
         });
     }
 
-    /**
-     * Mètode per enviar una petició de login al servidor.
-     *
-     * @param nomUsuari Nom d'usuari per a l'inici de sessió
-     * @param contrasenya Contrasenya de l'usuari per a l'inici de sessió
-     */
-    private void enviarPeticioLogin(String nomUsuari, String contrasenya) {
-        // Crear una nova instància de la petició de login
-        PeticioLogin peticioLogin = new PeticioLogin(nomUsuari, contrasenya, this);
-        // Executar la petició
-        peticioLogin.execute();
-    }
 
     /**
      * Mètode per validar el format d'un correu electrònic utilitzant una expressió regular.
@@ -242,4 +187,8 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.On
         return email.matches(emailPattern);
     }
 
+    @Override
+    public void onServerResponse(Object resposta) {
+
+    }
 }

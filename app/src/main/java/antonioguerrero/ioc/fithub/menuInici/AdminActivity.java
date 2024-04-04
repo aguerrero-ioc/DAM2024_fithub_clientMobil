@@ -33,7 +33,7 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
 
         // Actualitza les dades del usuari quan s'obre l'activitat
-        actualitzarDadesUsuari();;
+        actualitzarDadesUsuari();
 
         // Inicialitzar els botons de reserva d'activitats
         Button botoGestio1 = findViewById(R.id.boto_gestio1);

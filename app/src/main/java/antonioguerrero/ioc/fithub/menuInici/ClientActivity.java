@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,15 +33,13 @@ public class ClientActivity extends AppCompatActivity {
 
     private LinearLayout layoutMenuPerfil; // Per mostrar/ocultar el menú desplegable
 
-    private FrameLayout fragmentContainer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
 
         // Actualitza les dades del usuari quan s'obre l'activitat
-        actualitzarDadesUsuari();;
+        actualitzarDadesUsuari();
 
 
         // Inicialitzar els botons de reserva d'activitats
@@ -54,7 +51,6 @@ public class ClientActivity extends AppCompatActivity {
 
         // Referencias a los elementos del layout
         layoutMenuPerfil = findViewById(R.id.layoutPerfilMenu);
-        fragmentContainer = findViewById(R.id.fragment_container);
 
         // Configurar els listeners pels botons de reserva d'activitats
         botoReserva1.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +118,7 @@ public class ClientActivity extends AppCompatActivity {
         });
 
         // Enviar missatge al servidor
-        enviarMissatgeAlServidor("UsuariActual", "Contingut del missatge");
+        enviarMissatgeAlServidor();
 
         // Rebre missatge del servidor
         rebreMissatgeDelServidor();
@@ -130,15 +126,12 @@ public class ClientActivity extends AppCompatActivity {
 
     /**
      * Envia un missatge al servidor.
-     *
-     * @param remitent   El remitent del missatge.
-     * @param contingut  El contingut del missatge.
      */
-    private void enviarMissatgeAlServidor(String remitent, String contingut) {
+    private void enviarMissatgeAlServidor() {
         String data = Utils.obtenirDataActual();
         String hora = Utils.obtenirHoraActual();
 
-        GestorMissatges.enviarMissatge(remitent, contingut, data, hora, new GestorMissatges.GestorRespostaServidor() {
+        GestorMissatges.enviarMissatge("UsuariActual", "Contingut del missatge", data, hora, new GestorMissatges.GestorRespostaServidor() {
             @Override
             public void onServerResponse(String resposta) {
                 // Mostrar un Toast "Missatge enviat"

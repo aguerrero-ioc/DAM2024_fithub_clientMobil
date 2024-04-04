@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Classe Usuari que representa un usuari en l'aplicació FitHub.
- *
+ * <p>
  * Conté informació com el nom, cognoms, data de naixement, adreça, correu electrònic,
  * telèfon, contrasenya i data d'inscripció de l'usuari.
  *

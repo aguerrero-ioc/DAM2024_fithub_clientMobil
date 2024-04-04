@@ -6,7 +6,6 @@ package antonioguerrero.ioc.fithub.peticions;
  */
 public abstract class BasePeticions {
 
-
     protected OnServerResponseListener listener;
 
     /**
@@ -22,6 +21,11 @@ public abstract class BasePeticions {
      */
     protected abstract void execute();
 
+    /**
+     * Mètode abstracte per a gestionar la resposta del servidor.
+     * @param resposta La resposta rebuda del servidor.
+     */
+    public abstract void onServerResponse(Object resposta);
 
     /**
      * Interfície per a escoltar les respostes del servidor.
@@ -31,6 +35,6 @@ public abstract class BasePeticions {
          * Mètode cridat quan es rep una resposta del servidor.
          * @param resposta La resposta rebuda del servidor.
          */
-        void onServerResponse(String resposta);
+        void onServerResponse(Object resposta);
     }
 }
