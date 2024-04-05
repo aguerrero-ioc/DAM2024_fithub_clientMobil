@@ -1,5 +1,9 @@
 package antonioguerrero.ioc.fithub;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +23,7 @@ public class Utils {
         Date dataActual = Calendar.getInstance().getTime();
 
         // Formateja la data en el format desitjat
-        SimpleDateFormat formatData = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatData = new SimpleDateFormat("dd-MM-yyyy");
         return formatData.format(dataActual);
     }
 
@@ -33,29 +37,11 @@ public class Utils {
         Date horaActual = Calendar.getInstance().getTime();
 
         // Formateja l'hora en el format desitjat
-        SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
         return formatHora.format(horaActual);
     }
 
-    /**
-     * Obté el nom del client a partir de la resposta del servidor.
-     *
-     * @param resposta Resposta del servidor
-     * @return Nom del client actual
-     */
-    public static String obtenirNomUsuari(String resposta) {
-        // Verifica si la resposta del servidor no és nul·la i té els paràmetres esperats
-        if (resposta != null) {
-            String[] parts = resposta.split(",");
-            // Comprova si la resposta conté els paràmetres esperats (només hi hauria 3 parts si ho fa)
-            if (parts.length == 3) {
-                // Retorna el nom del client que es troba a la primera posició
-                return parts[0];
-            }
-        }
-        // En cas contrari, retorna un valor predeterminat o buit
-        return ""; // Opcional: pots retornar un valor predeterminat o llançar una excepció segons la teva lògica
-    }
+
 
     /**
      * Obté el tipus d'usuari a partir de la resposta del servidor.
@@ -75,6 +61,17 @@ public class Utils {
         }
         // En cas contrari, retorna un valor predeterminat o buit
         return ""; // Opcional: pots retornar un valor predeterminat o llançar una excepció segons la teva lògica
+    }
+
+
+    /**
+     * Mètode per mostrar un Toast amb el missatge especificat.
+     *
+     * @param context  El context de l'aplicació.
+     * @param missatge El missatge a mostrar en el Toast.
+     */
+    public static void mostrarToast(Context context, String missatge) {
+        Toast.makeText(context, missatge, Toast.LENGTH_SHORT).show();
     }
 
 }

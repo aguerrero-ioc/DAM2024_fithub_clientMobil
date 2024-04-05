@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 /**
  * Classe que gestiona la connexió amb el servidor.
- *
+ * <p>
  * Aquesta classe facilita la connexió amb el servidor per enviar peticions de login i escoltar les respostes.
  * El servidor al qual es connecta està configurat amb l'adreça IP i el port especificats com a constants.
  *

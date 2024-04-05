@@ -6,20 +6,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import antonioguerrero.ioc.fithub.R;
+import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.PeticioUsuari;
 
 /**
  * Classe que representa l'activitat del perfil de l'usuari a l'aplicació FitHub.
- *
- * @author Antonio Guerrero
- * @version 1.0
  */
 public class PerfilActivity extends AppCompatActivity implements ConnexioServidor.OnServerResponseListener {
 
@@ -107,7 +104,7 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
     }
 
     /**
-     * Mètode que gestiona la resposta del servidor.
+     * Mètode que maneja la resposta del servidor.
      */
     @Override
     public void onServerResponse(String resposta) {
@@ -115,8 +112,55 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
             // Processar la resposta del servidor aquí per mostrar les dades a PerfilActivity
             String[] parts = resposta.split(",");
             if (parts.length >= 10) {
-                // Crear un nou objecte Usuari
-                Usuari usuari = processarDadesUsuari(parts);
+                // Crear un nuevo objeto Usuari
+                Usuari usuari = new Usuari();
+
+                // Iterar sobre los datos recibidos
+                for (String part : parts) {
+                    // Dividir la cadena en etiqueta y valor
+                    String[] keyValue = part.split(":");
+                    if (keyValue.length == 2) {
+                        String etiqueta = keyValue[0].trim();
+                        String valor = keyValue[1].trim();
+
+                        // Assignem el valor corresponent al camp adequat de l'objecte Usuari
+                        switch (etiqueta) {
+                            case "correu":
+                                usuari.setCorreu(valor);
+                                break;
+                            case "contrasenya":
+                                usuari.setContrasenya(valor);
+                                break;
+                            case "usuariID":
+                                usuari.setUsuariID(Integer.parseInt(valor));
+                                break;
+                            case "tipus":
+                                usuari.setTipus(valor);
+                                break;
+                            case "dataInscripcio":
+                                usuari.setDataInscripcio(valor);
+                                break;
+                            case "nom":
+                                usuari.setNom(valor);
+                                break;
+                            case "cognoms":
+                                usuari.setCognoms(valor);
+                                break;
+                            case "dataNaixement":
+                                usuari.setDataNaixement(valor);
+                                break;
+                            case "adreca":
+                                usuari.setAdreca(valor);
+                                break;
+                            case "telefon":
+                                usuari.setTelefon(valor);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
                 // Actualitzar la interfície d'usuari amb les dades de l'usuari
                 actualitzarUsuari(usuari);
             } else {
@@ -128,59 +172,6 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         }
     }
 
-    /**
-     * Mètode que processa les dades de l'usuari a partir de la resposta del servidor.
-     */
-    private Usuari processarDadesUsuari(String[] parts) {
-        Usuari usuari = new Usuari();
-
-        // Iterar sobre les dades rebudes
-        for (String part : parts) {
-            // Dividir la cadena en etiqueta i valor
-            String[] keyValue = part.split(":");
-            if (keyValue.length == 2) {
-                String etiqueta = keyValue[0].trim();
-                String valor = keyValue[1].trim();
-
-                // Assignar el valor corresponent al camp adequat de l'objecte Usuari
-                switch (etiqueta) {
-                    case "correu":
-                        usuari.setCorreu(valor);
-                        break;
-                    case "contrasenya":
-                        usuari.setContrasenya(valor);
-                        break;
-                    case "usuariID":
-                        usuari.setUsuariID(Integer.parseInt(valor));
-                        break;
-                    case "tipus":
-                        usuari.setTipus(valor);
-                        break;
-                    case "dataInscripcio":
-                        usuari.setDataInscripcio(valor);
-                        break;
-                    case "nom":
-                        usuari.setNom(valor);
-                        break;
-                    case "cognoms":
-                        usuari.setCognoms(valor);
-                        break;
-                    case "dataNaixement":
-                        usuari.setDataNaixement(valor);
-                        break;
-                    case "adreca":
-                        usuari.setAdreca(valor);
-                        break;
-                    case "telefon":
-                        usuari.setTelefon(valor);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        return usuari;
-    }
 
 
     /**
@@ -239,7 +230,7 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         //Cridar al mètode modificarUsuari de la classe PeticioUsuari per a enviar la petició al servidor
         PeticioUsuari.modificarUsuari(usuari);
 
-        Toast.makeText(this, "Canvis guardats", Toast.LENGTH_SHORT).show();
+        Utils.mostrarToast(getApplicationContext(), "Canvis guardats");
 
         deshabilitarEdicio(); // Després de desar, deshabilitar l'edició de nou
     }
@@ -268,25 +259,25 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
 
         // Comprovar que cap dels camps estigui buit
         if (contrasenyaActual.isEmpty() || novaContrasenya.isEmpty() || confirmarContrasenya.isEmpty()) {
-            Toast.makeText(this, "Cal omplir tots els camps", Toast.LENGTH_SHORT).show();
+            Utils.mostrarToast(getApplicationContext(), "Cal omplir tots els camps");
             return;
         }
 
         // Verificar que la contrasenya actual coincideixi amb la contrasenya del usuari
         if (!contrasenyaActual.equals(usuari.getContrasenya())) {
-            Toast.makeText(this, "La contrasenya actual no és correcta", Toast.LENGTH_SHORT).show();
+            Utils.mostrarToast(getApplicationContext(), "La contrasenya actual no és correcta");
             return;
         }
 
         // Comprovar la longitud i la complexitat de la nova contrasenya
         if (novaContrasenya.length() < 8 || !novaContrasenya.matches(".*\\d.*") || !novaContrasenya.matches(".*[a-zA-Z].*")) {
-            Toast.makeText(this, "La nova contrasenya ha de tenir almenys 8 caràcters alfanumèrics", Toast.LENGTH_SHORT).show();
+            Utils.mostrarToast(getApplicationContext(), "La nova contrasenya ha de tenir almenys 8 caràcters alfanumèrics");
             return;
         }
 
         // Comparar la nova contrasenya amb la seva repetició
         if (!novaContrasenya.equals(confirmarContrasenya)) {
-            Toast.makeText(this, "Les contrasenyes noves no coincideixen", Toast.LENGTH_SHORT).show();
+            Utils.mostrarToast(getApplicationContext(), "Les contrasenyes noves no coincideixen");
             return;
         }
 

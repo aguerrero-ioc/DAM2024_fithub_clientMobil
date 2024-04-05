@@ -19,6 +19,7 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.LoginActivity;
 import antonioguerrero.ioc.fithub.missatges.GestorMissatges;
 import antonioguerrero.ioc.fithub.missatges.MissatgesFragment;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.usuari.PerfilActivity;
 
 /**
@@ -41,56 +42,32 @@ public class ClientActivity extends AppCompatActivity {
         // Actualitza les dades del usuari quan s'obre l'activitat
         actualitzarDadesUsuari();
 
-
-        // Inicialitzar els botons de reserva d'activitats
-        Button botoReserva1 = findViewById(R.id.boto_reserva1);
-        Button botoReserva2 = findViewById(R.id.boto_reserva2);
-        Button botoReserva3 = findViewById(R.id.boto_reserva3);
-        Button botoReserva4 = findViewById(R.id.boto_reserva4);
-        Button botoReserva5 = findViewById(R.id.boto_reserva5);
-
         // Referencias a los elementos del layout
         layoutMenuPerfil = findViewById(R.id.layoutPerfilMenu);
 
+        // Inicialitzar els botons de reserva d'activitats
+        Button[] botonsReserva = {
+                findViewById(R.id.boto_reserva1),
+                findViewById(R.id.boto_reserva2),
+                findViewById(R.id.boto_reserva3),
+                findViewById(R.id.boto_reserva4),
+                findViewById(R.id.boto_reserva5)
+        };
+
         // Configurar els listeners pels botons de reserva d'activitats
-        botoReserva1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ferReserva("Classe");
-            }
-        });
-
-        botoReserva2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ferReserva("Activitat");
-            }
-        });
-
-        botoReserva3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ferReserva("Instal·lació");
-            }
-        });
-
-        botoReserva4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ferReserva("Piscina");
-            }
-        });
-
-        botoReserva5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ferReserva("Servei");
-            }
-        });
+        String[] nomsActivitats = {"Classe", "Activitat", "Instal·lació", "Piscina", "Servei"};
+        for (int i = 0; i < botonsReserva.length; i++) {
+            final int index = i;
+            botonsReserva[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ferReserva(nomsActivitats[index]);
+                }
+            });
+        }
 
         // Configura el botó de perfil
         ImageButton botoPerfil = findViewById(R.id.boto_perfil_client);
-
         botoPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,8 +101,119 @@ public class ClientActivity extends AppCompatActivity {
         rebreMissatgeDelServidor();
     }
 
+    // Mètode per mostrar o ocultar el menú desplegable
+    public void toggleMenu() {
+        layoutMenuPerfil.setVisibility(layoutMenuPerfil.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+    }
+
+    // Mètode per mostrar el fragment de missatges quan es fa clic en un botó
+    public void mostrarFragmentMissatges(View view) {
+        // Crear una instància del fragment de missatges
+        MissatgesFragment missatgesFragment = new MissatgesFragment();
+
+        // Obtenir el FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Iniciar una transacció de fragment
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        // Reemplaçar el contingut del contenidor amb el fragment
+        transaction.replace(R.id.fragment_container, missatgesFragment);
+
+        // Afegir la transacció a la pila d'atràs
+        transaction.addToBackStack(null);
+
+        // Confirmar la transacció
+        transaction.commit();
+
+        // Mostrar el botó d'ocultar missatges
+        findViewById(R.id.boto_ocultar_missatges).setVisibility(View.VISIBLE);
+    }
+
+    public void ocultarFragmentMissatges(View view) {
+        getSupportFragmentManager().popBackStack();
+        findViewById(R.id.boto_ocultar_missatges).setVisibility(View.GONE);
+    }
+
+    /**
+     * Mètode per a realitzar una reserva d'una activitat.
+     * @param nomActivitat El nom de l'activitat a reservar.
+     */
+    private void ferReserva(String nomActivitat) {
+        Utils.mostrarToast(ClientActivity.this, "Activitat reservada: " + nomActivitat);
+    }
+
+    /**
+     * Mètode que s'executa quan l'usuari fa clic a l'opció 1 del perfil.
+     */
+    public void opcioPerfil1Clicat() {
+        startActivity(new Intent(ClientActivity.this, PerfilActivity.class));
+    }
+
+    /**
+     * Mètode que s'executa quan l'usuari fa clic a l'opció de tancar la sessió.
+     * Aquest mètode redirigeix l'usuari a la pantalla d'inici de sessió i finalitza l'activitat actual.
+     */
+    public void opcioTancarSessioClicat() {
+        startActivity(new Intent(ClientActivity.this, LoginActivity.class));
+        finish(); // Finalitzar l'activitat actual
+    }
+
+    private void actualitzarDadesUsuari() {
+
+
+        // Obtenir el nom, ID i tipus de client
+        String nomUsuari = obtenirNomUsuari(this);
+        String idUsuari = obtenirIdUsuari(this);
+        String tipusClient = obtenirTipusClient(this);
+
+        // Concatenar el nom d'usuari i l'ID d'usuari
+        String textUsuari = nomUsuari + " (" + idUsuari + ")";
+
+        // Trobar el textViewUsuari i establir el text
+        TextView textViewUsuari = findViewById(R.id.tv_usuari);
+        textViewUsuari.setText(textUsuari);
+
+        // Trobar el textViewTipusClient i establir el text
+        TextView textViewTipusClient = findViewById(R.id.tv_tipus_client);
+        textViewTipusClient.setText(tipusClient);
+
+    }
+
+    /**
+     * Mètode per obtenir el nom de l'usuari.
+     * @param context Context de l'aplicació.
+     * @return El nom de l'usuari.
+     */
+    public static String obtenirNomUsuari(Context context) {
+        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+        return preferencies.getString("nomUsuari", "");
+    }
+
+    /**
+     * Mètode per obtenir l'ID de l'usuari.
+     * @param context Context de l'aplicació.
+     * @return L'ID de l'usuari.
+     */
+    public static String obtenirIdUsuari(Context context) {
+        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+        return preferencies.getString("idUsuari", "");
+    }
+
+    /**
+     * Mètode per obtenir el tipus de client.
+     *
+     * @param context Context de l'aplicació.
+     * @return El tipus de client.
+     */
+    public static String obtenirTipusClient(Context context) {
+        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+        return preferencies.getString("tipusClient", "");
+    }
+
     /**
      * Envia un missatge al servidor.
+     *
      */
     private void enviarMissatgeAlServidor() {
         String data = Utils.obtenirDataActual();
@@ -135,7 +223,7 @@ public class ClientActivity extends AppCompatActivity {
             @Override
             public void onServerResponse(String resposta) {
                 // Mostrar un Toast "Missatge enviat"
-                Toast.makeText(getApplicationContext(), "Missatge enviat", Toast.LENGTH_SHORT).show();
+                Utils.mostrarToast(getApplicationContext(), "Missatge enviat");
             }
         });
     }
@@ -171,133 +259,5 @@ public class ClientActivity extends AppCompatActivity {
                 transaction.commit();
             }
         });
-    }
-
-    // Mètode per mostrar o ocultar el menú desplegable
-    public void toggleMenu() {
-        if (layoutMenuPerfil.getVisibility() == View.VISIBLE) {
-            layoutMenuPerfil.setVisibility(View.GONE);
-        } else {
-            layoutMenuPerfil.setVisibility(View.VISIBLE);
-        }
-    }
-
-    // Mètode per mostrar el fragment de missatges quan es fa clic en un botó
-    public void mostrarFragmentMissatges(View view) {
-        // Crear una instància del fragment de missatges
-        MissatgesFragment missatgesFragment = new MissatgesFragment();
-
-        // Obtenir el FragmentManager
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        // Iniciar una transacció de fragment
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        // Reemplaçar el contingut del contenidor amb el fragment
-        transaction.replace(R.id.fragment_container, missatgesFragment);
-
-        // Afegir la transacció a la pila d'atràs
-        transaction.addToBackStack(null);
-
-        // Confirmar la transacció
-        transaction.commit();
-
-        // Mostrar el botó d'ocultar missatges
-        Button botonOcultarMissatges = findViewById(R.id.boto_ocultar_missatges);
-        botonOcultarMissatges.setVisibility(View.VISIBLE);
-    }
-
-    public void ocultarFragmentMissatges(View view) {
-        // Ocultar el fragment de missatges
-        getSupportFragmentManager().popBackStack();
-
-        // Ocultar el botó d'ocultar missatges
-        Button botonOcultarMissatges = findViewById(R.id.boto_ocultar_missatges);
-        botonOcultarMissatges.setVisibility(View.GONE);
-    }
-
-
-
-
-    /**
-     * Mètode per a realitzar una reserva d'una activitat.
-     * @param nomActivitat El nom de l'activitat a reservar.
-     */
-    private void ferReserva(String nomActivitat) {
-        Toast.makeText(ClientActivity.this, "Activitat reservada: " + nomActivitat, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * Mètode que s'executa quan l'usuari fa clic a l'opció 1 del perfil.
-     */
-    public void opcioPerfil1Clicat() {
-        Intent intent = new Intent(ClientActivity.this, PerfilActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * Mètode que s'executa quan l'usuari fa clic a l'opció de tancar la sessió.
-     * Aquest mètode redirigeix l'usuari a la pantalla d'inici de sessió i finalitza l'activitat actual.
-     */
-    public void opcioTancarSessioClicat() {
-        // Redirigir a la pantalla d'inici de sessió
-        Intent intent = new Intent(ClientActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish(); // Finalitzar l'activitat actual
-    }
-
-
-    private void actualitzarDadesUsuari() {
-
-
-    // Obtenir el nom, ID i tipus de client
-    String nomUsuari = obtenirNomUsuari(this);
-    String idUsuari = obtenirIdUsuari(this);
-    String tipusClient = obtenirTipusClient(this);
-
-    // Concatenar el nom d'usuari i l'ID d'usuari
-    String textUsuari = nomUsuari + " (" + idUsuari + ")";
-
-    // Trobar el textViewUsuari i establir el text
-    TextView textViewUsuari = findViewById(R.id.tv_usuari);
-        textViewUsuari.setText(textUsuari);
-
-    // Trobar el textViewTipusClient i establir el text
-    TextView textViewTipusClient = findViewById(R.id.tv_tipus_client);
-        textViewTipusClient.setText(tipusClient);
-
-    }
-
-    /**
-     * Mètode per obtenir el nom de l'usuari.
-     * @param context Context de l'aplicació.
-     * @return El nom de l'usuari.
-     */
-    public static String obtenirNomUsuari(Context context) {
-        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        String nomUsuari = preferencies.getString("nomUsuari", "");
-        return nomUsuari;
-    }
-
-    /**
-     * Mètode per obtenir l'ID de l'usuari.
-     * @param context Context de l'aplicació.
-     * @return L'ID de l'usuari.
-     */
-    public static String obtenirIdUsuari(Context context) {
-        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        String idUsuari = preferencies.getString("idUsuari", "");
-        return idUsuari;
-    }
-
-    /**
-     * Mètode per obtenir el tipus de client.
-     * @param context Context de l'aplicació.
-     * @return El tipus de client.
-     */
-    public static String obtenirTipusClient(Context context) {
-        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        String tipusClient = preferencies.getString("tipusClient", "");
-        return tipusClient;
     }
 }
