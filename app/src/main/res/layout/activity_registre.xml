@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -49,35 +50,56 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="8dp"/>
 
-            <!-- EditText per al nom -->
-            <EditText
-                android:id="@+id/et_nom"
+            <!-- TextInputLayout per al nom -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_nom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nom"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp">
 
-            <!-- EditText per als cognoms -->
-            <EditText
-                android:id="@+id/et_cognoms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Cognoms"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nom"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
 
-            <!-- EditText per al telèfon de contacte -->
-            <EditText
-                android:id="@+id/et_telefon"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per als cognoms -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_cognoms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Telèfon de contacte"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_cognoms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Cognoms"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per al telèfon de contacte -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_telefon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_telefon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Telèfon de contacte"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
@@ -99,37 +121,58 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="8dp"/>
 
-            <!-- EditText per al correu electrònic -->
-            <EditText
-                android:id="@+id/et_correu_electronic"
+            <!-- TextInputLayout per al correu electrònic -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_correu_electronic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Correu electrònic"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp">
 
-            <!-- EditText per a la contrasenya -->
-            <EditText
-                android:id="@+id/et_contrasenya"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Contrasenya"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                android:inputType="textPassword"
-                android:layout_marginBottom="8dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_correu_electronic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Correu electrònic"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
 
-            <!-- EditText per a repetir la contrasenya -->
-            <EditText
-                android:id="@+id/et_repetir_contrasenya"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per a la contrasenya -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_contrasenya"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Repetir contrasenya"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                android:inputType="textPassword"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_contrasenya"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contrasenya"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per a repetir la contrasenya -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_repetir_contrasenya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_repetir_contrasenya"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Repetir contrasenya"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    android:inputType="textPassword"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- CheckBox per mostrar/ocultar la contrasenya -->
             <CheckBox

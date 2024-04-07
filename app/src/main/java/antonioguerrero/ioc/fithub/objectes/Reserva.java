@@ -9,17 +9,14 @@ package antonioguerrero.ioc.fithub.objectes;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class Reserva {
-
+public class Reserva {
     private int id;
     private Usuari usuari;
     private Installacio installacio;
-
     private String data;
     private String hora;
     private int durada;
     private int nombrePersones;
-    private float preu;
     private String estat;
 
     /**
@@ -32,7 +29,6 @@ public abstract class Reserva {
      * @param hora Hora de la reserva
      * @param durada Durada de la reserva
      * @param nombrePersones Nombre de persones per a la reserva
-     * @param preu Preu de la reserva
      * @param estat Estat de la reserva
      */
     public Reserva(int id, Usuari usuari, Installacio installacio, String data, String hora, int durada, int nombrePersones, float preu, String estat) {
@@ -43,7 +39,6 @@ public abstract class Reserva {
         this.hora = hora;
         this.durada = durada;
         this.nombrePersones = nombrePersones;
-        this.preu = preu;
         this.estat = estat;
     }
 
@@ -175,23 +170,6 @@ public abstract class Reserva {
         this.nombrePersones = nombrePersones;
     }
 
-    /**
-     * Obté el preu de la reserva.
-     *
-     * @return Preu de la reserva
-     */
-    public float getPreu() {
-        return preu;
-    }
-
-    /**
-     * Estableix el preu de la reserva.
-     *
-     * @param preu Preu de la reserva
-     */
-    public void setPreu(float preu) {
-        this.preu = preu;
-    }
 
     /**
      * Obté l'estat de la reserva.

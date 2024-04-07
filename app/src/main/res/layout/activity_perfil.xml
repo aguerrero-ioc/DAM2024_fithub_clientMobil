@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -49,25 +50,27 @@
         </FrameLayout>
 
         <!-- Secció de Dades Personals -->
+
+        <!-- Secció Dades d'Usuari -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/edit_text_background"
-            android:padding="12dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edit_text_background"
+            android:orientation="vertical"
+            android:padding="12dp">
 
             <!-- Títol secció Dades Personals -->
             <TextView
                 android:id="@+id/tv_seccio_dades_personals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Dades Personals"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="8dp"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
 
             <!-- Nom de l'usuari -->
@@ -75,133 +78,172 @@
                 android:id="@+id/tv_nom_usuari"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Nom:"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
+                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/et_nom_usuari"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_nom_usuari"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Introduïu el vostre nom"
-                android:inputType="textPersonName"
-                android:enabled="false" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nom_usuari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Introduïu el vostre nom"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Cognoms de l'usuari -->
             <TextView
                 android:id="@+id/tv_cognoms_usuari"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Cognoms:"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
+                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/et_cognoms_usuari"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_cognoms_usuari"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Introduïu el vostre nom"
-                android:inputType="textPersonName"
-                android:enabled="false" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_cognoms_usuari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Introduïu el vostre nom"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Data de Naixement -->
             <TextView
                 android:id="@+id/tv_data_naixement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Data de naixement:"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
+                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/et_data_naixement"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_data_naixement"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Introduïu la vostra data de naixement"
-                android:inputType="date"
-                android:enabled="false" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_data_naixement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Introduïu la vostra data de naixement"
+                    android:inputType="date" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Adreça -->
             <TextView
                 android:id="@+id/tv_adreca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Adreça:"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
+                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/et_adreca"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_adreca"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Introduïu la vostra adreça"
-                android:inputType="textPostalAddress"
-                android:enabled="false" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_adreca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Introduïu la vostra adreça"
+                    android:inputType="textPostalAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Correu Electrònic -->
             <TextView
                 android:id="@+id/tv_correu_usuari"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Correu electrònic:"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
+                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/et_correu_usuari"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_correu_usuari"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Introduïu el vostre correu electrònic"
-                android:inputType="textEmailAddress"
-                android:enabled="false" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_correu_usuari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Introduïu el vostre correu electrònic"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Telèfon de Contacte -->
             <TextView
                 android:id="@+id/tv_telefon_contacte"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Telèfon de contacte"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
+                android:textSize="18sp" />
 
-            <!-- Data d'Inscripció -->
-            <EditText
-                android:id="@+id/et_telefon_contacte"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_telefon_contacte"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:hint="Introduïu el vostre telèfon de contacte"
-                android:inputType="phone" />
+                android:layout_height="wrap_content">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_telefon_contacte"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Introduïu el vostre telèfon de contacte"
+                    android:inputType="phone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Botons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_editar_perfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Editar Perfil"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    android:text="Editar Perfil" />
 
                 <Button
                     android:id="@+id/btn_guardar_canvis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Guardar Canvis"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="8dp"
-                    android:enabled="false" />
+                    android:layout_marginTop="16dp"
+                    android:enabled="false"
+                    android:text="Guardar Canvis" />
 
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Secció Dades d'Usuari -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -230,13 +272,20 @@
                 android:textSize="18sp"
                 android:layout_marginTop="16dp" />
 
-            <EditText
-                android:id="@+id/et_usuari_id"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_usuari_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="ID d'Usuari"
-                android:inputType="none"
-                android:enabled="false" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_usuari_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ID d'Usuari"
+                    android:inputType="none"
+                    android:enabled="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Tipus d'Usuari -->
             <TextView
@@ -247,13 +296,20 @@
                 android:textSize="18sp"
                 android:layout_marginTop="16dp" />
 
-            <EditText
-                android:id="@+id/et_tipus_usuari"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_tipus_usuari"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Tipus d'Usuari"
-                android:inputType="none"
-                android:enabled="false" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_tipus_usuari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tipus d'Usuari"
+                    android:inputType="none"
+                    android:enabled="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Data d'Inscripció -->
             <TextView
@@ -264,107 +320,140 @@
                 android:textSize="18sp"
                 android:layout_marginTop="16dp" />
 
-            <EditText
-                android:id="@+id/et_data_inscripcio"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_data_inscripcio"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Data d'Inscripció"
-                android:inputType="none"
-                android:enabled="false" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_data_inscripcio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Data d'Inscripció"
+                    android:inputType="none"
+                    android:enabled="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-
-        <!-- Secció de Canvi de Contrasenya -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/edit_text_background"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp">
-
-            <!-- Títol secció Contrasenya -->
-            <TextView
-                android:id="@+id/tv_seccio_contrasenya"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Canvi de Contrasenya"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:layout_marginBottom="8dp"/>
-
-
-            <!-- Títol de la contrasenya actual -->
-            <TextView
-                android:id="@+id/tv_contrasenya_actual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contrasenya Actual:"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
-
-            <EditText
-                android:id="@+id/et_contrasenya_actual"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Introduïu la contrasenya actual"
-                android:inputType="textPassword"
-                android:enabled="false" />
-
-            <!-- Nova Contrasenya -->
-            <TextView
-                android:id="@+id/tv_contrasenya"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nova Contrasenya:"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
-
-            <EditText
-                android:id="@+id/et_nova_contrasenya"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Introduïu la nova contrasenya"
-                android:inputType="textPassword"
-                android:enabled="false" />
-
-            <!-- Confirmació de la nova contrasenya -->
-            <TextView
-                android:id="@+id/tv_confirmar_contrasenya"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Confirmar Nova Contrasenya:"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp" />
-
-            <EditText
-                android:id="@+id/et_confirmar_contrasenya"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Repetiu la nova contrasenya"
-                android:inputType="textPassword"
-                android:enabled="false" />
-
-
-            <!-- Botó canvi contrasenya -->
+            <!-- Secció de Canvi de Contrasenya -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:orientation="vertical"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp">
 
-                <Button
-                    android:id="@+id/btn_canviar_contrasenya"
+                <!-- Títol secció Contrasenya -->
+                <TextView
+                    android:id="@+id/tv_seccio_contrasenya"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Canviar Contrasenya"
-                    android:layout_marginTop="16dp"/>
+                    android:text="Canvi de Contrasenya"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="8dp"/>
 
+                <!-- Títol de la contrasenya actual -->
+                <TextView
+                    android:id="@+id/tv_contrasenya_actual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contrasenya Actual:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_contrasenya_actual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_contrasenya_actual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Introduïu la contrasenya actual"
+                        android:inputType="textPassword"
+                        android:enabled="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Nova Contrasenya -->
+                <TextView
+                    android:id="@+id/tv_contrasenya"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nova Contrasenya:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_nova_contrasenya"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_nova_contrasenya"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Introduïu la nova contrasenya"
+                        android:inputType="textPassword"
+                        android:enabled="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Confirmació de la nova contrasenya -->
+                <TextView
+                    android:id="@+id/tv_confirmar_contrasenya"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirmar Nova Contrasenya:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_confirmar_contrasenya"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_confirmar_contrasenya"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Repetiu la nova contrasenya"
+                        android:inputType="textPassword"
+                        android:enabled="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Botó canvi contrasenya -->
+
+                <!-- Botons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_canviar_contrasenya"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Canviar Contrasenya" />
+
+                    <Button
+                        android:id="@+id/btn_guardar_contrasenya"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:enabled="false"
+                        android:text="Guardar Canvis" />
+
+                </LinearLayout>
             </LinearLayout>
-
-        </LinearLayout>
-
     </LinearLayout>
-
 </ScrollView>
-

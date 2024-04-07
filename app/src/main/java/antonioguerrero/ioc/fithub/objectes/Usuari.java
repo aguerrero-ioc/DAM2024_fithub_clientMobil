@@ -1,6 +1,7 @@
 package antonioguerrero.ioc.fithub.objectes;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Classe Usuari que representa un usuari en l'aplicació FitHub.
@@ -23,10 +24,10 @@ public class Usuari implements Serializable {
     //Altres dades de l'usuari
     private String nom;
     private String cognoms;
-    private String dataNaixement;
+    private Date dataNaixement;
     private String adreca;
     private String telefon;
-    private String dataInscripcio;
+    private Date dataInscripcio;
 
     /**
      * Constructor de la classe Usuari reduit.
@@ -42,10 +43,10 @@ public class Usuari implements Serializable {
         this.tipus = DEFAULT_VALUE;
         this.nom = DEFAULT_VALUE;
         this.cognoms = DEFAULT_VALUE;
-        this.dataNaixement = DEFAULT_VALUE;
+        this.dataNaixement = null;
         this.adreca = DEFAULT_VALUE;
         this.telefon = DEFAULT_VALUE;
-        this.dataInscripcio = DEFAULT_VALUE;
+        this.dataInscripcio = null;
     }
 
     /**
@@ -63,7 +64,7 @@ public class Usuari implements Serializable {
      * @param telefon        El número de telèfon de l'usuari.
      */
 
-    public Usuari(String correu, String contrasenya, Integer usuariID, String tipus, String dataInscripcio, String nom, String cognoms, String dataNaixement, String adreca, String telefon) {
+    public Usuari(String correu, String contrasenya, Integer usuariID, String tipus, Date dataInscripcio, String nom, String cognoms, Date dataNaixement, String adreca, String telefon) {
         this.correu = correu;
         this.contrasenya = contrasenya;
         this.usuariID = -1;
@@ -125,7 +126,7 @@ public class Usuari implements Serializable {
      *
      * @return La data de naixement de l'usuari.
      */
-    public String getDataNaixement() {
+    public Date getDataNaixement() {
         return dataNaixement;
     }
 
@@ -134,7 +135,7 @@ public class Usuari implements Serializable {
      *
      * @param dataNaixement La data de naixement de l'usuari.
      */
-    public void setDataNaixement(String dataNaixement) {
+    public void setDataNaixement(Date dataNaixement) {
         this.dataNaixement = dataNaixement;
     }
 
@@ -215,7 +216,7 @@ public class Usuari implements Serializable {
      *
      * @return La data d'inscripció de l'usuari.
      */
-    public String getDataInscripcio() {
+    public Date getDataInscripcio() {
         return dataInscripcio;
     }
 
@@ -224,7 +225,7 @@ public class Usuari implements Serializable {
      *
      * @param dataInscripcio La data d'inscripció de l'usuari.
      */
-    public void setDataInscripcio(String dataInscripcio) {
+    public void setDataInscripcio(Date dataInscripcio) {
         this.dataInscripcio = dataInscripcio;
     }
 

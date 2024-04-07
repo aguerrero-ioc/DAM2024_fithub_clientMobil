@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Classe d'utilitats amb mètodes útils per a diverses funcionalitats.
@@ -74,4 +76,47 @@ public class Utils {
         Toast.makeText(context, missatge, Toast.LENGTH_SHORT).show();
     }
 
+    public static HashMap<String, String> ObjecteAHashMap(Object object) {
+        HashMap<String, String> map = new HashMap<>();
+        Field[] fields = object.getClass().getDeclaredFields(); // Obtiene todos los campos del objeto
+
+        for (Field field : fields) {
+            field.setAccessible(true); // Permite el acceso a campos privados
+            try {
+                Object value = field.get(object); // Obtiene el valor del campo
+                if (value != null) {
+                    map.put(field.getName(), value.toString()); // Añade el valor al HashMap
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return map;
+    }
+    public static Object HashMapAObjecte(HashMap<String, String> map, Class<?> clazz) {
+        Object object = null;
+        try {
+            object = clazz.newInstance(); // Crea una nueva instancia de la clase
+            Field[] fields = clazz.getDeclaredFields(); // Obtiene todos los campos de la clase
+
+            for (Field field : fields) {
+                field.setAccessible(true); // Permite el acceso a campos privados
+                String value = map.get(field.getName()); // Obtiene el valor del HashMap
+                if (value != null) {
+                    if (field.getType() == int.class) {
+                        field.setInt(object, Integer.parseInt(value));
+                    } else if (field.getType() == double.class) {
+                        field.setDouble(object, Double.parseDouble(value));
+                    } else if (field.getType() == boolean.class) {
+                        field.setBoolean(object, Boolean.parseBoolean(value));
+                    } else {
+                        field.set(object, value); // Establece el valor del campo
+                    }
+                }
+            }
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
 }

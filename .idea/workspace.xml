@@ -11,7 +11,22 @@
       </config>
     </shared>
     <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activitat_item.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_activitats.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_admin.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_classes.xml">
         <config>
           <theme>@style/Theme.Fithub</theme>
         </config>
@@ -21,7 +36,17 @@
           <theme>@style/Theme.Fithub</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_installacions.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_missatges.xml">
         <config>
           <theme>@style/Theme.Fithub</theme>
         </config>
@@ -36,12 +61,52 @@
           <theme>@style/Theme.Fithub</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_reserves.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_serveis.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_activitat_detail.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_activitat_list.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_missatges.xml">
         <config>
           <theme>@style/Theme.Fithub</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_reserves_pasades.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_reserves_realitzades.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_missatge.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_reserva.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_navigation_usuari.xml">
         <config>
           <theme>@style/Theme.Fithub</theme>
         </config>
@@ -52,15 +117,104 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86e27104-0ae9-4fa9-a015-cf2c88f3068c" name="Changes" comment="20240401 modificacions a peticions">
+    <list default="true" id="86e27104-0ae9-4fa9-a015-cf2c88f3068c" name="Changes" comment="20240404 modificacions per rectificar proves">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/activitats/ActivitatDetailFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/activitats/ActivitatListFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/activitats/ActivitatLlistaAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/activitats/ActivitatQuadriculaAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/activitats/ActivitatsActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/classes/ClassesActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/installacions/InstallacionsActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/missatges/MissatgesActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/missatges/MissatgesFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/ReservesActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/ReservesAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/ReservesPasadesFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/ReservesRealitzadesFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/serveis/ServeisActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/activitats/ConsultarActivitat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/activitats/ConsultarTotesActivitats.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/installacions/ConsultarInstallacio.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/installacions/ConsultarTotesInstallacions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/reserves/ConsultarReserva.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/reserves/ConsultarTotesReserves.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/reserves/CrearReserva.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/reserves/EliminarReserva.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/reserves/ModificarReserva.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/serveis/ConsultarServei.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/serveis/ConsultarTotsServeis.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/usuaris/CanviarContrasenya.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/usuaris/ConsultarUsuari.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/usuaris/CrearUsuari.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/usuaris/ModificarUsuari.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/boto_llista.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-anydpi/boto_quadricula.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/boto_llista.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/boto_quadricula.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/boto_llista.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/boto_quadricula.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/boto_llista.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/boto_quadricula.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/boto_llista.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/boto_quadricula.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activitat_item.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_activitats.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_classes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_installacions.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_missatges.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_reserves.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_serveis.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_activitat_detail.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_activitat_list.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_reserves_pasades.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_reserves_realitzades.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_reserva.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_navigation_usuari.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LoginTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LogoutAdminTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LogoutAdminTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LogoutClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LogoutClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/ConnexioServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/ConnexioServidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menuInici/ClientActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menuInici/ClientActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/usuari/PerfilActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/usuari/PerfilActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/usuari/RegistreActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/usuari/RegistreActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/login/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menuInici/AdminActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/main/AdminActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menuInici/ClientActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/main/ClientActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/GestorMissatges.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/missatges/GestorMissatges.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/MissatgesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/missatges/MissatgesAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/missatges/MissatgesFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Activitat.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Activitat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Installacio.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Installacio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Reserva.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Servei.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Servei.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Usuari.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Usuari.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/BasePeticions.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/BasePeticions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/usuaris/PeticioLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioReserva.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/peticions/PeticioUsuari.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/usuari/PerfilActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/usuari/PerfilActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/usuari/RegistreActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/login/RegistreActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/menu_item_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/menu_item_background.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_admin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_admin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_client.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_client.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_perfil.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_perfil.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_registre.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_registre.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_missatges.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_missatges.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,8 +251,8 @@
       <list>
         <option value="valueResourceFile" />
         <option value="resourceFile" />
-        <option value="layoutResourceFile" />
         <option value="Class" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -126,33 +280,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build DAM2024_fithub_clientMobil.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "TEA3-SE__2",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Dependencies",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "show.do.not.copy.http.proxy.settings.to.gradle": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build DAM2024_fithub_clientMobil.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;TEA3-SE__2&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sesa697418/AndroidStudioProjects/DAM2024_fithub_clientMobil/app/src/main/res/layout&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Dependencies&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.ApplicationConfigurable&quot;,
+    &quot;show.do.not.copy.http.proxy.settings.to.gradle&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="PsdUISettings">
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="antonioguerrero.ioc.fithub.menuInici" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sesa697418\AndroidStudioProjects\DAM2024_fithub_clientMobil\app\src\main\res\layout" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\sesa697418\AndroidStudioProjects\DAM2024_fithub_clientMobil\app\src\main\res\mipmap-hdpi" />
       <recent name="C:\Users\sesa697418\AndroidStudioProjects\DAM2024_fithub_clientMobil\app\src\main\res\layout" />
       <recent name="C:\Users\sesa697418\AndroidStudioProjects\DAM2024_fithub_clientMobil\app\src\androidTest\java\antonioguerrero\ioc\fithub" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="antonioguerrero.ioc.fithub.menu.classes" />
       <recent name="antonioguerrero.ioc.fithub.peticions" />
     </key>
   </component>
@@ -371,7 +533,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712011828550</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="20240404 modificacions per rectificar proves">
+      <option name="closed" value="true" />
+      <created>1712308356434</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1712308356434</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -403,6 +573,7 @@
     <MESSAGE value="20240401 Implementació recuperar contrasenya, RegistreActivity, PerfilActivity, modificació ConnexioServidor, creacio de subcarpetes de peticions." />
     <MESSAGE value="20240401 modificacions a peticions" />
     <MESSAGE value="20240404 modificacions" />
-    <option name="LAST_COMMIT_MESSAGE" value="20240404 modificacions" />
+    <MESSAGE value="20240404 modificacions per rectificar proves" />
+    <option name="LAST_COMMIT_MESSAGE" value="20240404 modificacions per rectificar proves" />
   </component>
 </project>

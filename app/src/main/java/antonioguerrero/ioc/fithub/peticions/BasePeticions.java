@@ -6,35 +6,42 @@ package antonioguerrero.ioc.fithub.peticions;
  */
 public abstract class BasePeticions {
 
-    protected OnServerResponseListener listener;
+    protected respostaServidorListener listener;
 
     /**
      * Constructor de la classe BasePeticions.
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public BasePeticions(OnServerResponseListener listener) {
+    public BasePeticions(respostaServidorListener listener) {
         this.listener = listener;
     }
 
     /**
      * Mètode abstracte per a executar la petició.
      */
-    protected abstract void execute();
+    public abstract void execute();
+
+    /**
+     * Mètode abstracte per a obtenir el tipus de l'objecte.
+     * @return La classe de l'objecte.
+     */
+    public abstract Class<?> obtenirTipusObjecte();
+
 
     /**
      * Mètode abstracte per a gestionar la resposta del servidor.
      * @param resposta La resposta rebuda del servidor.
      */
-    public abstract void onServerResponse(Object resposta);
+    public abstract void respostaServidor(Object resposta);
 
     /**
      * Interfície per a escoltar les respostes del servidor.
      */
-    public interface OnServerResponseListener {
+    public interface respostaServidorListener {
         /**
          * Mètode cridat quan es rep una resposta del servidor.
          * @param resposta La resposta rebuda del servidor.
          */
-        void onServerResponse(Object resposta);
+        void respostaServidor(Object resposta);
     }
 }

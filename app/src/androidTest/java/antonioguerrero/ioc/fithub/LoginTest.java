@@ -12,7 +12,7 @@ import androidx.test.filters.LargeTest;
 import org.junit.Rule;
 import org.junit.Test;
 
-import antonioguerrero.ioc.fithub.connexio.LoginActivity;
+import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 
 /**
  * Aquesta classe conté les proves d'acceptació per al procés de login (inici de sessió).
@@ -31,7 +31,7 @@ public class LoginTest {
     @Test
     public void testLoginClientCorrecte() {
         // Introdueix les credencials de client correctes
-        Espresso.onView(ViewMatchers.withId(R.id.et_nomusuari)).perform(ViewActions.typeText("client@fithub.es"));
+        Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText("client@fithub.es"));
         Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText("passClient"));
         Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());
 
@@ -45,7 +45,7 @@ public class LoginTest {
     @Test
     public void testLoginAdminCorrecte() {
         // Introdueix les credencials d'administrador correctes
-        Espresso.onView(ViewMatchers.withId(R.id.et_nomusuari)).perform(ViewActions.typeText("administrador@fithub.es"));
+        Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText("administrador@fithub.es"));
         Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText("passAdministrador"));
         Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());
 
@@ -59,7 +59,7 @@ public class LoginTest {
     @Test
     public void testLoginIncorrecte() {
         // Introdueix credencials incorrectes
-        Espresso.onView(ViewMatchers.withId(R.id.et_nomusuari)).perform(ViewActions.typeText("clientRandom"));
+        Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText("clientRandom"));
         Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText("contrasenyaIncorrecta"));
         Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());
 

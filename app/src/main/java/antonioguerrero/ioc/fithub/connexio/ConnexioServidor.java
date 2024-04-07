@@ -8,6 +8,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.HashMap;
+
+import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 
 /**
@@ -24,14 +27,14 @@ public class ConnexioServidor {
     private static final String SERVER_IP = "192.168.0.216";
     private static final int SERVER_PORT = 8080;
 
-    private static OnServerResponseListener listener;
+    private static respostaServidorListener listener;
 
     /**
      * Constructor de la classe ConnexioServidor.
      *
      * @param listener Listener per a les respostes del servidor
      */
-    public ConnexioServidor(OnServerResponseListener listener) {
+    public ConnexioServidor(respostaServidorListener listener) {
         this.listener = listener;
     }
 
@@ -39,11 +42,15 @@ public class ConnexioServidor {
     /**
      * Tasca asíncrona per connectar-se al servidor i enviar la petició de login.
      */
-    public static class ConnectToServerTask extends AsyncTask<String, Void, Object[]> {
+    public static class ConnectToServerTask extends AsyncTask<HashMap<String, String>, Void, Object[]> {
+        private BasePeticions peticio;
 
+        public ConnectToServerTask(BasePeticions peticio) {
+            this.peticio = peticio;
+        }
         @Override
-        protected Object[] doInBackground(String... params) {
-            String missatge = params[0];
+        protected Object[] doInBackground(HashMap<String, String>... params) {
+            HashMap<String, String> peticioMap = params[0];
             try {
                 Socket socket = new Socket(SERVER_IP, SERVER_PORT);
 
@@ -55,10 +62,17 @@ public class ConnexioServidor {
                 Log.d("ConnexioServidor", "Resposta del handshake: " + respostaHandshake);
 
                 // Enviar la petició al servidor com un array d'objectes
-                out.writeObject(new Object[] {missatge});
+                out.writeObject(new Object[] {peticioMap});
 
                 // Llegir la resposta del servidor com un array d'objectes
                 Object[] resposta = (Object[]) in.readObject();
+
+                // Crear un nou array del tipus correcte
+                Class<?>[] tipusObjecte = new Class[]{peticio.obtenirTipusObjecte()};
+                Object[] respostaTipusCorrecte = (Object[]) java.lang.reflect.Array.newInstance(tipusObjecte[0], resposta.length);
+
+                // Copiar els objectes de la resposta en el nou array
+                System.arraycopy(resposta, 0, respostaTipusCorrecte, 0, resposta.length);
 
                 out.close();
                 in.close();
@@ -75,7 +89,7 @@ public class ConnexioServidor {
         protected void onPostExecute(Object[] resposta) {
             if (listener != null) {
                 String respostaString = Arrays.toString(resposta);
-                listener.onServerResponse(respostaString);
+                listener.respostaServidor(respostaString);
             }
         }
     }
@@ -83,9 +97,7 @@ public class ConnexioServidor {
     /**
      * Interfície per a escoltar les respostes del servidor.
      */
-    public interface OnServerResponseListener {
-
-        void onServerResponse(String resposta);
+    public interface respostaServidorListener {
+        void respostaServidor(String resposta);
     }
-
 }

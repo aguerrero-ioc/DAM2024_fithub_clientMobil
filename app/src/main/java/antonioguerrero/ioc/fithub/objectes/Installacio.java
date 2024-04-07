@@ -11,30 +11,27 @@ package antonioguerrero.ioc.fithub.objectes;
 public class Installacio {
     private int id;
     private String nom;
-    private int capacitat;
     private String descripcio;
+    private int tipus;
+
+    // ALTRES (PENDENT)
     private String imatge;
+    private int capacitat;
     private boolean disponible;
-    private String tipus;
+
 
     /**
      * Constructor de la classe Installacio.
      *
      * @param id Identificador de la instal·lació
      * @param nom Nom de la instal·lació
-     * @param capacitat Capacitat de la instal·lació
      * @param descripcio Descripció de la instal·lació
-     * @param imatge URL de la imatge de la instal·lació
-     * @param disponible Disponibilitat de la instal·lació
      * @param tipus Tipus de la instal·lació
      */
-    public Installacio(int id, String nom, int capacitat, String descripcio, String imatge, boolean disponible, String tipus) {
+    public Installacio(int id, String nom, String descripcio, int tipus) {
         this.id = id;
         this.nom = nom;
-        this.capacitat = capacitat;
         this.descripcio = descripcio;
-        this.imatge = imatge;
-        this.disponible = disponible;
         this.tipus = tipus;
     }
 
@@ -76,23 +73,6 @@ public class Installacio {
         this.nom = nom;
     }
 
-    /**
-     * Obté la capacitat de la instal·lació.
-     *
-     * @return La capacitat de la instal·lació
-     */
-    public int getCapacitat() {
-        return capacitat;
-    }
-
-    /**
-     * Estableix la capacitat de la instal·lació.
-     *
-     * @param capacitat La capacitat de la instal·lació
-     */
-    public void setCapacitat(int capacitat) {
-        this.capacitat = capacitat;
-    }
 
     /**
      * Obté la descripció de la instal·lació.
@@ -111,6 +91,28 @@ public class Installacio {
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
+
+
+    /**
+     * Obté el tipus de la instal·lació.
+     *
+     * @return El tipus de la instal·lació
+     */
+    public int getTipus() {
+        return tipus;
+    }
+
+    /**
+     * Estableix el tipus de la instal·lació.
+     *
+     * @param tipus El tipus de la instal·lació
+     */
+    public void setTipus(int tipus) {
+        this.tipus = tipus;
+    }
+
+
+    // ALTRES Getters i setters PENDENT
 
     /**
      * Obté la URL de la imatge de la instal·lació.
@@ -149,20 +151,21 @@ public class Installacio {
     }
 
     /**
-     * Obté el tipus de la instal·lació.
+     * Obté la capacitat de la instal·lació.
      *
-     * @return El tipus de la instal·lació
+     * @return La capacitat de la instal·lació
      */
-    public String getTipus() {
-        return tipus;
+    public int getCapacitat() {
+        return capacitat;
     }
 
     /**
-     * Estableix el tipus de la instal·lació.
+     * Estableix la capacitat de la instal·lació.
      *
-     * @param tipus El tipus de la instal·lació
+     * @param capacitat La capacitat de la instal·lació
      */
-    public void setTipus(String tipus) {
-        this.tipus = tipus;
+    public void setCapacitat(int capacitat) {
+        this.capacitat = capacitat;
     }
+
 }
