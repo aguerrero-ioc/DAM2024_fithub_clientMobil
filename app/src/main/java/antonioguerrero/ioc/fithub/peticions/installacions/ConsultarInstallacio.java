@@ -27,6 +27,9 @@ public class ConsultarInstallacio extends BasePeticions {
     private static final String ETIQUETA = "ConsultarInstallacio";
     private String nomInstallacio;
 
+    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
+
     /**
      * Constructor de la classe ConsultarInstallacio.
      *
@@ -42,12 +45,16 @@ public class ConsultarInstallacio extends BasePeticions {
      * Mètode per obtenir les dades d'una instal·lació.
      */
     public void obtenirInstallacio() {
-        HashMap<String, String> installacioMapa = new HashMap<>();
-        installacioMapa.put("type", "select");
-        installacioMapa.put("objectType", "Installacio");
-        installacioMapa.put("data", this.nomInstallacio);
-        Log.d(ETIQUETA, "Enviant petició: " + installacioMapa);
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, installacioMapa);
+        // Crear el Object[] per la petició
+        Object[] peticio = new Object[4];
+        peticio[0] = "select";
+        peticio[1] = "installacio";
+        peticio[2] = this.nomInstallacio;
+        peticio[3] = this.sessioID;
+
+
+        Log.d(ETIQUETA, "Enviant petició: " + peticio);
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     /**

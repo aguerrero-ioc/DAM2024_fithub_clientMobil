@@ -1,5 +1,6 @@
 package antonioguerrero.ioc.fithub.menu.usuari;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,9 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefonContacte, etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya;
     private Button btnGuardarCanvis, btnEditarPerfil, btnCanviContrasenya, btnGuardarCanviContrasenya;
     private Usuari usuari;
+
+    SharedPreferences preferencies = getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +162,7 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
                         switch (etiqueta) {
 
                             case "correu":
-                                usuari.setCorreu(valor);
+                                usuari.setCorreuUsuari(valor);
                                 break;
                             case "contrasenya":
                                 usuari.setContrasenya(valor);
@@ -224,8 +228,7 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
     public void actualitzarUsuari(Usuari usuari) {
 
         // Crear una instancia de ConsultarUsuari
-        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreu());
-
+        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID);
         // Ejecutar la petición al servidor
         consultarUsuariInstance.execute();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -235,7 +238,7 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         String dataNaixement = format.format(usuari.getDataNaixement());
         etDataNaixement.setText(dataNaixement);
         etAdreca.setText(usuari.getAdreca());
-        etCorreuUsuari.setText(usuari.getCorreu());
+        etCorreuUsuari.setText(usuari.getCorreuUsuari());
         etTelefonContacte.setText(usuari.getTelefon());
         String dataInscripcio = format.format(usuari.getDataNaixement());
         etDataInscripcio.setText(dataInscripcio);
@@ -325,10 +328,10 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
 
         usuari.setAdreca(adreca);
         usuari.setTelefon(telefon);
-        usuari.setCorreu(correu);
+        usuari.setCorreuUsuari(correu);
 
         //Cridar al mètode modificarUsuari de la classe ModificarUsuari per enviar la petició al servidor
-        ModificarUsuari modificarUsuariInstance = new ModificarUsuari((BasePeticions.respostaServidorListener) this);
+        ModificarUsuari modificarUsuariInstance = new ModificarUsuari((BasePeticions.respostaServidorListener) this, sessioID);
         modificarUsuariInstance.modificarUsuari(usuari);
 
         Utils.mostrarToast(getApplicationContext(), "Canvis guardats");
@@ -344,10 +347,10 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         // Actualitzar la contrasenya de l'objecte Usuari existent
         usuari.setContrasenya(novaContrasenya);
 
-        // Cridar al mètode modificarUsuari de la classe CanviarContrasenya
+        // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
-        CanviarContrasenya canviarContrasenyaInstance = new CanviarContrasenya((BasePeticions.respostaServidorListener) this);
-        canviarContrasenyaInstance.canviarContrasenya(usuari);
+        CanviarContrasenya canviarContrasenyaInstance = new CanviarContrasenya((BasePeticions.respostaServidorListener) this, usuari);
+        canviarContrasenyaInstance.canviarContrasenya();
     }
 
     /**

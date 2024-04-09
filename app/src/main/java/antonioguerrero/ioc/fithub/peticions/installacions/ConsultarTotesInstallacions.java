@@ -26,7 +26,10 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  */
 public class ConsultarTotesInstallacions extends BasePeticions {
     private Context context;
-    private static final String ETIQUETA = "ConsultarTotesInstallacions";
+    private static final String ETIQUETA = "ConsultarInstallacions";
+
+    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
 
     /**
      * Constructor de la classe ConsultarTotesInstallacions.
@@ -42,12 +45,16 @@ public class ConsultarTotesInstallacions extends BasePeticions {
      * Mètode per obtenir les dades de totes les instal·lacions.
      */
     public void obtenirInstallacions() {
-        HashMap<String, String> requestMap = new HashMap<>();
-        requestMap.put("type", "selectAll");
-        requestMap.put("objectType", "Installacio");
-        requestMap.put("data", null);
-        Log.d(ETIQUETA, "Enviant petició: " + requestMap.toString());
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestMap);
+        // Crear el Object[] per la petició
+        Object[] peticio = new Object[4];
+        peticio[0] = "select";
+        peticio[1] = "installacioall";
+        peticio[2] = null;
+        peticio[3] = this.sessioID;
+
+
+        Log.d(ETIQUETA, "Enviant petició: " + peticio);
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     /**

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -26,6 +27,9 @@ public class ConsultarActivitat extends BasePeticions {
     private static final String ETIQUETA = "ConsultaActivitat";
     private String nomActivitat;
 
+    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
+
     /**
      * Constructor de la classe ConsultaActivitat.
      *
@@ -42,12 +46,16 @@ public class ConsultarActivitat extends BasePeticions {
      * Mètode per obtenir les dades d'una activitat.
      */
     public void obtenirActivitat() {
-        HashMap<String, String> requestMap = new HashMap<>();
-        requestMap.put("type", "select");
-        requestMap.put("objectType", "Activitat");
-        requestMap.put("nomActivitat", this.nomActivitat);
-        Log.d(ETIQUETA, "Enviant petició: " + requestMap.toString());
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestMap);
+        // Crear el Object[] per la petició
+        Object[] peticio = new Object[4];
+        peticio[0] = "select";
+        peticio[1] = "activitat";
+        peticio[2] = this.nomActivitat;
+        peticio[3] = this.sessioID;
+
+
+        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     /**

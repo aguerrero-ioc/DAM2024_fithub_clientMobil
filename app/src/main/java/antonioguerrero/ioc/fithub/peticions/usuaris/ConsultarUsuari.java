@@ -1,11 +1,13 @@
 package antonioguerrero.ioc.fithub.peticions.usuaris;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -27,27 +29,32 @@ public class ConsultarUsuari extends BasePeticions {
     private static final String ETIQUETA = "ConsultarUsuari";
     private String correuUsuari;
 
+    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
+
     /**
      * Constructor de la classe ConsultarUsuari.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarUsuari(respostaServidorListener listener, Context context, String correuUsuari) {
+    public ConsultarUsuari(respostaServidorListener listener, Context context, String correuUsuari, String sessioID) {
         super(listener);
         this.context = context;
         this.correuUsuari = correuUsuari;
+        this.sessioID = sessioID;
     }
 
     /**
      * Mètode per obtenir les dades d'un usuari.
      */
     public void obtenirUsuari() {
-        HashMap<String, String> mapaPeticio = new HashMap<>();
-        mapaPeticio.put("type", "select");
-        mapaPeticio.put("objectType", "usuari");
-        mapaPeticio.put("data", this.correuUsuari);
-        Log.d(ETIQUETA, "Enviant petició: " + mapaPeticio.toString());
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mapaPeticio);
+        Object[] peticio = new Object[4];
+        peticio[0] = "select";
+        peticio[1] = "usuari";
+        peticio[2] = this.correuUsuari;
+        peticio[3] = this.sessioID;
+        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     /**
@@ -75,7 +82,7 @@ public class ConsultarUsuari extends BasePeticions {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
                 Usuari usuari = new Usuari();
                 usuari.setNom(mapaUsuari.get("nomUsuari"));
-                usuari.setCorreu(mapaUsuari.get("correuUsuari"));
+                usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
                 usuari.setContrasenya(mapaUsuari.get("passUsuari"));
                 usuari.setCognoms(mapaUsuari.get("cognomsUsuari"));
                 usuari.setTelefon(mapaUsuari.get("telefon"));

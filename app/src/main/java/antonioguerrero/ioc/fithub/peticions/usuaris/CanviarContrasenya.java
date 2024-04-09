@@ -1,11 +1,13 @@
 package antonioguerrero.ioc.fithub.peticions.usuaris;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -19,18 +21,37 @@ public class CanviarContrasenya extends BasePeticions {
     private Usuari usuari;
     private Context context;
 
-    public CanviarContrasenya(respostaServidorListener listener) {
+    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
+
+    public CanviarContrasenya(respostaServidorListener listener, Usuari usuari) {
         super(listener);
+        this.usuari = usuari;
     }
 
-    public void canviarContrasenya(Usuari usuari) {
-        HashMap<String, String> requestMap = new HashMap<>();
-        requestMap.put("type", "update");
-        requestMap.put("objectType", "usuari");
-        requestMap.put("correu", usuari.getCorreu());
-        requestMap.put("contrasenya", usuari.getContrasenya());
+    public void canviarContrasenya() {
+        // Convertir el objecte Usuari a un HashMap
+        HashMap<String, String> usuariMap = new HashMap<>();
+        usuariMap.put("nom", usuari.getNom());
+        usuariMap.put("cognoms", usuari.getCognoms());
+        if (usuari.getDataNaixement() != null) {
+            usuariMap.put("dataNaixement", new SimpleDateFormat("dd-MM-yyyy").format(usuari.getDataNaixement()));
+        }
+        usuariMap.put("adreca", usuari.getAdreca());
+        usuariMap.put("telefon", usuari.getTelefon());
+        usuariMap.put("correu", usuari.getCorreuUsuari());
+        usuariMap.put("contrasenya", usuari.getContrasenya());
 
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestMap);
+        // Crear el Object[] per la petició
+        Object[] peticio = new Object[4];
+        peticio[0] = "update";
+        peticio[1] = "pass";
+        peticio[2] = usuariMap;
+        peticio[3] = this.sessioID;
+
+
+        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
     @Override
     public Class<?> obtenirTipusObjecte() {
@@ -47,7 +68,7 @@ public class CanviarContrasenya extends BasePeticions {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
                 Usuari usuari = new Usuari();
                 usuari.setNom(mapaUsuari.get("nomUsuari"));
-                usuari.setCorreu(mapaUsuari.get("correuUsuari"));
+                usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
                 usuari.setContrasenya(mapaUsuari.get("passUsuari"));
                 usuari.setCognoms(mapaUsuari.get("cognomsUsuari"));
                 usuari.setTelefon(mapaUsuari.get("telefon"));
@@ -71,7 +92,7 @@ public class CanviarContrasenya extends BasePeticions {
 
     @Override
     public void execute() {
-        canviarContrasenya(usuari);
+        canviarContrasenya();
     }
 
 

@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -28,17 +29,26 @@ public class CrearUsuari extends BasePeticions {
     }
 
     public void crearUsuari() {
-        HashMap<String, String> mapaPeticio = new HashMap<>();
-        mapaPeticio.put("objectType", "usuari");
-        mapaPeticio.put("nom", usuari.getNom());
-        mapaPeticio.put("cognoms", usuari.getCognoms());
-        mapaPeticio.put("dataNaixement", new SimpleDateFormat("dd-MM-yyyy").format(usuari.getDataNaixement()));
-        mapaPeticio.put("adreca", usuari.getAdreca());
-        mapaPeticio.put("telefon", usuari.getTelefon());
-        mapaPeticio.put("correu", usuari.getCorreu());
-        mapaPeticio.put("contrasenya", usuari.getContrasenya());
-        Log.d(ETIQUETA, "Enviant petició: " + mapaPeticio.toString());
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mapaPeticio);
+        // Convertir el objecte Usuari a un HashMap
+        HashMap<String, String> usuariMap = new HashMap<>();
+        usuariMap.put("nom", usuari.getNom());
+        usuariMap.put("cognoms", usuari.getCognoms());
+        if (usuari.getDataNaixement() != null) {
+            usuariMap.put("dataNaixement", new SimpleDateFormat("dd-MM-yyyy").format(usuari.getDataNaixement()));
+        }
+        usuariMap.put("adreca", usuari.getAdreca());
+        usuariMap.put("telefon", usuari.getTelefon());
+        usuariMap.put("correu", usuari.getCorreuUsuari());
+        usuariMap.put("contrasenya", usuari.getContrasenya());
+
+        // Crear el Object[] per la petició
+        Object[] peticio = new Object[3];
+        peticio[0] = "insert";
+        peticio[1] = "usuari";
+        peticio[2] = usuariMap;
+
+        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     @Override

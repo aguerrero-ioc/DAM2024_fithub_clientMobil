@@ -17,7 +17,7 @@ public class Usuari implements Serializable {
 
     //Dades Obligatories
     private int usuariID;
-    private String correu;
+    private String correuUsuari;
     private String contrasenya;
     private String tipus;
 
@@ -36,7 +36,7 @@ public class Usuari implements Serializable {
      * @param contrasenya    La contrasenya de l'usuari.
      */
     public Usuari(String correu, String contrasenya) {
-        this.correu = correu;
+        this.correuUsuari = correu;
         this.contrasenya = contrasenya;
         this.usuariID = -1;
 
@@ -52,7 +52,7 @@ public class Usuari implements Serializable {
     /**
      * Constructor de la classe Usuari.
      *
-     * @param correu         El correu electrònic de l'usuari.
+     * @param correuUsuari         El correu electrònic de l'usuari.
      * @param contrasenya    La contrasenya de l'usuari.
      * @param usuariID       L'ID de l'usuari.
      * @param tipus          El tipus d'usuari.
@@ -64,8 +64,8 @@ public class Usuari implements Serializable {
      * @param telefon        El número de telèfon de l'usuari.
      */
 
-    public Usuari(String correu, String contrasenya, Integer usuariID, String tipus, Date dataInscripcio, String nom, String cognoms, Date dataNaixement, String adreca, String telefon) {
-        this.correu = correu;
+    public Usuari(String correuUsuari, String contrasenya, Integer usuariID, String tipus, Date dataInscripcio, String nom, String cognoms, Date dataNaixement, String adreca, String telefon) {
+        this.correuUsuari = correuUsuari;
         this.contrasenya = contrasenya;
         this.usuariID = -1;
         this.tipus = DEFAULT_VALUE;
@@ -180,17 +180,17 @@ public class Usuari implements Serializable {
      *
      * @return El correu electrònic de l'usuari.
      */
-    public String getCorreu() {
-        return correu;
+    public String getCorreuUsuari() {
+        return correuUsuari;
     }
 
     /**
      * Estableix el correu electrònic de l'usuari.
      *
-     * @param correu El correu electrònic de l'usuari.
+     * @param correuUsuari El correu electrònic de l'usuari.
      */
-    public void setCorreu(String correu) {
-        this.correu = correu;
+    public void setCorreuUsuari(String correuUsuari) {
+        this.correuUsuari = correuUsuari;
     }
 
     /**

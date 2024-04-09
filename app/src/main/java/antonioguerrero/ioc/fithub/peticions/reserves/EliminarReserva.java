@@ -1,6 +1,7 @@
 package antonioguerrero.ioc.fithub.peticions.reserves;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -24,6 +25,9 @@ public class EliminarReserva extends BasePeticions {
     private int idReserva;
     private Context context;
 
+    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
+
     /**
      * Constructor de la classe EliminarReserva.
      *
@@ -39,12 +43,14 @@ public class EliminarReserva extends BasePeticions {
      * Mètode per eliminar una reserva.
      */
     public void eliminarReserva() {
-        HashMap<String, String> requestMap = new HashMap<>();
-        requestMap.put("type", "delete");
-        requestMap.put("objectType", "reserva");
-        requestMap.put("id", String.valueOf(idReserva));
+        // Crear el Object[] per la petició
+        Object[] peticio = new Object[4];
+        peticio[0] = "delete";
+        peticio[1] = "reserva";
+        peticio[2] = idReserva;
+        peticio[3] = this.sessioID;
 
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestMap);
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     /**

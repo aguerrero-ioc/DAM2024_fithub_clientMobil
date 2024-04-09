@@ -42,15 +42,15 @@ public class ConnexioServidor {
     /**
      * Tasca asíncrona per connectar-se al servidor i enviar la petició de login.
      */
-    public static class ConnectToServerTask extends AsyncTask<HashMap<String, String>, Void, Object[]> {
+    public static class ConnectToServerTask extends AsyncTask<Object[], Void, Object[]> {
         private BasePeticions peticio;
 
         public ConnectToServerTask(BasePeticions peticio) {
             this.peticio = peticio;
         }
         @Override
-        protected Object[] doInBackground(HashMap<String, String>... params) {
-            HashMap<String, String> peticioMap = params[0];
+        protected Object[] doInBackground(Object[]... params) {
+            Object[] peticioArray = params[0];
             try {
                 Socket socket = new Socket(SERVER_IP, SERVER_PORT);
 
@@ -62,7 +62,7 @@ public class ConnexioServidor {
                 Log.d("ConnexioServidor", "Resposta del handshake: " + respostaHandshake);
 
                 // Enviar la petició al servidor com un array d'objectes
-                out.writeObject(new Object[] {peticioMap});
+                out.writeObject(peticioArray);
 
                 // Llegir la resposta del servidor com un array d'objectes
                 Object[] resposta = (Object[]) in.readObject();

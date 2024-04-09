@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class ConsultarTotesActivitats extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultaActivitats";
 
+    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
+
     public ConsultarTotesActivitats(respostaServidorListener listener, Context context) {
         super(listener);
         this.context = context;
@@ -35,12 +39,15 @@ public class ConsultarTotesActivitats extends BasePeticions {
      * Mètode per obtenir les dades de totes les activitats.
      */
     public void obtenirActivitats() {
-        HashMap<String, String> requestMap = new HashMap<>();
-        requestMap.put("type", "selectAll");
-        requestMap.put("objectType", "Activitat");
-        requestMap.put("data", null);
-        Log.d(ETIQUETA, "Enviant petició: " + requestMap.toString());
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestMap);
+        // Crear el Object[] per la petició
+        Object[] peticio = new Object[4];
+        peticio[0] = "select";
+        peticio[1] = "activitatall";
+        peticio[2] = null;
+        peticio[3] = this.sessioID;
+
+        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     /**

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -26,28 +27,32 @@ public class ConsultarServei extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarServei";
     private String nomServei;
+    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString("sessioID", "");
 
     /**
      * Constructor de la classe ConsultarServei.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarServei(respostaServidorListener listener, Context context, String nomServei) {
+    public ConsultarServei(respostaServidorListener listener, Context context, String nomServei, String sessioID) {
         super(listener);
         this.context = context;
         this.nomServei = nomServei;
+        this.sessioID = sessioID;
     }
 
     /**
      * Mètode per obtenir les dades d'un servei.
      */
     public void obtenirServei() {
-        HashMap<String, String> requestMap = new HashMap<>();
-        requestMap.put("type", "select");
-        requestMap.put("objectType", "Servei");
-        requestMap.put("nomServei", this.nomServei);
-        Log.d(ETIQUETA, "Enviant sol·licitud: " + requestMap.toString());
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestMap);
+        Object[] peticio = new Object[4];
+        peticio[0] = "select";
+        peticio[1] = "servei";
+        peticio[2] = this.nomServei;
+        peticio[3] = this.sessioID;
+        Log.d(ETIQUETA, "Enviant sol·licitud: " + Arrays.toString(peticio));
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     /**

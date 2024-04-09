@@ -52,13 +52,24 @@ public class PeticioLogin extends BasePeticions {
      * Mètode per enviar la petició de login al servidor.
      */
     public void peticioLogin() {
-        HashMap<String, String> mapaPeticio = new HashMap<>();
-        mapaPeticio.put("type", "select");
-        mapaPeticio.put("objectType", "usuari");
-        mapaPeticio.put("correuUsuari", correuUsuari);
-        mapaPeticio.put("contrasenya", contrasenya);
-        Log.d(ETIQUETA, "Enviant petició: " + mapaPeticio.toString());
-        new ConnexioServidor.ConnectToServerTask(this).execute(mapaPeticio);
+        // Crear el Object[] per la petició
+        Object[] peticio = new Object[3];
+        peticio[0] = "login";
+        peticio[1] = this.correuUsuari;
+        peticio[2] = this.contrasenya;
+
+        Log.d(ETIQUETA, "Enviant petició: " + peticio.toString());
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+    }
+
+    /**
+     * Mètode per obtenir el tipus de l'objecte.
+     *
+     * @return La classe de l'objecte.
+     */
+    @Override
+    public Class<?> obtenirTipusObjecte() {
+        return Object[].class;
     }
 
     /**
@@ -78,44 +89,44 @@ public class PeticioLogin extends BasePeticions {
     @Override
     public void respostaServidor(Object resposta){
         Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
-        if (resposta instanceof HashMap) {
-            HashMap<String, String> respostaMap = (HashMap<String, String>) resposta;
-            String estat = respostaMap.get("exit");
-            if (estat != null && estat.equals("usuariActiu")) {
-                String tipusObjecte = respostaMap.get("tipusObjecte");
-                if (tipusObjecte != null && tipusObjecte.equals("usuari")) {
-                    Usuari usuari = (Usuari) Utils.HashMapAObjecte(respostaMap, Usuari.class);
-                    if (usuari != null) {
-                        // Guardar l'objecte d'usuari a SharedPreferences
-                        guardarDadesUsuari(usuari);
-                        // Extreure el tipus d'usuari
-                        String tipusUsuari = usuari.getTipus();
-                        Log.d("PeticioLogin", "Tipus d'usuari: " + tipusUsuari);
-                        // Obrir l'activitat de l'usuari corresponent
-                        obrirActivitat(tipusUsuari);
+        if (resposta instanceof Object[]) {
+            Object[] respostaArray = (Object[]) resposta;
+            if (respostaArray[0] instanceof String) {
+                String estat = (String) respostaArray[0];
+                if (estat.equals("usuariActiu")) {
+                    if (respostaArray[1] instanceof HashMap) {
+                        HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
+                        Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
+                        if (usuari != null) {
+                            // Guardar l'ID de sessió a SharedPreferences
+                            SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferencies.edit();
+                            editor.putString("sessioID", usuariMap.get("sessioID"));
+                            editor.apply();
+                            // Guardar l'objecte d'usuari a SharedPreferences
+                            guardarDadesUsuari(usuari);
+                            // Extreure el tipus d'usuari
+                            String tipusUsuari = usuari.getTipus();
+                            Log.d("PeticioLogin", "Tipus d'usuari: " + tipusUsuari);
+                            // Obrir l'activitat de l'usuari corresponent
+                            obrirActivitat(tipusUsuari);
+                        } else {
+                            Log.d("PeticioLogin", "Error al transformar el HashMap en Usuari");
+                        }
                     } else {
-                        Log.d("PeticioLogin", "Error al transformar el HashMap en Usuari");
+                        Log.d("PeticioLogin", "Tipus d'objecte no vàlid en la resposta");
                     }
-                } else {
-                    Log.d("PeticioLogin", "Tipus d'objecte no vàlid en la resposta");
+                } else if (estat.equals("false")) {
+                    Utils.mostrarToast(context, "Credencials incorrectes");
                 }
             } else {
-                Utils.mostrarToast(context, "Credencials incorrectes");
+                Utils.mostrarToast(context, "Error de connexió");
             }
         } else {
             Utils.mostrarToast(context, "Error de connexió");
         }
     }
 
-    /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
 
     /**
      * Guarda les propietats de l'objecte Usuari a SharedPreferences.
@@ -131,7 +142,7 @@ public class PeticioLogin extends BasePeticions {
         editor.putString("nomUsuari", usuari.getNom());
         editor.putString("idUsuari", String.valueOf(usuari.getUsuariID()));
         editor.putString("tipusClient", usuari.getTipus());
-        editor.putString("correu", usuari.getCorreu());
+        editor.putString("correu", usuari.getCorreuUsuari());
         editor.putString("contrasenya", usuari.getContrasenya());
         editor.putString("dataInscripcio", format.format(usuari.getDataInscripcio()));
         editor.putString("cognoms", usuari.getCognoms());
