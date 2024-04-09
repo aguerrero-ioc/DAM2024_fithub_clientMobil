@@ -4,21 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
-import antonioguerrero.ioc.fithub.objectes.Installacio;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 /**
  * Classe per obtenir totes les instal·lacions.
  * Hereta de la classe BasePeticions.
- *
+ * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir totes les instal·lacions.
  *
  * @author Antonio Guerrero
@@ -27,9 +28,8 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 public class ConsultarTotesInstallacions extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarInstallacions";
-
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies;
+    String sessioID;
 
     /**
      * Constructor de la classe ConsultarTotesInstallacions.
@@ -39,6 +39,8 @@ public class ConsultarTotesInstallacions extends BasePeticions {
     public ConsultarTotesInstallacions(respostaServidorListener listener, Context context) {
         super(listener);
         this.context = context;
+        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     /**
@@ -80,6 +82,13 @@ public class ConsultarTotesInstallacions extends BasePeticions {
             String estat = (String) respostaArray[0];
             if (estat != null && estat.equals("installacioLlista")) {
                 List<HashMap<String, String>> installacionsList = (List<HashMap<String, String>>) respostaArray[1];
+                Intent intent = new Intent(context, InstallacionsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("installacionsList", new ArrayList<>(installacionsList));
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+
+                /*List<HashMap<String, String>> installacionsList = (List<HashMap<String, String>>) respostaArray[1];
                 for (HashMap<String, String> installacioMap : installacionsList) {
                     Installacio installacio = new Installacio(
                             Integer.parseInt(installacioMap.get("id")),
@@ -88,7 +97,7 @@ public class ConsultarTotesInstallacions extends BasePeticions {
                             Integer.parseInt(installacioMap.get("tipusInstallacio"))
                     );
                     guardarDadesInstallacions(installacionsList);
-                }
+                }*/
             } else {
                 Utils.mostrarToast(context, "Error en la consulta d'instal·lacions");
             }

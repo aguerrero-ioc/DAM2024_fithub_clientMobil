@@ -41,7 +41,7 @@ public class CrearUsuari extends BasePeticions {
         usuariMap.put("correu", usuari.getCorreuUsuari());
         usuariMap.put("contrasenya", usuari.getContrasenya());
 
-        // Crear el Object[] per la petició
+        // Crear el Object[] per la petició (sense sessioID)
         Object[] peticio = new Object[3];
         peticio[0] = "insert";
         peticio[1] = "usuari";

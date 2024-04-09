@@ -90,41 +90,61 @@ public class PeticioLogin extends BasePeticions {
     public void respostaServidor(Object resposta){
         Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
         if (resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
-            if (respostaArray[0] instanceof String) {
-                String estat = (String) respostaArray[0];
-                if (estat.equals("usuariActiu")) {
-                    if (respostaArray[1] instanceof HashMap) {
-                        HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
-                        Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
-                        if (usuari != null) {
-                            // Guardar l'ID de sessió a SharedPreferences
-                            SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = preferencies.edit();
-                            editor.putString("sessioID", usuariMap.get("sessioID"));
-                            editor.apply();
-                            // Guardar l'objecte d'usuari a SharedPreferences
-                            guardarDadesUsuari(usuari);
-                            // Extreure el tipus d'usuari
-                            String tipusUsuari = usuari.getTipus();
-                            Log.d("PeticioLogin", "Tipus d'usuari: " + tipusUsuari);
-                            // Obrir l'activitat de l'usuari corresponent
-                            obrirActivitat(tipusUsuari);
-                        } else {
-                            Log.d("PeticioLogin", "Error al transformar el HashMap en Usuari");
-                        }
-                    } else {
-                        Log.d("PeticioLogin", "Tipus d'objecte no vàlid en la resposta");
-                    }
-                } else if (estat.equals("false")) {
-                    Utils.mostrarToast(context, "Credencials incorrectes");
-                }
-            } else {
-                Utils.mostrarToast(context, "Error de connexió");
+            gestionarRespostaArray((Object[]) resposta);
+        } else {
+            Utils.mostrarToast(context, "Error de connexió");
+        }
+    }
+
+    /**
+     * Mètode per gestionar la resposta del servidor quan aquesta és un Object[].
+     *
+     * @param respostaArray La resposta del servidor.
+     */
+    private void gestionarRespostaArray(Object[] respostaArray) {
+        if (respostaArray[0] instanceof String) {
+            String estat = (String) respostaArray[0];
+            if (estat.equals("usuariActiu")) {
+                gestionarUsuariActiu(respostaArray);
+            } else if (estat.equals("false")) {
+                Utils.mostrarToast(context, "Credencials incorrectes");
             }
         } else {
             Utils.mostrarToast(context, "Error de connexió");
         }
+    }
+
+    /**
+     * Mètode per gestionar l'usuari actiu després de l'autenticació.
+     *
+     * @param respostaArray La resposta del servidor.
+     */
+    private void gestionarUsuariActiu(Object[] respostaArray) {
+        if (respostaArray[1] instanceof HashMap) {
+            HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
+            Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
+            if (usuari != null) {
+                guardarSessioID(usuariMap.get("sessioID"));
+                guardarDadesUsuari(usuari);
+                obrirActivitat(usuari.getTipus());
+            } else {
+                Log.d("PeticioLogin", "Error al transformar el HashMap en Usuari");
+            }
+        } else {
+            Log.d("PeticioLogin", "Tipus d'objecte no vàlid en la resposta");
+        }
+    }
+
+    /**
+     * Guarda l'identificador de sessió a SharedPreferences.
+     *
+     * @param sessioID L'identificador de sessió que es guardarà a SharedPreferences.
+     */
+    private void guardarSessioID(String sessioID) {
+        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencies.edit();
+        editor.putString("sessioID", sessioID);
+        editor.apply();
     }
 
 

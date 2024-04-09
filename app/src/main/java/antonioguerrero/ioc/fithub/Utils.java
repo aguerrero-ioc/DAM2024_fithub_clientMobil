@@ -15,6 +15,13 @@ import java.util.HashMap;
  */
 public class Utils {
 
+    public static final String PREFERENCIES = "Preferències";
+    public static final String SESSIO_ID = "sessioID";
+
+    public static final String VALOR_DEFAULT = "";
+
+    public static final String FORMAT_DATA = "dd-MM-yyyy";
+
     /**
      * Obté la data actual en format de cadena.
      *

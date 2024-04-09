@@ -1,5 +1,6 @@
 package antonioguerrero.ioc.fithub.menu.usuari;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -139,91 +140,126 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
     }
 
     /**
-     * Mètode que maneja la resposta del servidor.
+     * Mètode per gestionar la resposta del servidor.
+     *
+     * @param resposta La resposta del servidor.
      */
     @Override
     public void respostaServidor(String resposta) {
         if (resposta != null) {
-            // Processar la resposta del servidor aquí per mostrar les dades a PerfilActivity
             String[] parts = resposta.split(",");
             if (parts.length >= 10) {
-                // Crear un nuevo objeto Usuari
                 Usuari usuari = new Usuari();
-
-                // Iterar sobre los datos recibidos
-                for (String part : parts) {
-                    // Dividir la cadena en etiqueta y valor
-                    String[] keyValue = part.split(":");
-                    if (keyValue.length == 2) {
-                        String etiqueta = keyValue[0].trim();
-                        String valor = keyValue[1].trim();
-
-                        // Assignem el valor corresponent al camp adequat de l'objecte Usuari
-                        switch (etiqueta) {
-
-                            case "correu":
-                                usuari.setCorreuUsuari(valor);
-                                break;
-                            case "contrasenya":
-                                usuari.setContrasenya(valor);
-                                break;
-                            case "usuariID":
-                                usuari.setUsuariID(Integer.parseInt(valor));
-                                break;
-                            case "tipus":
-                                usuari.setTipus(valor);
-                                break;
-                            case "dataInscripcio":
-                                try {
-                                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                                    Date dataInscripcio = format.parse(etDataInscripcio.getText().toString());
-                                    usuari.setDataInscripcio(dataInscripcio);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case "nom":
-                                usuari.setNom(valor);
-                                break;
-                            case "cognoms":
-                                usuari.setCognoms(valor);
-                                break;
-                            case "dataNaixement":
-                                try {
-                                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                                    Date dataNaixement = format.parse(etDataNaixement.getText().toString());
-                                    usuari.setDataNaixement(dataNaixement);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case "adreca":
-                                usuari.setAdreca(valor);
-                                break;
-                            case "telefon":
-                                usuari.setTelefon(valor);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-
-                // Actualitzar la interfície d'usuari amb les dades de l'usuari
+                assignarDadesUsuari(parts, usuari);
                 actualitzarUsuari(usuari);
             } else {
                 Log.e("ConnexioServidor", "Error: Resposta del servidor amb format incorrecte");
             }
         } else {
-            // Processar una resposta nul·la del servidor
             Log.e("ConnexioServidor", "Error de connexió: Resposta nul·la del servidor");
+        }
+    }
+
+    /**
+     * Mètode per assignar les dades de l'usuari a l'objecte Usuari.
+     *
+     * @param parts L'array de parts de la resposta del servidor.
+     * @param usuari L'objecte Usuari al qual assignar les dades.
+     */
+    private void assignarDadesUsuari(String[] parts, Usuari usuari) {
+        for (String part : parts) {
+            String[] keyValue = part.split(":");
+            if (keyValue.length == 2) {
+                assignarValorAUsuari(keyValue, usuari);
+            }
+        }
+    }
+
+    /**
+     * Mètode per assignar un valor a un camp de l'objecte Usuari.
+     *
+     * @param keyValue L'array de parts de la resposta del servidor.
+     * @param usuari L'objecte Usuari al qual assignar les dades.
+     */
+    private void assignarValorAUsuari(String[] keyValue, Usuari usuari) {
+        String etiqueta = keyValue[0].trim();
+        String valor = keyValue[1].trim();
+
+        switch (etiqueta) {
+            case "correu":
+                usuari.setCorreuUsuari(valor);
+                break;
+            case "contrasenya":
+                usuari.setContrasenya(valor);
+                break;
+            case "usuariID":
+                usuari.setUsuariID(Integer.parseInt(valor));
+                break;
+            case "tipus":
+                usuari.setTipus(valor);
+                break;
+            case "dataInscripcio":
+                assignarDataInscripcio(valor, usuari);
+                break;
+            case "nom":
+                usuari.setNom(valor);
+                break;
+            case "cognoms":
+                usuari.setCognoms(valor);
+                break;
+            case "dataNaixement":
+                assignarDataNaixement(valor, usuari);
+                break;
+            case "adreca":
+                usuari.setAdreca(valor);
+                break;
+            case "telefon":
+                usuari.setTelefon(valor);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Mètode per assignar la data d'inscripció de l'usuari.
+     *
+     * @param valor La data d'inscripció en format String.
+     * @param usuari L'objecte Usuari al qual assignar la data d'inscripció.
+     */
+    private void assignarDataInscripcio(String valor, Usuari usuari) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(Utils.FORMAT_DATA);
+            Date dataInscripcio = format.parse(etDataInscripcio.getText().toString());
+            usuari.setDataInscripcio(dataInscripcio);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Mètode per assignar la data de naixement de l'usuari.
+     *
+     * @param valor La data de naixement en format String.
+     * @param usuari L'objecte Usuari al qual assignar la data de naixement.
+     */
+
+    private void assignarDataNaixement(String valor, Usuari usuari) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(Utils.FORMAT_DATA);
+            Date dataNaixement = format.parse(etDataNaixement.getText().toString());
+            usuari.setDataNaixement(dataNaixement);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
 
 
     /**
-     * Mètode per actualitzar els camps de text amb les dades de l'usuari
+     * Mètode per actualitzar les dades de l'usuari a la interfície.
+     *
+     * @param usuari L'objecte Usuari amb les dades a actualitzar.
      */
     public void actualitzarUsuari(Usuari usuari) {
 
@@ -231,7 +267,7 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID);
         // Ejecutar la petición al servidor
         consultarUsuariInstance.execute();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat(Utils.FORMAT_DATA);
 
         etNomUsuari.setText(usuari.getNom());
         etCognoms.setText(usuari.getCognoms());
@@ -318,7 +354,7 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         usuari.setCognoms(cognoms);
 
         // Convertir les dates de String a Date
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat(Utils.FORMAT_DATA);
         try {
             Date dataNaixementDate = format.parse(dataNaixement);
             usuari.setDataNaixement(dataNaixementDate);
