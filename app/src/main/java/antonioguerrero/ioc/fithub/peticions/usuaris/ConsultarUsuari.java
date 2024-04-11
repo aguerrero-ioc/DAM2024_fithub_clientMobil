@@ -29,8 +29,8 @@ public class ConsultarUsuari extends BasePeticions {
     private static final String ETIQUETA = "ConsultarUsuari";
     private String correuUsuari;
 
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     /**
      * Constructor de la classe ConsultarUsuari.
@@ -48,13 +48,7 @@ public class ConsultarUsuari extends BasePeticions {
      * Mètode per obtenir les dades d'un usuari.
      */
     public void obtenirUsuari() {
-        Object[] peticio = new Object[4];
-        peticio[0] = "select";
-        peticio[1] = "usuari";
-        peticio[2] = this.correuUsuari;
-        peticio[3] = this.sessioID;
-        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("select", "usuari", this.correuUsuari, this.sessioID, ETIQUETA);
     }
 
     /**
@@ -80,11 +74,14 @@ public class ConsultarUsuari extends BasePeticions {
             String estat = (String) arrayResposta[0];
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
+                Usuari usuari = (Usuari) Utils.HashMapAObjecte(mapaUsuari, Usuari.class);
+
+                /* Comprovar que funciona amb HashMapAObjecte
                 Usuari usuari = new Usuari();
-                usuari.setNom(mapaUsuari.get("nomUsuari"));
+                usuari.setNomUsuari(mapaUsuari.get("nomUsuari"));
                 usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
-                usuari.setContrasenya(mapaUsuari.get("passUsuari"));
-                usuari.setCognoms(mapaUsuari.get("cognomsUsuari"));
+                usuari.setPassUsuari(mapaUsuari.get("passUsuari"));
+                usuari.setCognomsUsuari(mapaUsuari.get("cognomsUsuari"));
                 usuari.setTelefon(mapaUsuari.get("telefon"));
                 usuari.setAdreca(mapaUsuari.get("Adreca"));
                 try {
@@ -92,7 +89,7 @@ public class ConsultarUsuari extends BasePeticions {
                     usuari.setDataNaixement(formatData.parse(mapaUsuari.get("DataNaixement")));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
 
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la consulta de l'usuari");

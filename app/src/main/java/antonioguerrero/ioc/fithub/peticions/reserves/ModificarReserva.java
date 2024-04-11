@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
@@ -13,9 +14,10 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 public class ModificarReserva extends BasePeticions {
     private Reserva reserva;
     private Context context;
+    private static final String ETIQUETA = "ModificarReserva";
 
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     public ModificarReserva(BasePeticions.respostaServidorListener listener) {
         super(listener);
@@ -27,14 +29,10 @@ public class ModificarReserva extends BasePeticions {
      * @param reserva L'objecte Reserva amb les dades modificades.
      */
     public void modificarReserva(Reserva reserva) {
-        // Crear el Object[] para la petición
-        Object[] peticio = new Object[4];
-        peticio[0] = "update";
-        peticio[1] = "reserva";
-        peticio[2] = reserva;
-        peticio[3] = this.sessioID;
+        // Convertir el objecte Reserva a un HashMap
+        HashMap<String, String> reservaMap = Utils.ObjecteAHashMap(reserva);
 
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("update", "reserva", reservaMap, this.sessioID, ETIQUETA);
     }
     @Override
     public Class<?> obtenirTipusObjecte() {

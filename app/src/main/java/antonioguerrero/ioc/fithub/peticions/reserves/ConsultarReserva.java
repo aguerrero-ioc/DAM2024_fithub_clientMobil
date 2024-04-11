@@ -6,21 +6,22 @@ import android.os.AsyncTask;
 
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 public class ConsultarReserva extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarReserva";
-    private int idReserva;
+    private int IDReserva;
 
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     public ConsultarReserva(respostaServidorListener listener, Context context, int idReserva) {
         super(listener);
         this.context = context;
-        this.idReserva = idReserva;
+        this.IDReserva = IDReserva;
     }
 
     /**
@@ -29,14 +30,7 @@ public class ConsultarReserva extends BasePeticions {
      * @param idReserva L'ID de la reserva a consultar.
      */
     public void consultarReserva(int idReserva) {
-        // Crear el Object[] per la petició
-        Object[] peticio = new Object[4];
-        peticio[0] = "select";
-        peticio[1] = "reserva";
-        peticio[2] = idReserva;
-        peticio[3] = this.sessioID;
-
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("select", "reserva", idReserva, this.sessioID, ETIQUETA);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.Arrays;
 
+import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
@@ -17,8 +18,8 @@ public class ConsultarTotesReserves extends BasePeticions {
     private Usuari usuari;
     private static final String ETIQUETA = "ConsultarTotesReserves";
 
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     public ConsultarTotesReserves(respostaServidorListener listener, Context context, Usuari usuari) {
         super(listener);
@@ -27,15 +28,7 @@ public class ConsultarTotesReserves extends BasePeticions {
     }
 
     public void consultarTotesReserves() {
-        // Crear el Object[] per la petició
-        Object[] peticio = new Object[4];
-        peticio[0] = "select";
-        peticio[1] = "reservaall";
-        peticio[2] = usuari.getCorreuUsuari();
-        peticio[3] = this.sessioID;
-
-        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("selectAll", "reserva", usuari.getIDUsuari(), this.sessioID, ETIQUETA);
     }
 
     @Override

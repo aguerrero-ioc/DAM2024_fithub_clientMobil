@@ -18,9 +18,8 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 public class CrearUsuari extends BasePeticions {
     private static final String ETIQUETA = "CrearUsuari";
-    private Usuari usuari;
-
-    private Context context;
+    private final Usuari usuari;
+    private final Context context;
 
     public CrearUsuari(respostaServidorListener listener, Usuari usuari, Context context)  {
         super(listener);
@@ -30,25 +29,23 @@ public class CrearUsuari extends BasePeticions {
 
     public void crearUsuari() {
         // Convertir el objecte Usuari a un HashMap
+        HashMap<String, String> mapaUsuari = Utils.ObjecteAHashMap(usuari);
+
+        /* Comprovar si funciona amb ObjecteAHashMap
         HashMap<String, String> usuariMap = new HashMap<>();
-        usuariMap.put("nom", usuari.getNom());
-        usuariMap.put("cognoms", usuari.getCognoms());
+        usuariMap.put("nom", usuari.getNomUsuari());
+        usuariMap.put("cognoms", usuari.getCognomsUsuari());
         if (usuari.getDataNaixement() != null) {
             usuariMap.put("dataNaixement", new SimpleDateFormat("dd-MM-yyyy").format(usuari.getDataNaixement()));
         }
         usuariMap.put("adreca", usuari.getAdreca());
         usuariMap.put("telefon", usuari.getTelefon());
         usuariMap.put("correu", usuari.getCorreuUsuari());
-        usuariMap.put("contrasenya", usuari.getContrasenya());
-
+        usuariMap.put("contrasenya", usuari.getPassUsuari());
+        */
         // Crear el Object[] per la petició (sense sessioID)
-        Object[] peticio = new Object[3];
-        peticio[0] = "insert";
-        peticio[1] = "usuari";
-        peticio[2] = usuariMap;
+        enviarPeticio("insert", "usuari", mapaUsuari, null, ETIQUETA);
 
-        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     @Override

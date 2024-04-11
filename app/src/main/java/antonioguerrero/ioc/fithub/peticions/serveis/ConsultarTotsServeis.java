@@ -1,56 +1,52 @@
 package antonioguerrero.ioc.fithub.peticions.serveis;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.objectes.Servei;
+import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 /**
  * Classe per obtenir tots els serveis.
  * Hereta de la classe BasePeticions.
- *
+ * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir tots els serveis.
  *
- * @Author Antonio Guerrero
- * @Version 1.0
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class ConsultarTotsServeis extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarTotsServeis";
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     /**
      * Constructor de la classe ConsultarTotsServeis.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarTotsServeis(respostaServidorListener listener, Context context, String sessioID) {
+    public ConsultarTotsServeis(respostaServidorListener listener, Context context) {
         super(listener);
         this.context = context;
-        this.sessioID = sessioID;
     }
 
     /**
      * Mètode per obtenir les dades de tots els serveis.
      */
     public void obtenirTotsServeis() {
-        Object[] peticio = new Object[4];
-        peticio[0] = "select";
-        peticio[1] = "serveis";
-        peticio[2] = null;
-        peticio[3] = this.sessioID;
-        Log.d(ETIQUETA, "Enviant sol·licitud: " + Arrays.toString(peticio));
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("select", "serveis", null, this.sessioID, ETIQUETA);
     }
 
     /**
@@ -75,15 +71,12 @@ public class ConsultarTotsServeis extends BasePeticions {
             Object[] respostaArray = (Object[]) resposta;
             String estat = (String) respostaArray[0];
             if (estat != null && estat.equals("serveiLlista")) {
-                List<HashMap<String, String>> serveisList = (List<HashMap<String, String>>) respostaArray[1];
-                for (HashMap<String, String> serveiMap : serveisList) {
-                    Servei servei = new Servei(
-                            serveiMap.get("nom"),
-                            serveiMap.get("descripcio"),
-                            serveiMap.get("personal"),
-                            Integer.parseInt(serveiMap.get("preu"))
-                    );
-                    guardarDadesServeis(serveisList);                }
+                // Obtenir la llista de serveis
+                List<HashMap<String, String>> llistaServeis = (List<HashMap<String, String>>) respostaArray[1];
+                // Iniciar l'activitat ServeisActivity
+                Utils.iniciarActivitatLlista(context, ServeisActivity.class, llistaServeis, "llistaServeis");
+                // Guardar les dades dels serveis a SharedPreferences
+                guardarDadesServeis(llistaServeis);
             } else {
                 Utils.mostrarToast(context, "Error en la consulta de serveis");
             }
@@ -103,23 +96,26 @@ public class ConsultarTotsServeis extends BasePeticions {
     /**
      * Mètode per guardar les dades dels serveis a SharedPreferences.
      *
-     * @param serveisList La llista de serveis.
+     * @param llistaServeis La llista de serveis.
      */
-    private void guardarDadesServeis(List<HashMap<String, String>> serveisList) {
-        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+    private void guardarDadesServeis(List<HashMap<String, String>> llistaServeis) {
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de cada objecte servei a SharedPreferences
-        for (int i = 0; i < serveisList.size(); i++) {
-            HashMap<String, String> serveiMap = serveisList.get(i);
-            editor.putString("serveiNom" + i, serveiMap.get("nom"));
-            editor.putString("serveiDescripcio" + i, serveiMap.get("descripcio"));
-            editor.putString("serveiPersonal" + i, serveiMap.get("personal"));
-            editor.putInt("serveiPreu" + i, Integer.parseInt(serveiMap.get("preu")));
+        for (int i = 0; i < llistaServeis.size(); i++) {
+            HashMap<String, String> serveiMap = llistaServeis.get(i);
+            editor.putString("IDServei" + i, serveiMap.get("IDServei"));
+            editor.putString("nomServei" + i, serveiMap.get("nomServei"));
+            editor.putString("descripcioServei" + i, serveiMap.get("descripcioServei"));
+            editor.putString("aforamentServei", serveiMap.get("aforamentServei"));
+            editor.putString("tipusInstallacio", serveiMap.get("tipusInstallacio"));
+            editor.putString("personalServei" + i, serveiMap.get("personalServei"));
+            editor.putString("preuServei" + i, serveiMap.get("preuServei"));
         }
 
         // Guardar el número de serveis
-        editor.putInt("numServeis", serveisList.size());
+        editor.putInt("numServeis", llistaServeis.size());
 
         // Aplicar els canvis a SharedPreferences
         editor.apply();

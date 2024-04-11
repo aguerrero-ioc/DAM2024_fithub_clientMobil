@@ -25,10 +25,10 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 public class ConsultarInstallacio extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarInstallacio";
-    private String nomInstallacio;
+    private final String nomInstallacio;
 
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     /**
      * Constructor de la classe ConsultarInstallacio.
@@ -45,16 +45,7 @@ public class ConsultarInstallacio extends BasePeticions {
      * Mètode per obtenir les dades d'una instal·lació.
      */
     public void obtenirInstallacio() {
-        // Crear el Object[] per la petició
-        Object[] peticio = new Object[4];
-        peticio[0] = "select";
-        peticio[1] = "installacio";
-        peticio[2] = this.nomInstallacio;
-        peticio[3] = this.sessioID;
-
-
-        Log.d(ETIQUETA, "Enviant petició: " + peticio);
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("select", "installacio", this.nomInstallacio, this.sessioID, ETIQUETA);
     }
 
     /**
@@ -79,13 +70,11 @@ public class ConsultarInstallacio extends BasePeticions {
             Object[] respostaArray = (Object[]) resposta;
             String estat = (String) respostaArray[0];
             if (estat != null && estat.equals("installacio")) {
+                // Guardar les dades de la instal·lació a SharedPreferences
                 HashMap<String, String> installacioMap = (HashMap<String, String>) respostaArray[1];
-                Installacio installacio = new Installacio(
-                        Integer.parseInt(installacioMap.get("id")),
-                        installacioMap.get("nomInstallacio"),
-                        installacioMap.get("descripcioInstallacio"),
-                        Integer.parseInt(installacioMap.get("tipusInstallacio"))
-                );
+                // Convertir el HashMap a un objecte Installacio
+                Installacio installacio = (Installacio) Utils.HashMapAObjecte(installacioMap, Installacio.class);
+                // Guardar les dades de la instal·lació a SharedPreferences
                 guardarDadesInstallacio(installacio);
             } else {
                 Utils.mostrarToast(context, "Error en la consulta de la instal·lació");
@@ -109,13 +98,14 @@ public class ConsultarInstallacio extends BasePeticions {
      * @param installacio L'objecte Installacio que es guardarà a SharedPreferences.
      */
     private void guardarDadesInstallacio(Installacio installacio) {
-        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de l'objecte installacio a SharedPreferences
-        editor.putString("installacioNom", installacio.getNom());
-        editor.putString("installacioDescripcio", installacio.getDescripcio());
-        editor.putInt("installacioTipus", installacio.getTipus());
+        editor.putInt("idInstallacio", installacio.getIDInstallacio());
+        editor.putString("nomInstallacio", installacio.getNomInstallacio());
+        editor.putString("descripcioInstallacio", installacio.getDescripcioInstallacio());
+        editor.putInt("tipusInstallacio", installacio.getTipusInstallacio());
 
         // Aplicar els canvis a SharedPreferences
         editor.apply();

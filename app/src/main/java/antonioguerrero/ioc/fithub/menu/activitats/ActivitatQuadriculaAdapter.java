@@ -39,7 +39,7 @@ public class ActivitatQuadriculaAdapter extends RecyclerView.Adapter<ActivitatQu
         int hora = position / 7;
         Activitat activitat = llistaActivitats[hora][dia];
         if (activitat != null) {
-            holder.nomActivitat.setText(activitat.getNom());
+            holder.nomActivitat.setText(activitat.getNomActivitat());
             // Configurar las demás vistas del ViewHolder según sea necesario
         } else {
             holder.nomActivitat.setText("");

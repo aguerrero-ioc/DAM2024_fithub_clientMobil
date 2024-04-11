@@ -34,7 +34,7 @@ public class ActivitatListFragment extends Fragment {
         ListView listView = view.findViewById(R.id.list_view);
         String[] activitatNoms = new String[activitats.length];
         for (int i = 0; i < activitats.length; i++) {
-            activitatNoms[i] = activitats[i].getNom();
+            activitatNoms[i] = activitats[i].getNomActivitat();
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, activitatNoms);
         listView.setAdapter(adapter);

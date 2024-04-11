@@ -9,10 +9,10 @@ package antonioguerrero.ioc.fithub.objectes;
  * @version 1.0
  */
 public class Installacio {
-    private int id;
-    private String nom;
-    private String descripcio;
-    private int tipus;
+    private int IDInstallacio;
+    private String nomInstallacio;
+    private String descripcioInstallacio;
+    private int tipusInstallacio;
 
     // ALTRES (PENDENT)
     private String imatge;
@@ -23,16 +23,16 @@ public class Installacio {
     /**
      * Constructor de la classe Installacio.
      *
-     * @param id Identificador de la instal·lació
-     * @param nom Nom de la instal·lació
-     * @param descripcio Descripció de la instal·lació
-     * @param tipus Tipus de la instal·lació
+     * @param IDInstallacio Identificador de la instal·lació
+     * @param nomInstallacio Nom de la instal·lació
+     * @param descripcioInstallacio Descripció de la instal·lació
+     * @param tipusInstallacio Tipus de la instal·lació
      */
-    public Installacio(int id, String nom, String descripcio, int tipus) {
-        this.id = id;
-        this.nom = nom;
-        this.descripcio = descripcio;
-        this.tipus = tipus;
+    public Installacio(int IDInstallacio, String nomInstallacio, String descripcioInstallacio, int tipusInstallacio) {
+        this.IDInstallacio = IDInstallacio;
+        this.nomInstallacio = nomInstallacio;
+        this.descripcioInstallacio = descripcioInstallacio;
+        this.tipusInstallacio = tipusInstallacio;
     }
 
     // Getters i setters
@@ -42,17 +42,17 @@ public class Installacio {
      *
      * @return L'identificador de la instal·lació
      */
-    public int getId() {
-        return id;
+    public int getIDInstallacio() {
+        return IDInstallacio;
     }
 
     /**
      * Estableix l'identificador de la instal·lació.
      *
-     * @param id L'identificador de la instal·lació a establir
+     * @param IDInstallacio L'identificador de la instal·lació a establir
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setIDInstallacio(int IDInstallacio) {
+        this.IDInstallacio = IDInstallacio;
     }
 
     /**
@@ -60,17 +60,17 @@ public class Installacio {
      *
      * @return El nom de la instal·lació
      */
-    public String getNom() {
-        return nom;
+    public String getNomInstallacio() {
+        return nomInstallacio;
     }
 
     /**
      * Estableix el nom de la instal·lació.
      *
-     * @param nom El nom de la instal·lació
+     * @param nomInstallacio El nom de la instal·lació
      */
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNom(String nomInstallacio) {
+        this.nomInstallacio = nomInstallacio;
     }
 
 
@@ -79,17 +79,17 @@ public class Installacio {
      *
      * @return La descripció de la instal·lació
      */
-    public String getDescripcio() {
-        return descripcio;
+    public String getDescripcioInstallacio() {
+        return descripcioInstallacio;
     }
 
     /**
      * Estableix la descripció de la instal·lació.
      *
-     * @param descripcio La descripció de la instal·lació
+     * @param descripcioInstallacio La descripció de la instal·lació
      */
-    public void setDescripcio(String descripcio) {
-        this.descripcio = descripcio;
+    public void setDescripcioInstallacio(String descripcioInstallacio) {
+        this.descripcioInstallacio = descripcioInstallacio;
     }
 
 
@@ -98,17 +98,17 @@ public class Installacio {
      *
      * @return El tipus de la instal·lació
      */
-    public int getTipus() {
-        return tipus;
+    public int getTipusInstallacio() {
+        return tipusInstallacio;
     }
 
     /**
      * Estableix el tipus de la instal·lació.
      *
-     * @param tipus El tipus de la instal·lació
+     * @param tipusInstallacio El tipus de la instal·lació
      */
-    public void setTipus(int tipus) {
-        this.tipus = tipus;
+    public void setTipus(int tipusInstallacio) {
+        this.tipusInstallacio = tipusInstallacio;
     }
 
 

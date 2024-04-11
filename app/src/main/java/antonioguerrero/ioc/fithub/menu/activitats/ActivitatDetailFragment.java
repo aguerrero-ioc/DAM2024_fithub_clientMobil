@@ -24,8 +24,8 @@ public class ActivitatDetailFragment extends Fragment {
         TextView descripcioTextView = view.findViewById(R.id.descripcio);
         //ImageView fotoImageView = view.findViewById(R.id.foto); // PENDENT
 
-        nomTextView.setText(activitat.getNom());
-        descripcioTextView.setText(activitat.getDescripcio());
+        nomTextView.setText(activitat.getNomActivitat());
+        descripcioTextView.setText(activitat.getDescripcioActivitat());
         // Glide.with(this).load(activitat.getFoto()).into(fotoImageView); // PENDENT
 
         return view;

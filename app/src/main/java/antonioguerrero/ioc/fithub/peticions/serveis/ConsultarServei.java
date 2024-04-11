@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Activitat;
 import antonioguerrero.ioc.fithub.objectes.Servei;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
@@ -27,32 +28,25 @@ public class ConsultarServei extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarServei";
     private String nomServei;
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     /**
      * Constructor de la classe ConsultarServei.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarServei(respostaServidorListener listener, Context context, String nomServei, String sessioID) {
+    public ConsultarServei(respostaServidorListener listener, Context context, String nomServei) {
         super(listener);
         this.context = context;
         this.nomServei = nomServei;
-        this.sessioID = sessioID;
     }
 
     /**
      * Mètode per obtenir les dades d'un servei.
      */
     public void obtenirServei() {
-        Object[] peticio = new Object[4];
-        peticio[0] = "select";
-        peticio[1] = "servei";
-        peticio[2] = this.nomServei;
-        peticio[3] = this.sessioID;
-        Log.d(ETIQUETA, "Enviant sol·licitud: " + Arrays.toString(peticio));
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("select", "servei", this.nomServei, this.sessioID, ETIQUETA);
     }
 
     /**
@@ -78,12 +72,7 @@ public class ConsultarServei extends BasePeticions {
             String estat = (String) respostaArray[0];
             if (estat != null && estat.equals("servei")) {
                 HashMap<String, String> serveiMap = (HashMap<String, String>) respostaArray[1];
-                Servei servei = new Servei(
-                        serveiMap.get("nom"),
-                        serveiMap.get("descripcio"),
-                        serveiMap.get("personal"),
-                        Integer.parseInt(serveiMap.get("preu"))
-                );
+                Servei servei = (Servei) Utils.HashMapAObjecte(serveiMap, Servei.class);
                 guardarDadesServei(servei);
             } else {
                 Utils.mostrarToast(context, "Error en la consulta del servei");
@@ -107,16 +96,27 @@ public class ConsultarServei extends BasePeticions {
      * @param servei El servei a guardar.
      */
     private void guardarDadesServei(Servei servei) {
+
+        Utils.guardarDadesObjecte(context, servei, Servei.class);
+
+        /* Comparar amb aquesta implementacio
+
         SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de l'objecte servei a SharedPreferences
-        editor.putString("serveiNom", servei.getNom());
-        editor.putString("serveiDescripcio", servei.getDescripcio());
-        editor.putString("serveiPersonal", servei.getPersonal());
-        editor.putInt("serveiPreu", servei.getPreu());
+        editor.putInt("IDServei", servei.getIDServei());
+        editor.putString("nomServei", servei.getNomServei());
+        editor.putString("descripcioServei", servei.getDescripcioServei());
+        editor.putString("aforamentServei", servei.getDescripcioServei());
+        editor.putString("tipusInstallacio", servei.getTipusInstallacio());
+        editor.putString("personalServei", servei.getPersonalServei());
+        editor.putInt("preuServei", servei.getPreuServei());
+
 
         // Aplicar els canvis
         editor.apply();
+
+         */
     }
 }

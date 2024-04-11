@@ -50,7 +50,7 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.Reserv
         if (llistaActivitats != null && position / 7 < llistaActivitats.length && position % 7 < llistaActivitats[0].length) {
             Activitat activitat = llistaActivitats[position / 7][position % 7];
             if (activitat != null) {
-                holder.nomActivitat.setText(activitat.getNom());
+                holder.nomActivitat.setText(activitat.getNomActivitat());
                 holder.diaActivitat.setText(activitat.getDia());
                 holder.horaIniciActivitat.setText(activitat.getHoraInici());
             } else {

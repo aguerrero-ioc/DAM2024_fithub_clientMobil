@@ -27,8 +27,8 @@ public class ConsultarActivitat extends BasePeticions {
     private static final String ETIQUETA = "ConsultaActivitat";
     private String nomActivitat;
 
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     /**
      * Constructor de la classe ConsultaActivitat.
@@ -46,16 +46,7 @@ public class ConsultarActivitat extends BasePeticions {
      * Mètode per obtenir les dades d'una activitat.
      */
     public void obtenirActivitat() {
-        // Crear el Object[] per la petició
-        Object[] peticio = new Object[4];
-        peticio[0] = "select";
-        peticio[1] = "activitat";
-        peticio[2] = this.nomActivitat;
-        peticio[3] = this.sessioID;
-
-
-        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("select", "activitat", this.nomActivitat, this.sessioID, ETIQUETA);
     }
 
     /**
@@ -80,14 +71,11 @@ public class ConsultarActivitat extends BasePeticions {
             Object[] respostaArray = (Object[]) resposta;
             String estat = (String) respostaArray[0];
             if (estat != null && estat.equals("activitat")) {
+                // Obtenir les dades de l'activitat
                 HashMap<String, String> activitatMap = (HashMap<String, String>) respostaArray[1];
-                Activitat activitat = new Activitat(
-                        Integer.parseInt(activitatMap.get("id")),
-                        activitatMap.get("nomActivitat"),
-                        activitatMap.get("descripcioActivitat"),
-                        Integer.parseInt(activitatMap.get("aforamentActivitat")),
-                        activitatMap.get("tipusActivitat")
-                );
+                // Convertir les dades de l'activitat a un objecte Activitat
+                Activitat activitat = (Activitat) Utils.HashMapAObjecte(activitatMap, Activitat.class);
+                // Guardar les dades de l'activitat a SharedPreferences
                 guardarDadesActivitat(activitat);
             } else {
                 Utils.mostrarToast(context, "Activitat no trobada");
@@ -111,16 +99,21 @@ public class ConsultarActivitat extends BasePeticions {
      * @param activitat El objeto Activitat que se guardará en SharedPreferences.
      */
     private void guardarDadesActivitat(Activitat activitat) {
-        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+
+        Utils.guardarDadesObjecte(context, activitat, Activitat.class);
+
+        /* Comparar amb aquesta implementacio
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar las propiedades del objeto activitat en SharedPreferences
-        editor.putString("activitatNom", activitat.getNom());
-        editor.putString("activitatDescripcio", activitat.getDescripcio());
-        editor.putInt("activitatAforament", activitat.getAforament());
-        editor.putString("activitatTipus", activitat.getTipusInstallacio());
+        editor.putString("nomActivitat", activitat.getNomActivitat());
+        editor.putString("descripcioActivitat", activitat.getDescripcioActivitat());
+        editor.putString("tipusInstallacio", activitat.getTipusInstallacio());
+        editor.putInt("aforamentActivitat", activitat.getAforamentActivitat());
+        editor.putInt("idActivitat", activitat.getIdActivitat());
 
         // Aplicar los cambios a SharedPreferences
-        editor.apply();
+        editor.apply();*/
     }
 }

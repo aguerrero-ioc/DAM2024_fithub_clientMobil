@@ -2,13 +2,20 @@ package antonioguerrero.ioc.fithub;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Classe d'utilitats amb mètodes útils per a diverses funcionalitats.
@@ -17,8 +24,9 @@ public class Utils {
 
     public static final String PREFERENCIES = "Preferències";
     public static final String SESSIO_ID = "sessioID";
-
     public static final String VALOR_DEFAULT = "";
+    public static final String ERROR_CONNEXIO = "Error de connexió";
+
 
     public static final String FORMAT_DATA = "dd-MM-yyyy";
 
@@ -85,14 +93,14 @@ public class Utils {
 
     public static HashMap<String, String> ObjecteAHashMap(Object object) {
         HashMap<String, String> map = new HashMap<>();
-        Field[] fields = object.getClass().getDeclaredFields(); // Obtiene todos los campos del objeto
+        Field[] fields = object.getClass().getDeclaredFields();
 
         for (Field field : fields) {
-            field.setAccessible(true); // Permite el acceso a campos privados
+            field.setAccessible(true);
             try {
-                Object value = field.get(object); // Obtiene el valor del campo
+                Object value = field.get(object);
                 if (value != null) {
-                    map.put(field.getName(), value.toString()); // Añade el valor al HashMap
+                    map.put(field.getName(), value.toString());
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -125,5 +133,79 @@ public class Utils {
             e.printStackTrace();
         }
         return object;
+    }
+
+    /**
+     * Mètode per guardar les dades d'un objecte a SharedPreferences.
+     *
+     * @param context Context de l'aplicació.
+     * @param object  Objecte a guardar.
+     * @param clazz   Classe de l'objecte.
+     */
+    public static void guardarDadesObjecte(Context context, Object object, Class<?> clazz) {
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencies.edit();
+        SimpleDateFormat format = new SimpleDateFormat(Utils.FORMAT_DATA);
+
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(object);
+                if (value != null) {
+                    if (value instanceof Date) {
+                        editor.putString(field.getName(), format.format((Date) value));
+                    } else if (value instanceof Integer) {
+                        editor.putInt(field.getName(), (Integer) value);
+                    } else if (value instanceof Boolean) {
+                        editor.putBoolean(field.getName(), (Boolean) value);
+                    } else if (value instanceof Float) {
+                        editor.putFloat(field.getName(), (Float) value);
+                    } else if (value instanceof Long) {
+                        editor.putLong(field.getName(), (Long) value);
+                    } else if (value instanceof String) {
+                        editor.putString(field.getName(), (String) value);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Mètode per obrir una nova activitat.
+     *
+     * @param context      Context de l'aplicació.
+     * @param activityClass Classe de l'activitat a obrir.
+     * @param flags        Flags per a l'activitat.
+     */
+    public static void obrirActivitat(Context context, Class<?> activityClass, int flags) {
+        Intent intent = new Intent(context, activityClass);
+        intent.addFlags(flags);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Mètode per iniciar una nova activitat amb llista.
+     *
+     * @param context      Context de l'aplicació.
+     * @param activityClass Classe de l'activitat a obrir.
+     */
+    public static void iniciarActivitatLlista(Context context, Class<?> activityClass, List<? extends Serializable> llista, String clauLlista) {
+        Intent intent = new Intent(context, activityClass);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(clauLlista, new ArrayList<>(llista));
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+    public static class LogWrapper {
+        public void d(String tag, String msg) {
+            Log.d(tag, msg);
+        }
     }
 }

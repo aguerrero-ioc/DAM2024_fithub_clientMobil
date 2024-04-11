@@ -22,35 +22,31 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  */
 public class EliminarReserva extends BasePeticions {
 
-    private int idReserva;
+    private int IDReserva;
     private Context context;
 
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    private static final String ETIQUETA = "EliminarReserva";
+
+
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     /**
      * Constructor de la classe EliminarReserva.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public EliminarReserva(BasePeticions.respostaServidorListener listener, Context context, int idReserva) {
+    public EliminarReserva(BasePeticions.respostaServidorListener listener, Context context, int IDReserva) {
         super(listener);
         this.context = context;
-        this.idReserva = idReserva;
+        this.IDReserva = IDReserva;
     }
 
     /**
      * Mètode per eliminar una reserva.
      */
     public void eliminarReserva() {
-        // Crear el Object[] per la petició
-        Object[] peticio = new Object[4];
-        peticio[0] = "delete";
-        peticio[1] = "reserva";
-        peticio[2] = idReserva;
-        peticio[3] = this.sessioID;
-
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("delete", "reserva", IDReserva, this.sessioID, ETIQUETA);
     }
 
     /**

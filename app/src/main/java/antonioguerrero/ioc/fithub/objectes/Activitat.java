@@ -13,10 +13,12 @@ import java.util.HashMap;
  */
 public class Activitat implements Serializable {
 
-    private int id;
-    private String nom;
-    private String descripcio;
-    private int aforament;
+    // Atributs de la classe
+
+    private int IDActivitat;
+    private String nomActivitat;
+    private String descripcioActivitat;
+    private int aforamentActivitat;
 
     private String tipusInstallacio;
 
@@ -28,30 +30,21 @@ public class Activitat implements Serializable {
     /**
      * Constructor de la classe Activitat.
      *
-     * @param id Identificador de l'activitat
-     * @param nom Nom de l'activitat
-     * @param descripcio Descripció de l'activitat
-     * @param aforament Aforament de l'activitat
+     * @param IDActivitat Identificador de l'activitat
+     * @param nomActivitat Nom de l'activitat
+     * @param descripcioActivitat Descripció de l'activitat
+     * @param aforamentActivitat Aforament de l'activitat
      * @param tipusInstallacio Tipus de la instal·lació on es realitza l'activitat
      */
 
-    public Activitat(int id, String nom, String descripcio, int aforament, String tipusInstallacio) {
-        this.id = id;
-        this.nom = nom;
-        this.descripcio = descripcio;
-        this.aforament = aforament;
+    public Activitat(int IDActivitat, String nomActivitat, String descripcioActivitat, int aforamentActivitat, String tipusInstallacio) {
+        this.IDActivitat = IDActivitat;
+        this.nomActivitat = nomActivitat;
+        this.descripcioActivitat = descripcioActivitat;
+        this.aforamentActivitat = aforamentActivitat;
         this.tipusInstallacio = tipusInstallacio;
     }
 
-    public static Activitat deHashMap(HashMap<String, String> activitatMap) {
-        return new Activitat(
-                Integer.parseInt(activitatMap.get("id")),
-                activitatMap.get("nom"),
-                activitatMap.get("descripcio"),
-                Integer.parseInt(activitatMap.get("aforament")),
-                activitatMap.get("tipusInstallacio")
-        );
-    }
 
     // Getters i setters
 
@@ -60,17 +53,17 @@ public class Activitat implements Serializable {
      *
      * @return Identificador de l'activitat
      */
-    public int getId() {
-        return id;
+    public int getIDActivitat() {
+        return IDActivitat;
     }
 
     /**
      * Estableix l'identificador de l'activitat.
      *
-     * @param id Identificador de l'activitat
+     * @param IDActivitat Identificador de l'activitat
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setIDActivitat(int IDActivitat) {
+        this.IDActivitat = IDActivitat;
     }
 
     /**
@@ -78,17 +71,17 @@ public class Activitat implements Serializable {
      *
      * @return El nom de l'activitat
      */
-    public String getNom() {
-        return nom;
+    public String getNomActivitat() {
+        return nomActivitat;
     }
 
     /**
      * Estableix el nom de l'activitat.
      *
-     * @param nom El nou nom de l'activitat
+     * @param nomActivitat El nou nom de l'activitat
      */
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNomActivitat(String nomActivitat) {
+        this.nomActivitat = nomActivitat;
     }
 
     /**
@@ -96,17 +89,17 @@ public class Activitat implements Serializable {
      *
      * @return La descripció de l'activitat
      */
-    public String getDescripcio() {
-        return descripcio;
+    public String getDescripcioActivitat() {
+        return descripcioActivitat;
     }
 
     /**
      * Estableix la descripció de l'activitat.
      *
-     * @param descripcio La nova descripció de l'activitat
+     * @param descripcioActivitat La nova descripció de l'activitat
      */
-    public void setDescripcio(String descripcio) {
-        this.descripcio = descripcio;
+    public void setDescripcioActivitat(String descripcioActivitat) {
+        this.descripcioActivitat = descripcioActivitat;
     }
 
     /**
@@ -114,17 +107,17 @@ public class Activitat implements Serializable {
      *
      * @return L'aforament de l'activitat
      */
-    public int getAforament() {
-        return aforament;
+    public int getAforamentActivitat() {
+        return aforamentActivitat;
     }
 
     /**
      * Estableix l'aforament de l'activitat.
      *
-     * @param aforament El nou aforament de l'activitat
+     * @param aforamentActivitat El nou aforament de l'activitat
      */
-    public void setAforament(int aforament) {
-        this.aforament = aforament;
+    public void setAforamentActivitat(int aforamentActivitat) {
+        this.aforamentActivitat = aforamentActivitat;
     }
 
     /**

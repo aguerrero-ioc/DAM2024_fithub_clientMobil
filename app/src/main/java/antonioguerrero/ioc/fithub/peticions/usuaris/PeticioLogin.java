@@ -33,6 +33,8 @@ public class PeticioLogin extends BasePeticions {
     private final String contrasenya;
     private final Context context;
 
+    Utils.LogWrapper logWrapper = new Utils.LogWrapper();
+
 
     /**
      * Constructor de la classe PeticioLogin.
@@ -52,14 +54,7 @@ public class PeticioLogin extends BasePeticions {
      * Mètode per enviar la petició de login al servidor.
      */
     public void peticioLogin() {
-        // Crear el Object[] per la petició
-        Object[] peticio = new Object[3];
-        peticio[0] = "login";
-        peticio[1] = this.correuUsuari;
-        peticio[2] = this.contrasenya;
-
-        Log.d(ETIQUETA, "Enviant petició: " + peticio.toString());
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+        enviarPeticio("login", this.correuUsuari, this.contrasenya, null, ETIQUETA);
     }
 
     /**
@@ -88,11 +83,13 @@ public class PeticioLogin extends BasePeticions {
      */
     @Override
     public void respostaServidor(Object resposta){
+        logWrapper.d(ETIQUETA, "Resposta del servidor: " + resposta);
+
         Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
         if (resposta instanceof Object[]) {
             gestionarRespostaArray((Object[]) resposta);
         } else {
-            Utils.mostrarToast(context, "Error de connexió");
+            Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
         }
     }
 
@@ -110,7 +107,7 @@ public class PeticioLogin extends BasePeticions {
                 Utils.mostrarToast(context, "Credencials incorrectes");
             }
         } else {
-            Utils.mostrarToast(context, "Error de connexió");
+            Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
         }
     }
 
@@ -124,9 +121,9 @@ public class PeticioLogin extends BasePeticions {
             HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
             Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
             if (usuari != null) {
-                guardarSessioID(usuariMap.get("sessioID"));
-                guardarDadesUsuari(usuari);
-                obrirActivitat(usuari.getTipus());
+                guardarSessioID(usuariMap.get(Utils.SESSIO_ID));
+                Usuari.guardarDadesUsuari(usuari);
+                obrirActivitat(usuari.getTipusUsuari());
             } else {
                 Log.d("PeticioLogin", "Error al transformar el HashMap en Usuari");
             }
@@ -141,58 +138,29 @@ public class PeticioLogin extends BasePeticions {
      * @param sessioID L'identificador de sessió que es guardarà a SharedPreferences.
      */
     private void guardarSessioID(String sessioID) {
-        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
-        editor.putString("sessioID", sessioID);
+        editor.putString(Utils.SESSIO_ID, sessioID);
         editor.apply();
     }
 
 
-    /**
-     * Guarda les propietats de l'objecte Usuari a SharedPreferences.
-     *
-     * @param usuari L'objecte Usuari que es guardarà a SharedPreferences.
-     */
-    private void guardarDadesUsuari(Usuari usuari) {
-        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencies.edit();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
-        // Guardar les propietats de l'objecte usuari a SharedPreferences
-        editor.putString("nomUsuari", usuari.getNom());
-        editor.putString("idUsuari", String.valueOf(usuari.getUsuariID()));
-        editor.putString("tipusClient", usuari.getTipus());
-        editor.putString("correu", usuari.getCorreuUsuari());
-        editor.putString("contrasenya", usuari.getContrasenya());
-        editor.putString("dataInscripcio", format.format(usuari.getDataInscripcio()));
-        editor.putString("cognoms", usuari.getCognoms());
-        editor.putString("dataNaixement", format.format(usuari.getDataNaixement()));
-        editor.putString("adreca", usuari.getAdreca());
-        editor.putString("telefon", usuari.getTelefon());
-
-        // Aplicar els canvis a SharedPreferences
-        editor.apply();
-    }
 
     /**
-     * Mètode que obre l'activitat corresponent segons el tipus d'usuari autenticat.
+     * Mètode per obrir l'activitat corresponent segons el tipus d'usuari.
      *
-     * @param tipusUsuari Tipus d'usuari autenticat (client o administrador).
+     * @param tipusUsuari El tipus d'usuari.
      */
-    private void obrirActivitat(String tipusUsuari) {
+    private void obrirActivitat(int tipusUsuari) {
         // Obrir l'activitat corresponent segons el tipus d'usuari
-        Intent intent;
-        if (tipusUsuari.equals("client")) {
+        if (tipusUsuari == 2) {
             // Usuari tipus client
-            intent = new Intent(context, ClientActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            Utils.obrirActivitat(context, ClientActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
             Utils.mostrarToast(context, "Benvingut, client");
-        } else if (tipusUsuari.equals("admin")) {
+        } else if (tipusUsuari == 1) {
             // Usuari tipus admin
-            intent = new Intent(context, AdminActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            Utils.obrirActivitat(context, AdminActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
             Utils.mostrarToast(context, "Benvingut, administrador");
         } else {
             // Tipus d'usuari desconegut

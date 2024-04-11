@@ -21,8 +21,8 @@ public class CanviarContrasenya extends BasePeticions {
     private Usuari usuari;
     private Context context;
 
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     public CanviarContrasenya(respostaServidorListener listener, Usuari usuari) {
         super(listener);
@@ -31,27 +31,22 @@ public class CanviarContrasenya extends BasePeticions {
 
     public void canviarContrasenya() {
         // Convertir el objecte Usuari a un HashMap
+        HashMap<String, String> usuariMap = Utils.ObjecteAHashMap(usuari);
+
+        /* Comprovar si funciona amb ObjecteAHashMap
         HashMap<String, String> usuariMap = new HashMap<>();
-        usuariMap.put("nom", usuari.getNom());
-        usuariMap.put("cognoms", usuari.getCognoms());
+        usuariMap.put("nom", usuari.getNomUsuari());
+        usuariMap.put("cognoms", usuari.getCognomsUsuari());
         if (usuari.getDataNaixement() != null) {
             usuariMap.put("dataNaixement", new SimpleDateFormat("dd-MM-yyyy").format(usuari.getDataNaixement()));
         }
         usuariMap.put("adreca", usuari.getAdreca());
         usuariMap.put("telefon", usuari.getTelefon());
         usuariMap.put("correu", usuari.getCorreuUsuari());
-        usuariMap.put("contrasenya", usuari.getContrasenya());
+        usuariMap.put("contrasenya", usuari.getPassUsuari());*/
 
-        // Crear el Object[] per la petició
-        Object[] peticio = new Object[4];
-        peticio[0] = "update";
-        peticio[1] = "pass";
-        peticio[2] = usuariMap;
-        peticio[3] = this.sessioID;
+        enviarPeticio("update", "pass", usuariMap, this.sessioID, ETIQUETA);
 
-
-        Log.d(ETIQUETA, "Enviant petició: " + Arrays.toString(peticio));
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
     @Override
     public Class<?> obtenirTipusObjecte() {
@@ -66,11 +61,15 @@ public class CanviarContrasenya extends BasePeticions {
             String estat = (String) arrayResposta[0];
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
+                Usuari usuari = (Usuari) Utils.HashMapAObjecte(mapaUsuari, Usuari.class);
+                Utils.mostrarToast(context, "Contrasenya modificada correctament");
+
+                /* Comprovar si funciona amb HashMapAObjecte
                 Usuari usuari = new Usuari();
-                usuari.setNom(mapaUsuari.get("nomUsuari"));
+                usuari.setNomUsuari(mapaUsuari.get("nomUsuari"));
                 usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
-                usuari.setContrasenya(mapaUsuari.get("passUsuari"));
-                usuari.setCognoms(mapaUsuari.get("cognomsUsuari"));
+                usuari.setPassUsuari(mapaUsuari.get("passUsuari"));
+                usuari.setCognomsUsuari(mapaUsuari.get("cognomsUsuari"));
                 usuari.setTelefon(mapaUsuari.get("telefon"));
                 usuari.setAdreca(mapaUsuari.get("Adreca"));
                 try {
@@ -78,7 +77,7 @@ public class CanviarContrasenya extends BasePeticions {
                     usuari.setDataNaixement(formatData.parse(mapaUsuari.get("DataNaixement")));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
 
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la modificació de la contrasenya");

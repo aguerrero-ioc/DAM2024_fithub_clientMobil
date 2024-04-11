@@ -1,7 +1,11 @@
 package antonioguerrero.ioc.fithub.objectes;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.util.Date;
+
+import antonioguerrero.ioc.fithub.Utils;
 
 /**
  * Classe Usuari que representa un usuari en l'aplicació FitHub.
@@ -9,43 +13,43 @@ import java.util.Date;
  * Conté informació com el nom, cognoms, data de naixement, adreça, correu electrònic,
  * telèfon, contrasenya i data d'inscripció de l'usuari.
  *
- * @author Antonio Guerrero, Xavi Cano
+ * @author Antonio Guerrero
  * @version 1.1
  */
 public class Usuari implements Serializable {
-    private String DEFAULT_VALUE = "";
 
     //Dades Obligatories
-    private int usuariID;
+    private int IDUsuari;
     private String correuUsuari;
-    private String contrasenya;
-    private String tipus;
+    private String passUsuari;
+    private int tipusUsuari;
 
     //Altres dades de l'usuari
-    private String nom;
-    private String cognoms;
-    private Date dataNaixement;
+    private String nomUsuari;
+    private String cognomsUsuari;
+    private String dataNaixement;
     private String adreca;
     private String telefon;
-    private Date dataInscripcio;
+    private String dataInscripcio;
+    private static Context context;
 
     /**
      * Constructor de la classe Usuari reduit.
      *
-     * @param correu         El correu electrònic de l'usuari.
-     * @param contrasenya    La contrasenya de l'usuari.
+     * @param correuUsuari         El correu electrònic de l'usuari.
+     * @param passUsuari    La contrasenya de l'usuari.
      */
-    public Usuari(String correu, String contrasenya) {
-        this.correuUsuari = correu;
-        this.contrasenya = contrasenya;
-        this.usuariID = -1;
+    public Usuari(String correuUsuari, String passUsuari) {
+        this.correuUsuari = correuUsuari;
+        this.passUsuari = passUsuari;
+        this.IDUsuari = -1;
 
-        this.tipus = DEFAULT_VALUE;
-        this.nom = DEFAULT_VALUE;
-        this.cognoms = DEFAULT_VALUE;
+        this.tipusUsuari = Integer.parseInt(Utils.VALOR_DEFAULT);
+        this.nomUsuari = Utils.VALOR_DEFAULT;
+        this.cognomsUsuari = Utils.VALOR_DEFAULT;
         this.dataNaixement = null;
-        this.adreca = DEFAULT_VALUE;
-        this.telefon = DEFAULT_VALUE;
+        this.adreca = Utils.VALOR_DEFAULT;
+        this.telefon = Utils.VALOR_DEFAULT;
         this.dataInscripcio = null;
     }
 
@@ -53,25 +57,25 @@ public class Usuari implements Serializable {
      * Constructor de la classe Usuari.
      *
      * @param correuUsuari         El correu electrònic de l'usuari.
-     * @param contrasenya    La contrasenya de l'usuari.
-     * @param usuariID       L'ID de l'usuari.
-     * @param tipus          El tipus d'usuari.
+     * @param passUsuari    La contrasenya de l'usuari.
+     * @param IDUsuari       L'ID de l'usuari.
+     * @param tipusUsuari          El tipus d'usuari.
      * @param dataInscripcio La data d'inscripció de l'usuari.
-     * @param nom            El nom de l'usuari.
-     * @param cognoms        Els cognoms de l'usuari.
+     * @param nomUsuari            El nom de l'usuari.
+     * @param cognomsUsuari        Els cognoms de l'usuari.
      * @param dataNaixement  La data de naixement de l'usuari.
      * @param adreca         L'adreça de l'usuari.
      * @param telefon        El número de telèfon de l'usuari.
      */
 
-    public Usuari(String correuUsuari, String contrasenya, Integer usuariID, String tipus, Date dataInscripcio, String nom, String cognoms, Date dataNaixement, String adreca, String telefon) {
+    public Usuari(String correuUsuari, String passUsuari, Integer IDUsuari, Integer tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
         this.correuUsuari = correuUsuari;
-        this.contrasenya = contrasenya;
-        this.usuariID = -1;
-        this.tipus = DEFAULT_VALUE;
-        this.dataInscripcio = dataInscripcio;
-        this.nom = nom;
-        this.cognoms = cognoms;
+        this.passUsuari = passUsuari;
+        this.IDUsuari = -1;
+        this.tipusUsuari = Integer.parseInt(Utils.VALOR_DEFAULT);
+        this.dataInscripcio = Utils.VALOR_DEFAULT;
+        this.nomUsuari = nomUsuari;
+        this.cognomsUsuari = cognomsUsuari;
         this.dataNaixement = dataNaixement;
         this.adreca = adreca;
         this.telefon = telefon;
@@ -84,23 +88,60 @@ public class Usuari implements Serializable {
 
     }
 
+    // Getters i setters
+
+    /**
+     * Obté l'ID de l'usuari.
+     *
+     * @return L'ID de l'usuari.
+     */
+    public int getIDUsuari() {
+        return IDUsuari;
+    }
+
+    /**
+     * Estableix l'ID de l'usuari.
+     *
+     * @param IDUsuari L'ID de l'usuari.
+     */
+    public void setIDUsuari(int IDUsuari) {
+        this.IDUsuari = IDUsuari;
+    }
+
+    /**
+     * Obté el tipus d'usuari.
+     *
+     * @return El tipus d'usuari.
+     */
+    public int getTipusUsuari() {
+        return tipusUsuari;
+    }
+
+    /**
+     * Estableix el tipus d'usuari.
+     *
+     * @param tipusUsuari El tipus d'usuari.
+     */
+    public void setTipusUsuari(int tipusUsuari) {
+        this.tipusUsuari = tipusUsuari;
+    }
 
     /**
      * Obté el nom de l'usuari.
      *
      * @return El nom de l'usuari.
      */
-    public String getNom() {
-        return nom;
+    public String getNomUsuari() {
+        return nomUsuari;
     }
 
     /**
      * Estableix el nom de l'usuari.
      *
-     * @param nom El nom de l'usuari.
+     * @param nomUsuari El nom de l'usuari.
      */
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNomUsuari(String nomUsuari) {
+        this.nomUsuari = nomUsuari;
     }
 
     /**
@@ -108,17 +149,17 @@ public class Usuari implements Serializable {
      *
      * @return Els cognoms de l'usuari.
      */
-    public String getCognoms() {
-        return cognoms;
+    public String getCognomsUsuari() {
+        return cognomsUsuari;
     }
 
     /**
      * Estableix els cognoms de l'usuari.
      *
-     * @param cognoms Els cognoms de l'usuari.
+     * @param cognomsUsuari Els cognoms de l'usuari.
      */
-    public void setCognoms(String cognoms) {
-        this.cognoms = cognoms;
+    public void setCognomsUsuari(String cognomsUsuari) {
+        this.cognomsUsuari = cognomsUsuari;
     }
 
     /**
@@ -126,17 +167,17 @@ public class Usuari implements Serializable {
      *
      * @return La data de naixement de l'usuari.
      */
-    public Date getDataNaixement() {
+    public String getDataNaixement() {
         return dataNaixement;
     }
 
     /**
      * Estableix la data de naixement de l'usuari.
      *
-     * @param dataNaixement La data de naixement de l'usuari.
+     * @param DataNaixement La data de naixement de l'usuari.
      */
-    public void setDataNaixement(Date dataNaixement) {
-        this.dataNaixement = dataNaixement;
+    public void setDataNaixement(String DataNaixement) {
+        this.dataNaixement = DataNaixement;
     }
 
     /**
@@ -198,17 +239,17 @@ public class Usuari implements Serializable {
      *
      * @return La contrasenya de l'usuari.
      */
-    public String getContrasenya() {
-        return contrasenya;
+    public String getPassUsuari() {
+        return passUsuari;
     }
 
     /**
      * Estableix la contrasenya de l'usuari.
      *
-     * @param contrasenya La contrasenya de l'usuari.
+     * @param passUsuari La contrasenya de l'usuari.
      */
-    public void setContrasenya(String contrasenya) {
-        this.contrasenya = contrasenya;
+    public void setPassUsuari(String passUsuari) {
+        this.passUsuari = passUsuari;
     }
 
     /**
@@ -216,7 +257,7 @@ public class Usuari implements Serializable {
      *
      * @return La data d'inscripció de l'usuari.
      */
-    public Date getDataInscripcio() {
+    public String getDataInscripcio() {
         return dataInscripcio;
     }
 
@@ -225,43 +266,39 @@ public class Usuari implements Serializable {
      *
      * @param dataInscripcio La data d'inscripció de l'usuari.
      */
-    public void setDataInscripcio(Date dataInscripcio) {
+    public void setDataInscripcio(String dataInscripcio) {
         this.dataInscripcio = dataInscripcio;
     }
 
-    /**
-     * Obté l'ID de l'usuari.
-     *
-     * @return L'ID de l'usuari.
-     */
-    public int getUsuariID() {
-        return usuariID;
-    }
+
 
     /**
-     * Estableix l'ID de l'usuari.
+     * Guarda les propietats de l'objecte Usuari a SharedPreferences.
      *
-     * @param usuariID L'ID de l'usuari.
+     * @param usuari L'objecte Usuari que es guardarà a SharedPreferences.
      */
-    public void setUsuariID(int usuariID) {
-        this.usuariID = usuariID;
-    }
+    public static void guardarDadesUsuari(Usuari usuari) {
+        Utils.guardarDadesObjecte(context, usuari, Usuari.class);
 
-    /**
-     * Obté el tipus de l'usuari.
-     *
-     * @return El tipus de l'usuari.
-     */
-    public String getTipus() {
-        return tipus;
-    }
+                /* Comparar amb aquesta implementacio
 
-    /**
-     * Estableix el tipus de l'usuari.
-     *
-     * @param tipus El tipus de l'usuari.
-     */
-    public void setTipus(String tipus) {
-        this.tipus = tipus;
+        SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencies.edit();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+        // Guardar les propietats de l'objecte usuari a SharedPreferences
+        editor.putString("nomUsuari", usuari.getNomUsuari());
+        editor.putString("idUsuari", String.valueOf(usuari.getUsuariID()));
+        editor.putString("tipusUsuari", usuari.getTipusUsuari());
+        editor.putString("correuUsuari", usuari.getCorreuUsuari());
+        editor.putString("passUsuari", usuari.getPassUsuari());
+        editor.putString("dataInscripcio", format.format(usuari.getDataInscripcio()));
+        editor.putString("cognomsUsuari", usuari.getCognomsUsuari());
+        editor.putString("DataNaixement", format.format(usuari.getDataNaixement()));
+        editor.putString("adreca", usuari.getAdreca());
+        editor.putString("telefon", usuari.getTelefon());
+
+        // Aplicar els canvis a SharedPreferences
+        editor.apply();*/
     }
 }
