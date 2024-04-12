@@ -3,46 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
     tools:context=".menu.reserves.ReservesActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/boto_quadricula"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vista Cuadrícula"
-            android:layout_marginEnd="8dp"/>
-
-        <Button
-            android:id="@+id/boto_llista"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vista Lista"/>
-
-    </LinearLayout>
-
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/boto_quadricula"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"/>
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="10dp"
+        tools:text="Fecha" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rvClassesDirigides"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/datePicker"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvData"
+        android:padding="10dp" />
 
 </RelativeLayout>

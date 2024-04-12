@@ -13,7 +13,7 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
+//import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 
 public class CrearReserva extends BasePeticions {
 
@@ -32,11 +32,11 @@ public class CrearReserva extends BasePeticions {
 
     public void crearReserva() {
         // Convertir el objecte Reserva a un HashMap
-        HashMap<String, String> reservaMap = Utils.ObjecteAHashMap(reserva);
-        reservaMap.put("IDReserva", String.valueOf(reserva.getIDReserva()));
-        reservaMap.put("IDUsuari", String.valueOf(reserva.getIDUsuari()));
+        HashMap<String, String> mapaReserva = Utils.ObjecteAHashMap(reserva);
+        mapaReserva.put("IDReserva", String.valueOf(reserva.getIDReserva()));
+        mapaReserva.put("IDUsuari", String.valueOf(reserva.getIDUsuari()));
 
-        enviarPeticio("insert", "reserva", reservaMap, this.sessioID, ETIQUETA);
+        enviarPeticio("insert", "reserva", mapaReserva, this.sessioID, ETIQUETA);
     }
 
     @Override
@@ -59,9 +59,9 @@ public void respostaServidor(Object resposta) {
         // Mostra un missatge de confirmació a l'usuari
         Utils.mostrarToast(context, "Reserva confirmada");
         // Redirigeix a l'usuari a la pantalla de Reserves
-        Intent intent = new Intent(context, ReservaActivity.class);
+        /*Intent intent = new Intent(context, ReservesActivity.class);
         context.startActivity(intent);
-        ((Activity) context).finish();
+        ((Activity) context).finish();*/
     } else {
         String missatgeError = (String) respostaArray[1];
         Log.d(ETIQUETA, "Error en crear la reserva: " + missatgeError);

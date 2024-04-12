@@ -40,7 +40,7 @@ public class Utils {
         Date dataActual = Calendar.getInstance().getTime();
 
         // Formateja la data en el format desitjat
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatData = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatData = new SimpleDateFormat("ddMMyyyy");
         return formatData.format(dataActual);
     }
 

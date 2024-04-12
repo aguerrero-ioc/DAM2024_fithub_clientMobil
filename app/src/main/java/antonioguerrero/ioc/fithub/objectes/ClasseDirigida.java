@@ -2,34 +2,88 @@ package antonioguerrero.ioc.fithub.objectes;
 
 import java.io.Serializable;
 
+
 public class ClasseDirigida implements Serializable {
 
     // Atributs de la classe
-    private int IDClasseDirigida;
-    private String dia;
-    private String hora;
-    private int duracio;
+    private String IDClasseDirigida; // Nuevo atributo
     private Activitat activitat;
     private Installacio installacio;
+    private String dia;
+    private String horaInici;
+    private int duracio;
+    private int reservesActuals;
+    private boolean estaReservat;
 
-    // Constructor
-    public ClasseDirigida(int IDClasseDirigida, String dia, String hora, int duracio, Activitat activitat, Installacio installacio) {
+    /**
+     * Constructor de la classe ClasseDirigida.
+     *
+     * @param IDClasseDirigida ID de la classe dirigida
+     * @param activitat Activitat de la classe dirigida
+     * @param installacio Installació on es realitza la classe dirigida
+     * @param dia Dia de la setmana en què es realitza la classe dirigida
+     * @param horaInici Hora d'inici de la classe dirigida
+     * @param duracio Duració de la classe dirigida
+     * @param reservesActuals Reserves actuals de la classe dirigida
+     */
+    public ClasseDirigida(String IDClasseDirigida, Activitat activitat, Installacio installacio, String dia, String horaInici, int duracio, int reservesActuals) {
         this.IDClasseDirigida = IDClasseDirigida;
-        this.dia = dia;
-        this.hora = hora;
-        this.duracio = duracio;
         this.activitat = activitat;
         this.installacio = installacio;
+        this.dia = dia;
+        this.horaInici = horaInici;
+        this.duracio = duracio;
+        this.reservesActuals = reservesActuals;
+        this.estaReservat = false; // Inicialmente, la clase no está reservada
     }
 
     // Getters y setters
-    public int getIDClasseDirigida() {
+
+
+    public String getIDClasseDirigida() {
         return IDClasseDirigida;
     }
 
-    public void setIDClasseDirigida(int IDClasseDirigida) {
+    public void setIDClasseDirigida(String IDClasseDirigida) {
         this.IDClasseDirigida = IDClasseDirigida;
     }
+
+
+    public Activitat getActivitat() {
+        return activitat;
+    }
+
+    public void setActivitat(Activitat activitat) {
+        this.activitat = activitat;
+    }
+
+    public String getNomActivitat() {
+        return activitat.getNomActivitat();
+    }
+
+
+    public void setNomActivitat(String nomActivitat) {
+    }
+
+
+
+
+    public Installacio getInstallacio() {
+        return installacio;
+    }
+
+    public void setInstallacio(Installacio installacio) {
+        this.installacio = installacio;
+    }
+
+    public String getNomInstallacio() {
+        return installacio.getNomInstallacio();
+    }
+
+    public void setNomInstallacio(String nomInstallacio) {
+    }
+
+
 
     public String getDia() {
         return dia;
@@ -39,12 +93,12 @@ public class ClasseDirigida implements Serializable {
         this.dia = dia;
     }
 
-    public String getHora() {
-        return hora;
+    public String getHoraInici() {
+        return horaInici;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setHoraInici(String horaInici) {
+        this.horaInici = horaInici;
     }
 
     public int getDuracio() {
@@ -55,11 +109,12 @@ public class ClasseDirigida implements Serializable {
         this.duracio = duracio;
     }
 
-    public int getIDactivitat() {
-        return activitat.getIDActivitat();
+
+    public boolean estaReservat() {
+        return estaReservat;
     }
 
-    public int getIDinstalacio() {
-        return installacio.getIDInstallacio();
+    public void setEstaReservat(boolean estaReservat) {
+        this.estaReservat = estaReservat;
     }
 }

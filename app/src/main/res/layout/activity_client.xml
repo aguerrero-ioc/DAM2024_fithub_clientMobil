@@ -10,54 +10,63 @@
         android:layout_height="match_parent"
         android:background="@color/light_gray">
 
-        <!-- Títol de l'aplicació -->
-        <TextView
-            android:id="@+id/text_titol_aplicacio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nom_app"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="30dp" />
-
-        <!-- Botó de perfil -->
-        <ImageButton
-            android:id="@+id/boto_perfil_client"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="10dp"
-            android:src="@drawable/ic_perfil"
-            android:onClick="toggleMenu"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Botó d'accés a panell esquerre-->
-        <ImageButton
-            android:id="@+id/boto_acces_altre_panell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="10dp"
-            android:src="@drawable/ic_menu"
-            android:onClick="accedirPanell"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <!-- Toolbar -->
 
         <!-- Barra de títol -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Títol de l'aplicació -->
+            <TextView
+                android:id="@+id/text_titol_aplicacio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/nom_app"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <!-- Botó de perfil -->
+            <ImageButton
+                android:id="@+id/boto_perfil_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="toggleMenu"
+                android:padding="10dp"
+                android:src="@drawable/ic_perfil" />
+
+            <!-- Botó d'accés a panell esquerre-->
+            <ImageButton
+                android:id="@+id/boto_acces_panell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="accedirPanell"
+                android:padding="10dp"
+                android:src="@drawable/ic_menu" />
+
+        </androidx.appcompat.widget.Toolbar>
+
         <LinearLayout
             android:id="@+id/layout_titol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/text_titol_aplicacio"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="50dp">
@@ -79,9 +88,9 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/layout_titol"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_titol" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
@@ -103,62 +112,65 @@
             android:id="@+id/layoutPerfilMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/boto_perfil_client"
-            android:layout_below="@id/boto_perfil_client"
             android:layout_marginTop="8dp"
             android:background="@drawable/menu_background"
-            android:orientation="vertical"
-            android:elevation="8dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/boto_perfil_client"
-            app:layout_constraintEnd_toEndOf="parent"> <!-- Per defecte, menú ocult -->
+        android:orientation="vertical"
+        android:elevation="8dp"
+        android:visibility="gone"
+        android:animateLayoutChanges="true"
+        app:layout_constraintEnd_toEndOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <!-- Nom d'usuari -->
-            <TextView
-                android:id="@+id/tv_usuari"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nom_d_usuari"
-                android:textColor="@color/backgroundColorPrimary"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
+        <!-- Nom d'usuari -->
+        <TextView
+            android:id="@+id/tv_usuari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nom_d_usuari"
+            android:textColor="@color/backgroundColorPrimary"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="8dp"/>
 
-            <!-- Tipus de client -->
-            <TextView
-                android:id="@+id/tv_tipus_client"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tipus_de_client"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
+        <!-- Tipus de client -->
+        <TextView
+            android:id="@+id/tv_tipus_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tipus_de_client"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="8dp"/>
 
-            <!-- Barra de separació -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/black"
-                android:layout_marginBottom="8dp"/>
+        <!-- Barra de separació -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            android:layout_marginBottom="8dp"/>
 
-            <!-- Opcions del menú -->
-            <TextView
-                android:id="@+id/opcio_perfil1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/el_meu_compte"
-                android:background="@drawable/menu_item_background"
-                android:textColor="@android:color/black"
-                android:padding="10dp"/>
+        <!-- Opcions del menú -->
+        <TextView
+            android:id="@+id/opcio_perfil1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/el_meu_compte"
+            android:background="@drawable/menu_item_background"
+            android:textColor="@android:color/black"
+            android:padding="10dp"
+            android:drawablePadding="8dp"/>
 
-            <TextView
-                android:id="@+id/opcio_logout_client"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tancar_sessio"
-                android:background="@drawable/menu_item_background"
-                android:textColor="@android:color/black"
-                android:padding="10dp"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/opcio_logout_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tancar_sessio"
+            android:background="@drawable/menu_item_background"
+            android:textColor="@android:color/black"
+            android:padding="10dp"
+            android:drawablePadding="8dp"/>
+    </LinearLayout>
 
         <!-- Botó de missatges -->
 

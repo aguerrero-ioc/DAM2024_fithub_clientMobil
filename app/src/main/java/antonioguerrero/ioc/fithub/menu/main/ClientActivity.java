@@ -75,11 +75,6 @@ public class ClientActivity extends AppCompatActivity {
                     //PENDENT
                     /*intent = new Intent(ClientActivity.this, ActivitatsActivity.class);
                     startActivity(intent);*/
-                } else if (id == R.id.nav_classes) {
-                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar");
-                    //PENDENT
-                    /*intent = new Intent(ClientActivity.this, ClassesActivity.class);
-                    startActivity(intent);*/
                 } else if (id == R.id.nav_serveis) {
                     Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar");
                     //PENDENT

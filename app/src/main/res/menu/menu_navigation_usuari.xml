@@ -4,9 +4,6 @@
         android:id="@+id/nav_activitats"
         android:title="Activitats" />
     <item
-        android:id="@+id/nav_classes"
-        android:title="Classes" />
-    <item
         android:id="@+id/nav_serveis"
         android:title="Serveis" />
     <item

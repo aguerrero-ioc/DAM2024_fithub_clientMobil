@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+//import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 
 
 public class ConsultarClassesDirigidesDia extends BasePeticions {
@@ -21,7 +21,7 @@ public class ConsultarClassesDirigidesDia extends BasePeticions {
     private static final String ETIQUETA = "ConsultarClasseDirigidaDia";
 
 
-    public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context, String dia) {
+    public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context) {
         super(listener);
         this.context = context;
         this.dia = dia;
@@ -45,8 +45,7 @@ public class ConsultarClassesDirigidesDia extends BasePeticions {
             String estat = (String) respostaArray[0];
             if (estat != null && estat.equals("classeDirigida")) {
                 ArrayList<HashMap<String, String>> dadesClassesDirigides = (ArrayList<HashMap<String, String>>) respostaArray[1];
-                // Iniciar l'activitat InstallacionsActivity amb la llista d'instal·lacions
-                Utils.iniciarActivitatLlista(context, ReservesActivity .class, dadesClassesDirigides, "dadesClassesDirigides");
+
                 // Guardar les dades de les instal·lacions a SharedPreferences
                 guardarDadesClassesDirigides(dadesClassesDirigides);
             } else {
@@ -69,12 +68,12 @@ public class ConsultarClassesDirigidesDia extends BasePeticions {
         // Guardar les dades de les classes dirigides a SharedPreferences
         for (int i = 0; i < dadesClassesDirigides.size(); i++) {
             HashMap<String, String> mapaClassesDirigides = dadesClassesDirigides.get(i);
-            editor.putInt("IDClasseDirigida" + i, Integer.parseInt(mapaClassesDirigides.get("IDClasseDirigida")));
+            editor.putInt("IDActivitat" + i, Integer.parseInt(mapaClassesDirigides.get("IDActivitat")));
+            editor.putInt("IDInstallacio" + i, Integer.parseInt(mapaClassesDirigides.get("IDInstallacio")));
             editor.putString("dia" + i, mapaClassesDirigides.get("dia"));
-            editor.putString("hora" + i, mapaClassesDirigides.get("hora"));
+            editor.putString("horaInici" + i, mapaClassesDirigides.get("horaInici"));
             editor.putInt("duracio" + i, Integer.parseInt(mapaClassesDirigides.get("duracio")));
-            editor.putInt("IDactivitat" + i, Integer.parseInt(mapaClassesDirigides.get("IDactivitat")));
-            editor.putInt("IDinstallacio" + i, Integer.parseInt(mapaClassesDirigides.get("IDinstallacio")));
+
         }
 
         // Guardar la quantitat de classes dirigides a SharedPreferences
