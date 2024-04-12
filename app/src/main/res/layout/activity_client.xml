@@ -1,71 +1,125 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_gray"
-    tools:context=".ClientActivity">
+    android:layout_height="match_parent">
 
-    <!-- Títol de l'aplicació -->
-    <TextView
-        android:id="@+id/text_titol_aplicacio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/nom_app"
-        android:layout_marginTop="30dp"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <!-- Menú superior dret de l'usuari -->
-    <ImageButton
-        android:id="@+id/boto_perfil_client"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="10dp"
-        android:src="@drawable/ic_perfil"
-        android:onClick="toggleMenu" />
-
-    <!-- Barra de títol -->
-    <LinearLayout
-        android:id="@+id/layout_titol"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/text_titol_aplicacio"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        android:layout_height="match_parent"
+        android:background="@color/light_gray">
 
-        <!-- Títol de l'activitat -->
-        <TextView
-            android:id="@+id/text_titol_reserves"
+        <!-- Toolbar -->
+
+        <!-- Barra de títol -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Títol de l'aplicació -->
+            <TextView
+                android:id="@+id/text_titol_aplicacio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/nom_app"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <!-- Botó de perfil -->
+            <ImageButton
+                android:id="@+id/boto_perfil_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="toggleMenu"
+                android:padding="10dp"
+                android:src="@drawable/ic_perfil" />
+
+            <!-- Botó d'accés a panell esquerre-->
+            <ImageButton
+                android:id="@+id/boto_acces_panell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="accedirPanell"
+                android:padding="10dp"
+                android:src="@drawable/ic_menu" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/layout_titol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp">
+
+            <!-- Títol de l'activitat -->
+            <TextView
+                android:id="@+id/text_titol_reserves"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/reserves_client"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_titol" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+            app:layout_constraintBottom_toTopOf="@+id/boto_mostrar_missatges"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.viewpager.widget.ViewPager>
+
+        <!-- Menú desplegable del perfil -->
+        <LinearLayout
+            android:id="@+id/layoutPerfilMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reservar"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
-    </LinearLayout>
-
-    <!-- Menú desplegable del perfil -->
-    <LinearLayout
-        android:id="@+id/layoutPerfilMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/boto_perfil_client"
-        android:layout_below="@id/boto_perfil_client"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/menu_background"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/menu_background"
         android:orientation="vertical"
         android:elevation="8dp"
-        android:visibility="gone"> <!-- Per defecte, menú ocult -->
+        android:visibility="gone"
+        android:animateLayoutChanges="true"
+        app:layout_constraintEnd_toEndOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <!-- Nom d'usuari -->
         <TextView
@@ -75,7 +129,8 @@
             android:text="@string/nom_d_usuari"
             android:textColor="@color/backgroundColorPrimary"
             android:textSize="18sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="8dp"/>
 
         <!-- Tipus de client -->
         <TextView
@@ -85,7 +140,8 @@
             android:text="@string/tipus_de_client"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="8dp"/>
 
         <!-- Barra de separació -->
         <View
@@ -102,7 +158,8 @@
             android:text="@string/el_meu_compte"
             android:background="@drawable/menu_item_background"
             android:textColor="@android:color/black"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:drawablePadding="8dp"/>
 
         <TextView
             android:id="@+id/opcio_logout_client"
@@ -111,77 +168,34 @@
             android:text="@string/tancar_sessio"
             android:background="@drawable/menu_item_background"
             android:textColor="@android:color/black"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:drawablePadding="8dp"/>
     </LinearLayout>
 
-    <!-- Botons de reserva de les activitats -->
-    <LinearLayout
-        android:layout_width="match_parent"
+        <!-- Botó de missatges -->
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/boto_mostrar_missatges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_missatge"
+            android:onClick="mostrarFragmentMissatges"
+            android:background="@drawable/button_background"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- NavigationView per el panell desplegable -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_titol"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp">
+        android:layout_gravity="start"
+        app:menu="@menu/menu_navigation_usuari">
 
-        <Button
-            android:id="@+id/boto_reserva1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:text="@string/classe"
-            android:background="@drawable/boto_personalitzat"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"/>
+    </com.google.android.material.navigation.NavigationView>
 
-        <Button
-            android:id="@+id/boto_reserva2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:text="@string/activitat"
-            android:background="@drawable/boto_personalitzat"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"/>
-
-        <Button
-            android:id="@+id/boto_reserva3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:text="@string/instalacio"
-            android:background="@drawable/boto_personalitzat"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"/>
-
-        <Button
-            android:id="@+id/boto_reserva4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:text="@string/aigua"
-            android:background="@drawable/boto_personalitzat"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"/>
-
-        <Button
-            android:id="@+id/boto_reserva5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:text="@string/servei"
-            android:background="@drawable/boto_personalitzat"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"/>
-    </LinearLayout>
-</RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_activitats"
+        android:title="Activitats" />
+    <item
+        android:id="@+id/nav_serveis"
+        android:title="Serveis" />
+    <item
+        android:id="@+id/nav_installacions"
+        android:title="Instal·lacions" />
+    <item
+        android:id="@+id/nav_reserves"
+        android:title="Reserves" />
+</menu>

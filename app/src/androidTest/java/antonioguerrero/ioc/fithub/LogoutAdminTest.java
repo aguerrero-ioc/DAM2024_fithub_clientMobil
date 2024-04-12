@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
+
 /**
  * Test que verifica el procés de tancament de sessió per a l'administrador.
  * @author Antonio Guerrero
