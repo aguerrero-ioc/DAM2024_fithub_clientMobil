@@ -21,10 +21,9 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogin;
 
-public class LoginActivity extends AppCompatActivity implements BasePeticions.respostaServidorListener {
+public class LoginActivity extends AppCompatActivity  {
 
     private EditText etCorreuUsuari, etContrasenya;
     private Context context;
@@ -85,11 +84,27 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.re
 
     private void enviarLogin(String correuUsuari, String passUsuari) {
 
-        PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari, objectOut, objectIn) {
+        PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari) {
+            @Override
+            public void respostaServidor(Object[] resposta) {
+                if (resposta != null) {
+                    String tipusUsuari = Utils.obtenirTipusUsuari(resposta[0].toString());
+                    if (!tipusUsuari.isEmpty()) {
+                        obrirActivitat(tipusUsuari);
+                    } else {
+                        Utils.mostrarToast(getApplicationContext(), "Credencials incorrectes");
+                    }
+                } else {
+                    Utils.mostrarToast(getApplicationContext(), "Error de connexió");
+                }
+            }
+
             @Override
             protected Object doInBackground(Void... voids) {
                 return null;
             }
+
+
         };
         peticioLogin.execute();
     }
@@ -127,19 +142,7 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.re
         return email.matches(patroEmail);
     }
 
-    @Override
-    public void respostaServidor(Object resposta) {
-        if (resposta != null) {
-            String tipusUsuari = Utils.obtenirTipusUsuari(resposta.toString());
-            if (!tipusUsuari.isEmpty()) {
-                obrirActivitat(tipusUsuari);
-            } else {
-                Utils.mostrarToast(getApplicationContext(), "Credencials incorrectes");
-            }
-        } else {
-            Utils.mostrarToast(getApplicationContext(), "Error de connexió");
-        }
-    }
+
 
 
     private void obrirActivitat(String tipusUsuari) {

@@ -6,16 +6,9 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
@@ -48,8 +41,8 @@ public abstract class PeticioLogin extends BasePeticions {
      * @param correuUsuari El correu de l'usuari.
      * @param passUsuari   La contrasenya de l'usuari.
      */
-    public PeticioLogin(Context context, String correuUsuari, String passUsuari, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(null, objectOut, objectIn);
+    public PeticioLogin(Context context, String correuUsuari, String passUsuari) {
+        super(context, correuUsuari, passUsuari);
         this.context = context;
         this.correuUsuari = correuUsuari;
         this.passUsuari = passUsuari;
@@ -84,9 +77,17 @@ public abstract class PeticioLogin extends BasePeticions {
             }
         }.execute();}*/
 
+
     public void peticioLogin() {
-        enviarPeticioString("login", correuUsuari, passUsuari, null);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                enviarPeticioString("login", correuUsuari, passUsuari, null);
+                return null;
+            }
+        }.execute();
     }
+
 
     /**
      * Mètode per obtenir el tipus de l'objecte.
@@ -113,7 +114,7 @@ public abstract class PeticioLogin extends BasePeticions {
      * @param resposta Resposta del servidor, que pot ser l'èxit de l'autenticació o un error.
      */
     @Override
-public void respostaServidor(Object resposta){
+    public void respostaServidor(Object resposta) {
     Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
     if (resposta instanceof Object[]) {
         Object[] respostaArray = (Object[]) resposta;
@@ -173,6 +174,8 @@ public void respostaServidor(Object resposta){
             Utils.mostrarToast(context, "No s'ha pogut iniciar sessió. Tipus d'usuari desconegut.");
         }
     }
+
+    public abstract void respostaServidor(Object[] resposta);
 
     protected abstract Object doInBackground(Void... voids);
 }

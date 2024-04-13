@@ -32,7 +32,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
  * @Author Antonio Guerrero
  * @Version 1.0
  */
-public class PerfilActivity extends AppCompatActivity implements ConnexioServidor.respostaServidorListener {
+public class PerfilActivity extends AppCompatActivity implements BasePeticions.respostaServidorListener {
 
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefonContacte, etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya;
     private Button btnGuardarCanvis, btnEditarPerfil, btnCanviContrasenya, btnGuardarCanviContrasenya;
@@ -168,12 +168,10 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
      * @param resposta La resposta del servidor.
      */
     @Override
-    public void respostaServidor(String resposta) {
+    public void respostaServidor(Object resposta) {
         if (resposta != null) {
-            String[] parts = resposta.split(",");
-            if (parts.length >= 10) {
-                Usuari usuari = new Usuari();
-                assignarDadesUsuari(parts, usuari);
+            if (resposta instanceof Usuari) {
+                Usuari usuari = (Usuari) resposta;
                 actualitzarUsuari(usuari);
             } else {
                 Log.e("ConnexioServidor", "Error: Resposta del servidor amb format incorrecte");
@@ -254,12 +252,8 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
     public void actualitzarUsuari(Usuari usuari) {
 
         // Crear una instancia de ConsultarUsuari
-        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID, objecteSortida, objecteEntrada) {
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
-        };
+        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID, objecteSortida, objecteEntrada);
+
         // Ejecutar la petición al servidor
         consultarUsuariInstance.execute();
 

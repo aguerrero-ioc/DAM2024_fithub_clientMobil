@@ -28,14 +28,13 @@ public abstract class ConsultarActivitat extends BasePeticions {
 
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
-
     /**
      * Constructor de la classe ConsultaActivitat.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
 
-    public ConsultarActivitat(respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn, Context context, String nomActivitat) {
+    public ConsultarActivitat(BasePeticions.respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn, Context context, String nomActivitat) {
         super(listener, objectOut, objectIn);
         this.context = context;
         this.nomActivitat = nomActivitat;

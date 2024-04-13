@@ -26,7 +26,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class ConsultarUsuari extends BasePeticions {
+public class ConsultarUsuari extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarUsuari";
     private String correuUsuari;
@@ -111,5 +111,7 @@ public abstract class ConsultarUsuari extends BasePeticions {
         obtenirUsuari();
     }
 
-    protected abstract Object doInBackground(Void... voids);
+    protected Object doInBackground(Void... voids) {
+        return null;
+    }
 }
