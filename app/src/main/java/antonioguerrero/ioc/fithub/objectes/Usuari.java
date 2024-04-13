@@ -3,7 +3,7 @@ package antonioguerrero.ioc.fithub.objectes;
 import android.content.Context;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
 
@@ -47,43 +47,72 @@ public class Usuari implements Serializable {
         this.tipusUsuari = Integer.parseInt(Utils.VALOR_DEFAULT);
         this.nomUsuari = Utils.VALOR_DEFAULT;
         this.cognomsUsuari = Utils.VALOR_DEFAULT;
-        this.dataNaixement = null;
+        this.dataNaixement = Utils.VALOR_DEFAULT;
         this.adreca = Utils.VALOR_DEFAULT;
         this.telefon = Utils.VALOR_DEFAULT;
-        this.dataInscripcio = null;
+        this.dataInscripcio = Utils.VALOR_DEFAULT;
     }
 
     /**
-     * Constructor de la classe Usuari.
+     * Constructor de la classe Usuari per el registre.
      *
      * @param correuUsuari         El correu electrònic de l'usuari.
      * @param passUsuari    La contrasenya de l'usuari.
-     * @param IDUsuari       L'ID de l'usuari.
-     * @param tipusUsuari          El tipus d'usuari.
-     * @param dataInscripcio La data d'inscripció de l'usuari.
      * @param nomUsuari            El nom de l'usuari.
      * @param cognomsUsuari        Els cognoms de l'usuari.
-     * @param dataNaixement  La data de naixement de l'usuari.
-     * @param adreca         L'adreça de l'usuari.
      * @param telefon        El número de telèfon de l'usuari.
      */
 
-    public Usuari(String correuUsuari, String passUsuari, Integer IDUsuari, Integer tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
+    public Usuari(String correuUsuari, String passUsuari, String nomUsuari, String cognomsUsuari, String telefon) {
         this.correuUsuari = correuUsuari;
         this.passUsuari = passUsuari;
-        this.IDUsuari = -1;
-        this.tipusUsuari = Integer.parseInt(Utils.VALOR_DEFAULT);
-        this.dataInscripcio = Utils.VALOR_DEFAULT;
         this.nomUsuari = nomUsuari;
         this.cognomsUsuari = cognomsUsuari;
-        this.dataNaixement = dataNaixement;
-        this.adreca = adreca;
         this.telefon = telefon;
     }
 
-    /**
-     * Constructor buit de la classe Usuari.
+
+
+    /** Metode per convertir un objecte Usuari a un HashMap
+     * @param usuari Objecte Usuari a convertir
+     * @return HashMap amb les dades de l'usuari
      */
+    public HashMap<String, String> usuari_a_mapa(Usuari usuari) {
+        HashMap<String, String> mapaUsuari = new HashMap<>();
+        mapaUsuari.put("objectType", "usuari");
+        mapaUsuari.put("IDUsuari", String.valueOf(usuari.getIDUsuari()));
+        mapaUsuari.put("correuUsuari", usuari.getCorreuUsuari());
+        mapaUsuari.put("nomUsuari", usuari.getNomUsuari());
+        mapaUsuari.put("cognomsUsuari", usuari.getCognomsUsuari());
+        mapaUsuari.put("dataNaixement", usuari.getDataNaixement());
+        mapaUsuari.put("adreca", usuari.getAdreca());
+        mapaUsuari.put("telefon", usuari.getTelefon());
+        mapaUsuari.put("tipusUsuari", String.valueOf(usuari.getTipusUsuari()));
+        return mapaUsuari;
+    }
+
+    /** Metode per convertir un HashMap a un objecte Usuari
+     * @param map HashMap amb les dades de l'usuari
+     * @return Objecte Usuari amb les dades del HashMap
+     */
+    public Usuari mapa_a_usuari(HashMap<String, String> map) {
+        Usuari usuari = new Usuari();
+        usuari.setIDUsuari(Integer.parseInt(map.get("IDUsuari")));
+        usuari.setCorreuUsuari(map.get("correuUsuari"));
+        usuari.setNomUsuari(map.get("nomUsuari"));
+        usuari.setCognomsUsuari(map.get("cognomsUsuari"));
+        usuari.setDataNaixement(map.get("dataNaixement"));
+        usuari.setAdreca(map.get("adreca"));
+        usuari.setTelefon(map.get("telefon"));
+        usuari.setTipusUsuari(Integer.parseInt(map.get("tipusUsuari")));
+        usuari.setDataInscripcio(map.get("dataInscripcio"));
+        return usuari;
+    }
+
+
+        /**
+         * Constructor buit de la classe Usuari.
+         */
     public Usuari() {
 
     }

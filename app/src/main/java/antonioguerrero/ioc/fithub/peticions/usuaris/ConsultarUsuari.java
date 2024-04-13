@@ -48,7 +48,7 @@ public class ConsultarUsuari extends BasePeticions {
      * Mètode per obtenir les dades d'un usuari.
      */
     public void obtenirUsuari() {
-        enviarPeticio("select", "usuari", this.correuUsuari, this.sessioID);
+        enviarPeticioString("select", "usuari", this.correuUsuari, this.sessioID);
     }
 
     /**

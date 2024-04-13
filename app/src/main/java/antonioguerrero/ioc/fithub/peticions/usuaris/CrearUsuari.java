@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,16 +21,25 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 public class CrearUsuari extends BasePeticions {
     private static final String ETIQUETA = "CrearUsuari";
-    private final Usuari usuari;
+    private String nomUsuari;
+    private String cognomsUsuari;
+    private String telefon;
+    private String correuUsuari;
+    private String passUsuari;
     private final Context context;
 
-    public CrearUsuari(respostaServidorListener listener, Usuari usuari, Context context)  {
+    public CrearUsuari(respostaServidorListener listener, Usuari usuari, Context context){
         super(listener);
-        this.usuari = usuari;
         this.context = context;
+        this.correuUsuari = usuari.getCorreuUsuari();
+        this.passUsuari = usuari.getPassUsuari();
+        this.nomUsuari = usuari.getNomUsuari();
+        this.cognomsUsuari = usuari.getCognomsUsuari();
+        this.telefon = usuari.getTelefon();
+
     }
 
-    public void crearUsuari() {
+    /*public void crearUsuari() {
         // Convertir el objecte Usuari a un HashMap
         HashMap<String, String> mapaUsuari = Utils.ObjecteAHashMap(usuari);
 
@@ -44,10 +56,47 @@ public class CrearUsuari extends BasePeticions {
         usuariMap.put("contrasenya", usuari.getPassUsuari());
         */
         // Crear el Object[] per la petició (sense sessioID)
-        enviarPeticio("insert", "usuari", mapaUsuari, null);
+        /*enviarPeticio("insert", "usuari", mapaUsuari, null);
 
+    }*/
+
+    /*public void crearUsuari() {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    try {
+                        Socket socket = new Socket("192.168.0.252", 8080);
+                        ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+
+                        // Crear un nuevo objeto Usuari con los datos proporcionados
+                        Usuari usuari = new Usuari(correuUsuari, passUsuari, nomUsuari, cognomsUsuari, telefon);
+
+                        // Convertir el objeto Usuari a un HashMap
+                        HashMap<String, String> mapaUsuari = usuari.usuari_a_mapa(usuari);
+
+                        Object[] peticio = new Object[4];
+                        peticio[0] = "insert";
+                        peticio[1] = "usuari";
+                        peticio[2] = mapaUsuari; // Enviar el HashMap del usuario como tercer elemento del array
+                        peticio[3] = null; // No se envía el ID de sesión
+
+                        objectOut.writeObject(peticio);
+                        objectOut.flush();
+
+                        // Registrar la petición en el log de depuración
+                        Log.d(ETIQUETA, "Petición enviada: " + Arrays.toString(peticio));
+                    } catch (IOException e) {
+                        Log.e(ETIQUETA, "Error al enviar la petición de creación de usuario", e);
+                    }
+                    return null;
+                }
+            }.execute();}*/
+
+    public void crearUsuari() {
+        Usuari usuari = new Usuari(correuUsuari, passUsuari, nomUsuari, cognomsUsuari, telefon);
+        HashMap<String, String> mapaUsuari = usuari.usuari_a_mapa(usuari);
+        enviarPeticioHashmap("insert", "usuari", mapaUsuari, null);
     }
-
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;

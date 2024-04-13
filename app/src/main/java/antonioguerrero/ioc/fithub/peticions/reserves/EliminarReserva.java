@@ -46,7 +46,9 @@ public class EliminarReserva extends BasePeticions {
      * Mètode per eliminar una reserva.
      */
     public void eliminarReserva() {
-        enviarPeticio("delete", "reserva", IDReserva, this.sessioID);
+        String IDReservaString = Integer.toString(IDReserva);
+
+        enviarPeticioString("delete", "reserva", IDReservaString, this.sessioID);
     }
 
     /**

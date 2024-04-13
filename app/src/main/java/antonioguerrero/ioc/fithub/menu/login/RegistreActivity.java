@@ -108,7 +108,7 @@ public class RegistreActivity extends AppCompatActivity {
         }
 
         // Crear un objecte Usuari amb les dades obtingudes
-        Usuari usuari = new Usuari(correu, contrasenya, null, null, null, nom, cognoms, null, null, telefon);
+        Usuari usuari = new Usuari(correu, contrasenya, nom, cognoms,telefon);
 
         // Crear una instancia de CrearUsuari
         CrearUsuari crearUsuari = new CrearUsuari(new BasePeticions.respostaServidorListener() {

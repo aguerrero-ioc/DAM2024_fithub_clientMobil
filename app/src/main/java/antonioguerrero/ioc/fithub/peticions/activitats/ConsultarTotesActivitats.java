@@ -44,7 +44,7 @@ public class ConsultarTotesActivitats extends BasePeticions {
      * Mètode per obtenir les dades de totes les activitats.
      */
     public void obtenirActivitats() {
-        enviarPeticio("selectAll", "activitat", null, this.sessioID);
+        enviarPeticioString("selectAll", "activitat", null, this.sessioID);
     }
 
     /**

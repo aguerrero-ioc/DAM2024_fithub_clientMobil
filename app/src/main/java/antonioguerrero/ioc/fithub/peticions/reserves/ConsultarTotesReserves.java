@@ -28,7 +28,9 @@ public class ConsultarTotesReserves extends BasePeticions {
     }
 
     public void consultarTotesReserves() {
-        enviarPeticio("selectAll", "reserva", usuari.getIDUsuari(), this.sessioID);
+        String IDUsuariString = Integer.toString(usuari.getIDUsuari());
+
+        enviarPeticioString("selectAll", "reserva", IDUsuariString, this.sessioID);
     }
 
     @Override

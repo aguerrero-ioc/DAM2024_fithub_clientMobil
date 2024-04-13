@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
@@ -33,20 +34,61 @@ public abstract class BasePeticions {
         this.objectOut = new ObjectOutputStream(socket.getOutputStream());
     }
 
-    protected void enviarPeticioAsync(Object[] peticio) {
+
+
+    protected void enviarPeticioHashmap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
+                    Socket socket = new Socket("192.168.0.252", 8080);
+                    ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+
+                    Object[] peticio = new Object[4];
+                    peticio[0] = operacio;
+                    peticio[1] = nomObjecte;
+                    peticio[2] = objecteMapa;
+                    peticio[3] = idSessio;
+
                     objectOut.writeObject(peticio);
                     objectOut.flush();
+
+
+                    String peticioString = Arrays.toString(peticio);
+                    Log.d("PeticioInfo:", "Petición enviada: " + peticioString);
                 } catch (IOException e) {
-                    Log.e("BasePeticions", "Error al enviar la petición", e);
+                    Log.e("PeticioError:", "Error al enviar la petición", e);
                 }
                 return null;
             }
         }.execute();
     }
+
+    protected void enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) {
+    new AsyncTask<Void, Void, Void>() {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Socket socket = new Socket("192.168.0.252", 8080);
+                ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+
+                Object[] peticio = new Object[4];
+                peticio[0] = operacio;
+                peticio[1] = dada1;
+                peticio[2] = dada2;
+                peticio[3] = idSessio;
+
+                objectOut.writeObject(peticio);
+                objectOut.flush();
+                String peticioString = Arrays.toString(peticio);
+                Log.d("PeticioInfo:", "Petición enviada: " + peticioString);
+            } catch (IOException e) {
+                Log.e("PeticioError:", "Error al enviar la petición", e);
+            }
+            return null;
+        }
+    }.execute();
+}
 
     /**
      * Mètode abstracte per a executar la petició.
@@ -77,13 +119,8 @@ public abstract class BasePeticions {
         void respostaServidor(Object resposta);
     }
 
-    /**
-     * Mètode per enviar una petició al servidor.
-     * @param operacio L'operació a realitzar.
-     * @param dada1 La primera dada a enviar.
-     * @param dada2 La segona dada a enviar.
-     * @param sessioID L'identificador de la sessió.
-     */
+
+    /*
     public void enviarPeticioString(String operacio, String dada1, String dada2, String sessioID) {
         Object[] peticio = new Object[4];
         peticio[0] = operacio;
@@ -94,13 +131,7 @@ public abstract class BasePeticions {
         new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
-    /**
-     * Mètode per enviar una petició al servidor.
-     * @param operacio L'operació a realitzar.
-     * @param entitat L'entitat a la que es realitza l'operació.
-     * @param dades Les dades a enviar.
-     * @param sessioID L'identificador de la sessió.
-     */
+
     public void enviarPeticio(String operacio, String entitat, Object dades, String sessioID) {
         Object[] peticio = new Object[4];
         peticio[0] = operacio;
@@ -109,5 +140,5 @@ public abstract class BasePeticions {
         peticio[3] = sessioID;
 
         new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
-    }
+    }*/
 }

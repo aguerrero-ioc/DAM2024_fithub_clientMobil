@@ -45,7 +45,7 @@ public class CanviarContrasenya extends BasePeticions {
         usuariMap.put("correu", usuari.getCorreuUsuari());
         usuariMap.put("contrasenya", usuari.getPassUsuari());*/
 
-        enviarPeticio("update", "pass", usuariMap, this.sessioID);
+        enviarPeticioHashmap("update", "pass", usuariMap, this.sessioID);
 
     }
     @Override

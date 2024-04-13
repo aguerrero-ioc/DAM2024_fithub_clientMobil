@@ -57,7 +57,7 @@ public class PeticioLogin extends BasePeticions {
     /**
      * Mètode per enviar la petició de login al servidor.
      */
-    public void peticioLogin() {
+    /*public void peticioLogin() {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -81,8 +81,11 @@ public class PeticioLogin extends BasePeticions {
                 }
                 return null;
             }
-        }.execute();}
+        }.execute();}*/
 
+    public void peticioLogin() {
+        enviarPeticioString("login", correuUsuari, passUsuari, null);
+    }
 
     /**
      * Mètode per obtenir el tipus de l'objecte.

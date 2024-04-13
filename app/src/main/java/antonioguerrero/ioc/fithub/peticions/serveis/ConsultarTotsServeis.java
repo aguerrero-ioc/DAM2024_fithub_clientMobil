@@ -46,7 +46,7 @@ public class ConsultarTotsServeis extends BasePeticions {
      * Mètode per obtenir les dades de tots els serveis.
      */
     public void obtenirTotsServeis() {
-        enviarPeticio("select", "serveis", null, this.sessioID);
+        enviarPeticioString("select", "serveis", null, this.sessioID);
     }
 
     /**

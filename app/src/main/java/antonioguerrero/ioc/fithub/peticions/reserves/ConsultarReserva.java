@@ -30,7 +30,8 @@ public class ConsultarReserva extends BasePeticions {
      * @param idReserva L'ID de la reserva a consultar.
      */
     public void consultarReserva(int idReserva) {
-        enviarPeticio("select", "reserva", idReserva, this.sessioID);
+        String idReservaString = Integer.toString(idReserva);
+        enviarPeticioString("select", "reserva", idReservaString, this.sessioID);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class ConsultarActivitat extends BasePeticions {
      * Mètode per obtenir les dades d'una activitat.
      */
     public void obtenirActivitat() {
-        enviarPeticio("select", "activitat", this.nomActivitat, this.sessioID);
+        enviarPeticioString("select", "activitat", this.nomActivitat, this.sessioID);
     }
 
     /**
