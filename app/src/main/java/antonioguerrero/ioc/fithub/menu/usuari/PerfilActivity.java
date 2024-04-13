@@ -11,9 +11,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
@@ -37,11 +36,14 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
 
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefonContacte, etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya;
     private Button btnGuardarCanvis, btnEditarPerfil, btnCanviContrasenya, btnGuardarCanviContrasenya;
-    private Usuari usuari;
-
     private Context context;
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    private SharedPreferences preferencies;
+    private String sessioID;
+    private Usuari usuari;
+    private ObjectOutputStream objecteSortida;
+    private ObjectInputStream objecteEntrada;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +86,21 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         // Obtenció de la referència de l'ImageView de la imatge de l'usuari
         ImageView ivImatgeUsuari = findViewById(R.id.iv_imatge_usuari);
 
+        // Configuració del clic al ImageView
+        ivImatgeUsuari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.mostrarToast(PerfilActivity.this, "Pendent d'implementar");
+            }
+        });
+
         // Verificació si l'usuari té una imatge personalitzada
         boolean usuariTeImatgePersonalitzada = false;
 
         // Verificació si l'usuari té una imatge personalitzada
         if (usuariTeImatgePersonalitzada) {
             // Si té, carrega la imatge personalitzada
-            // PENDENT IMPLEMENTAR lògica per carregar la imatge de l'usuari
-            // ivImatgeUsuari.setImageResource(R.drawable.imagen_usuario_personalizada);
+            // PENDENT IMPLEMENTAR
         } else {
             // Si no té, carrega la imatge predeterminada
             ivImatgeUsuari.setImageResource(R.mipmap.default_imatge_perfil);
@@ -137,6 +146,19 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
             }
         });
 
+        context = this;
+        preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+
+        // Obtenir les dades de l'usuari de l'Intent
+        usuari = getIntent().getParcelableExtra("usuari");
+
+        // Actualitzar la interfície amb les dades de l'usuari
+        if (usuari != null) {
+            actualitzarUsuari(usuari);
+        } else {
+            Log.e("PerfilActivity", "Error: No s'han rebut les dades de l'usuari correctament");
+        }
 
     }
 
@@ -232,7 +254,12 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
     public void actualitzarUsuari(Usuari usuari) {
 
         // Crear una instancia de ConsultarUsuari
-        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID);
+        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID, objecteSortida, objecteEntrada) {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
+        };
         // Ejecutar la petición al servidor
         consultarUsuariInstance.execute();
 
@@ -314,6 +341,29 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
             return;
         }
 
+        // Comprovar el format correcte del nom
+        if (!nom.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+            Utils.mostrarToast(getApplicationContext(), "El nom només pot contenir lletres");
+            return;
+        }
+
+        // Comprovar el format correcte dels cognoms
+        if (!cognoms.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+            Utils.mostrarToast(getApplicationContext(), "Els cognoms només poden contenir lletres");
+            return;
+        }
+        // Comprovar el format correcte de la data de naixement
+        if (!dataNaixement.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            Utils.mostrarToast(getApplicationContext(), "El format de la data de naixement ha de ser dd/MM/yyyy");
+            return;
+        }
+
+        // Comprovar el format correcte del telèfon
+        if (!telefon.matches("\\d{9}")) {
+            Utils.mostrarToast(getApplicationContext(), "El telèfon ha de tenir 9 dígits");
+            return;
+        }
+
         // Actualitzar les dades de l'objecte Usuari amb els valors dels EditText
         usuari.setNomUsuari(nom);
         usuari.setCognomsUsuari(cognoms);
@@ -323,7 +373,12 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         usuari.setCorreuUsuari(correu);
 
         //Cridar al mètode modificarUsuari de la classe ModificarUsuari per enviar la petició al servidor
-        ModificarUsuari modificarUsuariInstance = new ModificarUsuari((BasePeticions.respostaServidorListener) this, sessioID);
+        ModificarUsuari modificarUsuariInstance = new ModificarUsuari((BasePeticions.respostaServidorListener) this, sessioID, objecteSortida, objecteEntrada) {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
+        };
         modificarUsuariInstance.modificarUsuari(usuari);
 
         Utils.mostrarToast(getApplicationContext(), "Canvis guardats");
@@ -341,7 +396,12 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
 
         // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
-        CanviarContrasenya canviarContrasenyaInstance = new CanviarContrasenya((BasePeticions.respostaServidorListener) this, usuari);
+        CanviarContrasenya canviarContrasenyaInstance = new CanviarContrasenya((BasePeticions.respostaServidorListener) this, usuari, objecteSortida, objecteEntrada) {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
+        };
         canviarContrasenyaInstance.canviarContrasenya();
     }
 
@@ -352,6 +412,11 @@ public class PerfilActivity extends AppCompatActivity implements ConnexioServido
         String contrasenyaActual = etContrasenyaActual.getText().toString();
         String novaContrasenya = etNovaContrasenya.getText().toString();
         String confirmarContrasenya = etConfirmarContrasenya.getText().toString();
+
+        // Comprovar si s'ha obtingut l'usuari correctament
+        if (usuari == null) {
+            Utils.mostrarToast(getApplicationContext(), "Error: No s'ha pogut obtenir l'usuari");
+        }
 
         // Comprovar que cap dels camps estigui buit
         if (contrasenyaActual.isEmpty() || novaContrasenya.isEmpty() || confirmarContrasenya.isEmpty()) {

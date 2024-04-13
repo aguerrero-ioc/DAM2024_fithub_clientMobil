@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -24,7 +26,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class ConsultarUsuari extends BasePeticions {
+public abstract class ConsultarUsuari extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarUsuari";
     private String correuUsuari;
@@ -37,8 +39,8 @@ public class ConsultarUsuari extends BasePeticions {
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarUsuari(respostaServidorListener listener, Context context, String correuUsuari, String sessioID) {
-        super(listener);
+    public ConsultarUsuari(respostaServidorListener listener, Context context, String correuUsuari, String sessioID, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
         this.context = context;
         this.correuUsuari = correuUsuari;
         this.sessioID = sessioID;
@@ -108,4 +110,6 @@ public class ConsultarUsuari extends BasePeticions {
     public void execute() {
         obtenirUsuari();
     }
+
+    protected abstract Object doInBackground(Void... voids);
 }

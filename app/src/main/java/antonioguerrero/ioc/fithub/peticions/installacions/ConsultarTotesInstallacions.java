@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class ConsultarTotesInstallacions extends BasePeticions {
+public abstract class ConsultarTotesInstallacions extends BasePeticions {
     private final Context context;
     private static final String ETIQUETA = "ConsultarInstallacions";
     SharedPreferences preferencies;
@@ -36,8 +38,8 @@ public class ConsultarTotesInstallacions extends BasePeticions {
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarTotesInstallacions(respostaServidorListener listener, Context context) {
-        super(listener);
+    public ConsultarTotesInstallacions(respostaServidorListener listener, Context context, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
         this.context = context;
         this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);

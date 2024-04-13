@@ -3,6 +3,8 @@ package antonioguerrero.ioc.fithub.peticions.reserves;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +14,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 //import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 
 
-public class ConsultarClassesDirigidesDia extends BasePeticions {
+public abstract class ConsultarClassesDirigidesDia extends BasePeticions {
 
     private String dia;
     private Context context;
@@ -21,8 +23,8 @@ public class ConsultarClassesDirigidesDia extends BasePeticions {
     private static final String ETIQUETA = "ConsultarClasseDirigidaDia";
 
 
-    public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context) {
-        super(listener);
+    public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
         this.context = context;
         this.dia = dia;
         this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);

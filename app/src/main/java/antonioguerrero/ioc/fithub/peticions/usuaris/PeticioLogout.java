@@ -5,12 +5,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
-public class PeticioLogout extends BasePeticions {
+public abstract class PeticioLogout extends BasePeticions {
     private static final String ETIQUETA = "PeticioLogout";
     private String idUsuariLogout;
     private String idSessioLogout;
@@ -19,8 +21,8 @@ public class PeticioLogout extends BasePeticions {
     SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
     String sessioID = preferencies.getString("sessioID", "");
 
-    public PeticioLogout(respostaServidorListener listener, String idUsuariLogout, String idSessioLogout) {
-        super(listener);
+    public PeticioLogout(respostaServidorListener listener, String idUsuariLogout, String idSessioLogout, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
         this.idUsuariLogout = idUsuariLogout;
         this.idSessioLogout = idSessioLogout;
     }

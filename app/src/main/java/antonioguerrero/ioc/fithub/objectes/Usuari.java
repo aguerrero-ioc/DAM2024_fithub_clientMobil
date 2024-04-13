@@ -77,7 +77,7 @@ public class Usuari implements Serializable {
      * @param usuari Objecte Usuari a convertir
      * @return HashMap amb les dades de l'usuari
      */
-    public HashMap<String, String> usuari_a_mapa(Usuari usuari) {
+    public HashMap<String, String> usuari_a_hashmap(Usuari usuari) {
         HashMap<String, String> mapaUsuari = new HashMap<>();
         mapaUsuari.put("objectType", "usuari");
         mapaUsuari.put("IDUsuari", String.valueOf(usuari.getIDUsuari()));
@@ -95,7 +95,7 @@ public class Usuari implements Serializable {
      * @param map HashMap amb les dades de l'usuari
      * @return Objecte Usuari amb les dades del HashMap
      */
-    public Usuari mapa_a_usuari(HashMap<String, String> map) {
+    public Usuari hashmap_a_usuari(HashMap<String, String> map) {
         Usuari usuari = new Usuari();
         usuari.setIDUsuari(Integer.parseInt(map.get("IDUsuari")));
         usuari.setCorreuUsuari(map.get("correuUsuari"));

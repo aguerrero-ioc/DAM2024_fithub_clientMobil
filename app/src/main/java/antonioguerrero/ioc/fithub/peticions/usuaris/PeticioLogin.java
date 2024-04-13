@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class PeticioLogin extends BasePeticions {
+public abstract class PeticioLogin extends BasePeticions {
 
     private static String ETIQUETA = "PeticioLogin";
     private String correuUsuari;
@@ -43,12 +44,12 @@ public class PeticioLogin extends BasePeticions {
     /**
      * Constructor de la classe PeticioLogin.
      *
-     * @param context      Contexto de la aplicación
-     * @param correuUsuari Correu electrònic de l'usuari per a l'inici de sessió
-     * @param passUsuari  Contrasenya de l'usuari per a l'inici de sessió
+     * @param context      El context de l'aplicació.
+     * @param correuUsuari El correu de l'usuari.
+     * @param passUsuari   La contrasenya de l'usuari.
      */
-    public PeticioLogin(Context context, String correuUsuari, String passUsuari) {
-        super(null);
+    public PeticioLogin(Context context, String correuUsuari, String passUsuari, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(null, objectOut, objectIn);
         this.context = context;
         this.correuUsuari = correuUsuari;
         this.passUsuari = passUsuari;
@@ -173,4 +174,5 @@ public void respostaServidor(Object resposta){
         }
     }
 
+    protected abstract Object doInBackground(Void... voids);
 }

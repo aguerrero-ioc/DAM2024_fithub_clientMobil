@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -11,7 +13,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
-public class ModificarReserva extends BasePeticions {
+public abstract class ModificarReserva extends BasePeticions {
     private Reserva reserva;
     private Context context;
     private static final String ETIQUETA = "ModificarReserva";
@@ -19,8 +21,8 @@ public class ModificarReserva extends BasePeticions {
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    public ModificarReserva(BasePeticions.respostaServidorListener listener) {
-        super(listener);
+    public ModificarReserva(BasePeticions.respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
     }
 
     /**

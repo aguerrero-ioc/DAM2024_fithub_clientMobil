@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -12,7 +14,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
-public class ConsultarTotesReserves extends BasePeticions {
+public abstract class ConsultarTotesReserves extends BasePeticions {
 
     private Context context;
     private Usuari usuari;
@@ -21,8 +23,8 @@ public class ConsultarTotesReserves extends BasePeticions {
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    public ConsultarTotesReserves(respostaServidorListener listener, Context context, Usuari usuari) {
-        super(listener);
+    public ConsultarTotesReserves(respostaServidorListener listener, Context context, Usuari usuari, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
         this.context = context;
         this.usuari = usuari;
     }

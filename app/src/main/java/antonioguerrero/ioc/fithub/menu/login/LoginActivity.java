@@ -14,6 +14,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
@@ -25,6 +28,9 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.re
 
     private EditText etCorreuUsuari, etContrasenya;
     private Context context;
+    private ObjectOutputStream objectOut;
+    private ObjectInputStream objectIn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +84,13 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.re
     }
 
     private void enviarLogin(String correuUsuari, String passUsuari) {
-        PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari);
+
+        PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari, objectOut, objectIn) {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
+        };
         peticioLogin.execute();
     }
 

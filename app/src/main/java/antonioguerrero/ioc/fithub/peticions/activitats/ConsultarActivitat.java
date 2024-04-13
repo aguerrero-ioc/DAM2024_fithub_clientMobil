@@ -2,14 +2,13 @@ package antonioguerrero.ioc.fithub.peticions.activitats;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import java.util.Arrays;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Activitat;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
@@ -22,7 +21,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class ConsultarActivitat extends BasePeticions {
+public abstract class ConsultarActivitat extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultaActivitat";
     private String nomActivitat;
@@ -36,8 +35,8 @@ public class ConsultarActivitat extends BasePeticions {
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
 
-    public ConsultarActivitat(respostaServidorListener listener, Context context, String nomActivitat) {
-        super(listener);
+    public ConsultarActivitat(respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn, Context context, String nomActivitat) {
+        super(listener, objectOut, objectIn);
         this.context = context;
         this.nomActivitat = nomActivitat;
     }

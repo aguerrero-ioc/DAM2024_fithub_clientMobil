@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
@@ -27,7 +30,8 @@ public class RegistreActivity extends AppCompatActivity {
 
     // Elements de la interfície d'usuari
     private EditText etNom, etCognoms, etTelefon, etCorreuElectronic, etContrasenya, etRepetirContrasenya;
-
+    private ObjectOutputStream objecteSortida;
+    private ObjectInputStream objecteEntrada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,24 @@ public class RegistreActivity extends AppCompatActivity {
             return;
         }
 
+        // Comprovar el format correcte del nom
+        if (!nom.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+            Utils.mostrarToast(getApplicationContext(), "El nom només pot contenir lletres");
+            return;
+        }
+
+        // Comprovar el format correcte dels cognoms
+        if (!cognoms.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+            Utils.mostrarToast(getApplicationContext(), "Els cognoms només poden contenir lletres");
+            return;
+        }
+
+        // Comprovar el format correcte del telèfon
+        if (!telefon.matches("\\d{9}")) {
+            Utils.mostrarToast(getApplicationContext(), "El telèfon ha de tenir 9 dígits");
+            return;
+        }
+
         // Verificar si el correu electrònic està en el format correcte
         if (!esEmailValid(correu)) {
             Utils.mostrarToast(getApplicationContext(), "Format de correu electrònic invàlid");
@@ -115,7 +137,12 @@ public class RegistreActivity extends AppCompatActivity {
             @Override
             public void respostaServidor(Object resposta) {
             }
-        }, usuari, RegistreActivity.this);
+        }, usuari, RegistreActivity.this, objecteSortida, objecteEntrada) {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
+        };
 
         // Enviar la petició al servidor
         crearUsuari.execute();

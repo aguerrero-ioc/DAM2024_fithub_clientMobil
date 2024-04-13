@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
-public class CanviarContrasenya extends BasePeticions {
+public abstract class CanviarContrasenya extends BasePeticions {
 
     private static final String ETIQUETA = "CanviarContrasenya";
     private Usuari usuari;
@@ -24,8 +26,8 @@ public class CanviarContrasenya extends BasePeticions {
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    public CanviarContrasenya(respostaServidorListener listener, Usuari usuari) {
-        super(listener);
+    public CanviarContrasenya(respostaServidorListener listener, Usuari usuari, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
         this.usuari = usuari;
     }
 
@@ -95,4 +97,5 @@ public class CanviarContrasenya extends BasePeticions {
     }
 
 
+    protected abstract Object doInBackground(Void... voids);
 }

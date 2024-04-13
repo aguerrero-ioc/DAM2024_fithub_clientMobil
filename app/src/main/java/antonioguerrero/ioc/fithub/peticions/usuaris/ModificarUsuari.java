@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -14,7 +16,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
-public class ModificarUsuari extends BasePeticions {
+public abstract class ModificarUsuari extends BasePeticions {
 
     private static final String ETIQUETA = "ModificarUsuari";
     private Usuari usuari;
@@ -22,8 +24,8 @@ public class ModificarUsuari extends BasePeticions {
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    public ModificarUsuari(respostaServidorListener listener, String sessioID) {
-        super(listener);
+    public ModificarUsuari(respostaServidorListener listener, String sessioID, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
         this.sessioID = sessioID;
     }
 
@@ -95,4 +97,6 @@ public class ModificarUsuari extends BasePeticions {
     public void execute() {
         modificarUsuari(usuari);
     }
+
+    protected abstract Object doInBackground(Void... voids);
 }

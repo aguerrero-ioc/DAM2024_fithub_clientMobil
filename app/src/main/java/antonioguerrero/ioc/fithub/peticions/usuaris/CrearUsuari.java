@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -19,7 +20,7 @@ import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
-public class CrearUsuari extends BasePeticions {
+public abstract class CrearUsuari extends BasePeticions {
     private static final String ETIQUETA = "CrearUsuari";
     private String nomUsuari;
     private String cognomsUsuari;
@@ -28,8 +29,8 @@ public class CrearUsuari extends BasePeticions {
     private String passUsuari;
     private final Context context;
 
-    public CrearUsuari(respostaServidorListener listener, Usuari usuari, Context context){
-        super(listener);
+    public CrearUsuari(respostaServidorListener listener, Usuari usuari, Context context, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+        super(listener, objectOut, objectIn);
         this.context = context;
         this.correuUsuari = usuari.getCorreuUsuari();
         this.passUsuari = usuari.getPassUsuari();
@@ -94,7 +95,7 @@ public class CrearUsuari extends BasePeticions {
 
     public void crearUsuari() {
         Usuari usuari = new Usuari(correuUsuari, passUsuari, nomUsuari, cognomsUsuari, telefon);
-        HashMap<String, String> mapaUsuari = usuari.usuari_a_mapa(usuari);
+        HashMap<String, String> mapaUsuari = usuari.usuari_a_hashmap(usuari);
         enviarPeticioHashmap("insert", "usuari", mapaUsuari, null);
     }
     @Override
@@ -128,4 +129,6 @@ public class CrearUsuari extends BasePeticions {
     public void execute() {
         crearUsuari();
     }
+
+    protected abstract Object doInBackground(Void... voids);
 }

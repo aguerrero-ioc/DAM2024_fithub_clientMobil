@@ -28,12 +28,9 @@
         <activity android:name=".menu.main.AdminActivity" />
         <activity android:name=".menu.main.ClientActivity" />
         <activity android:name=".menu.usuari.PerfilActivity" />
-        <activity android:name=".menu.missatges.MissatgesActivity" />
         <activity android:name=".menu.activitats.ActivitatsActivity" />
         <activity android:name=".menu.serveis.ServeisActivity" />
         <activity android:name=".menu.installacions.InstallacionsActivity" />
-        <activity android:name=".menu.classesdirigides.ClassesActivity" />
-        <activity android:name=".menu.reserves.ReservesActivity" />
     </application>
 
 </manifest>

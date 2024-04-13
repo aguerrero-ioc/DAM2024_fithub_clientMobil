@@ -4,12 +4,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.HashMap;
-
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe abstracta base per a les peticions al servidor.
@@ -23,9 +22,12 @@ public abstract class BasePeticions {
 
     /**
      * Constructor de la classe BasePeticions.
-     * @param listener L'objecte que escoltarà les respostes del servidor.
+     *
+     * @param listener  L'objecte que escoltarà les respostes del servidor.
+     * @param objectOut
+     * @param objectIn
      */
-    public BasePeticions(respostaServidorListener listener) {
+    public BasePeticions(respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
         this.listener = listener;
     }
 
@@ -80,6 +82,8 @@ public abstract class BasePeticions {
 
                 objectOut.writeObject(peticio);
                 objectOut.flush();
+
+
                 String peticioString = Arrays.toString(peticio);
                 Log.d("PeticioInfo:", "Petición enviada: " + peticioString);
             } catch (IOException e) {
