@@ -29,7 +29,7 @@ public class ActivitatQuadriculaAdapter extends RecyclerView.Adapter<ActivitatQu
     @NonNull
     @Override
     public ActivitatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activitat_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_activitat, parent, false);
         return new ActivitatViewHolder(view);
     }
 

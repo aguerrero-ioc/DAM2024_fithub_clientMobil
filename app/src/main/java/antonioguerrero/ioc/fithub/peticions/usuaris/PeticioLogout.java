@@ -35,7 +35,6 @@ public class PeticioLogout extends BasePeticions {
 
 
         Log.d(ETIQUETA, "Enviant petició: " + peticio.toString());
-        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }
 
     @Override

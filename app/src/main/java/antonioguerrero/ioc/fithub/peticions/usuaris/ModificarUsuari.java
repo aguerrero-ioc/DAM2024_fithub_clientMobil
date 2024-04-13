@@ -43,7 +43,7 @@ public class ModificarUsuari extends BasePeticions {
         requestMap.put("correu", usuari.getCorreuUsuari());
         requestMap.put("contrasenya", usuari.getPassUsuari());*/
 
-        enviarPeticio("update", "usuari", mapaUsuari, this.sessioID, ETIQUETA);
+        enviarPeticio("update", "usuari", mapaUsuari, this.sessioID);
     }
 
     @Override

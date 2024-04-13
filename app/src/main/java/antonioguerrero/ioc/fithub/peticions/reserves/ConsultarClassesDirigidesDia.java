@@ -30,7 +30,7 @@ public class ConsultarClassesDirigidesDia extends BasePeticions {
     }
 
     public void obtenirClassesDirigides() {
-        enviarPeticio("selectAll", "classe", dia, this.sessioID, ETIQUETA);
+        enviarPeticio("selectAll", "classe", dia, this.sessioID);
     }
 
     @Override

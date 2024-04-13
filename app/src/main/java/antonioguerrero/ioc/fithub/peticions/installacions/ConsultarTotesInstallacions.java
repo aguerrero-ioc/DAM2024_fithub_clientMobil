@@ -47,7 +47,7 @@ public class ConsultarTotesInstallacions extends BasePeticions {
      * Mètode per obtenir les dades de totes les instal·lacions.
      */
     public void obtenirInstallacions() {
-        enviarPeticio("selectAll", "installacio", null, this.sessioID, ETIQUETA);
+        enviarPeticio("selectAll", "installacio", null, this.sessioID);
 
     }
 

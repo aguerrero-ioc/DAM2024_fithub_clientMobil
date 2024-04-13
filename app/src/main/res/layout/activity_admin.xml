@@ -1,118 +1,92 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/drawer_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_gray"
-    tools:context=".menu.main.ClientActivity">
+    android:background="@color/light_gray">
 
-    <!-- Títol de l'aplicació -->
-    <TextView
-        android:id="@+id/text_titol_aplicacio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/nom_app"
-        android:layout_marginTop="30dp"
-        android:textSize="30sp"
-        android:textStyle="bold" />
 
-    <!-- Menú superior dret de l'usuari -->
-    <ImageButton
-        android:id="@+id/boto_perfil_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="10dp"
-        android:src="@drawable/ic_perfil"
-        android:onClick="toggleMenu" />
+
+    <!-- Toolbar -->
 
     <!-- Barra de títol -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Títol de l'aplicació -->
+        <TextView
+            android:id="@+id/text_titol_aplicacio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/nom_app"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <!-- Botó de perfil -->
+        <ImageButton
+            android:id="@+id/boto_perfil_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="toggleMenu"
+
+            android:src="@drawable/ic_perfil" />
+
+        <!-- Botó d'accés a panell esquerre-->
+        <ImageButton
+            android:id="@+id/boto_acces_panell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="accedirPanell"
+            android:src="@drawable/ic_menu" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:id="@+id/layout_titol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/text_titol_aplicacio"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp">
 
-        <!-- Títol de la gestio -->
+        <!-- Títol de l'activitat -->
         <TextView
             android:id="@+id/text_titol_gestions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/gestionar"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
+            android:textStyle="bold" />
+
     </LinearLayout>
 
-    <!-- Menú desplegable del perfil -->
-    <LinearLayout
-        android:id="@+id/layoutPerfilMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/boto_perfil_admin"
-        android:layout_below="@id/boto_perfil_admin"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/menu_background"
-        android:orientation="vertical"
-        android:elevation="8dp"
-        android:visibility="gone"> <!-- Per defecte, menú ocult -->
-
-        <!-- Nom d'usuari -->
-        <TextView
-            android:id="@+id/tv_usuari"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nom_d_usuari"
-            android:textColor="@color/backgroundColorPrimary"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Tipus de client -->
-        <TextView
-            android:id="@+id/tv_tipus_client"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tipus_de_client"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Barra de separació -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Opcions del menú -->
-        <TextView
-            android:id="@+id/opcio_perfil1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/el_meu_compte"
-            android:background="@drawable/menu_item_background"
-            android:textColor="@android:color/black"
-            android:padding="10dp"/>
-
-        <TextView
-            android:id="@+id/opcio_logout_admin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tancar_sessio"
-            android:background="@drawable/menu_item_background"
-            android:textColor="@android:color/black"
-            android:padding="10dp"/>
-    </LinearLayout>
 
     <!-- Botons de gestions -->
     <LinearLayout
@@ -122,7 +96,8 @@
         android:layout_marginTop="40dp"
         android:orientation="vertical"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp">
+        android:layout_marginEnd="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/layout_titol">
 
         <Button
             android:id="@+id/boto_gestio1"
@@ -161,4 +136,97 @@
             android:paddingBottom="10dp"/>
 
     </LinearLayout>
-</RelativeLayout>
+
+    <!-- Menú desplegable del perfil -->
+    <LinearLayout
+        android:id="@+id/layoutPerfilMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/menu_background"
+        android:orientation="vertical"
+        android:elevation="8dp"
+        android:visibility="gone"
+        android:animateLayoutChanges="true"
+        app:layout_constraintEnd_toEndOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <!-- Nom d'usuari -->
+        <TextView
+            android:id="@+id/tv_usuari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nom_d_usuari"
+            android:textColor="@color/backgroundColorPrimary"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="8dp"/>
+
+        <!-- Tipus de client -->
+        <TextView
+            android:id="@+id/tv_tipus_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tipus_de_client"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="8dp"/>
+
+        <!-- Barra de separació -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Opcions del menú -->
+        <TextView
+            android:id="@+id/opcio_perfil1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/el_meu_compte"
+            android:background="@drawable/menu_item_background"
+            android:textColor="@android:color/black"
+            android:padding="10dp"
+            android:drawablePadding="8dp"/>
+
+        <TextView
+            android:id="@+id/opcio_logout_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tancar_sessio"
+            android:background="@drawable/menu_item_background"
+            android:textColor="@android:color/black"
+            android:padding="10dp"
+            android:drawablePadding="8dp"/>
+    </LinearLayout>
+
+    <!-- Botó de missatges -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/boto_mostrar_missatges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_missatge"
+        android:background="?attr/colorPrimary"
+
+        android:onClick="mostrarFragmentMissatges"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!-- NavigationView per el panell desplegable -->
+<com.google.android.material.navigation.NavigationView
+    android:id="@+id/nav_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="start"
+    app:menu="@menu/menu_navigation_usuari">
+
+</com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

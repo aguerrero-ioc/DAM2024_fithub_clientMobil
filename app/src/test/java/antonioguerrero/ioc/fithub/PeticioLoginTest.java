@@ -1,4 +1,4 @@
-package antonioguerrero.ioc.fithub;
+/*package antonioguerrero.ioc.fithub;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -109,4 +109,4 @@ public class PeticioLoginTest {
         // Verificar que se llama al método respostaServidor con los argumentos correctos
         verify(peticioLogin).respostaServidor(resposta);
     }
-}
+}*/

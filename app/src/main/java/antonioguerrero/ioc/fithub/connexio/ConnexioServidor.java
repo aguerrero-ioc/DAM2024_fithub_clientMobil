@@ -24,8 +24,11 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  */
 public class ConnexioServidor {
 
-    private static final String SERVER_IP = "192.168.0.216";
-    private static final int SERVER_PORT = 8080;
+    public static final String SERVIDOR_IP = "192.168.0.252";
+    public static final int SERVIDOR_PORT = 8080;
+
+    protected Socket socket;
+    protected ObjectOutputStream objectOut;
 
     private static respostaServidorListener listener;
 
@@ -36,6 +39,11 @@ public class ConnexioServidor {
      */
     public ConnexioServidor(respostaServidorListener listener) {
         this.listener = listener;
+    }
+
+    public void Conectar(String direccionServidor, int puertoServidor) throws IOException {
+        this.socket = new Socket(direccionServidor, puertoServidor);
+        this.objectOut = new ObjectOutputStream(socket.getOutputStream());
     }
 
 
@@ -52,20 +60,20 @@ public class ConnexioServidor {
         protected Object[] doInBackground(Object[]... params) {
             Object[] peticioArray = params[0];
             try {
-                Socket socket = new Socket(SERVER_IP, SERVER_PORT);
+                Socket socket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
 
-                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+                ObjectOutputStream sortida = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream entrada = new ObjectInputStream(socket.getInputStream());
 
                 // Llegir la resposta inicial del servidor
-                String respostaHandshake = in.readLine();
+                String respostaHandshake = (String) entrada.readObject();
                 Log.d("ConnexioServidor", "Resposta del handshake: " + respostaHandshake);
 
                 // Enviar la petició al servidor com un array d'objectes
-                out.writeObject(peticioArray);
+                sortida.writeObject(peticioArray);
 
                 // Llegir la resposta del servidor com un array d'objectes
-                Object[] resposta = (Object[]) in.readObject();
+                Object[] resposta = (Object[]) entrada.readObject();
 
                 // Crear un nou array del tipus correcte
                 Class<?>[] tipusObjecte = new Class[]{peticio.obtenirTipusObjecte()};
@@ -74,8 +82,8 @@ public class ConnexioServidor {
                 // Copiar els objectes de la resposta en el nou array
                 System.arraycopy(resposta, 0, respostaTipusCorrecte, 0, resposta.length);
 
-                out.close();
-                in.close();
+                sortida.close();
+                entrada.close();
                 socket.close();
 
                 return resposta;

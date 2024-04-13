@@ -44,7 +44,7 @@ public class CrearUsuari extends BasePeticions {
         usuariMap.put("contrasenya", usuari.getPassUsuari());
         */
         // Crear el Object[] per la petició (sense sessioID)
-        enviarPeticio("insert", "usuari", mapaUsuari, null, ETIQUETA);
+        enviarPeticio("insert", "usuari", mapaUsuari, null);
 
     }
 

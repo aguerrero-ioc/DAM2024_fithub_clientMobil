@@ -32,7 +32,7 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.Reserv
     @NonNull
     @Override
     public ReservesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activitat_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_activitat, parent, false);
         return new ReservesViewHolder(view);
     }
 
@@ -51,8 +51,9 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.Reserv
             Activitat activitat = llistaActivitats[position / 7][position % 7];
             if (activitat != null) {
                 holder.nomActivitat.setText(activitat.getNomActivitat());
-                holder.diaActivitat.setText(activitat.getDia());
-                holder.horaIniciActivitat.setText(activitat.getHoraInici());
+                holder.descripcioActivitat.setText(activitat.getDescripcioActivitat());
+                holder.aforamentActivitat.setText(activitat.getAforamentActivitat());
+                holder.tipusInstallacio.setText(activitat.getTipusInstallacio());
             } else {
                 holder.nomActivitat.setText("");
                 // Netejar les altres vistes del ViewHolder
@@ -69,17 +70,20 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.Reserv
 
     static class ReservesViewHolder extends RecyclerView.ViewHolder {
         TextView nomActivitat;
-        TextView diaActivitat;
-        TextView horaIniciActivitat;
+        TextView descripcioActivitat;
+        TextView aforamentActivitat;
+                TextView tipusInstallacio;
 
         public ReservesViewHolder(@NonNull View itemView) {
             super(itemView);
             nomActivitat = itemView.findViewById(R.id.nomActivitat);
-            diaActivitat = itemView.findViewById(R.id.diaActivitat);
-            horaIniciActivitat = itemView.findViewById(R.id.horaIniciActivitat);
+            descripcioActivitat = itemView.findViewById(R.id.descripcioActivitat);
+            aforamentActivitat = itemView.findViewById(R.id.aforamentActivitat);
+            tipusInstallacio = itemView.findViewById(R.id.tipusInstallacio);
+
 
             // Comprovar si els TextViews s'han inicialitzat correctament
-            if (nomActivitat == null || diaActivitat == null || horaIniciActivitat == null) {
+            if (nomActivitat == null || descripcioActivitat == null || aforamentActivitat == null || tipusInstallacio == null) {
                 throw new RuntimeException("Error al inicialitzar els TextViews en el ViewHolder");
             }
         }

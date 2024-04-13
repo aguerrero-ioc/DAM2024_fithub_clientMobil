@@ -46,7 +46,7 @@ public class ConsultarTotsServeis extends BasePeticions {
      * Mètode per obtenir les dades de tots els serveis.
      */
     public void obtenirTotsServeis() {
-        enviarPeticio("select", "serveis", null, this.sessioID, ETIQUETA);
+        enviarPeticio("select", "serveis", null, this.sessioID);
     }
 
     /**
@@ -73,8 +73,8 @@ public class ConsultarTotsServeis extends BasePeticions {
             if (estat != null && estat.equals("serveiLlista")) {
                 // Obtenir la llista de serveis
                 List<HashMap<String, String>> llistaServeis = (List<HashMap<String, String>>) respostaArray[1];
-                // Iniciar l'activitat ServeisActivity
-                Utils.iniciarActivitatLlista(context, ServeisActivity.class, llistaServeis, "llistaServeis");
+                /*// Iniciar l'activitat ServeisActivity
+                Utils.iniciarActivitatLlista(context, ServeisActivity.class, llistaServeis, "llistaServeis");*/
                 // Guardar les dades dels serveis a SharedPreferences
                 guardarDadesServeis(llistaServeis);
             } else {

@@ -36,7 +36,7 @@ public class CrearReserva extends BasePeticions {
         mapaReserva.put("IDReserva", String.valueOf(reserva.getIDReserva()));
         mapaReserva.put("IDUsuari", String.valueOf(reserva.getIDUsuari()));
 
-        enviarPeticio("insert", "reserva", mapaReserva, this.sessioID, ETIQUETA);
+        enviarPeticio("insert", "reserva", mapaReserva, this.sessioID);
     }
 
     @Override

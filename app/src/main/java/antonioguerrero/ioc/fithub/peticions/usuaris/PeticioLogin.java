@@ -6,7 +6,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -28,10 +32,10 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  */
 public class PeticioLogin extends BasePeticions {
 
-    private static final String ETIQUETA = "PeticioLogin";
-    private final String correuUsuari;
-    private final String contrasenya;
-    private final Context context;
+    private static String ETIQUETA = "PeticioLogin";
+    private String correuUsuari;
+    private String passUsuari;
+    private Context context;
 
     Utils.LogWrapper logWrapper = new Utils.LogWrapper();
 
@@ -41,21 +45,44 @@ public class PeticioLogin extends BasePeticions {
      *
      * @param context      Contexto de la aplicación
      * @param correuUsuari Correu electrònic de l'usuari per a l'inici de sessió
-     * @param contrasenya  Contrasenya de l'usuari per a l'inici de sessió
+     * @param passUsuari  Contrasenya de l'usuari per a l'inici de sessió
      */
-    public PeticioLogin(Context context, String correuUsuari, String contrasenya) {
+    public PeticioLogin(Context context, String correuUsuari, String passUsuari) {
         super(null);
         this.context = context;
         this.correuUsuari = correuUsuari;
-        this.contrasenya = contrasenya;
+        this.passUsuari = passUsuari;
     }
 
     /**
      * Mètode per enviar la petició de login al servidor.
      */
     public void peticioLogin() {
-        enviarPeticio("login", this.correuUsuari, this.contrasenya, null, ETIQUETA);
-    }
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    Socket socket = new Socket("192.168.0.252", 8080);
+                    ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+
+                    Object[] peticio = new Object[4];
+                    peticio[0] = "login";
+                    peticio[1] = correuUsuari;
+                    peticio[2] = passUsuari;
+                    peticio[3] = null;
+
+                    objectOut.writeObject(peticio);
+                    objectOut.flush();
+
+                    // Registrar la petición en el log de depuración
+                    Log.d(ETIQUETA, "Petición enviada: " + Arrays.toString(peticio));
+                } catch (IOException e) {
+                    Log.e(ETIQUETA, "Error al enviar la petición de inicio de sesión", e);
+                }
+                return null;
+            }
+        }.execute();}
+
 
     /**
      * Mètode per obtenir el tipus de l'objecte.
@@ -82,55 +109,32 @@ public class PeticioLogin extends BasePeticions {
      * @param resposta Resposta del servidor, que pot ser l'èxit de l'autenticació o un error.
      */
     @Override
-    public void respostaServidor(Object resposta){
-        logWrapper.d(ETIQUETA, "Resposta del servidor: " + resposta);
-
-        Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
-        if (resposta instanceof Object[]) {
-            gestionarRespostaArray((Object[]) resposta);
-        } else {
-            Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
-        }
-    }
-
-    /**
-     * Mètode per gestionar la resposta del servidor quan aquesta és un Object[].
-     *
-     * @param respostaArray La resposta del servidor.
-     */
-    private void gestionarRespostaArray(Object[] respostaArray) {
-        if (respostaArray[0] instanceof String) {
-            String estat = (String) respostaArray[0];
-            if (estat.equals("usuariActiu")) {
-                gestionarUsuariActiu(respostaArray);
-            } else if (estat.equals("false")) {
-                Utils.mostrarToast(context, "Credencials incorrectes");
-            }
-        } else {
-            Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
-        }
-    }
-
-    /**
-     * Mètode per gestionar l'usuari actiu després de l'autenticació.
-     *
-     * @param respostaArray La resposta del servidor.
-     */
-    private void gestionarUsuariActiu(Object[] respostaArray) {
-        if (respostaArray[1] instanceof HashMap) {
+public void respostaServidor(Object resposta){
+    Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
+    if (resposta instanceof Object[]) {
+        Object[] respostaArray = (Object[]) resposta;
+        if (respostaArray[0] instanceof String && respostaArray[1] instanceof HashMap) {
+            // Inicio de sesión exitoso
+            String sessioID = (String) respostaArray[0];
             HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
             Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
             if (usuari != null) {
-                guardarSessioID(usuariMap.get(Utils.SESSIO_ID));
+                guardarSessioID(sessioID);
                 Usuari.guardarDadesUsuari(usuari);
                 obrirActivitat(usuari.getTipusUsuari());
             } else {
-                Log.d("PeticioLogin", "Error al transformar el HashMap en Usuari");
+                Log.d(ETIQUETA, "Error en transformar el HashMap en Usuari");
             }
+        } else if (respostaArray[0] instanceof Boolean && (Boolean) respostaArray[0] == false) {
+            // Inicio de sesión no exitoso
+            Utils.mostrarToast(context, "Credencials incorrectes");
         } else {
-            Log.d("PeticioLogin", "Tipus d'objecte no vàlid en la resposta");
+            Log.d(ETIQUETA, "Tipus d'objecte no vàlid en la resposta");
         }
+    } else {
+        Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
     }
+}
 
     /**
      * Guarda l'identificador de sessió a SharedPreferences.
@@ -143,8 +147,6 @@ public class PeticioLogin extends BasePeticions {
         editor.putString(Utils.SESSIO_ID, sessioID);
         editor.apply();
     }
-
-
 
 
     /**

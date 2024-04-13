@@ -13,6 +13,7 @@
         <!-- Toolbar -->
 
         <!-- Barra de títol -->
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -39,11 +40,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="toggleMenu"
-                android:padding="10dp"
+
                 android:src="@drawable/ic_perfil" />
 
             <!-- Botó d'accés a panell esquerre-->
@@ -53,10 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="accedirPanell"
-                android:padding="10dp"
                 android:src="@drawable/ic_menu" />
 
         </androidx.appcompat.widget.Toolbar>
@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/reserves_client"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -88,6 +89,8 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_titol" />
@@ -96,6 +99,8 @@
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintTop_toBottomOf="@+id/tab_layout"
             app:layout_constraintBottom_toTopOf="@+id/boto_mostrar_missatges"
             app:layout_constraintStart_toStartOf="parent"
@@ -179,9 +184,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_missatge"
+            android:background="?attr/colorPrimary"
+
             android:onClick="mostrarFragmentMissatges"
-            android:background="@drawable/button_background"
-            app:fabSize="mini"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp" />

@@ -77,8 +77,8 @@ public class LoginActivity extends AppCompatActivity implements BasePeticions.re
         });
     }
 
-    private void enviarLogin(String nomUsuari, String contrasenya) {
-        PeticioLogin peticioLogin = new PeticioLogin(context, nomUsuari, contrasenya);
+    private void enviarLogin(String correuUsuari, String passUsuari) {
+        PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari);
         peticioLogin.execute();
     }
 

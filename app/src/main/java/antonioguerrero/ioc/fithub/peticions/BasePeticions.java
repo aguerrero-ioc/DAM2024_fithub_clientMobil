@@ -3,6 +3,9 @@ package antonioguerrero.ioc.fithub.peticions;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.Arrays;
 
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
@@ -14,6 +17,8 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 public abstract class BasePeticions {
 
     protected respostaServidorListener listener;
+    protected Socket socket;
+    protected ObjectOutputStream objectOut;
 
     /**
      * Constructor de la classe BasePeticions.
@@ -21,6 +26,26 @@ public abstract class BasePeticions {
      */
     public BasePeticions(respostaServidorListener listener) {
         this.listener = listener;
+    }
+
+    public void conectar(String direccionServidor, int puertoServidor) throws IOException {
+        this.socket = new Socket(direccionServidor, puertoServidor);
+        this.objectOut = new ObjectOutputStream(socket.getOutputStream());
+    }
+
+    protected void enviarPeticioAsync(Object[] peticio) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    objectOut.writeObject(peticio);
+                    objectOut.flush();
+                } catch (IOException e) {
+                    Log.e("BasePeticions", "Error al enviar la petición", e);
+                }
+                return null;
+            }
+        }.execute();
     }
 
     /**
@@ -55,20 +80,33 @@ public abstract class BasePeticions {
     /**
      * Mètode per enviar una petició al servidor.
      * @param operacio L'operació a realitzar.
+     * @param dada1 La primera dada a enviar.
+     * @param dada2 La segona dada a enviar.
+     * @param sessioID L'identificador de la sessió.
+     */
+    public void enviarPeticioString(String operacio, String dada1, String dada2, String sessioID) {
+        Object[] peticio = new Object[4];
+        peticio[0] = operacio;
+        peticio[1] = dada1;
+        peticio[2] = dada2;
+        peticio[3] = sessioID;
+
+        new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
+    }
+
+    /**
+     * Mètode per enviar una petició al servidor.
+     * @param operacio L'operació a realitzar.
      * @param entitat L'entitat a la que es realitza l'operació.
      * @param dades Les dades a enviar.
      * @param sessioID L'identificador de la sessió.
-     * @param etiqueta L'etiqueta per a identificar la petició.
      */
-    public void enviarPeticio(String operacio, String entitat, Object dades, String sessioID, String etiqueta) {
+    public void enviarPeticio(String operacio, String entitat, Object dades, String sessioID) {
         Object[] peticio = new Object[4];
         peticio[0] = operacio;
         peticio[1] = entitat;
         peticio[2] = dades;
         peticio[3] = sessioID;
-
-        // Registrar la petición en el log de depuración
-        Log.d(etiqueta, "Petición enviada: " + Arrays.toString(peticio));
 
         new ConnexioServidor.ConnectToServerTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, peticio);
     }

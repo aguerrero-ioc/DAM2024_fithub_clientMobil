@@ -32,7 +32,7 @@ public class ModificarReserva extends BasePeticions {
         // Convertir el objecte Reserva a un HashMap
         HashMap<String, String> reservaMap = Utils.ObjecteAHashMap(reserva);
 
-        enviarPeticio("update", "reserva", reservaMap, this.sessioID, ETIQUETA);
+        enviarPeticio("update", "reserva", reservaMap, this.sessioID);
     }
     @Override
     public Class<?> obtenirTipusObjecte() {

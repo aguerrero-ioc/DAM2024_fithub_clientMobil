@@ -46,7 +46,7 @@ public class ConsultarServei extends BasePeticions {
      * Mètode per obtenir les dades d'un servei.
      */
     public void obtenirServei() {
-        enviarPeticio("select", "servei", this.nomServei, this.sessioID, ETIQUETA);
+        enviarPeticio("select", "servei", this.nomServei, this.sessioID);
     }
 
     /**

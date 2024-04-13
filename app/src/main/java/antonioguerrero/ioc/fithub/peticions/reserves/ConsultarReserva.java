@@ -30,7 +30,7 @@ public class ConsultarReserva extends BasePeticions {
      * @param idReserva L'ID de la reserva a consultar.
      */
     public void consultarReserva(int idReserva) {
-        enviarPeticio("select", "reserva", idReserva, this.sessioID, ETIQUETA);
+        enviarPeticio("select", "reserva", idReserva, this.sessioID);
     }
 
     @Override

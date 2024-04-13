@@ -28,7 +28,7 @@ public class ConsultarTotesReserves extends BasePeticions {
     }
 
     public void consultarTotesReserves() {
-        enviarPeticio("selectAll", "reserva", usuari.getIDUsuari(), this.sessioID, ETIQUETA);
+        enviarPeticio("selectAll", "reserva", usuari.getIDUsuari(), this.sessioID);
     }
 
     @Override

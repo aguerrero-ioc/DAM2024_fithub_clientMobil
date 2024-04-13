@@ -45,7 +45,7 @@ public class ConsultarInstallacio extends BasePeticions {
      * Mètode per obtenir les dades d'una instal·lació.
      */
     public void obtenirInstallacio() {
-        enviarPeticio("select", "installacio", this.nomInstallacio, this.sessioID, ETIQUETA);
+        enviarPeticio("select", "installacio", this.nomInstallacio, this.sessioID);
     }
 
     /**

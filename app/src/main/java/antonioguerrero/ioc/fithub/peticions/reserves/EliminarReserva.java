@@ -46,7 +46,7 @@ public class EliminarReserva extends BasePeticions {
      * Mètode per eliminar una reserva.
      */
     public void eliminarReserva() {
-        enviarPeticio("delete", "reserva", IDReserva, this.sessioID, ETIQUETA);
+        enviarPeticio("delete", "reserva", IDReserva, this.sessioID);
     }
 
     /**
