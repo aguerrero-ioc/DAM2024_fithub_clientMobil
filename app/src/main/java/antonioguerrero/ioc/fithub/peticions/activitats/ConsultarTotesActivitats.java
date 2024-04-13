@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public abstract class ConsultarTotesActivitats extends BasePeticions {
     /**
      * Mètode per obtenir les dades de totes les activitats.
      */
-    public void obtenirActivitats() {
+    public void obtenirActivitats() throws ConnectException {
         enviarPeticioString("selectAll", "activitat", null, this.sessioID);
     }
 
@@ -89,7 +90,7 @@ public abstract class ConsultarTotesActivitats extends BasePeticions {
      * Mètode per executar la petició.
      */
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         obtenirActivitats();
     }
 

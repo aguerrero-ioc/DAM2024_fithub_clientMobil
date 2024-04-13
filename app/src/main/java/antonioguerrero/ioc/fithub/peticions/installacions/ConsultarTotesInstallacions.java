@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +49,7 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
     /**
      * Mètode per obtenir les dades de totes les instal·lacions.
      */
-    public void obtenirInstallacions() {
+    public void obtenirInstallacions() throws ConnectException {
         enviarPeticioString("selectAll", "installacio", null, this.sessioID);
 
     }
@@ -103,7 +104,7 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
      * Mètode per executar la petició.
      */
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         obtenirInstallacions();
     }
 

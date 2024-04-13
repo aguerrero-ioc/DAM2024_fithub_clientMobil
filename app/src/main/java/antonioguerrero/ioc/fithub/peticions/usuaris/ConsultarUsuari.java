@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -49,7 +50,7 @@ public class ConsultarUsuari extends BasePeticions {
     /**
      * Mètode per obtenir les dades d'un usuari.
      */
-    public void obtenirUsuari() {
+    public void obtenirUsuari() throws ConnectException {
         enviarPeticioString("select", "usuari", this.correuUsuari, this.sessioID);
     }
 
@@ -107,7 +108,7 @@ public class ConsultarUsuari extends BasePeticions {
      * Mètode per executar la petició.
      */
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         obtenirUsuari();
     }
 

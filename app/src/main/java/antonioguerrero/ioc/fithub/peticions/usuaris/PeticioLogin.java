@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -51,42 +52,62 @@ public abstract class PeticioLogin extends BasePeticions {
     /**
      * Mètode per enviar la petició de login al servidor.
      */
-    /*public void peticioLogin() {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    Socket socket = new Socket("192.168.0.252", 8080);
-                    ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
-
-                    Object[] peticio = new Object[4];
-                    peticio[0] = "login";
-                    peticio[1] = correuUsuari;
-                    peticio[2] = passUsuari;
-                    peticio[3] = null;
-
-                    objectOut.writeObject(peticio);
-                    objectOut.flush();
-
-                    // Registrar la petición en el log de depuración
-                    Log.d(ETIQUETA, "Petición enviada: " + Arrays.toString(peticio));
-                } catch (IOException e) {
-                    Log.e(ETIQUETA, "Error al enviar la petición de inicio de sesión", e);
-                }
-                return null;
-            }
-        }.execute();}*/
-
-
     public void peticioLogin() {
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, Object>() {
             @Override
-            protected Void doInBackground(Void... voids) {
-                enviarPeticioString("login", correuUsuari, passUsuari, null);
-                return null;
+            protected Object doInBackground(Void... voids) {
+                try {
+                    // Aquí envías la petición al servidor y recibes la respuesta
+                    return enviarPeticioString("login", correuUsuari, passUsuari, null);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
             }
         }.execute();
     }
+
+
+    @Override
+    public void respostaServidor(Object resposta) {
+        Usuari.setContext(context);
+
+        if (context != null) {
+            SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+
+            Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
+            if (resposta instanceof Object[]) {
+                Object[] respostaArray = (Object[]) resposta;
+                if (respostaArray.length == 2 && respostaArray[0] instanceof String && respostaArray[1] instanceof HashMap) {
+                    // Inicio de sesión exitoso con el identificador de sesión y los datos del usuario
+                    String sessioID = (String) respostaArray[0];
+                    HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
+                    Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
+                    if (usuari != null) {
+                        guardarSessioID(sessioID);
+                        Usuari.guardarDadesUsuari(usuari);
+                        obrirActivitat(usuari.getTipusUsuari());
+                    } else {
+                        Log.d(ETIQUETA, "Error en transformar el HashMap en Usuari");
+                    }
+                } else if (respostaArray[0] instanceof Boolean && (Boolean) respostaArray[0] == false) {
+                    // Inicio de sesión no exitoso
+                    Utils.mostrarToast(context, "Credencials incorrectes");
+                } else {
+                    Log.d(ETIQUETA, "Tipus d'objecte no vàlid en la resposta");
+                }
+            } else {
+                Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
+            }
+        } else {
+            Log.e("PeticioLogin", "El contexto es nulo");
+        }
+    }
+
 
 
     /**
@@ -113,33 +134,7 @@ public abstract class PeticioLogin extends BasePeticions {
      *
      * @param resposta Resposta del servidor, que pot ser l'èxit de l'autenticació o un error.
      */
-    @Override
-    public void respostaServidor(Object resposta) {
-    Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
-    if (resposta instanceof Object[]) {
-        Object[] respostaArray = (Object[]) resposta;
-        if (respostaArray[0] instanceof String && respostaArray[1] instanceof HashMap) {
-            // Inicio de sesión exitoso
-            String sessioID = (String) respostaArray[0];
-            HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
-            Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
-            if (usuari != null) {
-                guardarSessioID(sessioID);
-                Usuari.guardarDadesUsuari(usuari);
-                obrirActivitat(usuari.getTipusUsuari());
-            } else {
-                Log.d(ETIQUETA, "Error en transformar el HashMap en Usuari");
-            }
-        } else if (respostaArray[0] instanceof Boolean && (Boolean) respostaArray[0] == false) {
-            // Inicio de sesión no exitoso
-            Utils.mostrarToast(context, "Credencials incorrectes");
-        } else {
-            Log.d(ETIQUETA, "Tipus d'objecte no vàlid en la resposta");
-        }
-    } else {
-        Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
-    }
-}
+
 
     /**
      * Guarda l'identificador de sessió a SharedPreferences.

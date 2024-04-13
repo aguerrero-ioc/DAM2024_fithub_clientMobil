@@ -6,6 +6,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
@@ -55,7 +56,11 @@ public class ConnexioServidor {
         @Override
         protected void onPostExecute(Object[] resposta) {
             if (listener != null) {
-                listener.respostaServidor(resposta);
+                try {
+                    listener.respostaServidor(resposta);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 

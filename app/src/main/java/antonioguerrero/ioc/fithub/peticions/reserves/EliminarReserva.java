@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -47,7 +48,7 @@ public abstract class EliminarReserva extends BasePeticions {
     /**
      * Mètode per eliminar una reserva.
      */
-    public void eliminarReserva() {
+    public void eliminarReserva() throws ConnectException {
         String IDReservaString = Integer.toString(IDReserva);
 
         enviarPeticioString("delete", "reserva", IDReservaString, this.sessioID);
@@ -67,7 +68,7 @@ public abstract class EliminarReserva extends BasePeticions {
      * Mètode per executar la petició.
      */
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         eliminarReserva();
     }
 

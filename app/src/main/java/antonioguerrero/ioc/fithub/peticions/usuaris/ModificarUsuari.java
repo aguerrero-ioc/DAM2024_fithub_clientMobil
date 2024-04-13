@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public abstract class ModificarUsuari extends BasePeticions {
         this.sessioID = sessioID;
     }
 
-    public void modificarUsuari(Usuari usuari) {
+    public void modificarUsuari(Usuari usuari) throws ConnectException {
         // Convertir el objecte Usuari a un HashMap
         HashMap<String, String> mapaUsuari = Utils.ObjecteAHashMap(usuari);
 
@@ -45,7 +46,7 @@ public abstract class ModificarUsuari extends BasePeticions {
         requestMap.put("correu", usuari.getCorreuUsuari());
         requestMap.put("contrasenya", usuari.getPassUsuari());*/
 
-        enviarPeticioHashmap("update", "usuari", mapaUsuari, this.sessioID);
+        enviarPeticioHashMap("update", "usuari", mapaUsuari, this.sessioID);
     }
 
     @Override
@@ -94,7 +95,7 @@ public abstract class ModificarUsuari extends BasePeticions {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         modificarUsuari(usuari);
     }
 

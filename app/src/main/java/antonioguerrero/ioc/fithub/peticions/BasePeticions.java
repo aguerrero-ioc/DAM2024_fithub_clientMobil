@@ -4,19 +4,27 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 public abstract class BasePeticions {
     protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
 
     public interface respostaServidorListener {
-        void respostaServidor(Object resposta);
+        void respostaServidor(Object resposta) throws ConnectException;
     }
 
     protected respostaServidorListener listener;
@@ -32,7 +40,7 @@ public abstract class BasePeticions {
         this.objectIn = objectIn;
     }
 
-    protected void enviarPeticio(Object[] peticio) {
+    /*protected void enviarPeticio(Object[] peticio) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -54,70 +62,129 @@ public abstract class BasePeticions {
                 return null;
             }
         }.execute();
-    }
+    }*/
+
+    public abstract void respostaServidor(Object resposta);
 
     public abstract Class<?> obtenirTipusObjecte();
 
-    public abstract void execute();
+    public abstract void execute() throws ConnectException;
 
+    public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
+        String respostaHS = "";
+        Object[] resposta = null; // Inicializar la variable 'resposta'
+        Socket clientSocket = null;
+        //Handshake
+        Scanner inHS = null;
+        //Missatge
+        ObjectInputStream in = null;
+        ObjectOutputStream out = null;
 
-    protected void enviarPeticioHashmap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    Socket socket = new Socket("192.168.0.252", 8080);
-                    ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+        Object[] peticio = new Object[4];
+        peticio[0] = operacio;
+        peticio[1] = dada1;
+        peticio[2] = dada2;
+        peticio[3] = idSessio;
 
-                    Object[] peticio = new Object[4];
-                    peticio[0] = operacio;
-                    peticio[1] = nomObjecte;
-                    peticio[2] = objecteMapa;
-                    peticio[3] = idSessio;
+        try {
+            // Conectar al servidor
+            clientSocket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
+            System.out.println("***COM***           Client connectant al servidor...");
 
-                    objectOut.writeObject(peticio);
-                    objectOut.flush();
+            inHS = new Scanner(clientSocket.getInputStream());
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+            in = new ObjectInputStream(clientSocket.getInputStream());
 
+            // Llegir missatge de conexio
+            respostaHS = inHS.nextLine();
+            System.out.println("***COM***           " + respostaHS);
 
-                    String peticioString = Arrays.toString(peticio);
-                    Log.d("PeticioInfo:", "Petición enviada: " + peticioString);
-                } catch (IOException e) {
-                    Log.e("PeticioError:", "Error al enviar la petición", e);
-                }
-                return null;
+            // Envia missatge al servidor
+            out.writeObject(peticio);
+
+            // Llegeix resposta del servidor
+            resposta = (Object[]) in.readObject();
+
+        } catch (ConnectException cx) {
+            throw cx;
+        } catch (EOFException eq) {
+            // Manejar la excepción EOFException
+            eq.printStackTrace();
+        } catch (IOException ex) {
+            // Manejar la excepción IOException
+            ex.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (in != null) in.close();
+                if (inHS != null) inHS.close();
+                if (out != null) out.close();
+                if (clientSocket != null) clientSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }.execute();
+        }
+        return resposta;
     }
 
-    protected void enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    Socket socket = new Socket("192.168.0.252", 8080);
-                    ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+    public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+        String respostaHS = "";
+        Object[] resposta = null; // Inicializar la variable 'resposta'
+        Socket clientSocket = null;
+        //Handshake
+        Scanner inHS = null;
+        //Missatge
+        ObjectInputStream in = null;
+        ObjectOutputStream out = null;
 
-                    Object[] peticio = new Object[4];
-                    peticio[0] = operacio;
-                    peticio[1] = dada1;
-                    peticio[2] = dada2;
-                    peticio[3] = idSessio;
+        Object[] peticio = new Object[4];
+        peticio[0] = operacio;
+        peticio[1] = nomObjecte;
+        peticio[2] = objecteMapa;
+        peticio[3] = idSessio;
 
-                    objectOut.writeObject(peticio);
-                    objectOut.flush();
+        try {
+            // Conectar al servidor
+            clientSocket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
+            System.out.println("***COM***           Client connectant al servidor...");
 
+            inHS = new Scanner(clientSocket.getInputStream());
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+            in = new ObjectInputStream(clientSocket.getInputStream());
 
-                    String peticioString = Arrays.toString(peticio);
-                    Log.d("PeticioInfo:", "Petición enviada: " + peticioString);
-                } catch (IOException e) {
-                    Log.e("PeticioError:", "Error al enviar la petición", e);
-                }
-                return null;
+            // Llegir missatge de conexio
+            respostaHS = inHS.nextLine();
+            System.out.println("***COM***           " + respostaHS);
+
+            // Envia missatge al servidor
+            out.writeObject(peticio);
+
+            // Llegeix resposta del servidor
+            resposta = (Object[]) in.readObject();
+
+        } catch (ConnectException cx) {
+            throw cx;
+        } catch (EOFException eq) {
+            // Manejar la excepción EOFException
+            eq.printStackTrace();
+        } catch (IOException ex) {
+            // Manejar la excepción IOException
+            ex.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (in != null) in.close();
+                if (inHS != null) inHS.close();
+                if (out != null) out.close();
+                if (clientSocket != null) clientSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }.execute();
+        }
+        return resposta;
     }
-
-    public abstract void respostaServidor(Object resposta);
 
 
 }

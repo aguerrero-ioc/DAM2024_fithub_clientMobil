@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public abstract class ConsultarTotsServeis extends BasePeticions {
     /**
      * Mètode per obtenir les dades de tots els serveis.
      */
-    public void obtenirTotsServeis() {
+    public void obtenirTotsServeis() throws ConnectException {
         enviarPeticioString("select", "serveis", null, this.sessioID);
     }
 
@@ -91,7 +92,7 @@ public abstract class ConsultarTotsServeis extends BasePeticions {
      * Mètode per executar la petició.
      */
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         obtenirTotsServeis();
     }
 

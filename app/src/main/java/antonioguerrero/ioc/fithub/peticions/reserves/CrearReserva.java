@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -32,13 +33,13 @@ public abstract class CrearReserva extends BasePeticions {
         this.reserva = reserva;
     }
 
-    public void crearReserva() {
+    public void crearReserva() throws ConnectException {
         // Convertir el objecte Reserva a un HashMap
         HashMap<String, String> mapaReserva = Utils.ObjecteAHashMap(reserva);
         mapaReserva.put("IDReserva", String.valueOf(reserva.getIDReserva()));
         mapaReserva.put("IDUsuari", String.valueOf(reserva.getIDUsuari()));
 
-        enviarPeticioHashmap("insert", "reserva", mapaReserva, this.sessioID);
+        enviarPeticioHashMap("insert", "reserva", mapaReserva, this.sessioID);
     }
 
     @Override
@@ -47,7 +48,7 @@ public abstract class CrearReserva extends BasePeticions {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         crearReserva();
     }
 

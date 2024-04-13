@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -30,11 +31,11 @@ public abstract class ModificarReserva extends BasePeticions {
      *
      * @param reserva L'objecte Reserva amb les dades modificades.
      */
-    public void modificarReserva(Reserva reserva) {
+    public void modificarReserva(Reserva reserva) throws ConnectException {
         // Convertir el objecte Reserva a un HashMap
         HashMap<String, String> reservaMap = Utils.ObjecteAHashMap(reserva);
 
-        enviarPeticioHashmap("update", "reserva", reservaMap, this.sessioID);
+        enviarPeticioHashMap("update", "reserva", reservaMap, this.sessioID);
     }
     @Override
     public Class<?> obtenirTipusObjecte() {
@@ -42,7 +43,7 @@ public abstract class ModificarReserva extends BasePeticions {
     }
 
 @Override
-public void execute() {
+public void execute() throws ConnectException {
     // Aquí es crida al mètode per modificar la reserva
     modificarReserva(reserva);
 }

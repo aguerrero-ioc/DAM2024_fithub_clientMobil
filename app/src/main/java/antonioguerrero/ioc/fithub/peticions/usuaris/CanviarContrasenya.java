@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public abstract class CanviarContrasenya extends BasePeticions {
         this.usuari = usuari;
     }
 
-    public void canviarContrasenya() {
+    public void canviarContrasenya() throws ConnectException {
         // Convertir el objecte Usuari a un HashMap
         HashMap<String, String> usuariMap = Utils.ObjecteAHashMap(usuari);
 
@@ -47,7 +48,7 @@ public abstract class CanviarContrasenya extends BasePeticions {
         usuariMap.put("correu", usuari.getCorreuUsuari());
         usuariMap.put("contrasenya", usuari.getPassUsuari());*/
 
-        enviarPeticioHashmap("update", "pass", usuariMap, this.sessioID);
+        enviarPeticioHashMap("update", "pass", usuariMap, this.sessioID);
 
     }
     @Override
@@ -92,7 +93,7 @@ public abstract class CanviarContrasenya extends BasePeticions {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         canviarContrasenya();
     }
 

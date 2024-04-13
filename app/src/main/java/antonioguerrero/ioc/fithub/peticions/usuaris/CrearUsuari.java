@@ -9,6 +9,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -94,10 +95,21 @@ public abstract class CrearUsuari extends BasePeticions {
             }.execute();}*/
 
     public void crearUsuari() {
-        Usuari usuari = new Usuari(correuUsuari, passUsuari, nomUsuari, cognomsUsuari, telefon);
-        HashMap<String, String> mapaUsuari = usuari.usuari_a_hashmap(usuari);
-        enviarPeticioHashmap("insert", "usuari", mapaUsuari, null);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    Usuari usuari = new Usuari(correuUsuari, passUsuari, nomUsuari, cognomsUsuari, telefon);
+                    HashMap<String, String> mapaUsuari = usuari.usuari_a_hashmap(usuari);
+                    enviarPeticioHashMap("insert", "usuari", mapaUsuari, null);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+                return null;
+            }
+        }.execute();
     }
+
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
@@ -126,7 +138,7 @@ public abstract class CrearUsuari extends BasePeticions {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         crearUsuari();
     }
 

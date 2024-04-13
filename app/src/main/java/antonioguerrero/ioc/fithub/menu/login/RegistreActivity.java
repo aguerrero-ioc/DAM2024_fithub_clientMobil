@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
@@ -68,7 +69,11 @@ public class RegistreActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrarUsuari();
+                try {
+                    registrarUsuari();
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
@@ -77,7 +82,7 @@ public class RegistreActivity extends AppCompatActivity {
      * Mètode per gestionar el registre d'un nou usuari.
      * S'obtenen les dades dels camps del formulari i es processen.
      */
-    private void registrarUsuari() {
+    private void registrarUsuari() throws ConnectException {
         // Obtindre els valors dels EditText
         String nom = etNom.getText().toString().trim();
         String cognoms = etCognoms.getText().toString().trim();

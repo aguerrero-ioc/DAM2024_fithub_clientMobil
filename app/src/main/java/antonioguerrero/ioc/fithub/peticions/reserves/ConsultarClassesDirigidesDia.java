@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ public abstract class ConsultarClassesDirigidesDia extends BasePeticions {
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
-    public void obtenirClassesDirigides() {
+    public void obtenirClassesDirigides() throws ConnectException {
         enviarPeticioString("selectAll", "classe", dia, this.sessioID);
     }
 
@@ -88,7 +89,7 @@ public abstract class ConsultarClassesDirigidesDia extends BasePeticions {
 
 
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         obtenirClassesDirigides();
     }
 }

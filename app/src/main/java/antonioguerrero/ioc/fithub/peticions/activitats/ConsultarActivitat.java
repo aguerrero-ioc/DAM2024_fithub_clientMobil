@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -43,7 +44,7 @@ public abstract class ConsultarActivitat extends BasePeticions {
     /**
      * Mètode per obtenir les dades d'una activitat.
      */
-    public void obtenirActivitat() {
+    public void obtenirActivitat() throws ConnectException {
         enviarPeticioString("select", "activitat", this.nomActivitat, this.sessioID);
     }
 
@@ -87,7 +88,7 @@ public abstract class ConsultarActivitat extends BasePeticions {
      * Mètode per executar la petició.
      */
     @Override
-    public void execute() {
+    public void execute() throws ConnectException {
         obtenirActivitat();
     }
 

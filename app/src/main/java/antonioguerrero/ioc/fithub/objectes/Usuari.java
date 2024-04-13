@@ -299,6 +299,10 @@ public class Usuari implements Serializable {
         this.dataInscripcio = dataInscripcio;
     }
 
+    public static void setContext(Context context) {
+        Usuari.context = context;
+    }
+
 
 
     /**

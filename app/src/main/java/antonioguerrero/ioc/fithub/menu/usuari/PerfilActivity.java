@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
@@ -77,7 +78,11 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
 
         // Actualització de la interfície amb les dades de l'usuari
         if (usuari != null) {
-            actualitzarUsuari(usuari);
+            try {
+                actualitzarUsuari(usuari);
+            } catch (ConnectException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             // Maneig del cas en què no es rebin les dades de l'usuari correctament
             Log.e("PerfilActivity", "Error: No s'han rebut les dades de l'usuari correctament");
@@ -122,7 +127,11 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         btnGuardarCanvis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardarCanvis();
+                try {
+                    guardarCanvis();
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -142,7 +151,11 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         btnGuardarCanviContrasenya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCanviContrasenyaButtonClick(); // Trucar al mètode corresponent
+                try {
+                    onCanviContrasenyaButtonClick(); // Trucar al mètode corresponent
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -155,7 +168,11 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
 
         // Actualitzar la interfície amb les dades de l'usuari
         if (usuari != null) {
-            actualitzarUsuari(usuari);
+            try {
+                actualitzarUsuari(usuari);
+            } catch (ConnectException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             Log.e("PerfilActivity", "Error: No s'han rebut les dades de l'usuari correctament");
         }
@@ -168,7 +185,7 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
      * @param resposta La resposta del servidor.
      */
     @Override
-    public void respostaServidor(Object resposta) {
+    public void respostaServidor(Object resposta) throws ConnectException {
         if (resposta != null) {
             if (resposta instanceof Usuari) {
                 Usuari usuari = (Usuari) resposta;
@@ -249,7 +266,7 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
      *
      * @param usuari L'objecte Usuari amb les dades a actualitzar.
      */
-    public void actualitzarUsuari(Usuari usuari) {
+    public void actualitzarUsuari(Usuari usuari) throws ConnectException {
 
         // Crear una instancia de ConsultarUsuari
         ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID, objecteSortida, objecteEntrada);
@@ -320,7 +337,7 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
     /**
      * Mètode per desar els canvis realitzats per l'usuari.
      */
-    private void guardarCanvis() {
+    private void guardarCanvis() throws ConnectException {
         // Obtenir els valors dels EditText
         String nom = etNomUsuari.getText().toString();
         String cognoms = etCognoms.getText().toString();
@@ -384,7 +401,7 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
     /**
      * Mètode per canviar la contrasenya
      */
-    private void canviContrasenya(String novaContrasenya) {
+    private void canviContrasenya(String novaContrasenya) throws ConnectException {
         // Actualitzar la contrasenya de l'objecte Usuari existent
         usuari.setPassUsuari(novaContrasenya);
 
@@ -402,7 +419,7 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
     /**
      * Mètode que maneja el clic del botó per canviar la contrasenya
      */
-    private void onCanviContrasenyaButtonClick() {
+    private void onCanviContrasenyaButtonClick() throws ConnectException {
         String contrasenyaActual = etContrasenyaActual.getText().toString();
         String novaContrasenya = etNovaContrasenya.getText().toString();
         String confirmarContrasenya = etConfirmarContrasenya.getText().toString();

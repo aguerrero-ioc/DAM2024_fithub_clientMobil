@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -31,7 +32,7 @@ public abstract class ConsultarReserva extends BasePeticions {
      *
      * @param idReserva L'ID de la reserva a consultar.
      */
-    public void consultarReserva(int idReserva) {
+    public void consultarReserva(int idReserva) throws ConnectException {
         String idReservaString = Integer.toString(idReserva);
         enviarPeticioString("select", "reserva", idReservaString, this.sessioID);
     }
