@@ -133,8 +133,5 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
         editor.apply();
     }
 
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
-        // Implementación del método onRespostaServidorMultiple
-    }
+
 }

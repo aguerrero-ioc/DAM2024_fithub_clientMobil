@@ -63,13 +63,13 @@ public class ClientActivity extends BaseActivity implements BasePeticions.respos
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(v -> obrirActivity(this, MissatgesActivity.class));
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, "Pendent d'implementar. Aviat dispobible!"));
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navView = findViewById(R.id.nav_view);
+        NavigationView navigation = findViewById(R.id.nav_view);
 
 
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
@@ -77,19 +77,19 @@ public class ClientActivity extends BaseActivity implements BasePeticions.respos
                 if (id == R.id.nav_perfil_usuari) {
                     opcioPerfilClicat(PerfilActivity.class);
                 } else if(id == R.id.nav_activitats) {
-                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar");
+                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar. Aviat dispobible!");
                     //PENDENT
                     /*intent = new Intent(BaseActivity.this, ActivitatsActivity.class);
                     startActivity(intent);*/
                 } else if (id == R.id.nav_serveis) {
-                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar");
+                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar. Aviat dispobible!");
                     //PENDENT
                     /*intent = new Intent(BaseActivity.this, ServeisActivity.class);
                     startActivity(intent);*/
                 } else if (id == R.id.nav_installacions) {
                     obrirActivity(ClientActivity.this, InstallacionsActivity.class);
                 } else if (id == R.id.nav_reserves) {
-                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar");
+                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar. Aviat dispobible!");
                     //PENDENT
                     /*intent = new Intent(BaseActivity.this, ReservesActivity.class);
                     startActivity(intent);*/

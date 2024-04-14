@@ -31,7 +31,7 @@ public abstract class CrearReserva extends BasePeticions {
         // Convertir el objecte Reserva a un HashMap
         HashMap<String, String> mapaReserva = Utils.ObjecteAHashMap(reserva);
         mapaReserva.put("IDReserva", String.valueOf(reserva.getIDReserva()));
-        mapaReserva.put("IDUsuari", String.valueOf(reserva.getIDUsuari()));
+        mapaReserva.put("IDUsuari", String.valueOf(reserva.getIDusuari()));
 
         enviarPeticioHashMap("insert", "reserva", mapaReserva, this.sessioID);
     }

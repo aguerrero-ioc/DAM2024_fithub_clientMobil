@@ -4,7 +4,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import antonioguerrero.ioc.fithub.R;
+import antonioguerrero.ioc.fithub.Utils;
 
 /**
  * Activitat per mostrar les activitats disponibles al centre esportiu.
@@ -29,5 +32,9 @@ public class ActivitatsActivity extends AppCompatActivity {
             transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
         }
+
+        // Configura el botó flotant de missatges
+        FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, "Pendent d'implementar. Aviat dispobible!"));
     }
 }

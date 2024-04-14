@@ -13,18 +13,18 @@ public class Reserva {
 
     // Dades obligatòries de la reserva
     private int IDReserva;
-    private int IDUsuari;
+    private int IDusuari;
 
 
     /**
      * Constructor de la classe Reserva reduït.
      *
      * @param IDReserva L'identificador de la reserva.
-     * @param IDUsuari  L'identificador de l'usuari.
+     * @param IDusuari  L'identificador de l'usuari.
      */
-    public Reserva(int IDReserva, int IDUsuari) {
+    public Reserva(int IDReserva, int IDusuari) {
         this.IDReserva = IDReserva;
-        this.IDUsuari = IDUsuari;
+        this.IDusuari = IDusuari;
     }
 
 
@@ -55,17 +55,17 @@ public class Reserva {
      *
      * @return L'identificador de l'usuari.
      */
-    public int getIDUsuari() {
-        return IDUsuari;
+    public int getIDusuari() {
+        return IDusuari;
     }
 
     /**
      * Estableix l'identificador de l'usuari.
      *
-     * @param IDUsuari L'identificador de l'usuari.
+     * @param IDusuari L'identificador de l'usuari.
      */
-    public void setIDUsuari(int IDUsuari) {
-        this.IDUsuari = IDUsuari;
+    public void setIDusuari(int IDusuari) {
+        this.IDusuari = IDusuari;
     }
 
 }

@@ -3,14 +3,12 @@ package antonioguerrero.ioc.fithub.menu.usuari;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.net.ConnectException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,7 +29,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class PerfilActivity extends BaseActivity implements ConsultarUsuari.ConsultarUsuariListener, BasePeticions.respostaServidorListener {
+public class PerfilActivity extends BaseActivity implements ConsultarUsuari.ConsultarUsuariListener, ModificarUsuari.ModificarUsuariListener, BasePeticions.respostaServidorListener {
 
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefon,
             etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya,
@@ -72,6 +70,8 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
                 Utils.mostrarToast(PerfilActivity.this, "Pendent d'implementar");
             }
         });
+
+
 
         // Configuració del clic del botó per editar el perfil
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
@@ -119,10 +119,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
         // Obtenir les dades de l'usuari
         ConsultarUsuari consultarUsuari = new ConsultarUsuari(this, this, correuUsuari, sessioID) {
-            @Override
-            public void onRespostaServidorMultiple(Object resposta) {
-            }
-
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
@@ -131,7 +127,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
             @Override
             public void respostaServidor(Object[] resposta) {
-
             }
 
             @Override
@@ -140,6 +135,11 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
         };
         consultarUsuari.consultarUsuari();
+
+    }
+
+    @Override
+    public void onRespostaServidorMultiple(Object resposta) {
 
     }
 
@@ -227,27 +227,27 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
      */
     private void guardarCanvis() throws ConnectException {
         // Obtenir els valors dels EditText
-        String nom = etNomUsuari.getText().toString();
-        String cognoms = etCognoms.getText().toString();
+        String nomUsuari = etNomUsuari.getText().toString();
+        String cognomsUsuari = etCognoms.getText().toString();
         String dataNaixement = etDataNaixement.getText().toString();
         String adreca = etAdreca.getText().toString();
-        String correu = etCorreuUsuari.getText().toString();
+        String correuUsuari = etCorreuUsuari.getText().toString();
         String telefon = etTelefon.getText().toString();
 
         // Comprovar si tots els camps estan complets
-        if (nom.isEmpty() || cognoms.isEmpty() || dataNaixement.isEmpty() || adreca.isEmpty() || correu.isEmpty() || telefon.isEmpty()) {
+        if (nomUsuari.isEmpty() || cognomsUsuari.isEmpty() || dataNaixement.isEmpty() || adreca.isEmpty() || correuUsuari.isEmpty() || telefon.isEmpty()) {
             Utils.mostrarToast(getApplicationContext(), "Si us plau, completa tots els camps");
             return;
         }
 
         // Comprovar el format correcte del nom
-        if (!nom.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+        if (!nomUsuari.matches("[a-zA-ZÀ-ÿ\\s]+")) {
             Utils.mostrarToast(getApplicationContext(), "El nom només pot contenir lletres");
             return;
         }
 
         // Comprovar el format correcte dels cognoms
-        if (!cognoms.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+        if (!cognomsUsuari.matches("[a-zA-ZÀ-ÿ\\s]+")) {
             Utils.mostrarToast(getApplicationContext(), "Els cognoms només poden contenir lletres");
             return;
         }
@@ -264,19 +264,17 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         }
 
         // Actualitzar les dades de l'objecte Usuari amb els valors dels EditText
-        usuari.setNomUsuari(nom);
-        usuari.setCognomsUsuari(cognoms);
+
+        usuari.setNomUsuari(nomUsuari);
+        usuari.setCognomsUsuari(cognomsUsuari);
         usuari.setDataNaixement(dataNaixement);
         usuari.setAdreca(adreca);
         usuari.setTelefon(telefon);
-        usuari.setCorreuUsuari(correu);
+        usuari.setCorreuUsuari(correuUsuari);
 
-        //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
-        ModificarUsuari modificarUsuariInstance = new ModificarUsuari((BasePeticions.respostaServidorListener) this, sessioID, context) {
-            @Override
-            public void onRespostaServidorMultiple(Object resposta) {
+            //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
+        ModificarUsuari modificarUsuari = new ModificarUsuari((ModificarUsuari.ModificarUsuariListener) this, this, correuUsuari, sessioID) {
 
-            }
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
@@ -288,11 +286,11 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
                 return null;
             }
         };
-        modificarUsuariInstance.modificarUsuari();
+        modificarUsuari.setUsuari(usuari);
+        modificarUsuari.modificarUsuari();
 
-        Utils.mostrarToast(getApplicationContext(), "Canvis guardats");
+        deshabilitarEdicioDades();
 
-        deshabilitarEdicioDades(); // Després de guardar, deshabilitar l'edició de nou
     }
 
 
@@ -305,11 +303,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
         // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
-        CanviarContrasenya canviarContrasenyaInstance = new CanviarContrasenya(context, usuari) {
-            @Override
-            public void onRespostaServidorMultiple(Object resposta) {
-
-            }
+        CanviarContrasenya canviarContrasenya = new CanviarContrasenya(context, usuari) {
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
@@ -322,8 +316,12 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
                 return null;
             }
         };
-        canviarContrasenyaInstance.execute();
+        canviarContrasenya.execute();
     }
+
+
+
+
 
     /**
      * Mètode que maneja el clic del botó per canviar la contrasenya
@@ -385,12 +383,15 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     }
 
     @Override
-    public void onRespostaServidorMultiple(Object resposta) {
-
+    public void onUsuariObtingut(Usuari usuari) {
+        this.usuari = usuari;
+        actualitzarUsuari(usuari);
     }
 
+
     @Override
-    public void onUsuariObtingut(Usuari usuari) {
+    public void onUsuariModificat(Usuari usuari) {
+        this.usuari = usuari;
         actualitzarUsuari(usuari);
     }
 }

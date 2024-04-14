@@ -82,11 +82,13 @@ public class Usuari implements Serializable {
     public HashMap<String, String> usuari_a_hashmap(Usuari usuari) {
         HashMap<String, String> mapaUsuari = new HashMap<>();
         mapaUsuari.put("objectType", "usuari");
-        mapaUsuari.put("IDUsuari", String.valueOf(usuari.getIDusuari()));
+        mapaUsuari.put("IDusuari", String.valueOf(usuari.getIDusuari()));
         mapaUsuari.put("correuUsuari", usuari.getCorreuUsuari());
+        mapaUsuari.put("passUsuari", usuari.getPassUsuari());
         mapaUsuari.put("nomUsuari", usuari.getNomUsuari());
         mapaUsuari.put("cognomsUsuari", usuari.getCognomsUsuari());
         mapaUsuari.put("dataNaixement", usuari.getDataNaixement());
+        mapaUsuari.put("dataInscripcio", usuari.getDataNaixement());
         mapaUsuari.put("adreca", usuari.getAdreca());
         mapaUsuari.put("telefon", usuari.getTelefon());
         mapaUsuari.put("tipusUsuari", String.valueOf(usuari.getTipusUsuari()));
@@ -99,8 +101,9 @@ public class Usuari implements Serializable {
      */
     public Usuari hashmap_a_usuari(HashMap<String, String> map) {
         Usuari usuari = new Usuari();
-        usuari.setIDUsuari(Integer.parseInt(map.get("IDUsuari")));
+        usuari.setIDusuari(Integer.parseInt(map.get("IDusuari")));
         usuari.setCorreuUsuari(map.get("correuUsuari"));
+        usuari.setPassUsuari(map.get("passUsuari"));
         usuari.setNomUsuari(map.get("nomUsuari"));
         usuari.setCognomsUsuari(map.get("cognomsUsuari"));
         usuari.setDataNaixement(map.get("dataNaixement"));
@@ -135,7 +138,7 @@ public class Usuari implements Serializable {
      *
      * @param IDusuari L'ID de l'usuari.
      */
-    public void setIDUsuari(int IDusuari) {
+    public void setIDusuari(int IDusuari) {
         this.IDusuari = IDusuari;
     }
 

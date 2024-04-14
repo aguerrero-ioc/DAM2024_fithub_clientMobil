@@ -35,59 +35,6 @@ public abstract class CrearUsuari extends BasePeticions {
 
     }
 
-    /*public void crearUsuari() {
-        // Convertir el objecte Usuari a un HashMap
-        HashMap<String, String> mapaUsuari = Utils.ObjecteAHashMap(usuari);
-
-        /* Comprovar si funciona amb ObjecteAHashMap
-        HashMap<String, String> usuariMap = new HashMap<>();
-        usuariMap.put("nom", usuari.getNomUsuari());
-        usuariMap.put("cognoms", usuari.getCognomsUsuari());
-        if (usuari.getDataNaixement() != null) {
-            usuariMap.put("dataNaixement", new SimpleDateFormat("dd-MM-yyyy").format(usuari.getDataNaixement()));
-        }
-        usuariMap.put("adreca", usuari.getAdreca());
-        usuariMap.put("telefon", usuari.getTelefon());
-        usuariMap.put("correu", usuari.getCorreuUsuari());
-        usuariMap.put("contrasenya", usuari.getPassUsuari());
-        */
-        // Crear el Object[] per la petició (sense sessioID)
-        /*enviarPeticio("insert", "usuari", mapaUsuari, null);
-
-    }*/
-
-    /*public void crearUsuari() {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    try {
-                        Socket socket = new Socket("192.168.0.252", 8080);
-                        ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
-
-                        // Crear un nuevo objeto Usuari con los datos proporcionados
-                        Usuari usuari = new Usuari(correuUsuari, passUsuari, nomUsuari, cognomsUsuari, telefon);
-
-                        // Convertir el objeto Usuari a un HashMap
-                        HashMap<String, String> mapaUsuari = usuari.usuari_a_mapa(usuari);
-
-                        Object[] peticio = new Object[4];
-                        peticio[0] = "insert";
-                        peticio[1] = "usuari";
-                        peticio[2] = mapaUsuari; // Enviar el HashMap del usuario como tercer elemento del array
-                        peticio[3] = null; // No se envía el ID de sesión
-
-                        objectOut.writeObject(peticio);
-                        objectOut.flush();
-
-                        // Registrar la petición en el log de depuración
-                        Log.d(ETIQUETA, "Petición enviada: " + Arrays.toString(peticio));
-                    } catch (IOException e) {
-                        Log.e(ETIQUETA, "Error al enviar la petición de creación de usuario", e);
-                    }
-                    return null;
-                }
-            }.execute();}*/
-
     @SuppressLint("StaticFieldLeak")
     public void crearUsuari() {
         new AsyncTask<Void, Void, Object>() {

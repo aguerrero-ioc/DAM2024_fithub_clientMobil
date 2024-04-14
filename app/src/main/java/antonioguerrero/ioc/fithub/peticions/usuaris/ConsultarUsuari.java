@@ -98,7 +98,7 @@ public abstract class ConsultarUsuari extends BasePeticions {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
 
                 Usuari usuari = new Usuari();
-                usuari.setIDUsuari(Integer.parseInt(mapaUsuari.get("IDUsuari")));
+                usuari.setIDusuari(Integer.parseInt(mapaUsuari.get("IDusuari")));
                 usuari.setNomUsuari(mapaUsuari.get("nomUsuari"));
                 usuari.setPassUsuari(mapaUsuari.get("passUsuari"));
                 usuari.setTipusUsuari(Integer.parseInt(mapaUsuari.get("tipusUsuari")));
@@ -111,7 +111,8 @@ public abstract class ConsultarUsuari extends BasePeticions {
 
                 ((ConsultarUsuariListener) listener).onUsuariObtingut(usuari);
 
-                Log.d(ETIQUETA, "Datos recibidos: " + Arrays.toString((Object[]) resposta));
+
+                Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la consulta de l'usuari");
             }

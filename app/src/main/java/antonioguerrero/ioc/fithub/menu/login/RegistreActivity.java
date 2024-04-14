@@ -151,10 +151,7 @@ public class RegistreActivity extends AppCompatActivity {
             public void onRespostaServidorMultiple(Object resposta) {
             }
         }, usuari, RegistreActivity.this) {
-            @Override
-            public void onRespostaServidorMultiple(Object resposta) {
 
-            }
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {

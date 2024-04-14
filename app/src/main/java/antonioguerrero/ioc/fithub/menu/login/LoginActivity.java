@@ -84,10 +84,6 @@ public class LoginActivity extends AppCompatActivity  {
     private void enviarLogin(String correuUsuari, String passUsuari) {
 
         PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari) {
-            @Override
-            public void onRespostaServidorMultiple(Object resposta) {
-
-            }
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {

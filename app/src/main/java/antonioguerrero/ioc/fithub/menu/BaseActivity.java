@@ -149,4 +149,6 @@ public void gestioRespostaServidor(Object respuesta) {
 
 
     public abstract void onRespostaServidorMultiple(Object resposta);
+
+
 }

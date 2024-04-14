@@ -23,7 +23,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  */
 public class PeticioLogout extends BasePeticions {
     private static final String ETIQUETA = "PeticioLogout";
-    private String IDUsuari;
+    private String IDusuari;
     private Context context;
     private SharedPreferences preferencies;
     private String sessioID;
@@ -33,13 +33,13 @@ public class PeticioLogout extends BasePeticions {
      *
      * @param listener  L'objecte que es notificarà quan la petició estigui completa.
      * @param context   El context de l'aplicació.
-     * @param IDUsuari  L'ID de l'usuari que vol tancar la sessió.
+     * @param IDusuari  L'ID de l'usuari que vol tancar la sessió.
      * @param sessioID  L'ID de la sessió que es vol tancar.
      */
-    public PeticioLogout(respostaServidorListener listener, Context context, String IDUsuari, String sessioID) {
+    public PeticioLogout(respostaServidorListener listener, Context context, String IDusuari, String sessioID) {
         super(listener);
         this.context = context;
-        this.IDUsuari = IDUsuari;
+        this.IDusuari = IDusuari;
         this.sessioID = sessioID;
         this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
@@ -55,7 +55,7 @@ public class PeticioLogout extends BasePeticions {
             protected Object doInBackground(Void... voids) {
                 try {
                     // Envía la petición de logout con el ID de usuario como una cadena
-                    return enviarPeticioString("logout", IDUsuari, "null", sessioID);
+                    return enviarPeticioString("logout", IDusuari, "null", sessioID);
                 } catch (ConnectException e) {
                     throw new RuntimeException(e);
                 }
@@ -80,11 +80,6 @@ public class PeticioLogout extends BasePeticions {
     @Override
     public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         return null;
-    }
-
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
-
     }
 
     /**

@@ -93,21 +93,25 @@ public class Utils {
 
     public static HashMap<String, String> ObjecteAHashMap(Object object) {
         HashMap<String, String> map = new HashMap<>();
-        Field[] fields = object.getClass().getDeclaredFields();
 
-        for (Field field : fields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(object);
-                if (value != null) {
-                    map.put(field.getName(), value.toString());
+        if (object != null) {
+            Field[] fields = object.getClass().getDeclaredFields();
+
+            for (Field field : fields) {
+                field.setAccessible(true);
+                try {
+                    Object value = field.get(object);
+                    if (value != null) {
+                        map.put(field.getName(), value.toString());
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
             }
         }
         return map;
     }
+
     public static Object HashMapAObjecte(HashMap<String, String> map, Class<?> clazz) {
         Object object = null;
         try {

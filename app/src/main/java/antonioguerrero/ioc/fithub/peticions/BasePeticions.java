@@ -24,8 +24,6 @@ public abstract class BasePeticions {
     protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
 
-    public abstract void onRespostaServidorMultiple(Object resposta);
-
 
     public interface respostaServidorListener {
         void respostaServidor(Object resposta) throws ConnectException;
@@ -54,7 +52,7 @@ public abstract class BasePeticions {
 
 
     public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
-        String respostaHS = "";
+        String respostaHandshake = "";
         Object[] resposta = null;
         Socket clientSocket = null;
         //Handshake
@@ -72,15 +70,15 @@ public abstract class BasePeticions {
         try {
             // Conectar al servidor
             clientSocket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
-            System.out.println("***COM***           Client connectant al servidor...");
+            Log.d("BasePeticions", "Client connectant al servidor...");
 
             handshake = new Scanner(clientSocket.getInputStream());
             sortida = new ObjectOutputStream(clientSocket.getOutputStream());
             entrada = new ObjectInputStream(clientSocket.getInputStream());
 
             // Llegir missatge de conexio
-            respostaHS = handshake.nextLine();
-            System.out.println("***COM***" + respostaHS);
+            respostaHandshake = handshake.nextLine();
+            Log.d("BasePeticions","Servidor: " + respostaHandshake);
 
             // Envia missatge al servidor
             sortida.writeObject(peticio);
@@ -91,10 +89,8 @@ public abstract class BasePeticions {
         } catch (ConnectException cx) {
             throw cx;
         } catch (EOFException eq) {
-            // Gestionar la excepció EOFException
             eq.printStackTrace();
         } catch (IOException ex) {
-            // Gestionar la excepció IOException
             ex.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -112,7 +108,7 @@ public abstract class BasePeticions {
     }
 
     public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
-        String respostaHS = "";
+        String respostaHandshake = "";
         Object[] resposta = null;
         Socket clientSocket = null;
 
@@ -130,15 +126,15 @@ public abstract class BasePeticions {
         try {
             // Conectar al servidor
             clientSocket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
-            System.out.println("***COM***           Client connectant al servidor...");
+            Log.d("BasePeticions", "Client connectant al servidor...");
 
             handshake = new Scanner(clientSocket.getInputStream());
             sortida = new ObjectOutputStream(clientSocket.getOutputStream());
             entrada = new ObjectInputStream(clientSocket.getInputStream());
 
             // Llegir missatge de conexio
-            respostaHS = handshake.nextLine();
-            System.out.println("***COM***           " + respostaHS);
+            respostaHandshake = handshake.nextLine();
+            Log.d("BasePeticions","Servidor: " + respostaHandshake);
 
             // Envia missatge al servidor
             sortida.writeObject(peticio);
@@ -149,10 +145,9 @@ public abstract class BasePeticions {
         } catch (ConnectException cx) {
             throw cx;
         } catch (EOFException eq) {
-            // Gestionar la excepció EOFException
+
             eq.printStackTrace();
         } catch (IOException ex) {
-            // Gestionar la excepció IOException
             ex.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
