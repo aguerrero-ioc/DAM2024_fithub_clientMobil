@@ -1,18 +1,26 @@
 package antonioguerrero.ioc.fithub.peticions.usuaris;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
+/**
+ * Classe per gestionar la petició de tancament de sessió.
+ */
 public class PeticioLogout extends BasePeticions {
     private static final String ETIQUETA = "PeticioLogout";
     private String IDUsuari;
@@ -20,6 +28,14 @@ public class PeticioLogout extends BasePeticions {
     private SharedPreferences preferencies;
     private String sessioID;
 
+    /**
+     * Constructor de la classe PeticioLogout.
+     *
+     * @param listener  L'objecte que es notificarà quan la petició estigui completa.
+     * @param context   El context de l'aplicació.
+     * @param IDUsuari  L'ID de l'usuari que vol tancar la sessió.
+     * @param sessioID  L'ID de la sessió que es vol tancar.
+     */
     public PeticioLogout(respostaServidorListener listener, Context context, String IDUsuari, String sessioID) {
         super(listener);
         this.context = context;
@@ -29,6 +45,9 @@ public class PeticioLogout extends BasePeticions {
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
+    /**
+     * Mètode per enviar la petició de tancament de sessió al servidor.
+     */
     @SuppressLint("StaticFieldLeak")
     public void peticioLogout() {
         new AsyncTask<Void, Void, Object>() {
@@ -48,7 +67,11 @@ public class PeticioLogout extends BasePeticions {
         }.execute();
     }
 
-
+    /**
+     * Mètode per obtenir el tipus de l'objecte.
+     *
+     * @return La classe de l'objecte.
+     */
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
@@ -64,28 +87,50 @@ public class PeticioLogout extends BasePeticions {
 
     }
 
+    /**
+     * Mètode per gestionar la resposta del servidor a la petició de tancament de sessió.
+     *
+     * @param resposta La resposta del servidor.
+     */
     @Override
     public void respostaServidor(Object resposta) {
-        Log.d(ETIQUETA, "Respossta del servidor: " + resposta);
+        Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
         if (resposta instanceof Object[]) {
             Object[] arrayResposta = (Object[]) resposta;
             String estat = (String) arrayResposta[0];
             if (estat.equals("true")) {
-                Log.d(ETIQUETA, "Logout exitoso");
+                if (estat.equals("true")) {
+                    Log.d(ETIQUETA, "Tancament de sessió exitós");
+                    Toast.makeText(context, "Tancament de sessió exitós", Toast.LENGTH_SHORT).show();
+
+                    // Torna a LoginActivity
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    context.startActivity(intent);
+                    ((Activity) context).finish(); // Tanca l'activitat actual
+                } else {
+                    Log.e(ETIQUETA, "Error en el tancament de sessió");
+                }
             } else {
-                Log.e(ETIQUETA, "Error en el logout");
+                String missatgeError = "Error: " + resposta.toString();
+                Log.e(ETIQUETA, missatgeError);
+                Toast.makeText(context, missatgeError, Toast.LENGTH_SHORT).show();
             }
-        } else {
-            String missatgeError = "Error: " + resposta.toString();
-            Log.e(ETIQUETA, missatgeError);
         }
     }
 
+    /**
+     * Mètode per executar la petició de tancament de sessió.
+     */
     @Override
     public void execute() {
         peticioLogout();
     }
 
+    /**
+     * Mètode per obtenir l'etiqueta de la classe.
+     *
+     * @return L'etiqueta de la classe.
+     */
     public String getEtiqueta() {
         return ETIQUETA;
     }
