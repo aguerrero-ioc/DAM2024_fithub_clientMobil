@@ -14,6 +14,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
+import java.util.List;
+
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
@@ -81,6 +84,16 @@ public class LoginActivity extends AppCompatActivity  {
     private void enviarLogin(String correuUsuari, String passUsuari) {
 
         PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari) {
+            @Override
+            public void onRespostaServidorMultiple(Object resposta) {
+
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
             @Override
             public void respostaServidor(Object[] resposta) {
                 if (resposta != null) {

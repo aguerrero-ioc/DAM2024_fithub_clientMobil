@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".menu.login.RegistreActivity" />
+        <activity android:name=".menu.BaseActivity" />
         <activity android:name=".menu.main.AdminActivity" />
         <activity android:name=".menu.main.ClientActivity" />
         <activity android:name=".menu.usuari.PerfilActivity" />

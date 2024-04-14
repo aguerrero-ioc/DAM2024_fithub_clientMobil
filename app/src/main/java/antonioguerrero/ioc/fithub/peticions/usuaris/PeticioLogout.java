@@ -7,19 +7,21 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
-public abstract class PeticioLogout extends BasePeticions {
+public class PeticioLogout extends BasePeticions {
     private static final String ETIQUETA = "PeticioLogout";
     private String IDUsuari;
     private Context context;
     private SharedPreferences preferencies;
     private String sessioID;
 
-    public PeticioLogout(Context context, String IDUsuari) {
-        super((respostaServidorListener) context);
+    public PeticioLogout(respostaServidorListener listener, Context context, String IDUsuari, String sessioID) {
+        super(listener);
         this.context = context;
         this.IDUsuari = IDUsuari;
         this.sessioID = sessioID;
@@ -33,7 +35,8 @@ public abstract class PeticioLogout extends BasePeticions {
             @Override
             protected Object doInBackground(Void... voids) {
                 try {
-                    return enviarPeticioString("logout",IDUsuari, null, sessioID);
+                    // Envía la petición de logout con el ID de usuario como una cadena
+                    return enviarPeticioString("logout", IDUsuari, "null", sessioID);
                 } catch (ConnectException e) {
                     throw new RuntimeException(e);
                 }
@@ -45,9 +48,20 @@ public abstract class PeticioLogout extends BasePeticions {
         }.execute();
     }
 
+
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
+    }
+
+    @Override
+    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+        return null;
+    }
+
+    @Override
+    public void onRespostaServidorMultiple(Object resposta) {
+
     }
 
     @Override
@@ -70,5 +84,9 @@ public abstract class PeticioLogout extends BasePeticions {
     @Override
     public void execute() {
         peticioLogout();
+    }
+
+    public String getEtiqueta() {
+        return ETIQUETA;
     }
 }

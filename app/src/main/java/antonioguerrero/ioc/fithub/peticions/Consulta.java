@@ -19,7 +19,7 @@ import antonioguerrero.ioc.fithub.objectes.Installacio;
 import antonioguerrero.ioc.fithub.objectes.Servei;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 
-public class Consulta extends BasePeticions {
+public abstract class Consulta extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarEntidad";
     private String sessioID;

@@ -1,22 +1,16 @@
 package antonioguerrero.ioc.fithub.peticions.installacions;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 /**
@@ -33,25 +27,40 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
     private static final String ETIQUETA = "ConsultarInstallacions";
     SharedPreferences preferencies;
     String sessioID;
+    private respostaServidorListener listener;
 
     /**
      * Constructor de la classe ConsultarTotesInstallacions.
-     *
-     * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarTotesInstallacions(respostaServidorListener listener, Context context) {
+    public ConsultarTotesInstallacions(Context context, respostaServidorListener listener) {
         super(listener);
         this.context = context;
+        this.listener = listener;
         this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     /**
-     * Mètode per obtenir les dades de totes les instal·lacions.
+     * Mètode per obtenir totes les instal·lacions.
      */
-    public void obtenirInstallacions() throws ConnectException {
-        enviarPeticioString("selectAll", "installacio", null, this.sessioID);
 
+    @SuppressLint("StaticFieldLeak")
+    public void consultarTotesInstallacions() {
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    return enviarPeticioString("selectAll", "installacio", null, sessioID);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
+            }
+        }.execute();
     }
 
     /**
@@ -70,7 +79,7 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
      * @param resposta La resposta del servidor.
      */
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         if (resposta instanceof Object[]) {
             Object[] respostaArray = (Object[]) resposta;
@@ -78,26 +87,17 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
             if (estat != null && estat.equals("llistaInstallacions")) {
                 // Obtenir la llista d'instal·lacions
                 List<HashMap<String, String>> llistaInstallacions = (List<HashMap<String, String>>) respostaArray[1];
-                // Iniciar l'activitat InstallacionsActivity amb la llista d'instal·lacions
-                Utils.iniciarActivitatLlista(context, InstallacionsActivity.class, llistaInstallacions, "llistaInstallacions");
                 // Guardar les dades de les instal·lacions a SharedPreferences
                 guardarDadesInstallacions(llistaInstallacions);
-
-                /*List<HashMap<String, String>> installacionsList = (List<HashMap<String, String>>) respostaArray[1];
-                for (HashMap<String, String> installacioMap : installacionsList) {
-                    Installacio installacio = new Installacio(
-                            Integer.parseInt(installacioMap.get("id")),
-                            installacioMap.get("nomInstallacio"),
-                            installacioMap.get("descripcioInstallacio"),
-                            Integer.parseInt(installacioMap.get("tipusInstallacio"))
-                    );
-                }*/
+                // Devolver la lista de instalaciones en lugar de iniciar la actividad
+                return llistaInstallacions;
             } else {
                 Utils.mostrarToast(context, "Error en la consulta d'instal·lacions");
             }
         } else {
             Utils.mostrarToast(context, "Error de connexió");
         }
+        return null;
     }
 
     /**
@@ -105,7 +105,7 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
      */
     @Override
     public void execute() throws ConnectException {
-        obtenirInstallacions();
+        consultarTotesInstallacions();
     }
 
     /**
@@ -120,7 +120,7 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
         // Guardar les propietats de cada objecte installacio a SharedPreferences
         for (int i = 0; i < llistaInstallacions.size(); i++) {
             HashMap<String, String> mapaInstallacions = llistaInstallacions.get(i);
-            editor.putInt("idInstallacio"+ i, Integer.parseInt(mapaInstallacions.get("idInstallacio")));
+            editor.putInt("IDInstallacio"+ i, Integer.parseInt(mapaInstallacions.get("IDInstallacio")));
             editor.putString("nomInstallacio" + i, mapaInstallacions.get("nomInstallacio"));
             editor.putString("descripcioInstallacio" + i, mapaInstallacions.get("descripcioInstallacio"));
             editor.putString("tipusInstallacio" + i, mapaInstallacions.get("tipusInstallacio"));
@@ -131,5 +131,10 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
 
         // Aplicar els canvis a SharedPreferences
         editor.apply();
+    }
+
+    @Override
+    public void onRespostaServidorMultiple(Object resposta) {
+        // Implementación del método onRespostaServidorMultiple
     }
 }

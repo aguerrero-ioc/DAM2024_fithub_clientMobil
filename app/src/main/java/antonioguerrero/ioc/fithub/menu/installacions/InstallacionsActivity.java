@@ -1,7 +1,7 @@
 package antonioguerrero.ioc.fithub.menu.installacions;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,18 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
+import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.menu.BaseActivity;
+import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
 
-/**
- * Activitat per mostrar les instal·lacions disponibles al centre esportiu.
- *
- * @author Antonio Guerrero
- * @version 1.0
- */
-public class InstallacionsActivity extends AppCompatActivity {
+public class InstallacionsActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private InstallacionsAdapter adapter;
-    private List<HashMap<String, String>> installacionsLlista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +26,44 @@ public class InstallacionsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<HashMap<String, String>> installacionsLlista = (List<HashMap<String, String>>) getIntent().getExtras().getSerializable("installacionsList");
-        adapter = new InstallacionsAdapter(installacionsLlista);
-        recyclerView.setAdapter(adapter);
+        ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, new ConsultarTotesInstallacions.respostaServidorListener() {
+            @Override
+            public void respostaServidor(Object resposta) {
+                // Implementació del mètode respostaServidor
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                if (resposta instanceof List) {
+                    List<HashMap<String, String>> llistaInstallacions = (List<HashMap<String, String>>) resposta;
+                    // Verificar si la llista no està buida abans de configurar l'adaptador
+                    if (!llistaInstallacions.isEmpty()) {
+                        adapter = new InstallacionsAdapter(llistaInstallacions);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        Utils.mostrarToast(InstallacionsActivity.this, "La llista d'instal·lacions està buida");
+                    }
+                } else {
+                    Utils.mostrarToast(InstallacionsActivity.this, "No s'han pogut obtenir les dades");
+                }
+                return null;
+            }
+
+            @Override
+            public void onRespostaServidorMultiple(Object resposta) {
+
+            }
+        }) {
+            @Override
+            public void respostaServidor(Object resposta) {
+
+            }
+        };
+        consulta.consultarTotesInstallacions();
+    }
+
+    @Override
+    public void onRespostaServidorMultiple(Object resposta) {
+
     }
 }

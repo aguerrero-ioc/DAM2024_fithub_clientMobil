@@ -9,12 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.net.ConnectException;
+import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
@@ -29,7 +30,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class PerfilActivity extends AppCompatActivity implements BasePeticions.respostaServidorListener {
+public class PerfilActivity extends BaseActivity implements BasePeticions.respostaServidorListener {
 
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefonContacte, etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya;
     private Button btnGuardarCanvis, btnEditarPerfil, btnCanviContrasenya, btnGuardarCanviContrasenya;
@@ -194,6 +195,16 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         }
     }
 
+    @Override
+    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+        return null;
+    }
+
+    @Override
+    public void onRespostaServidorMultiple(Object resposta) {
+
+    }
+
 
     /**
      * Mètode per assignar un valor a un camp de l'objecte Usuari.
@@ -251,7 +262,17 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
     public void actualitzarUsuari(Usuari usuari) throws ConnectException {
 
         // Crear una instancia de ConsultarUsuari
-        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID);
+        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID) {
+            @Override
+            public void onRespostaServidorMultiple(Object resposta) {
+
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+        };
 
         // Ejecutar la petición al servidor
         consultarUsuariInstance.execute();
@@ -368,6 +389,16 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
         ModificarUsuari modificarUsuariInstance = new ModificarUsuari((BasePeticions.respostaServidorListener) this, sessioID, context) {
             @Override
+            public void onRespostaServidorMultiple(Object resposta) {
+
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
             protected Object doInBackground(Void... voids) {
                 return null;
             }
@@ -390,6 +421,16 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
         CanviarContrasenya canviarContrasenyaInstance = new CanviarContrasenya(context, usuari) {
+            @Override
+            public void onRespostaServidorMultiple(Object resposta) {
+
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
             @Override
             protected Object doInBackground(Void... voids) {
                 canviarContrasenya();

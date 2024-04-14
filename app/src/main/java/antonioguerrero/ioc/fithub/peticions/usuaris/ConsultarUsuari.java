@@ -22,7 +22,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class ConsultarUsuari extends BasePeticions {
+public abstract class ConsultarUsuari extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarUsuari";
     private String correuUsuari;

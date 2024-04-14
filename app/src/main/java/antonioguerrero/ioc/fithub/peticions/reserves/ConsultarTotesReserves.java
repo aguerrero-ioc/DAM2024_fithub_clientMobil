@@ -27,7 +27,7 @@ public abstract class ConsultarTotesReserves extends BasePeticions {
     }
 
     public void consultarTotesReserves() throws ConnectException {
-        String IDUsuariString = Integer.toString(usuari.getIDUsuari());
+        String IDUsuariString = Integer.toString(usuari.getIDusuari());
 
         enviarPeticioString("selectAll", "reserva", IDUsuariString, this.sessioID);
     }

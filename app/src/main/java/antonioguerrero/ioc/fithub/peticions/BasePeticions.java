@@ -12,6 +12,7 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,14 +24,18 @@ public abstract class BasePeticions {
     protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
 
+    public abstract void onRespostaServidorMultiple(Object resposta);
+
+
     public interface respostaServidorListener {
         void respostaServidor(Object resposta) throws ConnectException;
+
+        List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
+
+        void onRespostaServidorMultiple(Object resposta);
     }
 
     protected respostaServidorListener listener;
-    protected ObjectOutputStream objectOut;
-    protected ObjectInputStream objectIn;
-
 
     public BasePeticions(respostaServidorListener listener) {
         this.listener = listener;
@@ -43,6 +48,8 @@ public abstract class BasePeticions {
 
     public abstract Class<?> obtenirTipusObjecte();
 
+    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
+
     public abstract void execute() throws ConnectException;
 
 
@@ -51,10 +58,10 @@ public abstract class BasePeticions {
         Object[] resposta = null;
         Socket clientSocket = null;
         //Handshake
-        Scanner inHS = null;
+        Scanner handshake = null;
         //Missatge
-        ObjectInputStream in = null;
-        ObjectOutputStream out = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream sortida = null;
 
         Object[] peticio = new Object[4];
         peticio[0] = operacio;
@@ -67,35 +74,35 @@ public abstract class BasePeticions {
             clientSocket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
             System.out.println("***COM***           Client connectant al servidor...");
 
-            inHS = new Scanner(clientSocket.getInputStream());
-            out = new ObjectOutputStream(clientSocket.getOutputStream());
-            in = new ObjectInputStream(clientSocket.getInputStream());
+            handshake = new Scanner(clientSocket.getInputStream());
+            sortida = new ObjectOutputStream(clientSocket.getOutputStream());
+            entrada = new ObjectInputStream(clientSocket.getInputStream());
 
             // Llegir missatge de conexio
-            respostaHS = inHS.nextLine();
-            System.out.println("***COM***           " + respostaHS);
+            respostaHS = handshake.nextLine();
+            System.out.println("***COM***" + respostaHS);
 
             // Envia missatge al servidor
-            out.writeObject(peticio);
+            sortida.writeObject(peticio);
 
             // Llegeix resposta del servidor
-            resposta = (Object[]) in.readObject();
+            resposta = (Object[]) entrada.readObject();
 
         } catch (ConnectException cx) {
             throw cx;
         } catch (EOFException eq) {
-            // Manejar la excepción EOFException
+            // Gestionar la excepció EOFException
             eq.printStackTrace();
         } catch (IOException ex) {
-            // Manejar la excepción IOException
+            // Gestionar la excepció IOException
             ex.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                if (in != null) in.close();
-                if (inHS != null) inHS.close();
-                if (out != null) out.close();
+                if (entrada != null) entrada.close();
+                if (handshake != null) handshake.close();
+                if (sortida != null) sortida.close();
                 if (clientSocket != null) clientSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -108,11 +115,11 @@ public abstract class BasePeticions {
         String respostaHS = "";
         Object[] resposta = null;
         Socket clientSocket = null;
-        //Handshake
-        Scanner inHS = null;
-        //Missatge
-        ObjectInputStream in = null;
-        ObjectOutputStream out = null;
+
+        Scanner handshake = null;
+
+        ObjectInputStream entrada = null;
+        ObjectOutputStream sortida = null;
 
         Object[] peticio = new Object[4];
         peticio[0] = operacio;
@@ -125,35 +132,35 @@ public abstract class BasePeticions {
             clientSocket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
             System.out.println("***COM***           Client connectant al servidor...");
 
-            inHS = new Scanner(clientSocket.getInputStream());
-            out = new ObjectOutputStream(clientSocket.getOutputStream());
-            in = new ObjectInputStream(clientSocket.getInputStream());
+            handshake = new Scanner(clientSocket.getInputStream());
+            sortida = new ObjectOutputStream(clientSocket.getOutputStream());
+            entrada = new ObjectInputStream(clientSocket.getInputStream());
 
             // Llegir missatge de conexio
-            respostaHS = inHS.nextLine();
+            respostaHS = handshake.nextLine();
             System.out.println("***COM***           " + respostaHS);
 
             // Envia missatge al servidor
-            out.writeObject(peticio);
+            sortida.writeObject(peticio);
 
             // Llegeix resposta del servidor
-            resposta = (Object[]) in.readObject();
+            resposta = (Object[]) entrada.readObject();
 
         } catch (ConnectException cx) {
             throw cx;
         } catch (EOFException eq) {
-            // Manejar la excepción EOFException
+            // Gestionar la excepció EOFException
             eq.printStackTrace();
         } catch (IOException ex) {
-            // Manejar la excepción IOException
+            // Gestionar la excepció IOException
             ex.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                if (in != null) in.close();
-                if (inHS != null) inHS.close();
-                if (out != null) out.close();
+                if (entrada != null) entrada.close();
+                if (handshake != null) handshake.close();
+                if (sortida != null) sortida.close();
                 if (clientSocket != null) clientSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();

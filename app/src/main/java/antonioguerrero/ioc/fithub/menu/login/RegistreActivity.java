@@ -11,6 +11,8 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.net.ConnectException;
+import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
@@ -139,7 +141,26 @@ public class RegistreActivity extends AppCompatActivity {
             @Override
             public void respostaServidor(Object resposta) {
             }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void onRespostaServidorMultiple(Object resposta) {
+            }
         }, usuari, RegistreActivity.this) {
+            @Override
+            public void onRespostaServidorMultiple(Object resposta) {
+
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
             @Override
             protected Object doInBackground(Void... voids) {
                 return null;

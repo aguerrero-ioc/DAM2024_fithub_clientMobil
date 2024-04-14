@@ -34,18 +34,6 @@
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <!-- Botó de perfil -->
-            <ImageButton
-                android:id="@+id/boto_perfil_client"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="toggleMenu"
-
-                android:src="@drawable/ic_perfil" />
 
             <!-- Botó d'accés a panell esquerre-->
             <ImageButton
@@ -112,79 +100,13 @@
                 android:layout_height="match_parent" />
         </androidx.viewpager.widget.ViewPager>
 
-        <!-- Menú desplegable del perfil -->
-        <LinearLayout
-            android:id="@+id/layoutPerfilMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/menu_background"
-        android:orientation="vertical"
-        android:elevation="8dp"
-        android:visibility="gone"
-        android:animateLayoutChanges="true"
-        app:layout_constraintEnd_toEndOf="@id/toolbar"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-        <!-- Nom d'usuari -->
-        <TextView
-            android:id="@+id/tv_usuari"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nom_d_usuari"
-            android:textColor="@color/backgroundColorPrimary"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"
-            android:drawablePadding="8dp"/>
-
-        <!-- Tipus de client -->
-        <TextView
-            android:id="@+id/tv_tipus_client"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tipus_de_client"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"
-            android:drawablePadding="8dp"/>
-
-        <!-- Barra de separació -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Opcions del menú -->
-        <TextView
-            android:id="@+id/opcio_perfil1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/el_meu_compte"
-            android:background="@drawable/menu_item_background"
-            android:textColor="@android:color/black"
-            android:padding="10dp"
-            android:drawablePadding="8dp"/>
-
-        <TextView
-            android:id="@+id/opcio_logout_client"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tancar_sessio"
-            android:background="@drawable/menu_item_background"
-            android:textColor="@android:color/black"
-            android:padding="10dp"
-            android:drawablePadding="8dp"/>
-    </LinearLayout>
-
         <!-- Botó de missatges -->
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/boto_mostrar_missatges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_missatge"
-            android:background="?attr/colorPrimary"
+            android:backgroundTint="?attr/colorPrimary"
 
             android:onClick="mostrarFragmentMissatges"
 

@@ -86,9 +86,9 @@ public abstract class PeticioLogin extends BasePeticions {
                     HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
                     Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
                     if (usuari != null) {
-                        guardarSessioID(sessioID);
-                        Usuari.guardarDadesUsuari(usuari);
                         obrirActivitat(usuari.getTipusUsuari());
+                        Usuari.guardarDadesUsuari(usuari);
+                        guardarSessioID(sessioID);
                     } else {
                         Log.d(ETIQUETA, "Error en transformar el HashMap en Usuari");
                     }
@@ -144,6 +144,7 @@ public abstract class PeticioLogin extends BasePeticions {
         SharedPreferences.Editor editor = preferencies.edit();
         editor.putString(Utils.SESSIO_ID, sessioID);
         editor.apply();
+        Log.d("PeticioLogin", "sessioID guardat: " + sessioID);
     }
 
 
@@ -171,4 +172,8 @@ public abstract class PeticioLogin extends BasePeticions {
     public abstract void respostaServidor(Object[] resposta);
 
     protected abstract Object doInBackground(Void... voids);
+
+    public String getEtiqueta() {
+        return ETIQUETA;
+    }
 }

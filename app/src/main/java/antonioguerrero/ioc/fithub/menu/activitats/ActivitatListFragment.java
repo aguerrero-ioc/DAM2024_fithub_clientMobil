@@ -19,14 +19,10 @@ import antonioguerrero.ioc.fithub.objectes.Activitat;
  */
 public class ActivitatListFragment extends Fragment {
 
-    /**
-     * Array d'activitats a mostrar.
-     */
+
     private Activitat[] activitats;
 
-    /**
-     * Constructor per defecte.
-     */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activitat_list, container, false);
@@ -52,5 +48,6 @@ public class ActivitatListFragment extends Fragment {
         });
 
         return view;
+
     }
 }
