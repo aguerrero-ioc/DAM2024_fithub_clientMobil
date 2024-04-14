@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -33,14 +34,18 @@ public abstract class ConsultarUsuari extends BasePeticions {
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarUsuari(respostaServidorListener listener, Context context, String correuUsuari, String sessioID) {
-        super(listener);
+    public ConsultarUsuari(ConsultarUsuariListener listener, Context context, String correuUsuari, String sessioID) {
+        super((respostaServidorListener) listener);
         this.context = context;
         this.correuUsuari = correuUsuari;
         this.sessioID = sessioID;
 
         SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    }
+
+    public interface ConsultarUsuariListener {
+        void onUsuariObtingut(Usuari usuari);
     }
 
     /**
@@ -91,23 +96,22 @@ public abstract class ConsultarUsuari extends BasePeticions {
             String estat = (String) arrayResposta[0];
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
-                Usuari usuari = (Usuari) Utils.HashMapAObjecte(mapaUsuari, Usuari.class);
 
-                /* Comprovar que funciona amb HashMapAObjecte
                 Usuari usuari = new Usuari();
+                usuari.setIDUsuari(Integer.parseInt(mapaUsuari.get("IDUsuari")));
                 usuari.setNomUsuari(mapaUsuari.get("nomUsuari"));
-                usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
                 usuari.setPassUsuari(mapaUsuari.get("passUsuari"));
+                usuari.setTipusUsuari(Integer.parseInt(mapaUsuari.get("tipusUsuari")));
+                usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
                 usuari.setCognomsUsuari(mapaUsuari.get("cognomsUsuari"));
                 usuari.setTelefon(mapaUsuari.get("telefon"));
-                usuari.setAdreca(mapaUsuari.get("Adreca"));
-                try {
-                    SimpleDateFormat formatData = new SimpleDateFormat("dd-MM-yyyy");
-                    usuari.setDataNaixement(formatData.parse(mapaUsuari.get("DataNaixement")));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }*/
+                usuari.setAdreca(mapaUsuari.get("adreca"));
+                usuari.setDataNaixement(mapaUsuari.get("dataNaixement"));
+                usuari.setDataInscripcio(mapaUsuari.get("dataInscripcio"));
 
+                ((ConsultarUsuariListener) listener).onUsuariObtingut(usuari);
+
+                Log.d(ETIQUETA, "Datos recibidos: " + Arrays.toString((Object[]) resposta));
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la consulta de l'usuari");
             }
@@ -125,6 +129,8 @@ public abstract class ConsultarUsuari extends BasePeticions {
     public void execute() throws ConnectException {
         consultarUsuari();
     }
+
+    public abstract void respostaServidor(Object[] resposta);
 
     protected Object doInBackground(Void... voids) {
         return null;

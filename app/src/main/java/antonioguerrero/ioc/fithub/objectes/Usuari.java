@@ -157,6 +157,16 @@ public class Usuari implements Serializable {
         this.tipusUsuari = tipusUsuari;
     }
 
+    public void setTipusUsuariString(String tipusUsuari) {
+        if (tipusUsuari.equals("Administrador")) {
+            this.tipusUsuari = 1;
+        } else if (tipusUsuari.equals("Client")) {
+            this.tipusUsuari = 2;
+        } else {
+            this.tipusUsuari = 0;
+        }
+    }
+
     /**
      * Obté el nom de l'usuari.
      *
@@ -325,7 +335,7 @@ public class Usuari implements Serializable {
         editor.putString("passUsuari", usuari.getPassUsuari());
         editor.putString("dataInscripcio", usuari.getDataInscripcio());
         editor.putString("cognomsUsuari", usuari.getCognomsUsuari());
-        editor.putString("DataNaixement", usuari.getDataNaixement());
+        editor.putString("dataNaixement", usuari.getDataNaixement());
         editor.putString("adreca", usuari.getAdreca());
         editor.putString("telefon", usuari.getTelefon());
 

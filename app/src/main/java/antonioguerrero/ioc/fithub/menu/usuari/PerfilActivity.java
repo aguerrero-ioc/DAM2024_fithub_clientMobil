@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,14 +31,15 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class PerfilActivity extends BaseActivity implements BasePeticions.respostaServidorListener {
+public class PerfilActivity extends BaseActivity implements ConsultarUsuari.ConsultarUsuariListener, BasePeticions.respostaServidorListener {
 
-    private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefonContacte, etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya;
+    private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefon,
+            etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya,
+            etTipusUsuari, etIDusuari;
     private Button btnGuardarCanvis, btnEditarPerfil, btnCanviContrasenya, btnGuardarCanviContrasenya;
     private Context context;
     private String sessioID;
     private Usuari usuari;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,57 +52,26 @@ public class PerfilActivity extends BaseActivity implements BasePeticions.respos
         etDataNaixement = findViewById(R.id.et_data_naixement);
         etAdreca = findViewById(R.id.et_adreca);
         etCorreuUsuari = findViewById(R.id.et_correu_usuari);
-        etTelefonContacte = findViewById(R.id.et_telefon_contacte);
+        etTelefon = findViewById(R.id.et_telefon_contacte);
         etDataInscripcio = findViewById(R.id.et_data_inscripcio);
-
-        // EditText per a la contrasenya actual, nova contrasenya i confirmació de contrasenya
         etContrasenyaActual = findViewById(R.id.et_contrasenya_actual);
         etNovaContrasenya = findViewById(R.id.et_nova_contrasenya);
         etConfirmarContrasenya = findViewById(R.id.et_confirmar_contrasenya);
-
-        // Inicialització dels botons d'edició i desament de dades d'usuari
+        etTipusUsuari = findViewById(R.id.et_tipus_usuari);
+        etIDusuari = findViewById(R.id.et_id_usuari);
         btnEditarPerfil = findViewById(R.id.btn_editar_perfil);
         btnGuardarCanvis = findViewById(R.id.btn_guardar_canvis);
-
-        // Inicialització dels botons d'edició i desament de contrasenya
         btnCanviContrasenya = findViewById(R.id.btn_canviar_contrasenya);
         btnGuardarCanviContrasenya = findViewById(R.id.btn_guardar_contrasenya);
 
-        // Obtenció de les dades de l'usuari de l'Intent
-        Usuari usuari = getIntent().getParcelableExtra("usuari");
-
-        // Actualització de la interfície amb les dades de l'usuari
-        try {
-            inicialitzarUsuari();
-        } catch (ConnectException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Obtenció de la referència de l'ImageView de la imatge de l'usuari
-        ImageView ivImatgeUsuari = findViewById(R.id.iv_imatge_usuari);
-
         // Configuració del clic al ImageView
+        ImageView ivImatgeUsuari = findViewById(R.id.iv_imatge_usuari);
         ivImatgeUsuari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.mostrarToast(PerfilActivity.this, "Pendent d'implementar");
             }
         });
-
-        // Verificació si l'usuari té una imatge personalitzada
-        boolean usuariTeImatgePersonalitzada = false;
-
-        // Verificació si l'usuari té una imatge personalitzada
-        if (usuariTeImatgePersonalitzada) {
-            // Si té, carrega la imatge personalitzada
-            // PENDENT IMPLEMENTAR
-        } else {
-            // Si no té, carrega la imatge predeterminada
-            ivImatgeUsuari.setImageResource(R.mipmap.default_imatge_perfil);
-        }
-
-        // Inicialment, deshabilitar l'edició dels camps de text
-        deshabilitarEdicioDades();
 
         // Configuració del clic del botó per editar el perfil
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +80,6 @@ public class PerfilActivity extends BaseActivity implements BasePeticions.respos
                 habilitarEdicioDades();
             }
         });
-
 
         // Configuració del clic del botó per desar els canvis de les dades d'Usuari
         btnGuardarCanvis.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +101,6 @@ public class PerfilActivity extends BaseActivity implements BasePeticions.respos
             }
         });
 
-
         // Configuració del clic del botó per desar els canvis de la contrasenya
         btnGuardarCanviContrasenya.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,148 +112,64 @@ public class PerfilActivity extends BaseActivity implements BasePeticions.respos
                 }
             }
         });
+        // Obtenir sessioID de l'usuari
+        SharedPreferences preferences = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        String correuUsuari = preferences.getString("correuUsuari", Utils.VALOR_DEFAULT);
 
-        context = this;
-        SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
-
-        // Obtenir les dades de l'usuari de l'Intent
-        usuari = getIntent().getParcelableExtra("usuari");
-
-        // Actualitzar la interfície amb les dades de l'usuari
-        if (usuari != null) {
-            try {
-                actualitzarUsuari(usuari);
-            } catch (ConnectException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            Log.e("PerfilActivity", "Error: No s'han rebut les dades de l'usuari correctament");
-        }
-
-    }
-
-    private void inicialitzarUsuari() throws ConnectException {
-        // Obtenir les dades de l'usuari de l'Intent
-        usuari = getIntent().getParcelableExtra("usuari");
-        // Actualitzar la interfície amb les dades de l'usuari
-
-        if (usuari != null) {
-            actualitzarUsuari(usuari);
-        } else {
-            Log.e("PerfilActivity", "Error: No s'han rebut les dades de l'usuari correctament");
-        }
-    }
-
-    /**
-     * Mètode per gestionar la resposta del servidor.
-     *
-     * @param resposta La resposta del servidor.
-     */
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-        if (resposta != null) {
-            if (resposta instanceof Usuari) {
-                Usuari usuari = (Usuari) resposta;
-                actualitzarUsuari(usuari);
-            } else {
-                Log.e("ConnexioServidor", "Error: Resposta del servidor amb format incorrecte");
-            }
-        } else {
-            Log.e("ConnexioServidor", "Error de connexió: Resposta nul·la del servidor");
-        }
-    }
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
-
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
-
-    }
-
-
-    /**
-     * Mètode per assignar un valor a un camp de l'objecte Usuari.
-     *
-     * @param valorClau L'array de parts de la resposta del servidor.
-     * @param usuari L'objecte Usuari al qual assignar les dades.
-     */
-    private void assignarValorAUsuari(String[] valorClau, Usuari usuari) {
-        String etiqueta = valorClau[0].trim();
-        String valor = valorClau[1].trim();
-
-        switch (etiqueta) {
-            case "correuUsuari":
-                usuari.setCorreuUsuari(valor);
-                break;
-            case "passUsuari":
-                usuari.setPassUsuari(valor);
-                break;
-            case "IDUsuari":
-                usuari.setIDUsuari(Integer.parseInt(valor));
-                break;
-            case "tipusUsuari":
-                usuari.setTipusUsuari(Integer.parseInt(valor));
-                break;
-            case "dataInscripcio":
-                usuari.setDataInscripcio(valor);
-                break;
-            case "nomUsuari":
-                usuari.setNomUsuari(valor);
-                break;
-            case "cognomsUsuari":
-                usuari.setCognomsUsuari(valor);
-                break;
-            case "dataNaixement":
-                usuari.setDataNaixement(valor);
-                break;
-            case "adreca":
-                usuari.setAdreca(valor);
-                break;
-            case "telefon":
-                usuari.setTelefon(valor);
-                break;
-            default:
-                break;
-        }
-    }
-
-
-
-    /**
-     * Mètode per actualitzar les dades de l'usuari a la interfície.
-     *
-     * @param usuari L'objecte Usuari amb les dades a actualitzar.
-     */
-    public void actualitzarUsuari(Usuari usuari) throws ConnectException {
-
-        // Crear una instancia de ConsultarUsuari
-        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID) {
+        // Obtenir les dades de l'usuari
+        ConsultarUsuari consultarUsuari = new ConsultarUsuari(this, this, correuUsuari, sessioID) {
             @Override
             public void onRespostaServidorMultiple(Object resposta) {
-
             }
+
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
             }
+
+            @Override
+            public void respostaServidor(Object[] resposta) {
+
+            }
+
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
         };
+        consultarUsuari.consultarUsuari();
 
-        // Ejecutar la petición al servidor
-        consultarUsuariInstance.execute();
+    }
 
+
+    /**
+     * Mètode per actualitzar les dades de l'usuari a l'activitat.
+     *
+     * @param usuari L'objecte Usuari amb les dades a actualitzar.
+     */
+    private void actualitzarUsuari(Usuari usuari) {
         etNomUsuari.setText(usuari.getNomUsuari());
         etCognoms.setText(usuari.getCognomsUsuari());
         etDataNaixement.setText(usuari.getDataNaixement());
         etAdreca.setText(usuari.getAdreca());
         etCorreuUsuari.setText(usuari.getCorreuUsuari());
-        etTelefonContacte.setText(usuari.getTelefon());
+        etTelefon.setText(usuari.getTelefon());
         etDataInscripcio.setText(usuari.getDataInscripcio());
+        int tipusUsuari = usuari.getTipusUsuari();
+        if (tipusUsuari == 1) {
+            etTipusUsuari.setText("Administrador");
+        } else if (tipusUsuari == 2) {
+            etTipusUsuari.setText("Client");
+        } else {
+            etTipusUsuari.setText("Desconegut");
+        }
+        etIDusuari.setText(String.valueOf(usuari.getIDusuari()));
     }
+
+
+
 
     /**
      * Mètode per habilitar l'edició dels camps de text de dades personals de l'usuari.
@@ -295,7 +180,7 @@ public class PerfilActivity extends BaseActivity implements BasePeticions.respos
         etDataNaixement.setEnabled(true);
         etAdreca.setEnabled(true);
         etCorreuUsuari.setEnabled(true);
-        etTelefonContacte.setEnabled(true);
+        etTelefon.setEnabled(true);
         etDataInscripcio.setEnabled(false);
         btnEditarPerfil.setEnabled(false);
         btnGuardarCanvis.setEnabled(true);
@@ -310,7 +195,7 @@ public class PerfilActivity extends BaseActivity implements BasePeticions.respos
         etDataNaixement.setEnabled(false);
         etAdreca.setEnabled(false);
         etCorreuUsuari.setEnabled(false);
-        etTelefonContacte.setEnabled(false);
+        etTelefon.setEnabled(false);
         etDataInscripcio.setEnabled(false);
         btnGuardarCanvis.setEnabled(false);
     }
@@ -347,7 +232,7 @@ public class PerfilActivity extends BaseActivity implements BasePeticions.respos
         String dataNaixement = etDataNaixement.getText().toString();
         String adreca = etAdreca.getText().toString();
         String correu = etCorreuUsuari.getText().toString();
-        String telefon = etTelefonContacte.getText().toString();
+        String telefon = etTelefon.getText().toString();
 
         // Comprovar si tots els camps estan complets
         if (nom.isEmpty() || cognoms.isEmpty() || dataNaixement.isEmpty() || adreca.isEmpty() || correu.isEmpty() || telefon.isEmpty()) {
@@ -488,4 +373,24 @@ public class PerfilActivity extends BaseActivity implements BasePeticions.respos
         deshabilitarEdicioContrasenya(); // Després de guardar, deshabilitar l'edició de nou
     }
 
+
+    @Override
+    public void respostaServidor(Object resposta) throws ConnectException {
+
+    }
+
+    @Override
+    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+        return null;
+    }
+
+    @Override
+    public void onRespostaServidorMultiple(Object resposta) {
+
+    }
+
+    @Override
+    public void onUsuariObtingut(Usuari usuari) {
+        actualitzarUsuari(usuari);
+    }
 }

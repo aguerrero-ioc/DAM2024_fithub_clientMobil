@@ -39,6 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         setContentView(R.layout.activity_base);
 
 
+
     }
 
     /**
@@ -108,21 +109,6 @@ public void gestioRespostaServidor(Object respuesta) {
 
         // Concatenar el nom d'usuari i l'ID d'usuari
         String textUsuari = nomUsuari + " (" + IDUsuari + ")";
-
-        // Trobar el textViewUsuari i establir el text
-        TextView textViewUsuari = findViewById(R.id.tv_usuari);
-        if (textViewUsuari != null) {
-            textViewUsuari.setText(textUsuari);
-        } else {
-            Log.e("BaseActivity", "TextView Usuari no trobat");
-        }
-        // Trobar el textViewTipusUsuari i establir el text
-        TextView textViewTipusUsuari = findViewById(R.id.tv_tipus_usuari);
-        if (textViewTipusUsuari != null) {
-            textViewTipusUsuari.setText(tipusUsuari);
-        } else {
-            Log.e("BaseActivity", "TextView tipusUsuari no trobat");
-        }
 
     }
 
