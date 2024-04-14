@@ -1,24 +1,15 @@
 package antonioguerrero.ioc.fithub.peticions.activitats;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
-import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 
@@ -38,8 +29,8 @@ public abstract class ConsultarTotesActivitats extends BasePeticions {
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    public ConsultarTotesActivitats(respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn, Context context, String nomActivitat) {
-        super(listener, objectOut, objectIn);
+    public ConsultarTotesActivitats(respostaServidorListener listener, String nomActivitat) {
+        super(listener);
         this.context = context;
     }
 

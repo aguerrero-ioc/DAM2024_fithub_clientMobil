@@ -2,16 +2,12 @@ package antonioguerrero.ioc.fithub.peticions.reserves;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
-import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 /**
@@ -40,7 +36,7 @@ public abstract class EliminarReserva extends BasePeticions {
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
     public EliminarReserva(BasePeticions.respostaServidorListener listener, Context context, int IDReserva, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+        super(listener);
         this.context = context;
         this.IDReserva = IDReserva;
     }

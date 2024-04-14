@@ -203,6 +203,20 @@ public class Utils {
         context.startActivity(intent);
     }
 
+    /**
+     * Mètode per validar el format d'un correu electrònic utilitzant una expressió regular.
+     *
+     * @param correu  El correu electrònic a validar.
+     * @return Cert si el correu electrònic té el format vàlid, fals altrament.
+     */
+    public static boolean esEmailValid(String correu) {
+        // Patró per validar el format d'un correu electrònic
+        String patroCorreu = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        // Comprova si el correu electrònic coincideix amb el patró
+        return correu.matches(patroCorreu);
+    }
+
+
     public static class LogWrapper {
         public void d(String tag, String msg) {
             Log.d(tag, msg);

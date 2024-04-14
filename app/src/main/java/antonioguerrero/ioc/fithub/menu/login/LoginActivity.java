@@ -14,9 +14,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
@@ -24,12 +21,8 @@ import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogin;
 
 public class LoginActivity extends AppCompatActivity  {
-
     private EditText etCorreuUsuari, etContrasenya;
     private Context context;
-    private ObjectOutputStream objectOut;
-    private ObjectInputStream objectIn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +42,24 @@ public class LoginActivity extends AppCompatActivity  {
 
         // Configurar el clic del botón de inicio de sesión
         btnLogin.setOnClickListener(v -> {
-            String nomUsuari = etCorreuUsuari.getText().toString();
+            String correuUsuari = etCorreuUsuari.getText().toString();
             String contrasenya = etContrasenya.getText().toString();
             // Verificar si se han introducido ambos campos
-            if (nomUsuari.isEmpty() && contrasenya.isEmpty()) {
+            if (correuUsuari.isEmpty() && contrasenya.isEmpty()) {
                 Utils.mostrarToast(getApplicationContext(), "Introdueix el nom d'usuari i la contrasenya");
-            } else if (nomUsuari.isEmpty()) {
+            } else if (correuUsuari.isEmpty()) {
                 Utils.mostrarToast(getApplicationContext(), "Introdueix el nom d'usuari");
             } else if (contrasenya.isEmpty()) {
                 Utils.mostrarToast(getApplicationContext(), "Introdueix la contrasenya");
             } else {
-                enviarLogin(nomUsuari, contrasenya);
+                enviarLogin(correuUsuari, contrasenya);
+            }
+            if (!Utils.esEmailValid(correuUsuari)) {
+                Utils.mostrarToast(getApplicationContext(), "El format del correu electrònic és incorrecte");
             }
         });
 
-        // Configurar el CheckBox para mostrar/ocultar la contraseña
+        // CheckBox per mostrar/ocultar la contrasenya
         checkMostrarContrasenya.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 etContrasenya.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
@@ -98,13 +94,10 @@ public class LoginActivity extends AppCompatActivity  {
                     Utils.mostrarToast(getApplicationContext(), "Error de connexió");
                 }
             }
-
             @Override
             protected Object doInBackground(Void... voids) {
                 return null;
             }
-
-
         };
         peticioLogin.execute();
     }
@@ -128,7 +121,7 @@ public class LoginActivity extends AppCompatActivity  {
                 Utils.mostrarToast(getApplicationContext(), "El correu electrònic és obligatori");
                 return;
             }
-            if (!esEmailValid(correu)) {
+            if (!Utils.esEmailValid(correu)) {
                 Utils.mostrarToast(getApplicationContext(), "El format del correu electrònic és incorrecte");
                 return;
             }
@@ -136,14 +129,6 @@ public class LoginActivity extends AppCompatActivity  {
             dialegAlerta.dismiss();
         });
     }
-
-    private boolean esEmailValid(String email) {
-        String patroEmail = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        return email.matches(patroEmail);
-    }
-
-
-
 
     private void obrirActivitat(String tipusUsuari) {
         Intent intent;

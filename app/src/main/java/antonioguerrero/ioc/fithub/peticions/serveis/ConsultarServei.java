@@ -2,18 +2,14 @@ package antonioguerrero.ioc.fithub.peticions.serveis;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.objectes.Activitat;
 import antonioguerrero.ioc.fithub.objectes.Servei;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
@@ -40,7 +36,7 @@ public abstract class ConsultarServei extends BasePeticions {
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
     public ConsultarServei(respostaServidorListener listener, Context context, String nomServei, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+        super(listener);
         this.context = context;
         this.nomServei = nomServei;
     }

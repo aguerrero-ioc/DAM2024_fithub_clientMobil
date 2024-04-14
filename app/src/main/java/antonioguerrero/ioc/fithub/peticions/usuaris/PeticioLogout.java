@@ -1,42 +1,48 @@
 package antonioguerrero.ioc.fithub.peticions.usuaris;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
+import java.net.ConnectException;
 
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 public abstract class PeticioLogout extends BasePeticions {
     private static final String ETIQUETA = "PeticioLogout";
-    private String idUsuariLogout;
-    private String idSessioLogout;
-
+    private String IDUsuari;
     private Context context;
-    SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString("sessioID", "");
+    private SharedPreferences preferencies;
+    private String sessioID;
 
-    public PeticioLogout(respostaServidorListener listener, String idUsuariLogout, String idSessioLogout, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
-        this.idUsuariLogout = idUsuariLogout;
-        this.idSessioLogout = idSessioLogout;
+    public PeticioLogout(Context context, String IDUsuari) {
+        super((respostaServidorListener) context);
+        this.context = context;
+        this.IDUsuari = IDUsuari;
+        this.sessioID = sessioID;
+        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
-    public void ferLogout() {
-        // Crear el Object[] per la petició
-        Object[] peticio = new Object[4];
-        peticio[0] = "logout";
-        peticio[1] = this.idUsuariLogout;
-        peticio[2] = this.idSessioLogout;
-        peticio[3] = this.sessioID;
-
-
-        Log.d(ETIQUETA, "Enviant petició: " + peticio.toString());
+    @SuppressLint("StaticFieldLeak")
+    public void peticioLogout() {
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    return enviarPeticioString("logout",IDUsuari, null, sessioID);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
+            }
+        }.execute();
     }
 
     @Override
@@ -46,12 +52,23 @@ public abstract class PeticioLogout extends BasePeticions {
 
     @Override
     public void respostaServidor(Object resposta) {
-        Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
-        // PENDENT DE FER
+        Log.d(ETIQUETA, "Respossta del servidor: " + resposta);
+        if (resposta instanceof Object[]) {
+            Object[] arrayResposta = (Object[]) resposta;
+            String estat = (String) arrayResposta[0];
+            if (estat.equals("true")) {
+                Log.d(ETIQUETA, "Logout exitoso");
+            } else {
+                Log.e(ETIQUETA, "Error en el logout");
+            }
+        } else {
+            String missatgeError = "Error: " + resposta.toString();
+            Log.e(ETIQUETA, missatgeError);
+        }
     }
 
     @Override
     public void execute() {
-        ferLogout();
+        peticioLogout();
     }
 }

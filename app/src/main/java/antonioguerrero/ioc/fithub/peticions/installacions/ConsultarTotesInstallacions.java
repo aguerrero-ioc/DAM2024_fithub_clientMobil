@@ -39,8 +39,8 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarTotesInstallacions(respostaServidorListener listener, Context context, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+    public ConsultarTotesInstallacions(respostaServidorListener listener, Context context) {
+        super(listener);
         this.context = context;
         this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,10 +26,8 @@ import com.google.android.material.tabs.TabLayout;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
-import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
-import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
+import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPasadesFragment;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesRealitzadesFragment;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
@@ -46,7 +43,6 @@ import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 public class ClientActivity extends AppCompatActivity {
 
     private LinearLayout layoutMenuPerfil; // Per mostrar/ocultar el menú desplegable
-    private FloatingActionButton botoMostrarMissatges;
 
 
     @Override
@@ -82,9 +78,8 @@ public class ClientActivity extends AppCompatActivity {
                     startActivity(intent);*/
                 } else if (id == R.id.nav_installacions) {
                     Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar");
-                    //PENDENT
-                    /*intent = new Intent(ClientActivity.this, InstallacionsActivity.class);
-                    startActivity(intent);*/
+                    intent = new Intent(ClientActivity.this, InstallacionsActivity.class);
+                    startActivity(intent);
                 } else if (id == R.id.nav_reserves) {
                     Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar");
                     //PENDENT
@@ -98,66 +93,43 @@ public class ClientActivity extends AppCompatActivity {
 
         // Configura el botó de perfil
         ImageButton botoPerfil = findViewById(R.id.boto_perfil_client);
-        botoPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleMenu();
-            }
-        });
+        botoPerfil.setOnClickListener(v -> toggleMenu());
 
         // Trobar les referències als elements del menú
         TextView opcioPerfil1 = findViewById(R.id.opcio_perfil1);
         TextView opcioLogout = findViewById(R.id.opcio_logout_client);
 
         // Configurar els listeners dels elements del menú
-        opcioPerfil1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                opcioPerfilClicat();
-            }
-        });
+        opcioPerfil1.setOnClickListener(v -> opcioPerfilClicat());
 
-        opcioLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                opcioTancarSessioClicat();
-            }
-        });
+        opcioLogout.setOnClickListener(v -> opcioTancarSessioClicat());
 
 
         // Configurar ViewPager y TabLayout per a les reserves
         ViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
 
-        ReservasPagerAdapter reservasPagerAdapter = new ReservasPagerAdapter(getSupportFragmentManager());
+        PaginesReservesAdapter reservasPagerAdapter = new PaginesReservesAdapter(getSupportFragmentManager());
         viewPager.setAdapter(reservasPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
         // Configura el botó flotant de missatges
-        botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                obrirMissatgesActivity();
-            }
-        });
+        FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
+        botoMostrarMissatges.setOnClickListener(v -> obrirMissatgesActivity());
     }
 
-    private class ReservasPagerAdapter extends FragmentPagerAdapter {
-        public ReservasPagerAdapter(FragmentManager fm) {
+    private static class PaginesReservesAdapter extends FragmentPagerAdapter {
+        public PaginesReservesAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new ReservesRealitzadesFragment();
-                case 1:
-                    return new ReservesPasadesFragment();
-                default:
-                    return null;
-            }
+            return switch (position) {
+                case 0 -> new ReservesRealitzadesFragment();
+                case 1 -> new ReservesPasadesFragment();
+                default -> null;
+            };
         }
 
         @Override
@@ -168,14 +140,11 @@ public class ClientActivity extends AppCompatActivity {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Reserves Realitzades";
-                case 1:
-                    return "Reserves Pasades";
-                default:
-                    return null;
-            }
+            return switch (position) {
+                case 0 -> "Reserves Realitzades";
+                case 1 -> "Reserves Pasades";
+                default -> null;
+            };
         }
     }
     /**
@@ -185,7 +154,7 @@ public class ClientActivity extends AppCompatActivity {
      */
     public void accedirPanell(View view) {
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        drawerLayout.openDrawer(GravityCompat.START); // Abre el panel lateral
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
     /**

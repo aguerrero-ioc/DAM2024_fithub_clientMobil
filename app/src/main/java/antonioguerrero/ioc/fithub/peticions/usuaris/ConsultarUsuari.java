@@ -1,20 +1,15 @@
 package antonioguerrero.ioc.fithub.peticions.usuaris;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
@@ -31,27 +26,46 @@ public class ConsultarUsuari extends BasePeticions {
     private Context context;
     private static final String ETIQUETA = "ConsultarUsuari";
     private String correuUsuari;
-
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    private String sessioID;
 
     /**
      * Constructor de la classe ConsultarUsuari.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarUsuari(respostaServidorListener listener, Context context, String correuUsuari, String sessioID, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+    public ConsultarUsuari(respostaServidorListener listener, Context context, String correuUsuari, String sessioID) {
+        super(listener);
         this.context = context;
         this.correuUsuari = correuUsuari;
         this.sessioID = sessioID;
+
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     /**
-     * Mètode per obtenir les dades d'un usuari.
+     * Mètode per obtenir un usuari.
      */
-    public void obtenirUsuari() throws ConnectException {
-        enviarPeticioString("select", "usuari", this.correuUsuari, this.sessioID);
+    @SuppressLint("StaticFieldLeak")
+    public void consultarUsuari() {
+        final String correuUsuari = this.correuUsuari;
+        final String sessioID = this.sessioID;
+
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    return enviarPeticioString("select", "usuari", correuUsuari, sessioID);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
+            }
+        }.execute();
     }
 
     /**
@@ -109,7 +123,7 @@ public class ConsultarUsuari extends BasePeticions {
      */
     @Override
     public void execute() throws ConnectException {
-        obtenirUsuari();
+        consultarUsuari();
     }
 
     protected Object doInBackground(Void... voids) {

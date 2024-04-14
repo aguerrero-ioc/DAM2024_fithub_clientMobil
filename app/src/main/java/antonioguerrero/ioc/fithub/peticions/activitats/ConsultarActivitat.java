@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
 
@@ -35,8 +33,8 @@ public abstract class ConsultarActivitat extends BasePeticions {
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
 
-    public ConsultarActivitat(BasePeticions.respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn, Context context, String nomActivitat) {
-        super(listener, objectOut, objectIn);
+    public ConsultarActivitat(BasePeticions.respostaServidorListener listener, Context context, String nomActivitat) {
+        super(listener);
         this.context = context;
         this.nomActivitat = nomActivitat;
     }

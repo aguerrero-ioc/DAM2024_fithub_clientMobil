@@ -1,20 +1,15 @@
 package antonioguerrero.ioc.fithub.peticions.usuaris;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
@@ -23,34 +18,41 @@ public abstract class CanviarContrasenya extends BasePeticions {
     private static final String ETIQUETA = "CanviarContrasenya";
     private Usuari usuari;
     private Context context;
+    private SharedPreferences preferencies;
+    private String sessioID;
 
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
-
-    public CanviarContrasenya(respostaServidorListener listener, Usuari usuari, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+    public CanviarContrasenya(Context context, Usuari usuari) {
+        super(context, usuari.getCorreuUsuari(), usuari.getPassUsuari());
+        this.context = context;
         this.usuari = usuari;
+        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
-    public void canviarContrasenya() throws ConnectException {
-        // Convertir el objecte Usuari a un HashMap
-        HashMap<String, String> usuariMap = Utils.ObjecteAHashMap(usuari);
 
-        /* Comprovar si funciona amb ObjecteAHashMap
-        HashMap<String, String> usuariMap = new HashMap<>();
-        usuariMap.put("nom", usuari.getNomUsuari());
-        usuariMap.put("cognoms", usuari.getCognomsUsuari());
-        if (usuari.getDataNaixement() != null) {
-            usuariMap.put("dataNaixement", new SimpleDateFormat("dd-MM-yyyy").format(usuari.getDataNaixement()));
-        }
-        usuariMap.put("adreca", usuari.getAdreca());
-        usuariMap.put("telefon", usuari.getTelefon());
-        usuariMap.put("correu", usuari.getCorreuUsuari());
-        usuariMap.put("contrasenya", usuari.getPassUsuari());*/
+    @SuppressLint("StaticFieldLeak")
+    public void canviarContrasenya() {
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    HashMap<String, String> mapaUsuari = Utils.ObjecteAHashMap(usuari);
 
-        enviarPeticioHashMap("update", "pass", usuariMap, this.sessioID);
+                    enviarPeticioHashMap("update", "pass", mapaUsuari, sessioID);
+                } catch (ConnectException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+                return null;
+            }
 
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
+            }
+        }.execute();
     }
+
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
@@ -66,22 +68,6 @@ public abstract class CanviarContrasenya extends BasePeticions {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
                 Usuari usuari = (Usuari) Utils.HashMapAObjecte(mapaUsuari, Usuari.class);
                 Utils.mostrarToast(context, "Contrasenya modificada correctament");
-
-                /* Comprovar si funciona amb HashMapAObjecte
-                Usuari usuari = new Usuari();
-                usuari.setNomUsuari(mapaUsuari.get("nomUsuari"));
-                usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
-                usuari.setPassUsuari(mapaUsuari.get("passUsuari"));
-                usuari.setCognomsUsuari(mapaUsuari.get("cognomsUsuari"));
-                usuari.setTelefon(mapaUsuari.get("telefon"));
-                usuari.setAdreca(mapaUsuari.get("Adreca"));
-                try {
-                    SimpleDateFormat formatData = new SimpleDateFormat("dd-MM-yyyy");
-                    usuari.setDataNaixement(formatData.parse(mapaUsuari.get("DataNaixement")));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }*/
-
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la modificació de la contrasenya");
             }

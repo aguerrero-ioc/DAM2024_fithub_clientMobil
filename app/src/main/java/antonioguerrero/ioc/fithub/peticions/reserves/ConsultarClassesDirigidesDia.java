@@ -25,7 +25,7 @@ public abstract class ConsultarClassesDirigidesDia extends BasePeticions {
 
 
     public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+        super(listener);
         this.context = context;
         this.dia = dia;
         this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);

@@ -1,5 +1,6 @@
 package antonioguerrero.ioc.fithub.peticions.usuaris;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,9 +33,6 @@ public abstract class PeticioLogin extends BasePeticions {
     private String passUsuari;
     private Context context;
 
-    Utils.LogWrapper logWrapper = new Utils.LogWrapper();
-
-
     /**
      * Constructor de la classe PeticioLogin.
      *
@@ -52,12 +50,12 @@ public abstract class PeticioLogin extends BasePeticions {
     /**
      * Mètode per enviar la petició de login al servidor.
      */
+    @SuppressLint("StaticFieldLeak")
     public void peticioLogin() {
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
                 try {
-                    // Aquí envías la petición al servidor y recibes la respuesta
                     return enviarPeticioString("login", correuUsuari, passUsuari, null);
                 } catch (ConnectException e) {
                     throw new RuntimeException(e);
@@ -95,7 +93,7 @@ public abstract class PeticioLogin extends BasePeticions {
                         Log.d(ETIQUETA, "Error en transformar el HashMap en Usuari");
                     }
                 } else if (respostaArray[0] instanceof Boolean && (Boolean) respostaArray[0] == false) {
-                    // Inicio de sesión no exitoso
+                    // Inici de sesión no exitoso
                     Utils.mostrarToast(context, "Credencials incorrectes");
                 } else {
                     Log.d(ETIQUETA, "Tipus d'objecte no vàlid en la resposta");
@@ -104,7 +102,7 @@ public abstract class PeticioLogin extends BasePeticions {
                 Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
             }
         } else {
-            Log.e("PeticioLogin", "El contexto es nulo");
+            Log.e("PeticioLogin", "El context es nul");
         }
     }
 

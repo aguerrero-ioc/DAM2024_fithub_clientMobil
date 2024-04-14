@@ -1,22 +1,16 @@
 package antonioguerrero.ioc.fithub.peticions.usuaris;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
-import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
@@ -30,8 +24,8 @@ public abstract class CrearUsuari extends BasePeticions {
     private String passUsuari;
     private final Context context;
 
-    public CrearUsuari(respostaServidorListener listener, Usuari usuari, Context context, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+    public CrearUsuari(respostaServidorListener listener, Usuari usuari, Context context) {
+        super(listener);
         this.context = context;
         this.correuUsuari = usuari.getCorreuUsuari();
         this.passUsuari = usuari.getPassUsuari();
@@ -94,18 +88,24 @@ public abstract class CrearUsuari extends BasePeticions {
                 }
             }.execute();}*/
 
+    @SuppressLint("StaticFieldLeak")
     public void crearUsuari() {
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, Object>() {
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Object doInBackground(Void... voids) {
                 try {
                     Usuari usuari = new Usuari(correuUsuari, passUsuari, nomUsuari, cognomsUsuari, telefon);
                     HashMap<String, String> mapaUsuari = usuari.usuari_a_hashmap(usuari);
-                    enviarPeticioHashMap("insert", "usuari", mapaUsuari, null);
+                    return enviarPeticioHashMap("insert", "usuari", mapaUsuari, null);
                 } catch (ConnectException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    return null;
                 }
-                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
             }
         }.execute();
     }

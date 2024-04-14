@@ -2,6 +2,8 @@ package antonioguerrero.ioc.fithub;
 
 import static org.mockito.Mockito.*;
 
+import android.content.Context;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,7 +26,12 @@ public class CanviarContrasenyaTest {
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        canviarContrasenya = new CanviarContrasenya(listener, usuari);
+        canviarContrasenya = new CanviarContrasenya((Context) listener, usuari) {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
+        };
     }
 
     @Test

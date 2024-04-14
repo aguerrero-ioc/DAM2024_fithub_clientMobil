@@ -11,13 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 
 /**
  * Classe que representa l'activitat del administrador a l'aplicacio FitHub.
- *
+ * <p>
  * Aquesta classe permet a l'administrador realitzar diverses operacions com fer gestions i gestionar el seu perfil.
  *
  * @author Antonio Guerrero
@@ -41,41 +43,23 @@ public class AdminActivity extends AppCompatActivity {
         Button botoGestio3 = findViewById(R.id.boto_gestio3);
 
         // Configurar els listeners pels botons de reserva d'activitats
-        botoGestio1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ferGestio("Usuari");
-            }
-        });
+        botoGestio1.setOnClickListener(v -> ferGestio("Usuari"));
 
-        botoGestio2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ferGestio("Activitat");
-            }
-        });
+        botoGestio2.setOnClickListener(v -> ferGestio("Activitat"));
 
-        botoGestio3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ferGestio("Instal·lació");
-            }
-        });
+        botoGestio3.setOnClickListener(v -> ferGestio("Instal·lació"));
 
         // Inicialitzar el botó de perfil
         ImageButton botoPerfil = findViewById(R.id.boto_perfil_admin);
         layoutMenuPerfil = findViewById(R.id.layoutPerfilMenu);
 
         // Configurar els listeners del botó de perfil
-        botoPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Mostrar/ocultar el menú desplegable en fer clic al botó de perfil
-                if (layoutMenuPerfil.getVisibility() == View.VISIBLE) {
-                    layoutMenuPerfil.setVisibility(View.GONE);
-                } else {
-                    layoutMenuPerfil.setVisibility(View.VISIBLE);
-                }
+        botoPerfil.setOnClickListener(v -> {
+            // Mostrar/ocultar el menú desplegable en fer clic al botó de perfil
+            if (layoutMenuPerfil.getVisibility() == View.VISIBLE) {
+                layoutMenuPerfil.setVisibility(View.GONE);
+            } else {
+                layoutMenuPerfil.setVisibility(View.VISIBLE);
             }
         });
 
@@ -84,19 +68,19 @@ public class AdminActivity extends AppCompatActivity {
         TextView opcioLogout = findViewById(R.id.opcio_logout_admin);
 
         // Configurar els listeners dels elements del menú
-        opcioPerfil1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                opcioPerfil1Clicked();
-            }
-        });
+        opcioPerfil1.setOnClickListener(v -> opcioPerfil1Clicked());
 
-        opcioLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                opcioLogoutClicked();
-            }
-        });
+        opcioLogout.setOnClickListener(v -> opcioLogoutClicked());
+    }
+
+    /**
+     * Mètode per accedir al panell de control.
+     *
+     * @param view La vista que ha generat l'event.
+     */
+    public void accedirPanell(View view) {
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
 
@@ -153,8 +137,7 @@ public class AdminActivity extends AppCompatActivity {
      */
     public static String obtenirNomUsuari(Context context) {
         SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        String nomUsuari = preferencies.getString("nomUsuari", "");
-        return nomUsuari;
+        return preferencies.getString("nomUsuari", "");
     }
 
     /**
@@ -165,8 +148,7 @@ public class AdminActivity extends AppCompatActivity {
      */
     public static String obtenirIdUsuari(Context context) {
         SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        String idUsuari = preferencies.getString("idUsuari", "");
-        return idUsuari;
+        return preferencies.getString("idUsuari", "");
     }
 
     /**
@@ -177,7 +159,6 @@ public class AdminActivity extends AppCompatActivity {
      */
     public static String obtenirTipusClient(Context context) {
         SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
-        String tipusClient = preferencies.getString("tipusClient", "");
-        return tipusClient;
+        return preferencies.getString("tipusClient", "");
     }
 }

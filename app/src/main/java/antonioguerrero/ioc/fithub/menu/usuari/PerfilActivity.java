@@ -11,15 +11,11 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ConsultarUsuari;
@@ -30,20 +26,16 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
  * Aquesta activitat permet a l'usuari veure i modificar les seves dades personals.
  * A més, també permet canviar la contrasenya de l'usuari.
  *
- * @Author Antonio Guerrero
- * @Version 1.0
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class PerfilActivity extends AppCompatActivity implements BasePeticions.respostaServidorListener {
 
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefonContacte, etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya;
     private Button btnGuardarCanvis, btnEditarPerfil, btnCanviContrasenya, btnGuardarCanviContrasenya;
     private Context context;
-    private SharedPreferences preferencies;
     private String sessioID;
     private Usuari usuari;
-    private ObjectOutputStream objecteSortida;
-    private ObjectInputStream objecteEntrada;
-
 
 
     @Override
@@ -77,15 +69,10 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         Usuari usuari = getIntent().getParcelableExtra("usuari");
 
         // Actualització de la interfície amb les dades de l'usuari
-        if (usuari != null) {
-            try {
-                actualitzarUsuari(usuari);
-            } catch (ConnectException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            // Maneig del cas en què no es rebin les dades de l'usuari correctament
-            Log.e("PerfilActivity", "Error: No s'han rebut les dades de l'usuari correctament");
+        try {
+            inicialitzarUsuari();
+        } catch (ConnectException e) {
+            throw new RuntimeException(e);
         }
 
         // Obtenció de la referència de l'ImageView de la imatge de l'usuari
@@ -135,9 +122,6 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
             }
         });
 
-
-
-
         // Configuració del clic del botó per canviar la contrasenya
         btnCanviContrasenya.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +136,7 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
             @Override
             public void onClick(View v) {
                 try {
-                    onCanviContrasenyaButtonClick(); // Trucar al mètode corresponent
+                    onCanviContrasenyaButtonClick();
                 } catch (ConnectException e) {
                     throw new RuntimeException(e);
                 }
@@ -160,7 +144,7 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         });
 
         context = this;
-        preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
         // Obtenir les dades de l'usuari de l'Intent
@@ -177,6 +161,18 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
             Log.e("PerfilActivity", "Error: No s'han rebut les dades de l'usuari correctament");
         }
 
+    }
+
+    private void inicialitzarUsuari() throws ConnectException {
+        // Obtenir les dades de l'usuari de l'Intent
+        usuari = getIntent().getParcelableExtra("usuari");
+        // Actualitzar la interfície amb les dades de l'usuari
+
+        if (usuari != null) {
+            actualitzarUsuari(usuari);
+        } else {
+            Log.e("PerfilActivity", "Error: No s'han rebut les dades de l'usuari correctament");
+        }
     }
 
     /**
@@ -198,20 +194,6 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         }
     }
 
-    /**
-     * Mètode per assignar les dades de l'usuari a l'objecte Usuari.
-     *
-     * @param parts L'array de parts de la resposta del servidor.
-     * @param usuari L'objecte Usuari al qual assignar les dades.
-     */
-    private void assignarDadesUsuari(String[] parts, Usuari usuari) {
-        for (String part : parts) {
-            String[] keyValue = part.split(":");
-            if (keyValue.length == 2) {
-                assignarValorAUsuari(keyValue, usuari);
-            }
-        }
-    }
 
     /**
      * Mètode per assignar un valor a un camp de l'objecte Usuari.
@@ -269,7 +251,7 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
     public void actualitzarUsuari(Usuari usuari) throws ConnectException {
 
         // Crear una instancia de ConsultarUsuari
-        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID, objecteSortida, objecteEntrada);
+        ConsultarUsuari consultarUsuariInstance = new ConsultarUsuari((BasePeticions.respostaServidorListener) this, getApplicationContext(), usuari.getCorreuUsuari(), sessioID);
 
         // Ejecutar la petición al servidor
         consultarUsuariInstance.execute();
@@ -383,14 +365,14 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
         usuari.setTelefon(telefon);
         usuari.setCorreuUsuari(correu);
 
-        //Cridar al mètode modificarUsuari de la classe ModificarUsuari per enviar la petició al servidor
-        ModificarUsuari modificarUsuariInstance = new ModificarUsuari((BasePeticions.respostaServidorListener) this, sessioID, objecteSortida, objecteEntrada) {
+        //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
+        ModificarUsuari modificarUsuariInstance = new ModificarUsuari((BasePeticions.respostaServidorListener) this, sessioID, context) {
             @Override
             protected Object doInBackground(Void... voids) {
                 return null;
             }
         };
-        modificarUsuariInstance.modificarUsuari(usuari);
+        modificarUsuariInstance.modificarUsuari();
 
         Utils.mostrarToast(getApplicationContext(), "Canvis guardats");
 
@@ -407,13 +389,14 @@ public class PerfilActivity extends AppCompatActivity implements BasePeticions.r
 
         // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
-        CanviarContrasenya canviarContrasenyaInstance = new CanviarContrasenya((BasePeticions.respostaServidorListener) this, usuari, objecteSortida, objecteEntrada) {
+        CanviarContrasenya canviarContrasenyaInstance = new CanviarContrasenya(context, usuari) {
             @Override
             protected Object doInBackground(Void... voids) {
+                canviarContrasenya();
                 return null;
             }
         };
-        canviarContrasenyaInstance.canviarContrasenya();
+        canviarContrasenyaInstance.execute();
     }
 
     /**

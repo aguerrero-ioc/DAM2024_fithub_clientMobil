@@ -1,19 +1,13 @@
 package antonioguerrero.ioc.fithub.peticions.reserves;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 //import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
@@ -28,8 +22,8 @@ public abstract class CrearReserva extends BasePeticions {
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    public CrearReserva(BasePeticions.respostaServidorListener listener, Reserva reserva, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+    public CrearReserva(BasePeticions.respostaServidorListener listener, Reserva reserva) {
+        super(listener);
         this.reserva = reserva;
     }
 

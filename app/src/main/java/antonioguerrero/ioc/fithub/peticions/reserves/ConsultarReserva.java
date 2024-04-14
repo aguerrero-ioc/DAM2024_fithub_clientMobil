@@ -2,15 +2,12 @@ package antonioguerrero.ioc.fithub.peticions.reserves;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
-import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 public abstract class ConsultarReserva extends BasePeticions {
@@ -22,7 +19,7 @@ public abstract class ConsultarReserva extends BasePeticions {
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
     public ConsultarReserva(respostaServidorListener listener, Context context, int idReserva, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        super(listener, objectOut, objectIn);
+        super(listener);
         this.context = context;
         this.IDReserva = IDReserva;
     }

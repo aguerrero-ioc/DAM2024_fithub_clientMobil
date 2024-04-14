@@ -10,8 +10,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 
 import antonioguerrero.ioc.fithub.R;
@@ -31,8 +29,7 @@ public class RegistreActivity extends AppCompatActivity {
 
     // Elements de la interfície d'usuari
     private EditText etNom, etCognoms, etTelefon, etCorreuElectronic, etContrasenya, etRepetirContrasenya;
-    private ObjectOutputStream objecteSortida;
-    private ObjectInputStream objecteEntrada;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +114,7 @@ public class RegistreActivity extends AppCompatActivity {
         }
 
         // Verificar si el correu electrònic està en el format correcte
-        if (!esEmailValid(correu)) {
+        if (!Utils.esEmailValid(correu)) {
             Utils.mostrarToast(getApplicationContext(), "Format de correu electrònic invàlid");
             return;
         }
@@ -142,7 +139,7 @@ public class RegistreActivity extends AppCompatActivity {
             @Override
             public void respostaServidor(Object resposta) {
             }
-        }, usuari, RegistreActivity.this, objecteSortida, objecteEntrada) {
+        }, usuari, RegistreActivity.this) {
             @Override
             protected Object doInBackground(Void... voids) {
                 return null;
@@ -154,17 +151,6 @@ public class RegistreActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Mètode per validar el format d'un correu electrònic utilitzant una expressió regular.
-     *
-     * @param correu  El correu electrònic a validar.
-     * @return Cert si el correu electrònic té el format vàlid, fals altrament.
-     */
-    private boolean esEmailValid(String correu) {
-        // Patró per validar el format d'un correu electrònic
-        String patroCorreu = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        // Comprova si el correu electrònic coincideix amb el patró
-        return correu.matches(patroCorreu);
-    }
+
 
 }

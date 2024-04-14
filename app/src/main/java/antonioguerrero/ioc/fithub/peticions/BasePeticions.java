@@ -31,38 +31,13 @@ public abstract class BasePeticions {
     protected ObjectOutputStream objectOut;
     protected ObjectInputStream objectIn;
 
+
+    public BasePeticions(respostaServidorListener listener) {
+        this.listener = listener;
+    }
+
     public BasePeticions(Context context, String correuUsuari, String passUsuari) {
     }
-
-    public BasePeticions(respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
-        this.listener = listener;
-        this.objectOut = objectOut;
-        this.objectIn = objectIn;
-    }
-
-    /*protected void enviarPeticio(Object[] peticio) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    Socket socket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
-                    ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
-
-                    objectOut.writeObject(peticio);
-                    objectOut.flush();
-
-                    String peticioString = Arrays.toString(peticio);
-                    Log.d("PeticioInfo:", "Petición enviada: " + peticioString);
-
-                    objectOut.close();
-                    socket.close();
-                } catch (IOException e) {
-                    Log.e("PeticioError:", "Error al enviar la petición", e);
-                }
-                return null;
-            }
-        }.execute();
-    }*/
 
     public abstract void respostaServidor(Object resposta);
 
@@ -70,9 +45,10 @@ public abstract class BasePeticions {
 
     public abstract void execute() throws ConnectException;
 
+
     public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
         String respostaHS = "";
-        Object[] resposta = null; // Inicializar la variable 'resposta'
+        Object[] resposta = null;
         Socket clientSocket = null;
         //Handshake
         Scanner inHS = null;
@@ -130,7 +106,7 @@ public abstract class BasePeticions {
 
     public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
         String respostaHS = "";
-        Object[] resposta = null; // Inicializar la variable 'resposta'
+        Object[] resposta = null;
         Socket clientSocket = null;
         //Handshake
         Scanner inHS = null;
