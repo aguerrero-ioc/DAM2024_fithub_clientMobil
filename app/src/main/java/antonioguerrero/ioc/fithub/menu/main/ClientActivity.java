@@ -50,9 +50,6 @@ public class ClientActivity extends BaseActivity implements BasePeticions.respos
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
 
-        // Actualitza les dades del usuari quan s'obre l'activitat
-        actualitzarDadesUsuari();
-
         // Configurar ViewPager y TabLayout per a les reserves
         ViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -63,62 +60,30 @@ public class ClientActivity extends BaseActivity implements BasePeticions.respos
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, "Pendent d'implementar. Aviat dispobible!"));
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR));
 
+        // Configura el menú lateral
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigation = findViewById(R.id.nav_view);
 
-
-        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                Intent intent;
-                if (id == R.id.nav_perfil_usuari) {
-                    opcioPerfilClicat(PerfilActivity.class);
-                } else if(id == R.id.nav_activitats) {
-                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar. Aviat dispobible!");
-                    //PENDENT
-                    /*intent = new Intent(BaseActivity.this, ActivitatsActivity.class);
-                    startActivity(intent);*/
-                } else if (id == R.id.nav_serveis) {
-                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar. Aviat dispobible!");
-                    //PENDENT
-                    /*intent = new Intent(BaseActivity.this, ServeisActivity.class);
-                    startActivity(intent);*/
-                } else if (id == R.id.nav_installacions) {
-                    obrirActivity(ClientActivity.this, InstallacionsActivity.class);
-                } else if (id == R.id.nav_reserves) {
-                    Utils.mostrarToast(ClientActivity.this, "Pendent d'implementar. Aviat dispobible!");
-                    //PENDENT
-                    /*intent = new Intent(BaseActivity.this, ReservesActivity.class);
-                    startActivity(intent);*/
-                } else if (id == R.id.nav_tancar_sessio) {
-                    tancarSessioClicat();
-                }
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
+        navigation.setNavigationItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (id == R.id.nav_perfil_usuari) {
+                obrirActivity(PerfilActivity.class);
+            } else if(id == R.id.nav_activitats) {
+                Utils.mostrarToast(ClientActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_serveis) {
+                Utils.mostrarToast(ClientActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_installacions) {
+                obrirActivity(InstallacionsActivity.class);
+            } else if (id == R.id.nav_reserves) {
+                Utils.mostrarToast(ClientActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_tancar_sessio) {
+                tancarSessioClicat();
             }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
         });
-    }
-
-    public void tancarSessioClicat() {
-        SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-
-        // Obtén el ID del usuario actual como un entero
-        String IDUsuariStr = preferencies.getString("IDusuari", "-1");
-
-        // Verifica que IDUsuari no sea -1 antes de intentar usarlo
-        if (!IDUsuariStr.equals("-1")) {
-
-            // Crea una instancia de PeticioLogout
-            PeticioLogout peticioLogout = new PeticioLogout((BasePeticions.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
-
-            // Inicia la petición de cierre de sesión
-            peticioLogout.execute();
-        } else {
-            Log.e("ClientActivity", "IDusuari no está definido en SharedPreferences");
-        }
     }
 
 

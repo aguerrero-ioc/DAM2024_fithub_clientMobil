@@ -8,6 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +21,7 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
+import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
@@ -46,6 +53,29 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
+        // Configura el menú lateral
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigation = findViewById(R.id.nav_view);
+
+        navigation.setNavigationItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (id == R.id.nav_perfil_usuari) {
+                obrirActivity(PerfilActivity.class);
+            } else if(id == R.id.nav_activitats) {
+                Utils.mostrarToast(PerfilActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_serveis) {
+                Utils.mostrarToast(PerfilActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_installacions) {
+                obrirActivity(InstallacionsActivity.class);
+            } else if (id == R.id.nav_reserves) {
+                Utils.mostrarToast(PerfilActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_tancar_sessio) {
+                tancarSessioClicat();
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });;
+
         // Inicialització de les vistes
         etNomUsuari = findViewById(R.id.et_nom_usuari);
         etCognoms = findViewById(R.id.et_cognoms_usuari);
@@ -72,8 +102,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
                 Utils.mostrarToast(PerfilActivity.this, "Pendent d'implementar");
             }
         });
-
-
 
         // Configuració del clic del botó per editar el perfil
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
@@ -156,11 +184,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
     }
 
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
-
-    }
-
 
     /**
      * Mètode per actualitzar les dades de l'usuari a l'activitat.
@@ -185,6 +208,31 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         }
         etIDusuari.setText(String.valueOf(usuari.getIDusuari()));
     }
+
+    /**
+     * Mètode per retornar les dades de l'usuari a l'activitat.
+     *
+     * @param usuari L'objecte Usuari amb les dades a desactualitzar.
+     */
+    private void desactualitzarUsuari(Usuari usuari) {
+        etNomUsuari.setText(usuari.getNomUsuari());
+        etCognoms.setText(usuari.getCognomsUsuari());
+        etDataNaixement.setText(usuari.getDataNaixement());
+        etAdreca.setText(usuari.getAdreca());
+        etCorreuUsuari.setText(usuari.getCorreuUsuari());
+        etTelefon.setText(usuari.getTelefon());
+        etDataInscripcio.setText(usuari.getDataInscripcio());
+        String tipusUsuariStr = etTipusUsuari.getText().toString();
+        int tipusUsuari;
+
+        if (tipusUsuariStr.equals("Administrador")) {
+            tipusUsuari = 1;
+        } else if (tipusUsuariStr.equals("Client")) {
+            tipusUsuari = 2;
+        }
+        etIDusuari.setText(String.valueOf(usuari.getIDusuari()));
+    }
+
 
 
 
@@ -347,9 +395,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     }
 
 
-
-
-
     /**
      * Mètode que maneja el clic del botó per canviar la contrasenya
      */
@@ -407,6 +452,11 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     @Override
     public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         return null;
+    }
+
+    @Override
+    public void onRespostaServidorMultiple(Object resposta) {
+
     }
 
     @Override

@@ -38,6 +38,7 @@ public class Utils {
     public static final String SESSIO_ID = "sessioID";
     public static final String VALOR_DEFAULT = "";
     public static final String ERROR_CONNEXIO = "Error de connexió";
+    public static final String PENDENT_IMPLEMENTAR = "Pendent d'implementar. Aviat disponible!";
 
 
     public static final String FORMAT_DATA = "dd-MM-yyyy";

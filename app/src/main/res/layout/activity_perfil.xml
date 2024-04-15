@@ -44,6 +44,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+
         <!-- Scrollview del contingut -->
 
         <ScrollView
@@ -117,13 +118,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Nom:"
                         android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_nom_usuari"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_nom_usuari"
@@ -141,13 +144,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Cognoms:"
                         android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_cognoms_usuari"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_cognoms_usuari"
@@ -165,13 +170,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Data de naixement:"
                         android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_data_naixement"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_data_naixement"
@@ -189,13 +196,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Adreça:"
                         android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_adreca"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_adreca"
@@ -207,21 +216,21 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-
-
                     <!-- Telèfon de Contacte -->
                     <TextView
                         android:id="@+id/tv_telefon_contacte"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Telèfon de contacte"
                         android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_telefon_contacte"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_telefon_contacte"
@@ -285,13 +294,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Correu electrònic:"
                         android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_correu_usuari"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_correu_usuari"
@@ -308,14 +319,16 @@
                         android:id="@+id/tv_usuari_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="ID d'Usuari:"
-                        android:textSize="18sp"
-                        android:layout_marginTop="16dp" />
+                        android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_id_usuari"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_id_usuari"
@@ -332,14 +345,16 @@
                         android:id="@+id/tv_tipus_usuari"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Tipus d'Usuari:"
-                        android:textSize="18sp"
-                        android:layout_marginTop="16dp" />
+                        android:textSize="18sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_tipus_usuari"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_tipus_usuari"
@@ -356,14 +371,16 @@
                         android:id="@+id/tv_data_inscripcio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Data d'Inscripció:"
-                        android:textSize="18sp"
-                        android:layout_marginTop="16dp" />
+                        android:textSize="18sp"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_data_inscripcio"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_data_inscripcio"
@@ -400,14 +417,16 @@
                         android:id="@+id/tv_contrasenya_actual"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Contrasenya Actual:"
-                        android:textSize="18sp"
-                        android:layout_marginTop="16dp" />
+                        android:textSize="18sp"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_contrasenya_actual"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_contrasenya_actual"
@@ -424,14 +443,16 @@
                         android:id="@+id/tv_contrasenya"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Nova Contrasenya:"
-                        android:textSize="18sp"
-                        android:layout_marginTop="16dp" />
+                        android:textSize="18sp"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_nova_contrasenya"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_nova_contrasenya"
@@ -455,7 +476,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_confirmar_contrasenya"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_confirmar_contrasenya"
@@ -481,6 +503,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
+                            android:layout_marginBottom="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="Canviar Contrasenya" />
 
@@ -498,6 +521,9 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
+
+
     <!-- NavigationView del panell desplegable -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

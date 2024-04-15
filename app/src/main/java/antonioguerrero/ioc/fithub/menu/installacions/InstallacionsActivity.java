@@ -2,10 +2,13 @@ package antonioguerrero.ioc.fithub.menu.installacions;
 
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
+import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
+import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
 
 public class InstallacionsActivity extends BaseActivity {
@@ -30,10 +35,30 @@ public class InstallacionsActivity extends BaseActivity {
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, "Pendent d'implementar. Aviat dispobible!"));
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR));
 
+        // Configura el menú lateral
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigation = findViewById(R.id.nav_view);
 
-
+        navigation.setNavigationItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (id == R.id.nav_perfil_usuari) {
+                obrirActivity(PerfilActivity.class);
+            } else if(id == R.id.nav_activitats) {
+                Utils.mostrarToast(InstallacionsActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_serveis) {
+                Utils.mostrarToast(InstallacionsActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_installacions) {
+                obrirActivity(InstallacionsActivity.class);
+            } else if (id == R.id.nav_reserves) {
+                Utils.mostrarToast(InstallacionsActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_tancar_sessio) {
+                tancarSessioClicat();
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });;
 
         ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, new ConsultarTotesInstallacions.respostaServidorListener() {
             @Override
@@ -70,11 +95,6 @@ public class InstallacionsActivity extends BaseActivity {
             }
         };
         consulta.consultarTotesInstallacions();
-    }
-
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
-
     }
 
 

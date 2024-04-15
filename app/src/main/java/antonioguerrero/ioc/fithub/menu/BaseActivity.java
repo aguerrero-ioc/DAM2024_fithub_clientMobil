@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashMap;
@@ -25,19 +26,22 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
+import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
+import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
-public abstract class BaseActivity extends AppCompatActivity{
+public class BaseActivity extends AppCompatActivity{
 
-    private LinearLayout layoutMenuPerfil;
+    public LinearLayout layoutMenuPerfil;
+
+    public Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
 
 
     }
@@ -52,65 +56,12 @@ public abstract class BaseActivity extends AppCompatActivity{
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    /**
-     * Mètode per mostrar o ocultar el menú del perfil.
-     */
-    public void toggleMenu() {
-        layoutMenuPerfil.setVisibility(layoutMenuPerfil.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-    }
 
 
-    /**
-     * Mètode que s'executa quan l'usuari fa clic a l'opció 1 del perfil.
-     */
-    public void opcioPerfilClicat(Class<? extends AppCompatActivity> activityClass) {
+    public void obrirActivity(Class<? extends AppCompatActivity> activityClass) {
         startActivity(new Intent(this, activityClass));
     }
 
-
-public void gestioRespostaServidor(Object respuesta) {
-    if (respuesta instanceof Object[] && ((Object[]) respuesta).length >= 2) {
-        Object[] arrayResposta = (Object[]) respuesta;
-        String IDSessio = (String) arrayResposta[0];
-        HashMap<String, String> usuariMap = (HashMap<String, String>) arrayResposta[1];
-
-        Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
-
-        if (usuari != null) {
-            // Obtener SharedPreferences y su editor
-            SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferencies.edit();
-
-            // Guardar los datos del usuario en SharedPreferences
-            editor.putString("IDSessio", IDSessio);
-            editor.putString("nomUsuari", usuari.getNomUsuari());
-            editor.putString("IDUsuari", String.valueOf(usuari.getIDusuari()));
-            editor.putString("tipusUsuari", String.valueOf(usuari.getTipusUsuari()));
-
-            // Aplicar los cambios
-            editor.apply();
-        } else {
-            Log.e("Resposta inici", "Error en la transformació del HashMap a Usuari");
-        }
-    } else {
-        Log.e("Resposta inici", "Error en la resposta del servidor");
-    }
-}
-
-    /**
-     * Mètode per actualitzar les dades del usuari.
-     */
-    public void actualitzarDadesUsuari() {
-
-        // Obtenir el nom, ID i tipus de client
-        String nomUsuari = obtenirDadaUsuari(this, "nomUsuari");
-        String IDUsuari = obtenirDadaUsuari(this, "IDUsuari");
-        String tipusUsuari = obtenirDadaUsuari(this, "tipusUsuari");
-
-        // Concatenar el nom d'usuari i l'ID d'usuari
-        String textUsuari = nomUsuari + " (" + IDUsuari + ")";
-
-    }
 
     /**
      * Mètode per obtenir una dada de l'usuari a partir de la clau.
@@ -139,16 +90,19 @@ public void gestioRespostaServidor(Object respuesta) {
         return valor;
     }
 
+
     /**
-     * Mètode per mostrar l'activitat de missatges.
+     * Mètode per tancar la sessió de l'usuari.
      */
-    public void obrirActivity(Context context, Class<? extends AppCompatActivity> activityClass) {
-        Intent intent = new Intent(context, activityClass);
-        context.startActivity(intent);
+    public void tancarSessioClicat() {
+        SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        String IDUsuariStr = preferencies.getString("IDusuari", "-1");
+
+        if (!IDUsuariStr.equals("-1")) {
+            PeticioLogout peticioLogout = new PeticioLogout((BasePeticions.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
+            peticioLogout.execute();
+        } else {
+            Log.e("ClientActivity", "IDusuari no definit");
+        }
     }
-
-
-    public abstract void onRespostaServidorMultiple(Object resposta);
-
-
 }
