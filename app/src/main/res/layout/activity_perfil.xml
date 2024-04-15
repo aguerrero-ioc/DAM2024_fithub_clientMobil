@@ -207,29 +207,7 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Correu Electrònic -->
-                    <TextView
-                        android:id="@+id/tv_correu_usuari"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Correu electrònic:"
-                        android:textSize="18sp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tl_correu_usuari"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_correu_usuari"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:hint="Introduïu el vostre correu electrònic"
-                            android:inputType="textEmailAddress" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Telèfon de Contacte -->
                     <TextView
@@ -300,6 +278,30 @@
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:layout_marginBottom="8dp"/>
+
+                    <!-- Correu Electrònic -->
+                    <TextView
+                        android:id="@+id/tv_correu_usuari"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Correu electrònic:"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tl_correu_usuari"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_correu_usuari"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:hint="Correu electrònic"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- ID d'Usuari -->
                     <TextView

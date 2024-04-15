@@ -197,7 +197,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         etCognoms.setEnabled(true);
         etDataNaixement.setEnabled(true);
         etAdreca.setEnabled(true);
-        etCorreuUsuari.setEnabled(true);
         etTelefon.setEnabled(true);
         etDataInscripcio.setEnabled(false);
         btnEditarPerfil.setEnabled(false);
@@ -212,7 +211,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         etCognoms.setEnabled(false);
         etDataNaixement.setEnabled(false);
         etAdreca.setEnabled(false);
-        etCorreuUsuari.setEnabled(false);
         etTelefon.setEnabled(false);
         etDataInscripcio.setEnabled(false);
         btnGuardarCanvis.setEnabled(false);
@@ -253,7 +251,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         String telefon = etTelefon.getText().toString();
 
         // Comprovar si tots els camps estan complets
-        if (nomUsuari.isEmpty() || cognomsUsuari.isEmpty() || dataNaixement.isEmpty() || adreca.isEmpty() || correuUsuari.isEmpty() || telefon.isEmpty()) {
+        if (nomUsuari.isEmpty() || cognomsUsuari.isEmpty() || dataNaixement.isEmpty() || adreca.isEmpty() || telefon.isEmpty()) {
             Utils.mostrarToast(getApplicationContext(), "Si us plau, completa tots els camps");
             return;
         }

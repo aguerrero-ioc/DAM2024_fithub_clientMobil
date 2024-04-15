@@ -93,7 +93,7 @@ public abstract class PeticioLogin extends BasePeticions {
                     } else {
                         Log.d(ETIQUETA, "Error en transformar el HashMap en Usuari");
                     }
-                } else if (respostaArray[0] instanceof Boolean && (Boolean) respostaArray[0] == false) {
+                } else if (respostaArray[0] instanceof String && respostaArray[0].equals("false")) {
                     // Inici de sesión no exitoso
                     Utils.mostrarToast(context, "Credencials incorrectes");
                 } else {
@@ -171,7 +171,8 @@ public abstract class PeticioLogin extends BasePeticions {
         }
     }
 
-    public abstract void respostaServidor(Object[] resposta);
+    public void respostaServidor(Object[] resposta) {
+    }
 
     protected abstract Object doInBackground(Void... voids);
 

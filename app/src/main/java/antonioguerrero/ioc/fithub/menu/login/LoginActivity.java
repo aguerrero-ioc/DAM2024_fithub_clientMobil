@@ -92,16 +92,6 @@ public class LoginActivity extends AppCompatActivity  {
 
             @Override
             public void respostaServidor(Object[] resposta) {
-                if (resposta != null) {
-                    String tipusUsuari = Utils.obtenirTipusUsuari(resposta[0].toString());
-                    if (!tipusUsuari.isEmpty()) {
-                        obrirActivitat(tipusUsuari);
-                    } else {
-                        Utils.mostrarToast(getApplicationContext(), "Credencials incorrectes");
-                    }
-                } else {
-                    Utils.mostrarToast(getApplicationContext(), "Error de connexió");
-                }
             }
             @Override
             protected Object doInBackground(Void... voids) {
