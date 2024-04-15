@@ -39,11 +39,6 @@ public abstract class ModificarUsuari extends BasePeticions {
         void onUsuariModificat(Usuari usuari);
     }
 
-
-    public void setUsuari(Usuari usuari) {
-        this.usuari = usuari;
-    }
-
     @SuppressLint("StaticFieldLeak")
     public void modificarUsuari() {
         new AsyncTask<Void, Void, Object>() {
@@ -51,12 +46,10 @@ public abstract class ModificarUsuari extends BasePeticions {
             protected Object doInBackground(Void... voids) {
                 try {
                     HashMap<String, String> mapaUsuari = usuari.usuari_a_hashmap(usuari);
-                    enviarPeticioHashMap("update", "usuari", mapaUsuari, sessioID);
+                    return enviarPeticioHashMap("update", "usuari", mapaUsuari, sessioID);
                 } catch (ConnectException e) {
-                    e.printStackTrace();
-                    return null;
+                    throw new RuntimeException(e);
                 }
-                return null;
             }
 
             @Override
@@ -112,6 +105,8 @@ public abstract class ModificarUsuari extends BasePeticions {
     }
 
     public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
+
+    public abstract void respostaServidor(Object[] resposta);
 
     protected abstract Object doInBackground(Void... voids);
 }

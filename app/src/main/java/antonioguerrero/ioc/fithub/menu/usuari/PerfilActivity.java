@@ -282,6 +282,10 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
 
             @Override
+            public void respostaServidor(Object[] resposta) {
+            }
+
+            @Override
             protected Object doInBackground(Void... voids) {
                 return null;
             }
@@ -316,6 +320,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
                 return null;
             }
         };
+        canviarContrasenya.setUsuari(usuari);
         canviarContrasenya.execute();
     }
 

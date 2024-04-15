@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Utils;
@@ -37,13 +38,10 @@ public abstract class CanviarContrasenya extends BasePeticions {
             protected Object doInBackground(Void... voids) {
                 try {
                     HashMap<String, String> mapaUsuari = Utils.ObjecteAHashMap(usuari);
-
-                    enviarPeticioHashMap("update", "pass", mapaUsuari, sessioID);
+                    return enviarPeticioHashMap("update", "pass", mapaUsuari, sessioID);
                 } catch (ConnectException e) {
-                    e.printStackTrace();
-                    return null;
+                    throw new RuntimeException(e);
                 }
-                return null;
             }
 
             @Override
@@ -66,7 +64,20 @@ public abstract class CanviarContrasenya extends BasePeticions {
             String estat = (String) arrayResposta[0];
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
-                Usuari usuari = (Usuari) Utils.HashMapAObjecte(mapaUsuari, Usuari.class);
+                Usuari usuari = new Usuari();
+                usuari.setIDusuari(Integer.parseInt(mapaUsuari.get("IDusuari")));
+                usuari.setNomUsuari(mapaUsuari.get("nomUsuari"));
+                usuari.setPassUsuari(mapaUsuari.get("passUsuari"));
+                usuari.setTipusUsuari(Integer.parseInt(mapaUsuari.get("tipusUsuari")));
+                usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
+                usuari.setCognomsUsuari(mapaUsuari.get("cognomsUsuari"));
+                usuari.setTelefon(mapaUsuari.get("telefon"));
+                usuari.setAdreca(mapaUsuari.get("adreca"));
+                usuari.setDataNaixement(mapaUsuari.get("dataNaixement"));
+                usuari.setDataInscripcio(mapaUsuari.get("dataInscripcio"));
+
+                ((ModificarUsuari.ModificarUsuariListener) listener).onUsuariModificat(usuari);
+                Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
                 Utils.mostrarToast(context, "Contrasenya modificada correctament");
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la modificació de la contrasenya");

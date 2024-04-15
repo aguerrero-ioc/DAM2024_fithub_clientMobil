@@ -12,7 +12,7 @@ import java.net.Socket;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 public class ConnexioServidor {
-    public static final String SERVIDOR_IP = "192.168.0.252";
+    public static final String SERVIDOR_IP = "192.168.209.185";
     public static final int SERVIDOR_PORT = 8080;
 
     public static class ConnectToServerTask extends AsyncTask<Object[], Void, Object[]> {

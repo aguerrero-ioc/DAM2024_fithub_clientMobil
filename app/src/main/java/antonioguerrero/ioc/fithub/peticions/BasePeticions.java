@@ -1,7 +1,6 @@
 package antonioguerrero.ioc.fithub.peticions;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.EOFException;
@@ -10,19 +9,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 public abstract class BasePeticions {
-    protected static final String SERVIDOR_IP = "192.168.0.252";
+    protected static final String SERVIDOR_IP = "192.168.209.185";
     protected static final int SERVIDOR_PORT = 8080;
+
+    public void setUsuari(Usuari usuari) {
+    }
 
 
     public interface respostaServidorListener {

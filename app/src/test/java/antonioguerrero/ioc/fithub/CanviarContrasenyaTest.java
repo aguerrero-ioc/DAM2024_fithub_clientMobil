@@ -9,6 +9,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.HashMap;
+import java.util.List;
+
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
@@ -27,6 +30,11 @@ public class CanviarContrasenyaTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         canviarContrasenya = new CanviarContrasenya((Context) listener, usuari) {
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
             @Override
             protected Object doInBackground(Void... voids) {
                 return null;
