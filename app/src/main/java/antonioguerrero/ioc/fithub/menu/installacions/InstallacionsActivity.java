@@ -13,7 +13,6 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
 
 public class InstallacionsActivity extends BaseActivity {
@@ -32,6 +31,9 @@ public class InstallacionsActivity extends BaseActivity {
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, "Pendent d'implementar. Aviat dispobible!"));
+
+
+
 
         ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, new ConsultarTotesInstallacions.respostaServidorListener() {
             @Override
@@ -62,8 +64,9 @@ public class InstallacionsActivity extends BaseActivity {
             }
         }) {
             @Override
-            public void respostaServidor(Object resposta) {
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
 
+                return null;
             }
         };
         consulta.consultarTotesInstallacions();

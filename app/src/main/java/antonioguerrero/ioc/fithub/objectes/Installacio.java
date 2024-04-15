@@ -1,5 +1,7 @@
 package antonioguerrero.ioc.fithub.objectes;
 
+import java.util.HashMap;
+
 /**
  * Classe que representa una instal·lació on es realitzen activitats, classes o serveis.
  *
@@ -33,6 +35,10 @@ public class Installacio {
         this.nomInstallacio = nomInstallacio;
         this.descripcioInstallacio = descripcioInstallacio;
         this.tipusInstallacio = tipusInstallacio;
+    }
+
+    public Installacio() {
+
     }
 
     // Getters i setters
@@ -168,4 +174,22 @@ public class Installacio {
         this.capacitat = capacitat;
     }
 
+    public HashMap<String, String> installacio_a_hashmap(Installacio installacio) {
+        HashMap<String, String> mapaInstallacio = new HashMap<>();
+        mapaInstallacio.put("objectType","installacio");
+        mapaInstallacio.put("id",Integer.toString(installacio.getIDInstallacio()));
+        mapaInstallacio.put("nomInstallacio",installacio.getNomInstallacio());
+        mapaInstallacio.put("descripcioInstallacio", installacio.getDescripcioInstallacio());
+        mapaInstallacio.put("tipusInstallacio",Integer.toString(installacio.getTipusInstallacio()));
+        return mapaInstallacio;
+    }
+
+    public static Installacio hashmap_a_installacio(HashMap<String, String> mapaInstallacio) {
+        Installacio installacio = new Installacio();
+        installacio.setIDInstallacio(Integer.parseInt(mapaInstallacio.get("id")));
+        installacio.setNom(mapaInstallacio.get("nomInstal·lacio"));
+        installacio.setDescripcioInstallacio(mapaInstallacio.get("descripcioInstal·lacio"));;
+        installacio.setTipus(Integer.parseInt(mapaInstallacio.get("tipusInstal·lacio")));
+        return installacio;
+    }
 }

@@ -9,6 +9,8 @@ import android.util.Log;
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
+import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
@@ -87,6 +89,13 @@ public abstract class ConsultarTotesInstallacions extends BasePeticions {
             if (estat != null && estat.equals("llistaInstallacions")) {
                 // Obtenir la llista d'instal·lacions
                 List<HashMap<String, String>> llistaInstallacions = (List<HashMap<String, String>>) respostaArray[1];
+                // Convertir cada HashMap en un objeto Installacio
+                List<Installacio> installacions = new ArrayList<>();
+                for (HashMap<String, String> mapaInstallacio : llistaInstallacions) {
+                    Installacio installacio = Installacio.hashmap_a_installacio(mapaInstallacio);
+                    installacions.add(installacio);
+                }
+
                 // Guardar les dades de les instal·lacions a SharedPreferences
                 guardarDadesInstallacions(llistaInstallacions);
                 // Devolver la lista de instalaciones en lugar de iniciar la actividad

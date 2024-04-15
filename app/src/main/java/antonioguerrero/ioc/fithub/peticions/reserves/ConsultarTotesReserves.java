@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
+import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
@@ -24,6 +26,8 @@ public abstract class ConsultarTotesReserves extends BasePeticions {
         super(listener);
         this.context = context;
         this.usuari = usuari;
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     public void consultarTotesReserves() throws ConnectException {
@@ -43,7 +47,8 @@ public abstract class ConsultarTotesReserves extends BasePeticions {
     }
 
     @Override
-    public void respostaServidor(Object response) {
+    public List<HashMap<String, String>> respostaServidor(Object response) {
         // PENDENT
+        return null;
     }
 }

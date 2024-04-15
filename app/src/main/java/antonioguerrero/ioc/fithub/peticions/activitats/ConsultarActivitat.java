@@ -1,11 +1,15 @@
 package antonioguerrero.ioc.fithub.peticions.activitats;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Activitat;
@@ -33,17 +37,40 @@ public abstract class ConsultarActivitat extends BasePeticions {
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
 
-    public ConsultarActivitat(BasePeticions.respostaServidorListener listener, Context context, String nomActivitat) {
-        super(listener);
+
+            public ConsultarActivitat(ConsultarActivitat.ConsultarActivitatListener listener, Context context, String nomActivitat, String sessioID) {
+        super((respostaServidorListener) listener);
         this.context = context;
         this.nomActivitat = nomActivitat;
+                this.sessioID = sessioID;
+
+                SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     /**
      * Mètode per obtenir les dades d'una activitat.
      */
-    public void obtenirActivitat() throws ConnectException {
-        enviarPeticioString("select", "activitat", this.nomActivitat, this.sessioID);
+    @SuppressLint("StaticFieldLeak")
+    public void obtenirActivitat() {
+        final String nomActivitat = this.nomActivitat;
+        final String sessioID = this.sessioID;
+
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    return enviarPeticioString("select", "activitat", nomActivitat, sessioID);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
+            }
+        }.execute();
     }
 
     /**
@@ -60,18 +87,22 @@ public abstract class ConsultarActivitat extends BasePeticions {
      * Mètode per gestionar la resposta del servidor.
      *
      * @param resposta La resposta del servidor.
+     * @return
      */
     @Override
-    public void respostaServidor(Object resposta){
+    public List<HashMap<String, String>> respostaServidor(Object resposta){
         Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
         if (resposta instanceof Object[]) {
             Object[] respostaArray = (Object[]) resposta;
             String estat = (String) respostaArray[0];
             if (estat != null && estat.equals("activitat")) {
                 // Obtenir les dades de l'activitat
-                HashMap<String, String> activitatMap = (HashMap<String, String>) respostaArray[1];
-                // Convertir les dades de l'activitat a un objecte Activitat
-                Activitat activitat = (Activitat) Utils.HashMapAObjecte(activitatMap, Activitat.class);
+                HashMap<String, String> mapaActivitat = (HashMap<String, String>) respostaArray[1];
+                Activitat activitat = Activitat.hashmap_a_activitat(mapaActivitat);
+              ((ConsultarActivitat.ConsultarActivitatListener) listener).onActivitatObtinguda(activitat);
+                Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
+
+
                 // Guardar les dades de l'activitat a SharedPreferences
                 guardarDadesActivitat(activitat);
             } else {
@@ -80,6 +111,7 @@ public abstract class ConsultarActivitat extends BasePeticions {
         } else {
             Utils.mostrarToast(context, "Error de connexió");
         }
+        return null;
     }
 
     /**
@@ -97,20 +129,21 @@ public abstract class ConsultarActivitat extends BasePeticions {
      */
     private void guardarDadesActivitat(Activitat activitat) {
 
-        Utils.guardarDadesObjecte(context, activitat, Activitat.class);
-
-        /* Comparar amb aquesta implementacio
         SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar las propiedades del objeto activitat en SharedPreferences
         editor.putString("nomActivitat", activitat.getNomActivitat());
         editor.putString("descripcioActivitat", activitat.getDescripcioActivitat());
-        editor.putString("tipusInstallacio", activitat.getTipusInstallacio());
+        editor.putString("tipusInstallacio", String.valueOf(activitat.getTipusInstallacio()));
         editor.putInt("aforamentActivitat", activitat.getAforamentActivitat());
-        editor.putInt("idActivitat", activitat.getIdActivitat());
+        editor.putInt("idActivitat", activitat.getIDActivitat());
 
         // Aplicar los cambios a SharedPreferences
-        editor.apply();*/
+        editor.apply();
+    }
+
+    public interface ConsultarActivitatListener {
+        void onActivitatObtinguda(Activitat activitat);
     }
 }

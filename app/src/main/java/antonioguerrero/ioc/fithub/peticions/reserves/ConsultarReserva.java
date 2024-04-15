@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
+import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
@@ -45,7 +47,8 @@ public abstract class ConsultarReserva extends BasePeticions {
     }
 
     @Override
-    public void respostaServidor(Object response) {
+    public List<HashMap<String, String>> respostaServidor(Object response) {
         // PENDENT
+        return null;
     }
 }

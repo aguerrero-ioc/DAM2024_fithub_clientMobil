@@ -21,7 +21,19 @@ import java.util.List;
  * Classe d'utilitats amb mètodes útils per a diverses funcionalitats.
  */
 public class Utils {
+    //USUARI
+    public static final String ID_USUARI = "IDusuari";
+    public static final String NOM_USUARI = "nomUsuari";
+    public static final String PASS_USUARI = "passUsuari";
+    public static final String TIPUS_USUARI = "tipusUsuari";
+    public static final String CORREU_USUARI = "correuUsuari";
+    public static final String COGNOMS_USUARI = "cognomsUsuari";
+    public static final String TELEFON = "telefon";
+    public static final String ADRECA = "adreca";
+    public static final String DATA_NAIXEMENT = "dataNaixement";
+    public static final String DATA_INSCRIPCIO = "dataInscripcio";
 
+    // RESTA
     public static final String PREFERENCIES = "Preferències";
     public static final String SESSIO_ID = "sessioID";
     public static final String VALOR_DEFAULT = "";

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.net.ConnectException;
 import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
@@ -47,7 +48,7 @@ public abstract class CrearReserva extends BasePeticions {
     }
 
 @Override
-public void respostaServidor(Object resposta) {
+public List<HashMap<String, String>> respostaServidor(Object resposta) {
     Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
     Object[] respostaArray = (Object[]) resposta;
     boolean exit = respostaArray[0].equals("True");
@@ -65,5 +66,6 @@ public void respostaServidor(Object resposta) {
         // Mostra el missatge d'error a l'usuari
         Utils.mostrarToast(context.getApplicationContext(), "No s'ha pogut realitzar la reserva: " + missatgeError);
     }
+    return null;
 }
 }

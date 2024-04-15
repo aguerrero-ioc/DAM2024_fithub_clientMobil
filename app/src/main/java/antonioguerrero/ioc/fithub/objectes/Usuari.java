@@ -99,7 +99,7 @@ public class Usuari implements Serializable {
      * @param map HashMap amb les dades de l'usuari
      * @return Objecte Usuari amb les dades del HashMap
      */
-    public Usuari hashmap_a_usuari(HashMap<String, String> map) {
+    public static Usuari hashmap_a_usuari(HashMap<String, String> map) {
         Usuari usuari = new Usuari();
         usuari.setIDusuari(Integer.parseInt(map.get("IDusuari")));
         usuari.setCorreuUsuari(map.get("correuUsuari"));

@@ -9,6 +9,7 @@ import android.util.Log;
 import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
@@ -87,9 +88,10 @@ public abstract class ConsultarUsuari extends BasePeticions {
      * Mètode per gestionar la resposta del servidor.
      *
      * @param resposta La resposta del servidor.
+     * @return
      */
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         if (resposta instanceof Object[]) {
             Object[] arrayResposta = (Object[]) resposta;
@@ -97,22 +99,13 @@ public abstract class ConsultarUsuari extends BasePeticions {
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
 
-                Usuari usuari = new Usuari();
-                usuari.setIDusuari(Integer.parseInt(mapaUsuari.get("IDusuari")));
-                usuari.setNomUsuari(mapaUsuari.get("nomUsuari"));
-                usuari.setPassUsuari(mapaUsuari.get("passUsuari"));
-                usuari.setTipusUsuari(Integer.parseInt(mapaUsuari.get("tipusUsuari")));
-                usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
-                usuari.setCognomsUsuari(mapaUsuari.get("cognomsUsuari"));
-                usuari.setTelefon(mapaUsuari.get("telefon"));
-                usuari.setAdreca(mapaUsuari.get("adreca"));
-                usuari.setDataNaixement(mapaUsuari.get("dataNaixement"));
-                usuari.setDataInscripcio(mapaUsuari.get("dataInscripcio"));
+                Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
 
                 ((ConsultarUsuariListener) listener).onUsuariObtingut(usuari);
 
-
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
+
+                guardarDadesUsuari(usuari);
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la consulta de l'usuari");
             }
@@ -121,7 +114,27 @@ public abstract class ConsultarUsuari extends BasePeticions {
             Log.e(ETIQUETA, missatgeError);
             Utils.mostrarToast(context, "Error en la resposta del servidor");
         }
+        return null;
     }
+
+    private void guardarDadesUsuari(Usuari usuari) {
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencies.edit();
+
+        editor.putInt(Utils.ID_USUARI, usuari.getIDusuari());
+        editor.putString(Utils.NOM_USUARI, usuari.getNomUsuari());
+        editor.putString(Utils.PASS_USUARI, usuari.getPassUsuari());
+        editor.putInt(Utils.TIPUS_USUARI, usuari.getTipusUsuari());
+        editor.putString(Utils.CORREU_USUARI, usuari.getCorreuUsuari());
+        editor.putString(Utils.COGNOMS_USUARI, usuari.getCognomsUsuari());
+        editor.putString(Utils.TELEFON, usuari.getTelefon());
+        editor.putString(Utils.ADRECA, usuari.getAdreca());
+        editor.putString(Utils.DATA_NAIXEMENT, usuari.getDataNaixement());
+        editor.putString(Utils.DATA_INSCRIPCIO, usuari.getDataInscripcio());
+
+        editor.apply();
+    }
+
 
     /**
      * Mètode per executar la petició.

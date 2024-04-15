@@ -1,6 +1,8 @@
 package antonioguerrero.ioc.fithub.objectes;
 
 
+import java.util.HashMap;
+
 /**
  * Classe que representa una reserva d'una classe.
  * <p>
@@ -18,11 +20,8 @@ public class Reserva {
 
     /**
      * Constructor de la classe Reserva reduït.
-     *
-     * @param IDReserva L'identificador de la reserva.
-     * @param IDusuari  L'identificador de l'usuari.
      */
-    public Reserva(int IDReserva, int IDusuari) {
+    public Reserva() {
         this.IDReserva = IDReserva;
         this.IDusuari = IDusuari;
     }
@@ -66,6 +65,21 @@ public class Reserva {
      */
     public void setIDusuari(int IDusuari) {
         this.IDusuari = IDusuari;
+    }
+
+    public HashMap<String, String> reserva_a_hashmap(Reserva reserva) {
+        HashMap<String, String> mapaReserva = new HashMap<>();
+        mapaReserva.put("objectType","reserva");
+        mapaReserva.put("id",Integer.toString(reserva.getIDReserva()));
+        mapaReserva.put("idUsuari",Integer.toString(reserva.getIDusuari()));
+        return mapaReserva;
+    }
+
+    public Reserva hashmap_a_reserva(HashMap<String, String> mapaReserva) {
+        Reserva reserva = new Reserva();
+        reserva.setIDReserva(Integer.parseInt(mapaReserva.get("id")));
+        reserva.setIDusuari(Integer.parseInt(mapaReserva.get("idUsuari")));
+        return reserva;
     }
 
 }

@@ -16,6 +16,8 @@ import java.util.Scanner;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 public abstract class BasePeticions {
+
+    //LOCAL "192.168.0.252"
     protected static final String SERVIDOR_IP = "192.168.209.185";
     protected static final int SERVIDOR_PORT = 8080;
 
@@ -40,7 +42,7 @@ public abstract class BasePeticions {
     public BasePeticions(Context context, String correuUsuari, String passUsuari) {
     }
 
-    public abstract void respostaServidor(Object resposta);
+    public abstract List<HashMap<String, String>> respostaServidor(Object resposta);
 
     public abstract Class<?> obtenirTipusObjecte();
 

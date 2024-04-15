@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Servei;
@@ -62,9 +63,10 @@ public abstract class ConsultarServei extends BasePeticions {
      * Mètode per gestionar la resposta del servidor.
      *
      * @param resposta La resposta del servidor.
+     * @return
      */
     @Override
-    public void respostaServidor(Object resposta){
+    public List<HashMap<String, String>> respostaServidor(Object resposta){
         Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
         if (resposta instanceof Object[]) {
             Object[] respostaArray = (Object[]) resposta;
@@ -79,6 +81,7 @@ public abstract class ConsultarServei extends BasePeticions {
         } else {
             Utils.mostrarToast(context, "Error de connexió");
         }
+        return null;
     }
 
     /**

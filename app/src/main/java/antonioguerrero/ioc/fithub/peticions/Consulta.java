@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 
 import java.util.HashMap;
@@ -107,7 +105,7 @@ public abstract class Consulta extends BasePeticions {
 
 
         @Override
-        public void respostaServidor(Object resposta) {
+        public List<HashMap<String, String>> respostaServidor(Object resposta) {
             Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
             if (resposta instanceof Object[]) {
                 Object[] arrayResposta = (Object[]) resposta;
@@ -143,6 +141,7 @@ public abstract class Consulta extends BasePeticions {
                 Log.e(ETIQUETA, missatgeError);
                 Utils.mostrarToast(context, "Error en la resposta del servidor");
             }
+            return null;
         }
 
 
@@ -162,7 +161,18 @@ public abstract class Consulta extends BasePeticions {
 
                 case "activitatLlista":
                     llistaEntitats = (List<HashMap<String, String>>) respostaArray[1];
-                    guardarDades(llistaEntitats,"activitat");
+                    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferencies.edit();
+                    for (int i = 0; i < llistaEntitats.size(); i++) {
+                        HashMap<String, String> mapaActivitat = llistaEntitats.get(i);
+
+                        editor.putString("idActivitat" + i, mapaActivitat.get("idActivitat"));
+                        editor.putString("nomActivitat" + i, mapaActivitat.get("nomActivitat"));
+                        editor.putString("descripcioActivitat" + i, mapaActivitat.get("descripcioActivitat"));
+                        editor.putString("tipusActivitat" + i, mapaActivitat.get("tipusActivitat"));
+                        editor.putString("aforamentActivitat" + i, mapaActivitat.get("aforamentActivitat"));
+                    }
+                    editor.putInt("numActivitats", llistaEntitats.size());
                     break;
 
                 case "installacioLlista":

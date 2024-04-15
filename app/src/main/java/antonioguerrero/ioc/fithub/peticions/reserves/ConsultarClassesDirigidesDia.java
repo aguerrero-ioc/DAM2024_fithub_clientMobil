@@ -42,7 +42,7 @@ public abstract class ConsultarClassesDirigidesDia extends BasePeticions {
     }
 
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidor(Object resposta) {
         if (resposta instanceof Object[]) {
             Object[] respostaArray = (Object[]) resposta;
             String estat = (String) respostaArray[0];
@@ -57,6 +57,7 @@ public abstract class ConsultarClassesDirigidesDia extends BasePeticions {
         } else {
             Utils.mostrarToast(context, "Error de conexión");
         }
+        return null;
     }
 
     /**

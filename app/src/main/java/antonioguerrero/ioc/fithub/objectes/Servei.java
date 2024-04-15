@@ -1,11 +1,12 @@
 package antonioguerrero.ioc.fithub.objectes;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Classe que representa un servei reservat en una instal·lació.
  * Hereta de la classe Reserva.
- *
+ * <p>
  * Cada servei té un nom, una descripció, personal assignat i hereta els altres atributs de la reserva.
  *
  * @author Antonio Guerrero
@@ -42,6 +43,10 @@ public class Servei implements Serializable {
         this.descripcioServei = descripcioServei;
         this.aforamentServei = aforamentServei;
         this.tipusInstallacio = tipusInstallacio;
+    }
+
+    public Servei() {
+
     }
 
 
@@ -186,6 +191,31 @@ public class Servei implements Serializable {
 
     public void setPreuServei(int preuServei) {
         this.preuServei = preuServei;
+    }
+
+    public HashMap<String, String> servei_a_hashmap(Servei servei) {
+        HashMap<String, String> mapaServei = new HashMap<>();
+        mapaServei.put("objectType","servei");
+        mapaServei.put("id",Integer.toString(servei.getIDServei()));
+        mapaServei.put("nomServei",servei.getNomServei());
+        mapaServei.put("descripcioServei", servei.getDescripcioServei());
+        mapaServei.put("aforamentServei",Integer.toString(servei.getAforamentServei()));
+        mapaServei.put("tipusInstallacio",servei.getTipusInstallacio());
+        mapaServei.put("personalServei",servei.getPersonalServei());
+        mapaServei.put("preuServei",Integer.toString(servei.getPreuServei()));
+        return mapaServei;
+    }
+
+    public Servei hashmap_a_servei(HashMap<String, String> mapaServei) {
+        Servei servei = new Servei();
+        servei.setIDServei(Integer.parseInt(mapaServei.get("id")));
+        servei.setNomServei(mapaServei.get("nomServei"));
+        servei.setDescripcioServei(mapaServei.get("descripcioServei"));
+        servei.setAforamentServei(Integer.parseInt(mapaServei.get("aforamentServei")));
+        servei.setTipusInstallacio(mapaServei.get("tipusInstallacio"));
+        servei.setPersonalServei(mapaServei.get("personalServei"));
+        servei.setPreuServei(Integer.parseInt(mapaServei.get("preuServei")));
+        return servei;
     }
 
 }

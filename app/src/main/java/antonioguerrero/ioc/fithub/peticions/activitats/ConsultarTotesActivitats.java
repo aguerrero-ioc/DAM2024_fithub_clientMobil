@@ -1,7 +1,9 @@
 package antonioguerrero.ioc.fithub.peticions.activitats;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
@@ -9,8 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import java.util.ArrayList;
+import antonioguerrero.ioc.fithub.objectes.Activitat; // Asegúrate de que esta sea la ruta correcta a la clase Activitat
 
 
 /**
@@ -37,8 +40,25 @@ public abstract class ConsultarTotesActivitats extends BasePeticions {
     /**
      * Mètode per obtenir les dades de totes les activitats.
      */
-    public void obtenirActivitats() throws ConnectException {
-        enviarPeticioString("selectAll", "activitat", null, this.sessioID);
+    @SuppressLint("StaticFieldLeak")
+    public void obtenirTotesActivitats() {
+        final String sessioID = this.sessioID;
+
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    return enviarPeticioString("selectAll", "activitat","null", sessioID);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
+            }
+        }.execute();
     }
 
     /**
@@ -55,9 +75,10 @@ public abstract class ConsultarTotesActivitats extends BasePeticions {
      * Mètode per obtenir la resposta del servidor.
      *
      * @param resposta La resposta del servidor.
+     * @return
      */
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
         if (resposta instanceof Object[]) {
             Object[] respostaArray = (Object[]) resposta;
@@ -65,16 +86,24 @@ public abstract class ConsultarTotesActivitats extends BasePeticions {
             if (estat != null && estat.equals("activitatLlista")) {
                 // Obtenir la llista d'activitats
                 List<HashMap<String, String>> llistaActivitats = (List<HashMap<String, String>>) respostaArray[1];
-                // Iniciar l'activitat de les activitats
-                Utils.iniciarActivitatLlista(context, ActivitatsActivity.class, llistaActivitats, "llistaActivitats");
+
+                // Convertir cada HashMap en un objeto Activitat
+                List<Activitat> activitats = new ArrayList<>();
+                for (HashMap<String, String> mapaActivitat : llistaActivitats) {
+                    Activitat activitat = Activitat.hashmap_a_activitat(mapaActivitat);
+                    activitats.add(activitat);
+                }
                 // Guardar les dades de les activitats a SharedPreferences
                 guardarDadesActivitats(llistaActivitats);
+                // Devolver la lista de activitats en lugar de iniciar la actividad
+                return llistaActivitats;
             } else {
                 Utils.mostrarToast(context, "No s'han pogut obtenir les activitats");
             }
         } else {
             Utils.mostrarToast(context, "Error de connexió");
         }
+        return null;
     }
 
     /**
@@ -82,7 +111,7 @@ public abstract class ConsultarTotesActivitats extends BasePeticions {
      */
     @Override
     public void execute() throws ConnectException {
-        obtenirActivitats();
+        obtenirTotesActivitats();
     }
 
     /**
@@ -97,7 +126,7 @@ public abstract class ConsultarTotesActivitats extends BasePeticions {
         // Guardar les propietats de cada objecte activitat a SharedPreferences
         for (int i = 0; i < llistaActivitats.size(); i++) {
             HashMap<String, String> mapaActivitat = llistaActivitats.get(i);
-            editor.putString("idActivitat" + i, mapaActivitat.get("idActivitat"));
+            editor.putString("IDactivitat" + i, mapaActivitat.get("idActivitat"));
             editor.putString("nomActivitat" + i, mapaActivitat.get("nomActivitat"));
             editor.putString("descripcioActivitat" + i, mapaActivitat.get("descripcioActivitat"));
             editor.putString("tipusActivitat" + i, mapaActivitat.get("tipusActivitat"));

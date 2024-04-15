@@ -1,6 +1,7 @@
 package antonioguerrero.ioc.fithub.objectes;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 
 public class ClasseDirigida implements Serializable {
@@ -17,16 +18,8 @@ public class ClasseDirigida implements Serializable {
 
     /**
      * Constructor de la classe ClasseDirigida.
-     *
-     * @param IDClasseDirigida ID de la classe dirigida
-     * @param activitat Activitat de la classe dirigida
-     * @param installacio Installació on es realitza la classe dirigida
-     * @param dia Dia de la setmana en què es realitza la classe dirigida
-     * @param horaInici Hora d'inici de la classe dirigida
-     * @param duracio Duració de la classe dirigida
-     * @param reservesActuals Reserves actuals de la classe dirigida
      */
-    public ClasseDirigida(String IDClasseDirigida, Activitat activitat, Installacio installacio, String dia, String horaInici, int duracio, int reservesActuals) {
+    public ClasseDirigida() {
         this.IDClasseDirigida = IDClasseDirigida;
         this.activitat = activitat;
         this.installacio = installacio;
@@ -108,7 +101,12 @@ public class ClasseDirigida implements Serializable {
     public void setDuracio(int duracio) {
         this.duracio = duracio;
     }
+    private int getReservesActuals() {
+        return reservesActuals;
+    }
 
+    private void setReservesActuals(int reservesActuals) {
+    }
 
     public boolean estaReservat() {
         return estaReservat;
@@ -117,4 +115,35 @@ public class ClasseDirigida implements Serializable {
     public void setEstaReservat(boolean estaReservat) {
         this.estaReservat = estaReservat;
     }
+
+
+
+    public HashMap<String, String> classeDirigida_a_hashmap(ClasseDirigida classeDirigida) {
+        HashMap<String, String> mapaClasseDirigida = new HashMap<>();
+        mapaClasseDirigida.put("objectType","classeDirigida");
+        mapaClasseDirigida.put("id",classeDirigida.getIDClasseDirigida());
+        mapaClasseDirigida.put("nomActivitat",classeDirigida.getNomActivitat()); // Se utiliza el método getNomActivitat
+        mapaClasseDirigida.put("nomInstallacio",classeDirigida.getNomInstallacio()); // Se utiliza el método getNomInstallacio
+        mapaClasseDirigida.put("dia",classeDirigida.getDia());
+        mapaClasseDirigida.put("horaInici",classeDirigida.getHoraInici());
+        mapaClasseDirigida.put("duracio",Integer.toString(classeDirigida.getDuracio()));
+        mapaClasseDirigida.put("reservesActuals",Integer.toString(classeDirigida.getReservesActuals()));
+        return mapaClasseDirigida;
+    }
+
+
+
+    public ClasseDirigida hashmap_a_classeDirigida(HashMap<String, String> mapaClasseDirigida) {
+        ClasseDirigida classeDirigida = new ClasseDirigida();
+        classeDirigida.setIDClasseDirigida(mapaClasseDirigida.get("id"));
+        classeDirigida.setNomActivitat(mapaClasseDirigida.get("nomActivitat"));
+        classeDirigida.setNomInstallacio(mapaClasseDirigida.get("nomInstallacio"));
+        classeDirigida.setDia(mapaClasseDirigida.get("dia"));
+        classeDirigida.setHoraInici(mapaClasseDirigida.get("horaInici"));
+        classeDirigida.setDuracio(Integer.parseInt(mapaClasseDirigida.get("duracio")));
+        classeDirigida.setReservesActuals(Integer.parseInt(mapaClasseDirigida.get("reservesActuals")));
+        return classeDirigida;
+    }
+
+
 }

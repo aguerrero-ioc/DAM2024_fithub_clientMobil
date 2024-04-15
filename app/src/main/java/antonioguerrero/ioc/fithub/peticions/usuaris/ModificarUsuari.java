@@ -65,7 +65,7 @@ public abstract class ModificarUsuari extends BasePeticions {
 
 
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         if (resposta instanceof Object[]) {
             Object[] arrayResposta = (Object[]) resposta;
@@ -73,17 +73,8 @@ public abstract class ModificarUsuari extends BasePeticions {
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
 
-                Usuari usuari = new Usuari();
-                usuari.setIDusuari(Integer.parseInt(mapaUsuari.get("IDusuari")));
-                usuari.setNomUsuari(mapaUsuari.get("nomUsuari"));
-                usuari.setPassUsuari(mapaUsuari.get("passUsuari"));
-                usuari.setTipusUsuari(Integer.parseInt(mapaUsuari.get("tipusUsuari")));
-                usuari.setCorreuUsuari(mapaUsuari.get("correuUsuari"));
-                usuari.setCognomsUsuari(mapaUsuari.get("cognomsUsuari"));
-                usuari.setTelefon(mapaUsuari.get("telefon"));
-                usuari.setAdreca(mapaUsuari.get("adreca"));
-                usuari.setDataNaixement(mapaUsuari.get("dataNaixement"));
-                usuari.setDataInscripcio(mapaUsuari.get("dataInscripcio"));
+                Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
+
 
                 ((ModificarUsuariListener) listener).onUsuariModificat(usuari);
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
@@ -97,6 +88,7 @@ public abstract class ModificarUsuari extends BasePeticions {
             Log.e(ETIQUETA, missatgeError);
             Utils.mostrarToast(context, "Error en la resposta del servidor");
         }
+        return null;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Activitat implements Serializable {
     private String descripcioActivitat;
     private int aforamentActivitat;
 
-    private String tipusInstallacio;
+    private int tipusInstallacio;
 
     // Altres atributs que podrien ser necessaris
 
@@ -29,15 +29,9 @@ public class Activitat implements Serializable {
 
     /**
      * Constructor de la classe Activitat.
-     *
-     * @param IDActivitat Identificador de l'activitat
-     * @param nomActivitat Nom de l'activitat
-     * @param descripcioActivitat Descripció de l'activitat
-     * @param aforamentActivitat Aforament de l'activitat
-     * @param tipusInstallacio Tipus de la instal·lació on es realitza l'activitat
      */
 
-    public Activitat(int IDActivitat, String nomActivitat, String descripcioActivitat, int aforamentActivitat, String tipusInstallacio) {
+    public Activitat() {
         this.IDActivitat = IDActivitat;
         this.nomActivitat = nomActivitat;
         this.descripcioActivitat = descripcioActivitat;
@@ -125,7 +119,7 @@ public class Activitat implements Serializable {
      *
      * @return El tipus d'instal·lació on es realitza l'activitat
      */
-    public String getTipusInstallacio() {
+    public int getTipusInstallacio() {
         return tipusInstallacio;
     }
 
@@ -134,7 +128,7 @@ public class Activitat implements Serializable {
      *
      * @param tipusInstallacio El nou tipus d'instal·lació on es realitza l'activitat
      */
-    public void setTipusInstallacio(String tipusInstallacio) {
+    public void setTipusInstallacio(int tipusInstallacio) {
         this.tipusInstallacio = tipusInstallacio;}
 
     public int getDia() {
@@ -152,5 +146,30 @@ public class Activitat implements Serializable {
     public void setHora(int hora) {
         this.horaInici = hora;
     }
+
+
+    public HashMap<String, String> activitat_a_hashmap(Activitat activitat) {
+        HashMap<String, String> mapaActivitat = new HashMap<>();
+        mapaActivitat.put("objectType","activitat");
+        mapaActivitat.put("id",Integer.toString(activitat.getIDActivitat()));
+        mapaActivitat.put("nomActivitat",activitat.getNomActivitat());
+        mapaActivitat.put("descripcioActivitat", activitat.getDescripcioActivitat());
+        mapaActivitat.put("aforamentActivitat",Integer.toString(activitat.getAforamentActivitat()));
+        mapaActivitat.put("tipusActivitat",Integer.toString(activitat.getTipusInstallacio()));
+        return mapaActivitat;
+
+    }
+
+
+    public static Activitat hashmap_a_activitat(HashMap<String, String> mapaActivitat) {
+        Activitat activitat = new Activitat();
+        activitat.setIDActivitat(Integer.parseInt(mapaActivitat.get("id")));
+        activitat.setNomActivitat(mapaActivitat.get("nomActivitat"));
+        activitat.setDescripcioActivitat(mapaActivitat.get("descripcioActivitat"));;
+        activitat.setAforamentActivitat(Integer.parseInt(mapaActivitat.get("aforamentActivitat")));
+        activitat.setTipusInstallacio(Integer.parseInt(mapaActivitat.get("tipusActivitat")));
+        return activitat;
+    }
+
 
 }

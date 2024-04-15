@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.net.ConnectException;
 import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
@@ -71,7 +72,7 @@ public abstract class PeticioLogin extends BasePeticions {
 
 
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Usuari.setContext(context);
 
         if (context != null) {
@@ -104,6 +105,7 @@ public abstract class PeticioLogin extends BasePeticions {
         } else {
             Log.e("PeticioLogin", "El context es nul");
         }
+        return null;
     }
 
 

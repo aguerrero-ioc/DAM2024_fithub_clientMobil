@@ -15,7 +15,6 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 
 /**
@@ -86,9 +85,10 @@ public class PeticioLogout extends BasePeticions {
      * Mètode per gestionar la resposta del servidor a la petició de tancament de sessió.
      *
      * @param resposta La resposta del servidor.
+     * @return
      */
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
         if (resposta instanceof Object[]) {
             Object[] arrayResposta = (Object[]) resposta;
@@ -111,6 +111,7 @@ public class PeticioLogout extends BasePeticions {
                 Toast.makeText(context, missatgeError, Toast.LENGTH_SHORT).show();
             }
         }
+        return null;
     }
 
     /**

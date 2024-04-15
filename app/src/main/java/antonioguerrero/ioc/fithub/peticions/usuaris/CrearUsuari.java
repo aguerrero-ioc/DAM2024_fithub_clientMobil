@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.net.ConnectException;
 import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
@@ -64,7 +65,7 @@ public abstract class CrearUsuari extends BasePeticions {
 
 
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;
         boolean exit = respostaArray[0].equals("true");
@@ -82,6 +83,7 @@ public abstract class CrearUsuari extends BasePeticions {
             // Mostra el missatge d'error a l'usuari
             Utils.mostrarToast(context.getApplicationContext(), "Error en crear l'usuari: " + missatgeError);
         }
+        return null;
     }
 
     @Override

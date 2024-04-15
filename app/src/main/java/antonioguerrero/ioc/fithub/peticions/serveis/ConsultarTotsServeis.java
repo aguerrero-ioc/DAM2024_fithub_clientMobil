@@ -57,9 +57,10 @@ public abstract class ConsultarTotsServeis extends BasePeticions {
      * Mètode per gestionar la resposta del servidor.
      *
      * @param resposta La resposta del servidor.
+     * @return
      */
     @Override
-    public void respostaServidor(Object resposta) {
+    public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         if (resposta instanceof Object[]) {
             Object[] respostaArray = (Object[]) resposta;
@@ -77,6 +78,7 @@ public abstract class ConsultarTotsServeis extends BasePeticions {
         } else {
             Utils.mostrarToast(context, "Error de connexió");
         }
+        return null;
     }
 
     /**
