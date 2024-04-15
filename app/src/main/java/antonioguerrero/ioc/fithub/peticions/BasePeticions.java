@@ -18,7 +18,7 @@ import antonioguerrero.ioc.fithub.objectes.Usuari;
 public abstract class BasePeticions {
 
     //LOCAL "192.168.0.252"
-    protected static final String SERVIDOR_IP = "192.168.209.185";
+    protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
 
     public void setUsuari(Usuari usuari) {

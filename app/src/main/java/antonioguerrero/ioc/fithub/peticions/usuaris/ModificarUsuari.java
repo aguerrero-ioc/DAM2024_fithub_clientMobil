@@ -39,6 +39,11 @@ public abstract class ModificarUsuari extends BasePeticions {
         void onUsuariModificat(Usuari usuari);
     }
 
+    public void setUsuari(Usuari usuari) {
+        this.usuari = usuari;
+    }
+
+
     @SuppressLint("StaticFieldLeak")
     public void modificarUsuari() {
         new AsyncTask<Void, Void, Object>() {

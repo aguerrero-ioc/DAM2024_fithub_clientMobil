@@ -39,6 +39,8 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     private String sessioID;
     private Usuari usuari;
 
+    private ModificarUsuari modificarUsuari;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +137,22 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
         };
         consultarUsuari.consultarUsuari();
+
+        modificarUsuari = new ModificarUsuari(this, this, correuUsuari, sessioID) {
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void respostaServidor(Object[] resposta) {
+            }
+
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
+        };
 
     }
 
@@ -391,6 +409,8 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     public void onUsuariObtingut(Usuari usuari) {
         this.usuari = usuari;
         actualitzarUsuari(usuari);
+
+        modificarUsuari.setUsuari(usuari);
     }
 
 

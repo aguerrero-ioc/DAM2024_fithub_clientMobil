@@ -151,7 +151,7 @@ public class Activitat implements Serializable {
     public HashMap<String, String> activitat_a_hashmap(Activitat activitat) {
         HashMap<String, String> mapaActivitat = new HashMap<>();
         mapaActivitat.put("objectType","activitat");
-        mapaActivitat.put("id",Integer.toString(activitat.getIDActivitat()));
+        mapaActivitat.put("IDactivitat",Integer.toString(activitat.getIDActivitat()));
         mapaActivitat.put("nomActivitat",activitat.getNomActivitat());
         mapaActivitat.put("descripcioActivitat", activitat.getDescripcioActivitat());
         mapaActivitat.put("aforamentActivitat",Integer.toString(activitat.getAforamentActivitat()));
@@ -163,7 +163,7 @@ public class Activitat implements Serializable {
 
     public static Activitat hashmap_a_activitat(HashMap<String, String> mapaActivitat) {
         Activitat activitat = new Activitat();
-        activitat.setIDActivitat(Integer.parseInt(mapaActivitat.get("id")));
+        activitat.setIDActivitat(Integer.parseInt(mapaActivitat.get("IDactivitat")));
         activitat.setNomActivitat(mapaActivitat.get("nomActivitat"));
         activitat.setDescripcioActivitat(mapaActivitat.get("descripcioActivitat"));;
         activitat.setAforamentActivitat(Integer.parseInt(mapaActivitat.get("aforamentActivitat")));
