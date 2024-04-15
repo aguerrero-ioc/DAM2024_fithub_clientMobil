@@ -18,16 +18,26 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 public abstract class CanviarContrasenya extends BasePeticions {
 
     private static final String ETIQUETA = "CanviarContrasenya";
-    private final Usuari usuari;
-    private final Context context;
-    private final String sessioID;
+    private Usuari usuari;
+    private Context context;
+    private SharedPreferences preferencies;
+    private String sessioID;
 
-    public CanviarContrasenya(Context context, Usuari usuari) {
-        super(context, usuari.getCorreuUsuari(), usuari.getPassUsuari());
+    public CanviarContrasenya(CanviarContrasenyaListener listener, Context context, Usuari usuari, String sessioID) {
+        super((respostaServidorListener) listener);
         this.context = context;
         this.usuari = usuari;
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = sessioID;
+        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    }
+
+    public interface CanviarContrasenyaListener {
+        void onUsuariModificat(Usuari usuari);
+    }
+
+    public void setUsuari(Usuari usuari) {
+        this.usuari = usuari;
     }
 
 
@@ -37,7 +47,7 @@ public abstract class CanviarContrasenya extends BasePeticions {
             @Override
             protected Object doInBackground(Void... voids) {
                 try {
-                    HashMap<String, String> mapaUsuari = Utils.ObjecteAHashMap(usuari);
+                    HashMap<String, String> mapaUsuari = usuari.usuari_a_hashmap(usuari);
                     return enviarPeticioHashMap("update", "pass", mapaUsuari, sessioID);
                 } catch (ConnectException e) {
                     throw new RuntimeException(e);
@@ -66,9 +76,9 @@ public abstract class CanviarContrasenya extends BasePeticions {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
                 Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
 
-
-                ((ModificarUsuari.ModificarUsuariListener) listener).onUsuariModificat(usuari);
+                ((CanviarContrasenyaListener) listener).onUsuariModificat(usuari);
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
+
                 Utils.mostrarToast(context, "Contrasenya modificada correctament");
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la modificació de la contrasenya");

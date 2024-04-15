@@ -312,6 +312,8 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         modificarUsuari.modificarUsuari();
 
         deshabilitarEdicioDades();
+        btnEditarPerfil.setEnabled(true);
+        btnGuardarCanvis.setEnabled(false);
 
     }
 
@@ -325,7 +327,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
         // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
-        CanviarContrasenya canviarContrasenya = new CanviarContrasenya(context, usuari) {
+        CanviarContrasenya canviarContrasenya = new CanviarContrasenya((CanviarContrasenya.CanviarContrasenyaListener) context, this, usuari, sessioID) {
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
@@ -339,7 +341,11 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
         };
         canviarContrasenya.setUsuari(usuari);
-        canviarContrasenya.execute();
+        canviarContrasenya.canviarContrasenya();
+
+        deshabilitarEdicioContrasenya();
+        btnGuardarCanviContrasenya.setEnabled(false);
+        btnCanviContrasenya.setEnabled(true);
     }
 
 
