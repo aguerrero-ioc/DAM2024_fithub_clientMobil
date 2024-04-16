@@ -42,7 +42,7 @@ public abstract class PeticioLogin extends ConnexioServidor {
      * @param passUsuari   La contrasenya de l'usuari.
      */
     public PeticioLogin(Context context, String correuUsuari, String passUsuari) {
-        super(context, correuUsuari, passUsuari);
+        super();
         this.context = context;
         this.correuUsuari = correuUsuari;
         this.passUsuari = passUsuari;

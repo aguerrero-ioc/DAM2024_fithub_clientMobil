@@ -47,6 +47,9 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
     private ModificarUsuari modificarUsuari;
 
+    private CanviarContrasenya canviarContrasenya ;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,7 +168,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         };
         consultarUsuari.consultarUsuari();
 
-        modificarUsuari = new ModificarUsuari(this, this, correuUsuari, sessioID) {
+        modificarUsuari = new ModificarUsuari(this, this, sessioID) {
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
@@ -181,6 +184,18 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
         };
 
+        canviarContrasenya = new CanviarContrasenya(this, this, sessioID) {
+
+            @Override
+            protected Object doInBackground(Void... voids) {
+                return null;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+        };
     }
 
 
@@ -313,7 +328,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         usuari.setCorreuUsuari(correuUsuari);
 
             //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
-        ModificarUsuari modificarUsuari = new ModificarUsuari((ModificarUsuari.ModificarUsuariListener) this, this, correuUsuari, sessioID) {
+        ModificarUsuari modificarUsuari = new ModificarUsuari((ModificarUsuari.ModificarUsuariListener) this, this, sessioID) {
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
@@ -348,7 +363,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
         // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
-        CanviarContrasenya canviarContrasenya = new CanviarContrasenya((CanviarContrasenya.CanviarContrasenyaListener) context, this, usuari, sessioID) {
+        CanviarContrasenya canviarContrasenya = new CanviarContrasenya((ModificarUsuari.ModificarUsuariListener) this, this, sessioID) {
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
@@ -429,10 +444,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         return null;
     }
 
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
 
-    }
 
     @Override
     public void onUsuariObtingut(Usuari usuari) {
@@ -447,6 +459,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         this.usuari = usuari;
         actualitzarUsuari(usuari);
     }
+
 
 
 

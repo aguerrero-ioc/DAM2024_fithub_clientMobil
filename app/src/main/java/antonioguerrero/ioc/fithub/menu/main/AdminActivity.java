@@ -93,8 +93,5 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
         return null;
     }
 
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
 
-    }
 }

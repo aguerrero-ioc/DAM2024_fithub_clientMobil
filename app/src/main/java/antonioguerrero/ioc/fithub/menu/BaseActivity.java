@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
 public class BaseActivity extends AppCompatActivity{
@@ -78,9 +79,6 @@ public class BaseActivity extends AppCompatActivity{
             Log.e("ETIQUETA", "IDusuari no encontrado en SharedPreferences");
         }
     }
-
-
-
 
 
 }

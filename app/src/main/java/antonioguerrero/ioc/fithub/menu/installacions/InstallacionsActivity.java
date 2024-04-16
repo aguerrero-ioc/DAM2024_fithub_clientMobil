@@ -59,10 +59,7 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
-        });;
-
-
-
+        });
 
 
         ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, new ConsultarTotesInstallacions.respostaServidorListener() {
@@ -88,10 +85,7 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
                 return null;
             }
 
-            @Override
-            public void onRespostaServidorMultiple(Object resposta) {
 
-            }
         }) {
             @Override
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
@@ -113,8 +107,5 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
         return null;
     }
 
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
 
-    }
 }

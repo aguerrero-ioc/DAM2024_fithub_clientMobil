@@ -89,10 +89,7 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
         return null;
     }
 
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
 
-    }
 
     private static class PaginesReservesAdapter extends FragmentPagerAdapter {
         public PaginesReservesAdapter(FragmentManager fm) {
