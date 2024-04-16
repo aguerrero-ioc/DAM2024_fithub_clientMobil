@@ -1,9 +1,6 @@
 package antonioguerrero.ioc.fithub.menu.main;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.core.view.GravityCompat;
@@ -21,8 +18,7 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
-import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe que representa l'activitat de l'administrador a l'aplicació FitHub.
@@ -32,7 +28,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
  * <p>
  * Aquesta classe hereta de BaseActivity.
  */
-public class AdminActivity extends BaseActivity implements BasePeticions.respostaServidorListener {
+public class AdminActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,9 +1,6 @@
 package antonioguerrero.ioc.fithub.menu.installacions;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,13 +17,11 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
-import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
-import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
-public class InstallacionsActivity extends BaseActivity implements BasePeticions.respostaServidorListener {
+public class InstallacionsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener {
 
     private RecyclerView recyclerView;
     private InstallacionsAdapter adapter;

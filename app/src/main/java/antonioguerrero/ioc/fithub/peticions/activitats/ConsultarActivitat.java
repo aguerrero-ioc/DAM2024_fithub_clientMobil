@@ -13,7 +13,7 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Activitat;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per obtenir una activitat.
@@ -24,7 +24,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class ConsultarActivitat extends BasePeticions {
+public abstract class ConsultarActivitat extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultaActivitat";
     private String nomActivitat;

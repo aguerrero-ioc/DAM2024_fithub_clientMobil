@@ -11,9 +11,9 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
-public abstract class ConsultarTotesReserves extends BasePeticions {
+public abstract class ConsultarTotesReserves extends ConnexioServidor {
 
     private Context context;
     private Usuari usuari;

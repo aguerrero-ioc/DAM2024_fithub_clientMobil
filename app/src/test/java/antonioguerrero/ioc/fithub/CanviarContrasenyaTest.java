@@ -1,21 +1,5 @@
 package antonioguerrero.ioc.fithub;
 
-import static org.mockito.Mockito.*;
-
-import android.content.Context;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.util.HashMap;
-import java.util.List;
-
-import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
-import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
-
 /*public class CanviarContrasenyaTest {
 
     @Mock

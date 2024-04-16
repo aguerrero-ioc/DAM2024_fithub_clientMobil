@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per eliminar una reserva.
@@ -21,7 +21,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @Author Antonio Guerrero
  * @Version 1.0
  */
-public abstract class EliminarReserva extends BasePeticions {
+public abstract class EliminarReserva extends ConnexioServidor {
 
     private int IDReserva;
     private Context context;
@@ -37,7 +37,7 @@ public abstract class EliminarReserva extends BasePeticions {
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public EliminarReserva(BasePeticions.respostaServidorListener listener, Context context, int IDReserva, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+    public EliminarReserva(ConnexioServidor.respostaServidorListener listener, Context context, int IDReserva, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
         super(listener);
         this.context = context;
         this.IDReserva = IDReserva;

@@ -14,9 +14,9 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
-public abstract class CrearUsuari extends BasePeticions {
+public abstract class CrearUsuari extends ConnexioServidor {
     private static final String ETIQUETA = "CrearUsuari";
     private String nomUsuari;
     private String cognomsUsuari;

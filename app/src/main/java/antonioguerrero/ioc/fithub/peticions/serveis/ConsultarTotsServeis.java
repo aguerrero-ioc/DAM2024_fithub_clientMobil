@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per obtenir tots els serveis.
@@ -20,7 +20,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class ConsultarTotsServeis extends BasePeticions {
+public abstract class ConsultarTotsServeis extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultarTotsServeis";
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);

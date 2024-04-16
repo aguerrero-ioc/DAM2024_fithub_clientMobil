@@ -1,13 +1,7 @@
 package antonioguerrero.ioc.fithub.menu.main;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -28,12 +22,10 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
-import antonioguerrero.ioc.fithub.menu.missatges.MissatgesActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPasadesFragment;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesRealitzadesFragment;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
-import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe que representa l'activitat del client a l'aplicació FitHub.
@@ -43,7 +35,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class ClientActivity extends BaseActivity implements BasePeticions.respostaServidorListener {
+public class ClientActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

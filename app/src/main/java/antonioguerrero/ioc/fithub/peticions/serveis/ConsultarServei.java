@@ -12,7 +12,7 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Servei;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 
 /**
@@ -24,7 +24,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class ConsultarServei extends BasePeticions {
+public abstract class ConsultarServei extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultarServei";
     private String nomServei;

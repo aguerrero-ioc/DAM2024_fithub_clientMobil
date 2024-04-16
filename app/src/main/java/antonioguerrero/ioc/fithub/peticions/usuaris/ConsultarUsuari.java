@@ -13,7 +13,7 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per obtenir un usuari.
@@ -24,7 +24,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class ConsultarUsuari extends BasePeticions {
+public abstract class ConsultarUsuari extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultarUsuari";
     private String correuUsuari;

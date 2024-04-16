@@ -15,7 +15,7 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe que representa una petició de login al servidor.
@@ -27,7 +27,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class PeticioLogin extends BasePeticions {
+public abstract class PeticioLogin extends ConnexioServidor {
 
     private static String ETIQUETA = "PeticioLogin";
     private String correuUsuari;

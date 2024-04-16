@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import java.util.ArrayList;
 import antonioguerrero.ioc.fithub.objectes.Activitat; // Asegúrate de que esta sea la ruta correcta a la clase Activitat
 
@@ -25,7 +25,7 @@ import antonioguerrero.ioc.fithub.objectes.Activitat; // Asegúrate de que esta 
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class ConsultarTotesActivitats extends BasePeticions {
+public abstract class ConsultarTotesActivitats extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultaActivitats";
 

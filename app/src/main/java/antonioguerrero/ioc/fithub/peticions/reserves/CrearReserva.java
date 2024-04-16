@@ -10,10 +10,10 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 //import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 
-public abstract class CrearReserva extends BasePeticions {
+public abstract class CrearReserva extends ConnexioServidor {
 
     private Reserva reserva;
     private Context context;
@@ -23,7 +23,7 @@ public abstract class CrearReserva extends BasePeticions {
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    public CrearReserva(BasePeticions.respostaServidorListener listener, Reserva reserva) {
+    public CrearReserva(ConnexioServidor.respostaServidorListener listener, Reserva reserva) {
         super(listener);
         this.reserva = reserva;
     }

@@ -15,12 +15,12 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per gestionar la petició de tancament de sessió.
  */
-public class PeticioLogout extends BasePeticions {
+public class PeticioLogout extends ConnexioServidor {
     private static final String ETIQUETA = "PeticioLogout";
     private String IDusuari;
     private Context context;

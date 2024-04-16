@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per obtenir totes les instal·lacions.
@@ -24,7 +24,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public abstract class ConsultarTotesInstallacions extends BasePeticions {
+public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
     private final Context context;
     private static final String ETIQUETA = "ConsultarInstallacions";
     SharedPreferences preferencies;

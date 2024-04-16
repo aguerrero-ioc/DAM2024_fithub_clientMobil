@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
-public abstract class ConsultarReserva extends BasePeticions {
+public abstract class ConsultarReserva extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultarReserva";
     private int IDReserva;

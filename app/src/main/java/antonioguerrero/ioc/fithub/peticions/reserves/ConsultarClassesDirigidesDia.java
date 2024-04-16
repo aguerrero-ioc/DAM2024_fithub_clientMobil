@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 //import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 
 
-public abstract class ConsultarClassesDirigidesDia extends BasePeticions {
+public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
 
     private String dia;
     private Context context;

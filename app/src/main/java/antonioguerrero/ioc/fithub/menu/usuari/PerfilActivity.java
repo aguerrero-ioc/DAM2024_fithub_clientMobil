@@ -3,7 +3,6 @@ package antonioguerrero.ioc.fithub.menu.usuari;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.net.ConnectException;
@@ -24,11 +22,10 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ConsultarUsuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
-import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
 /**
  * Classe que representa l'activitat del perfil de l'usuari a l'aplicació FitHub.
@@ -38,7 +35,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class PerfilActivity extends BaseActivity implements ConsultarUsuari.ConsultarUsuariListener, ModificarUsuari.ModificarUsuariListener, BasePeticions.respostaServidorListener {
+public class PerfilActivity extends BaseActivity implements ConsultarUsuari.ConsultarUsuariListener, ModificarUsuari.ModificarUsuariListener, ConnexioServidor.respostaServidorListener {
 
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefon,
             etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya,
@@ -317,7 +314,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
             //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
         ModificarUsuari modificarUsuari = new ModificarUsuari((ModificarUsuari.ModificarUsuariListener) this, this, correuUsuari, sessioID) {
-
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {

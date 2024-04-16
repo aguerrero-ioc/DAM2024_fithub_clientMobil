@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,10 +18,8 @@ import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.objectes.Activitat;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarActivitat;
-import antonioguerrero.ioc.fithub.peticions.usuaris.ConsultarUsuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
 /**
@@ -91,7 +88,7 @@ public class ActivitatsActivity extends BaseActivity implements ConsultarActivit
         String IDUsuariStr = String.valueOf(IDUsuari);
 
         if (!IDUsuariStr.equals("-1")) {
-            PeticioLogout peticioLogout = new PeticioLogout((BasePeticions.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
+            PeticioLogout peticioLogout = new PeticioLogout((ConnexioServidor.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
             peticioLogout.execute();
             preferencies.edit().clear().apply();
         } else {
