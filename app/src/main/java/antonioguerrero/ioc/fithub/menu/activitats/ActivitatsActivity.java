@@ -70,12 +70,7 @@ public class ActivitatsActivity extends BaseActivity implements ConsultarActivit
             return true;
         });;
 
-        if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            ActivitatListFragment fragment = new ActivitatListFragment();
-            transaction.replace(R.id.fragment_container, fragment);
-            transaction.commit();
-        }
+        // Configura el fragment de les activitats
 
     }
 
@@ -97,11 +92,8 @@ public class ActivitatsActivity extends BaseActivity implements ConsultarActivit
     }
 
 
-
     @Override
     public void onActivitatObtinguda(Activitat activitat) {
-        this.activitat = activitat;
 
     }
-
 }

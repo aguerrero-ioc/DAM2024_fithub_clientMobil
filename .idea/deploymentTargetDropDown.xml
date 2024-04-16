@@ -2,7 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="RegistreActivity">
+      <entry key="ClientActivityTest">
+        <State />
+      </entry>
+      <entry key="LoginActivityTest">
+        <State />
+      </entry>
+      <entry key="PeticioLoginTest">
         <State />
       </entry>
       <entry key="app">

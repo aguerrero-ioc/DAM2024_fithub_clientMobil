@@ -27,6 +27,9 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * També poden veure els missatges rebuts.
  * <p>
  * Aquesta classe hereta de BaseActivity.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class AdminActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener {
 
@@ -73,8 +76,6 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
         });
     }
 
-
-
     /**
      * Realitza una acció de gestió escollida.
      * @param nomActivitat Nom de l'activitat a gestionar.
@@ -92,6 +93,4 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
     public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         return null;
     }
-
-
 }

@@ -14,15 +14,13 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 /**
  * Classe per obtenir totes les instal·lacions.
- * Hereta de la classe BasePeticions.
  * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir totes les instal·lacions.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -33,7 +31,11 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
     String sessioID;
 
     /**
-     * Constructor de la classe ConsultarTotesInstallacions.
+     * Constructor de la classe.
+     *
+     * @param listener Listener de la classe.
+     * @param context  Context de l'aplicació.
+     * @param sessioID Identificador de la sessió.
      */
     public ConsultarTotesInstallacions(respostaServidorListener listener, Context context, String sessioID) {
         super(listener);
@@ -49,9 +51,8 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
 
 
     /**
-     * Mètode per obtenir totes les instal·lacions.
+     * Mètode per obtenir totes les instal·lacions del servidor.
      */
-
     @SuppressLint("StaticFieldLeak")
     public void consultarTotesInstallacions() {
         new AsyncTask<Void, Void, Object>() {
@@ -63,7 +64,6 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -94,23 +94,23 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
             if (respostaArray.length >= 2 && respostaArray[0] instanceof String && respostaArray[1] instanceof List) {
                 String estat = (String) respostaArray[0];
                 if ("installacioLlista".equals(estat)) {
-                // Obtenir la llista d'instal·lacions
+                    // Obtenir la llista d'instal·lacions
                     @SuppressWarnings("unchecked")
                     List<HashMap<String, String>> llistaInstallacions = (List<HashMap<String, String>>) respostaArray[1];
-                    // Convertir cada HashMap en un objeto Installacio
-                List<Installacio> installacions = new ArrayList<>();
-                for (HashMap<String, String> mapaInstallacio : llistaInstallacions) {
-                    Installacio installacio = Installacio.hashmap_a_installacio(mapaInstallacio);
-                    installacions.add(installacio);
-                }
+                    // Convertir la llista d'instal·lacions a una llista d'objectes Installacio
+                    List<Installacio> installacions = new ArrayList<>();
+                    for (HashMap<String, String> mapaInstallacio : llistaInstallacions) {
+                        Installacio installacio = Installacio.hashmap_a_installacio(mapaInstallacio);
+                        installacions.add(installacio);
+                    }
 
-                // Llamar al método onInstallacionsObtingudes con la lista de HashMaps
-                ((ConsultarTotesInstallacionsListener) listener).onInstallacionsObtingudes(llistaInstallacions);
+                    // Enviar la llista d'instal·lacions al listener
+                    ((ConsultarTotesInstallacionsListener) listener).onInstallacionsObtingudes(llistaInstallacions);
 
-                Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
-                // Guardar les dades de les instal·lacions a SharedPreferences
-                guardarDadesInstallacions(llistaInstallacions);
-                // Devolver la lista de instalaciones en lugar de iniciar la actividad
+                    Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
+                    // Guardar les dades de les instal·lacions a SharedPreferences
+                    guardarDadesInstallacions(llistaInstallacions);
+                    // Retornar la llista d'instal·lacions
                     return llistaInstallacions;
                 } else {
                     Utils.mostrarToast(context, "Error en la consulta de instalaciones");
@@ -131,9 +131,6 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
     public void execute() throws ConnectException {
         consultarTotesInstallacions();
     }
-
-
-
 
     /**
      * Guarda les propietats de l'objecte Installacio a SharedPreferences.

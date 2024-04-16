@@ -23,7 +23,8 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.CrearUsuari;
 
 /**
  * Activitat per gestionar el registre d'un nou usuari.
- *
+ * Hereta de la classe AppCompatActivity.
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -33,6 +34,12 @@ public class RegistreActivity extends AppCompatActivity {
     private EditText etNom, etCognoms, etTelefon, etCorreuElectronic, etContrasenya, etRepetirContrasenya;
 
 
+    /**
+     * Mètode que s'executa en crear l'activitat.
+     * S'encarrega d'inicialitzar els elements de la interfície d'usuari i configurar els esdeveniments.
+     *
+     * @param savedInstanceState Estat de l'activitat
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,10 +153,7 @@ public class RegistreActivity extends AppCompatActivity {
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
             }
-
-
         }, usuari, RegistreActivity.this) {
-
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
@@ -164,9 +168,5 @@ public class RegistreActivity extends AppCompatActivity {
 
         // Enviar la petició al servidor
         crearUsuari.execute();
-
     }
-
-
-
 }

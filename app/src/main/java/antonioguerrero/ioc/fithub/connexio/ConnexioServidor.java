@@ -11,28 +11,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import antonioguerrero.ioc.fithub.objectes.Usuari;
-
 
 /**
  * Classe abstracta per connectar-se al servidor.
  * <p>
  * Aquesta classe és la base per a totes les peticions que es facin al servidor.
  *
+ * @version 1.0
+ * @version 1.0
  */
 public abstract class ConnexioServidor {
 
     //LOCAL "192.168.0.252"
     protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
+
     protected respostaServidorListener listener;
-
-    public interface respostaServidorListener {
-        void respostaServidor(Object resposta) throws ConnectException;
-
-        List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
-
-    }
 
     public ConnexioServidor(respostaServidorListener listener) {
         this.listener = listener;
@@ -41,15 +35,16 @@ public abstract class ConnexioServidor {
     public ConnexioServidor() {
     }
 
-    public abstract List<HashMap<String, String>> respostaServidor(Object resposta);
-
-    public abstract Class<?> obtenirTipusObjecte();
-
-    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
-
-    public abstract void execute() throws ConnectException;
-
-
+    /**
+     * Mètode per enviar una petició al servidor amb un Object[] de Strings.
+     *
+     * @param operacio Tipus de petició que es vol fer.
+     * @param dada1    Dada 1 de la petició.
+     * @param dada2    Dada 2 de la petició.
+     * @param idSessio Identificador de la sessió.
+     * @return Object[] Resposta del servidor.
+     * @throws ConnectException
+     */
     public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
         String respostaHandshake;
         Object[] resposta = null;
@@ -103,6 +98,17 @@ public abstract class ConnexioServidor {
         }
         return resposta;
     }
+
+    /**
+     * Mètode per enviar una petició al servidor amb un Object[] amb un HashMap.
+     *
+     * @param operacio Tipus de petició que es vol fer.
+     * @param nomObjecte Nom de l'objecte que es vol enviar.
+     * @param objecteMapa Objecte que es vol enviar en format HashMap.
+     * @param idSessio Identificador de la sessió.
+     * @return Object[] Resposta del servidor.
+     * @throws ConnectException
+     */
 
     public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
         String respostaHandshake;
@@ -158,5 +164,16 @@ public abstract class ConnexioServidor {
         return resposta;
     }
 
+    public interface respostaServidorListener {
+        void respostaServidor(Object resposta) throws ConnectException;
+        List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
+    }
 
+    public abstract List<HashMap<String, String>> respostaServidor(Object resposta);
+
+    public abstract Class<?> obtenirTipusObjecte();
+
+    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
+
+    public abstract void execute() throws ConnectException;
 }

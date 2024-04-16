@@ -10,14 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.objectes.Activitat;
+/*
+PENDENT D'IMPLEMENTAR
 
-/**
- * Classe que implementa l'adaptador per a la quadricula d'activitats.
- * Hereta de RecyclerView.Adapter.
- *
- * @autor Antonio Guerrero
- * @version 1.0
- */
+
+
 public class ActivitatQuadriculaAdapter extends RecyclerView.Adapter<ActivitatQuadriculaAdapter.ActivitatViewHolder> {
 
     private Activitat[][] llistaActivitats;
@@ -40,10 +37,10 @@ public class ActivitatQuadriculaAdapter extends RecyclerView.Adapter<ActivitatQu
         Activitat activitat = llistaActivitats[hora][dia];
         if (activitat != null) {
             holder.nomActivitat.setText(activitat.getNomActivitat());
-            // Configurar las demás vistas del ViewHolder según sea necesario
+            // Configurar les altres vistes del ViewHolder
         } else {
             holder.nomActivitat.setText("");
-            // Limpiar las demás vistas del ViewHolder
+            // Netejar les altres vistes del ViewHolder
         }
     }
 
@@ -62,4 +59,5 @@ public class ActivitatQuadriculaAdapter extends RecyclerView.Adapter<ActivitatQu
             // Inicialitzar altres vistes
         }
     }
-}
+
+*/

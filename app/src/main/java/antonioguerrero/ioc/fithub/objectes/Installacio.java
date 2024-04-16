@@ -4,9 +4,10 @@ import java.util.HashMap;
 
 /**
  * Classe que representa una instal·lació on es realitzen activitats, classes o serveis.
- *
+ * <p>
  * Conté informació com el seu identificador, nom, capacitat, descripció, imatge, disponibilitat i tipus.
- *
+ * Aquesta classe també conté mètodes per convertir una instal·lació a un HashMap i viceversa.
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -174,6 +175,13 @@ public class Installacio {
         this.capacitat = capacitat;
     }
 
+
+    /**
+     * Converteix una instal·lació a un HashMap.
+     *
+     * @param installacio La instal·lació a convertir
+     * @return El HashMap amb les dades de la instal·lació
+     */
     public HashMap<String, String> installacio_a_hashmap(Installacio installacio) {
         HashMap<String, String> mapaInstallacio = new HashMap<>();
         mapaInstallacio.put("objectType","installacio");
@@ -184,6 +192,12 @@ public class Installacio {
         return mapaInstallacio;
     }
 
+    /**
+     * Converteix un HashMap a una instal·lació.
+     *
+     * @param mapaInstallacio El HashMap amb les dades de la instal·lació
+     * @return La instal·lació amb les dades del HashMap
+     */
     public static Installacio hashmap_a_installacio(HashMap<String, String> mapaInstallacio) {
         Installacio installacio = new Installacio();
         installacio.setIDInstallacio(Integer.parseInt(mapaInstallacio.get("IDinstallacio")));

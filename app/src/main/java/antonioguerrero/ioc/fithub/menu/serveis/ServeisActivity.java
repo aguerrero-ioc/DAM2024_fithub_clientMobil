@@ -27,6 +27,10 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
  */
 public class ServeisActivity extends BaseActivity {
 
+    /**
+     * Mètode que s'executa quan es crea l'activitat.
+     * @param savedInstanceState L'estat guardat de l'activitat.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

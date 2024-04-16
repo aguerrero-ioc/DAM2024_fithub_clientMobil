@@ -16,6 +16,12 @@ import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
+/**
+ * Classe que s'encarrega de fer la petició al servidor per crear un usuari
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public abstract class CrearUsuari extends ConnexioServidor {
     private static final String ETIQUETA = "CrearUsuari";
     private String nomUsuari;
@@ -25,6 +31,12 @@ public abstract class CrearUsuari extends ConnexioServidor {
     private String passUsuari;
     private final Context context;
 
+    /**
+     * Constructor de la classe
+     * @param listener Listener per a la resposta del servidor
+     * @param usuari Usuari a crear
+     * @param context Context de l'aplicació
+     */
     public CrearUsuari(respostaServidorListener listener, Usuari usuari, Context context) {
         super(listener);
         this.context = context;
@@ -33,9 +45,11 @@ public abstract class CrearUsuari extends ConnexioServidor {
         this.nomUsuari = usuari.getNomUsuari();
         this.cognomsUsuari = usuari.getCognomsUsuari();
         this.telefon = usuari.getTelefon();
-
     }
 
+    /**
+     * Mètode que crea un usuari
+     */
     @SuppressLint("StaticFieldLeak")
     public void crearUsuari() {
         new AsyncTask<Void, Void, Object>() {
@@ -50,7 +64,6 @@ public abstract class CrearUsuari extends ConnexioServidor {
                     return null;
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -58,12 +71,20 @@ public abstract class CrearUsuari extends ConnexioServidor {
         }.execute();
     }
 
+    /**
+     * Mètode que retorna el tipus d'objecte
+     * @return Object[].class
+     */
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
     }
 
-
+    /**
+     * Mètode que retorna la resposta del servidor
+     * @param resposta Resposta del servidor
+     * @return null
+     */
     @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
@@ -86,10 +107,19 @@ public abstract class CrearUsuari extends ConnexioServidor {
         return null;
     }
 
+    /**
+     * Mètode que executa la petició
+     * @throws ConnectException
+     */
     @Override
     public void execute() throws ConnectException {
         crearUsuari();
     }
 
+    /**
+     * Mètode que s'executa en segon pla
+     * @param voids
+     * @return null
+     */
     protected abstract Object doInBackground(Void... voids);
 }

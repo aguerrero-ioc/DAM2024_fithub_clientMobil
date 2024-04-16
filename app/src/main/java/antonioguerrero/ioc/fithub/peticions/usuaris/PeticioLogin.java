@@ -19,16 +19,14 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe que representa una petició de login al servidor.
- * Hereta de la classe BasePeticions.
  * <p>
  * Aquesta classe s'utilitza per iniciar sessió a través del servidor mitjançant les credencials d'usuari.
  * El missatge de la petició de login s'envia amb el correu d'usuari i la contrasenya.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public abstract class PeticioLogin extends ConnexioServidor {
-
     private static String ETIQUETA = "PeticioLogin";
     private String correuUsuari;
     private String passUsuari;
@@ -62,7 +60,6 @@ public abstract class PeticioLogin extends ConnexioServidor {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -70,7 +67,22 @@ public abstract class PeticioLogin extends ConnexioServidor {
         }.execute();
     }
 
+    /**
+     * Mètode per obtenir el tipus de l'objecte.
+     *
+     * @return La classe de l'objecte.
+     */
+    @Override
+    public Class<?> obtenirTipusObjecte() {
+        return Object[].class;
+    }
 
+    /**
+     * Mètode per obtenir la resposta del servidor.
+     *
+     * @param resposta La resposta del servidor.
+     * @return La resposta del servidor.
+     */
     @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Usuari.setContext(context);
@@ -108,18 +120,6 @@ public abstract class PeticioLogin extends ConnexioServidor {
         return null;
     }
 
-
-
-    /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
     /**
      * Executa la petició de login.
      */
@@ -128,20 +128,13 @@ public abstract class PeticioLogin extends ConnexioServidor {
         peticioLogin();
     }
 
-    /**
-     * Mètode que gestiona la resposta del servidor després de l'intent d'inici de sessió.
-     * Aquest mètode serà cridat pel servidor per informar sobre l'estat de l'autenticació.
-     *
-     * @param resposta Resposta del servidor, que pot ser l'èxit de l'autenticació o un error.
-     */
-
 
     /**
      * Guarda l'identificador de sessió a SharedPreferences.
      *
      * @param sessioID L'identificador de sessió que es guardarà a SharedPreferences.
      */
-    private void guardarSessioID(String sessioID) {
+    public void guardarSessioID(String sessioID) {
         SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
         editor.putString(Utils.SESSIO_ID, sessioID);
@@ -171,11 +164,25 @@ public abstract class PeticioLogin extends ConnexioServidor {
         }
     }
 
+    /**
+     * Mètode per obtenir la resposta del servidor.
+     *
+     * @param resposta La resposta del servidor.
+     */
     public void respostaServidor(Object[] resposta) {
     }
 
+    /**
+     * Mètode que s'executa en segon pla.
+     * @param voids Paràmetres de tipus Void.
+     * @return Object
+     */
     protected abstract Object doInBackground(Void... voids);
 
+    /**
+     * Mètode per obtenir l'etiqueta de la classe.
+     * @return L'etiqueta de la classe.
+     */
     public String getEtiqueta() {
         return ETIQUETA;
     }

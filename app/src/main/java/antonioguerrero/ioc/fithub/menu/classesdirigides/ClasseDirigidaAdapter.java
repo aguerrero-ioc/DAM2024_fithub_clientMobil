@@ -1,4 +1,5 @@
-/*
+/* PENDENT D'IMPLEMENTAR
+
 package antonioguerrero.ioc.fithub.menu.classesdirigides;
 
 import android.content.Context;

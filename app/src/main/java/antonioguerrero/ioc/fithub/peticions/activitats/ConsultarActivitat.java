@@ -17,10 +17,8 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per obtenir una activitat.
- * Hereta de la classe BasePeticions.
  * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir una activitat.
- *
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -28,28 +26,29 @@ public abstract class ConsultarActivitat extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultaActivitat";
     private String nomActivitat;
-
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+
     /**
-     * Constructor de la classe ConsultaActivitat.
+     * Constructor de la classe.
      *
-     * @param listener L'objecte que escoltarà les respostes del servidor.
+     * @param listener      Listener de la classe.
+     * @param context       Context de l'aplicació.
+     * @param nomActivitat  Nom de l'activitat a obtenir.
+     * @param sessioID      Identificador de la sessió.
      */
-
-
-            public ConsultarActivitat(ConsultarActivitat.ConsultarActivitatListener listener, Context context, String nomActivitat, String sessioID) {
+    public ConsultarActivitat(ConsultarActivitat.ConsultarActivitatListener listener, Context context, String nomActivitat, String sessioID) {
         super((respostaServidorListener) listener);
         this.context = context;
         this.nomActivitat = nomActivitat;
-                this.sessioID = sessioID;
+        this.sessioID = sessioID;
 
-                SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     /**
-     * Mètode per obtenir les dades d'una activitat.
+     * Mètode per obtenir una activitat del servidor.
      */
     @SuppressLint("StaticFieldLeak")
     public void obtenirActivitat() {
@@ -76,7 +75,7 @@ public abstract class ConsultarActivitat extends ConnexioServidor {
     /**
      * Mètode per obtenir el tipus de l'objecte.
      *
-     * @return La classe de l'objecte.
+     * @return El tipus de l'objecte.
      */
     @Override
     public Class<?> obtenirTipusObjecte() {
@@ -99,7 +98,7 @@ public abstract class ConsultarActivitat extends ConnexioServidor {
                 // Obtenir les dades de l'activitat
                 HashMap<String, String> mapaActivitat = (HashMap<String, String>) respostaArray[1];
                 Activitat activitat = Activitat.hashmap_a_activitat(mapaActivitat);
-              ((ConsultarActivitat.ConsultarActivitatListener) listener).onActivitatObtinguda(activitat);
+                ((ConsultarActivitat.ConsultarActivitatListener) listener).onActivitatObtinguda(activitat);
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
 
 
@@ -143,6 +142,9 @@ public abstract class ConsultarActivitat extends ConnexioServidor {
         editor.apply();
     }
 
+    /**
+     * Interfície per gestionar les respostes del servidor.
+     */
     public interface ConsultarActivitatListener {
         void onActivitatObtinguda(Activitat activitat);
     }

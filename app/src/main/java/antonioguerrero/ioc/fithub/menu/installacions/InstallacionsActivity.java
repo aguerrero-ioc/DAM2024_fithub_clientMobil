@@ -24,6 +24,12 @@ import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
 
+/**
+ * Activitat per mostrar les instal·lacions disponibles al centre esportiu.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+  */
 public class InstallacionsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesInstallacions.ConsultarTotesInstallacionsListener {
 
     private RecyclerView recyclerView;
@@ -92,21 +98,9 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
         consulta.consultarTotesInstallacions();
     }
 
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-
-    }
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
-
-
-
-
-
+    /**
+     * Mètode qye s'executa quan s'han obtingut les instal·lacions.
+     */
     @Override
     public void onInstallacionsObtingudes(List<HashMap<String, String>> installacions) {
         if (installacions != null && !installacions.isEmpty()) {
@@ -117,4 +111,12 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
         }
     }
 
+    @Override
+    public void respostaServidor(Object resposta) throws ConnectException {
+    }
+
+    @Override
+    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+        return null;
+    }
 }

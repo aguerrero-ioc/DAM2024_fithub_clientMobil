@@ -15,6 +15,12 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
+/**
+ * Classe que permet canviar la contrasenya d'un usuari
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public abstract class CanviarContrasenya extends ConnexioServidor {
 
     private static final String ETIQUETA = "CanviarContrasenya";
@@ -23,6 +29,12 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
     private SharedPreferences preferencies;
     private String sessioID;
 
+    /**
+     * Constructor de la classe
+     * @param listener Listener de la classe
+     * @param context Context de l'aplicació
+     * @param sessioID Sessió de l'usuari
+     */
     public CanviarContrasenya(ModificarUsuari.ModificarUsuariListener listener, Context context, String sessioID) {
         super((respostaServidorListener) listener);
         this.context = context;
@@ -31,12 +43,17 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
-
+    /**
+     * Mètode que permet obtenir l'usuari
+     * @return Usuari
+     */
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
     }
 
-
+    /**
+     * Mètode que permet canviar la contrasenya de l'usuari
+     */
     @SuppressLint("StaticFieldLeak")
     public void canviarContrasenya() {
 
@@ -58,11 +75,20 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
         }.execute();
     }
 
+    /**
+     * Mètode que permet obtenir el tipus d'objecte
+     * @return Tipus d'objecte
+     */
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
     }
 
+    /**
+     * Mètode que permet obtenir la resposta del servidor
+     * @param resposta Resposta del servidor
+     * @return Resposta del servidor
+     */
     @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
@@ -88,11 +114,19 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
         return null;
     }
 
+    /**
+     * Mètode que executa la petició
+     * @throws ConnectException Excepció de connexió
+     */
     @Override
     public void execute() throws ConnectException {
         canviarContrasenya();
     }
 
-
+    /**
+     * Mètode que s'executa en segon pla
+     * @param voids Paràmetres de tipus void
+     * @return Objecte
+     */
     protected abstract Object doInBackground(Void... voids);
 }

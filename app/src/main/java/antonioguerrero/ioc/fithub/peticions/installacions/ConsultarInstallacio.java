@@ -4,26 +4,22 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.objectes.Installacio;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 /**
  * Classe per obtenir una instal·lació.
- * Hereta de la classe BasePeticions.
  * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir una instal·lació.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
-
 public abstract class ConsultarInstallacio extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultarInstallacio";
@@ -36,6 +32,8 @@ public abstract class ConsultarInstallacio extends ConnexioServidor {
      * Constructor de la classe ConsultarInstallacio.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
+     * @param context  Context de l'aplicació.
+     * @param nomInstallacio  Nom de l'instal·lació a obtenir.
      */
     public ConsultarInstallacio(respostaServidorListener listener, Context context, String nomInstallacio) {
         super(listener);

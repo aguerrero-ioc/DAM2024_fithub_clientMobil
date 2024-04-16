@@ -14,7 +14,8 @@ import antonioguerrero.ioc.fithub.Utils;
  * <p>
  * Conté informació com el nom, cognoms, data de naixement, adreça, correu electrònic,
  * telèfon, contrasenya i data d'inscripció de l'usuari.
- *
+ * Aquesta classe també conté mètodes per convertir un usuari a un HashMap i viceversa.
+ * <p>
  * @author Antonio Guerrero
  * @version 1.1
  */

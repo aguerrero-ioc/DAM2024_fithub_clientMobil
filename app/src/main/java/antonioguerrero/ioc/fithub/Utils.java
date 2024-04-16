@@ -19,8 +19,16 @@ import java.util.List;
 
 /**
  * Classe d'utilitats amb mètodes útils per a diverses funcionalitats.
+ * <p>
+ * Aquesta classe conté mètodes per a la gestió de dades, la validació de correus electrònics,
+ * la conversió d'objectes a HashMap i viceversa, la gestió de SharedPreferences, la creació de
+ * Toasts, la conversió de dates a cadenes de text i altres funcionalitats útils per a l'aplicació.
+ * <p>
+ * @autor Antonio Guerrero
+ * @version 1.0
  */
 public class Utils {
+
     //USUARI
     public static final String ID_USUARI = "IDusuari";
     public static final String NOM_USUARI = "nomUsuari";
@@ -39,8 +47,6 @@ public class Utils {
     public static final String VALOR_DEFAULT = "";
     public static final String ERROR_CONNEXIO = "Error de connexió";
     public static final String PENDENT_IMPLEMENTAR = "Pendent d'implementar. Aviat disponible!";
-
-
     public static final String FORMAT_DATA = "dd-MM-yyyy";
 
     /**
@@ -51,7 +57,6 @@ public class Utils {
     public static String obtenirDataActual() {
         // Obté la data actual
         Date dataActual = Calendar.getInstance().getTime();
-
         // Formateja la data en el format desitjat
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatData = new SimpleDateFormat("ddMMyyyy");
         return formatData.format(dataActual);
@@ -65,13 +70,10 @@ public class Utils {
     public static String obtenirHoraActual() {
         // Obté l'hora actual
         Date horaActual = Calendar.getInstance().getTime();
-
         // Formateja l'hora en el format desitjat
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
         return formatHora.format(horaActual);
     }
-
-
 
     /**
      * Obté el tipus d'usuari a partir de la resposta del servidor.
@@ -104,6 +106,12 @@ public class Utils {
         Toast.makeText(context, missatge, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Mètode per convertir un objecte a un HashMap.
+     *
+     * @param object L'objecte a convertir.
+     * @return Un HashMap amb els valors de l'objecte.
+     */
     public static HashMap<String, String> ObjecteAHashMap(Object object) {
         HashMap<String, String> map = new HashMap<>();
 
@@ -125,6 +133,13 @@ public class Utils {
         return map;
     }
 
+    /**
+     * Mètode per convertir un HashMap a un objecte.
+     *
+     * @param map   El HashMap a convertir.
+     * @param clazz La classe de l'objecte.
+     * @return Un objecte amb els valors del HashMap.
+     */
     public static Object HashMapAObjecte(HashMap<String, String> map, Class<?> clazz) {
         Object object = null;
         try {
@@ -188,7 +203,6 @@ public class Utils {
                 e.printStackTrace();
             }
         }
-
         editor.apply();
     }
 
@@ -231,12 +245,5 @@ public class Utils {
         String patroCorreu = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         // Comprova si el correu electrònic coincideix amb el patró
         return correu.matches(patroCorreu);
-    }
-
-
-    public static class LogWrapper {
-        public void d(String tag, String msg) {
-            Log.d(tag, msg);
-        }
     }
 }

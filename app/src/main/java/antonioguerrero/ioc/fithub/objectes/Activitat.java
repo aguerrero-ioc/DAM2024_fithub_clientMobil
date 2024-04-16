@@ -7,7 +7,8 @@ import java.util.HashMap;
  * Classe que representa una activitat que es realitza en una instal·lació.
  * <p>
  * Cada activitat té una identificació única, un nom, una descripció, un aforament i una instal·lació on es realitza.
- *
+ * Aquesta classe també conté mètodes per convertir una activitat a un HashMap i viceversa.
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -23,7 +24,6 @@ public class Activitat implements Serializable {
     private int tipusInstallacio;
 
     // Altres atributs que podrien ser necessaris
-
     private int dia;
     private int horaInici;
 
@@ -131,23 +131,14 @@ public class Activitat implements Serializable {
     public void setTipusInstallacio(int tipusInstallacio) {
         this.tipusInstallacio = tipusInstallacio;}
 
-    public int getDia() {
-        return dia;
-    }
-
-    public void setDia(int dia) {
-        this.dia = dia;
-    }
-
-    public int getHoraInici() {
-        return horaInici;
-    }
-
-    public void setHora(int hora) {
-        this.horaInici = hora;
-    }
 
 
+    /**
+     * Converteix una activitat en un HashMap.
+     *
+     * @param activitat L'activitat a convertir
+     * @return Un HashMap amb les dades de l'activitat
+     */
     public HashMap<String, String> activitat_a_hashmap(Activitat activitat) {
         HashMap<String, String> mapaActivitat = new HashMap<>();
         mapaActivitat.put("objectType","activitat");
@@ -157,10 +148,14 @@ public class Activitat implements Serializable {
         mapaActivitat.put("aforamentActivitat",Integer.toString(activitat.getAforamentActivitat()));
         mapaActivitat.put("tipusActivitat",Integer.toString(activitat.getTipusInstallacio()));
         return mapaActivitat;
-
     }
 
-
+    /**
+     * Converteix un HashMap en una activitat.
+     *
+     * @param mapaActivitat El HashMap a convertir
+     * @return L'activitat amb les dades del HashMap
+     */
     public static Activitat hashmap_a_activitat(HashMap<String, String> mapaActivitat) {
         Activitat activitat = new Activitat();
         activitat.setIDActivitat(Integer.parseInt(mapaActivitat.get("IDactivitat")));
@@ -170,6 +165,4 @@ public class Activitat implements Serializable {
         activitat.setTipusInstallacio(Integer.parseInt(mapaActivitat.get("tipusActivitat")));
         return activitat;
     }
-
-
 }

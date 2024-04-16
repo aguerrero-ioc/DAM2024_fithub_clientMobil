@@ -5,10 +5,10 @@ import java.util.HashMap;
 
 /**
  * Classe que representa un servei reservat en una instal·lació.
- * Hereta de la classe Reserva.
  * <p>
  * Cada servei té un nom, una descripció, personal assignat i hereta els altres atributs de la reserva.
- *
+ * Aquesta classe també conté mètodes per convertir un servei a un HashMap i viceversa.
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -193,6 +193,12 @@ public class Servei implements Serializable {
         this.preuServei = preuServei;
     }
 
+    /**
+     * Converteix un servei a un HashMap.
+     *
+     * @param servei El servei a convertir
+     * @return El HashMap resultant
+     */
     public HashMap<String, String> servei_a_hashmap(Servei servei) {
         HashMap<String, String> mapaServei = new HashMap<>();
         mapaServei.put("objectType","servei");
@@ -206,6 +212,12 @@ public class Servei implements Serializable {
         return mapaServei;
     }
 
+    /**
+     * Converteix un HashMap a un servei.
+     *
+     * @param mapaServei El HashMap a convertir
+     * @return El servei resultant
+     */
     public Servei hashmap_a_servei(HashMap<String, String> mapaServei) {
         Servei servei = new Servei();
         servei.setIDServei(Integer.parseInt(mapaServei.get("id")));

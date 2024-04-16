@@ -15,13 +15,12 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import java.util.ArrayList;
 import antonioguerrero.ioc.fithub.objectes.Activitat; // Asegúrate de que esta sea la ruta correcta a la clase Activitat
 
-
 /**
  * Classe per obtenir totes les activitats.
  * Hereta de la classe BasePeticions.
  * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir totes les activitats.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -32,13 +31,19 @@ public abstract class ConsultarTotesActivitats extends ConnexioServidor {
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    public ConsultarTotesActivitats(respostaServidorListener listener, String nomActivitat) {
+    /**
+     * Constructor de la classe.
+     *
+     * @param listener Listener de la classe.
+     * @param context  Context de l'aplicació.
+     */
+    public ConsultarTotesActivitats(respostaServidorListener listener, Context context) {
         super(listener);
         this.context = context;
     }
 
     /**
-     * Mètode per obtenir les dades de totes les activitats.
+     * Mètode per obtenir totes les activitats del servidor.
      */
     @SuppressLint("StaticFieldLeak")
     public void obtenirTotesActivitats() {
@@ -53,7 +58,6 @@ public abstract class ConsultarTotesActivitats extends ConnexioServidor {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -87,7 +91,7 @@ public abstract class ConsultarTotesActivitats extends ConnexioServidor {
                 // Obtenir la llista d'activitats
                 List<HashMap<String, String>> llistaActivitats = (List<HashMap<String, String>>) respostaArray[1];
 
-                // Convertir cada HashMap en un objeto Activitat
+                // Convertir la llista d'activitats a una llista d'objectes Activitat
                 List<Activitat> activitats = new ArrayList<>();
                 for (HashMap<String, String> mapaActivitat : llistaActivitats) {
                     Activitat activitat = Activitat.hashmap_a_activitat(mapaActivitat);
@@ -95,7 +99,7 @@ public abstract class ConsultarTotesActivitats extends ConnexioServidor {
                 }
                 // Guardar les dades de les activitats a SharedPreferences
                 guardarDadesActivitats(llistaActivitats);
-                // Devolver la lista de activitats en lugar de iniciar la actividad
+                // Retornar la llista d'activitats
                 return llistaActivitats;
             } else {
                 Utils.mostrarToast(context, "No s'han pogut obtenir les activitats");

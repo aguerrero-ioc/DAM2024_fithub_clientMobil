@@ -23,10 +23,30 @@ import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogin;
 
+/**
+ * Activitat per iniciar sessió a l'aplicació.
+ * <p>
+ * Aquesta activitat permet als usuaris iniciar sessió amb el seu correu electrònic i contrasenya.
+ * Si l'usuari no té un compte, pot registrar-se fent clic a l'enllaç de registre.
+ * Si l'usuari ha oblidat la contrasenya, pot recuperar-la fent clic a l'enllaç de recuperació de contrasenya.
+ * <p>
+ * Aquesta activitat és l'activitat principal de l'aplicació.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class LoginActivity extends AppCompatActivity  {
     private EditText etCorreuUsuari, etContrasenya;
     private Context context;
 
+    /**
+     * Mètode que s'executa en crear l'activitat.
+     * <p>
+     * Aquest mètode s'executa en crear l'activitat i s'encarrega de configurar els elements de la interfície d'usuari.
+     * Configura els clics dels botons i els enllaços de la interfície d'usuari.
+     *
+     * @param savedInstanceState Estat de l'activitat.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +74,10 @@ public class LoginActivity extends AppCompatActivity  {
                 Utils.mostrarToast(getApplicationContext(), "Introdueix el nom d'usuari");
             } else if (contrasenya.isEmpty()) {
                 Utils.mostrarToast(getApplicationContext(), "Introdueix la contrasenya");
+            } else if (!Utils.esEmailValid(correuUsuari)) {
+                Utils.mostrarToast(getApplicationContext(), "El format del correu electrònic és incorrecte");
             } else {
                 enviarLogin(correuUsuari, contrasenya);
-            }
-            if (!Utils.esEmailValid(correuUsuari)) {
-                Utils.mostrarToast(getApplicationContext(), "El format del correu electrònic és incorrecte");
             }
         });
 
@@ -81,6 +100,15 @@ public class LoginActivity extends AppCompatActivity  {
         });
     }
 
+    /**
+     * Mètode per enviar les dades d'inici de sessió al servidor.
+     * <p>
+     * Aquest mètode envia les dades d'inici de sessió al servidor per comprovar si l'usuari existeix i les dades són correctes.
+     * Si les dades són correctes, l'usuari serà redirigit a l'activitat corresponent al seu tipus d'usuari.
+     *
+     * @param correuUsuari Correu electrònic de l'usuari.
+     * @param passUsuari Contrasenya de l'usuari.
+     */
     private void enviarLogin(String correuUsuari, String passUsuari) {
 
         PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari) {
@@ -101,6 +129,9 @@ public class LoginActivity extends AppCompatActivity  {
         peticioLogin.execute();
     }
 
+    /**
+     * Mètode per mostrar el diàleg de recuperació de contrasenya.
+     */
     public void mostrarDialegRecuperacioContrasenya() {
         View vistaDialeg = LayoutInflater.from(context).inflate(R.layout.dialeg_recuperar_contrasenya, null);
         EditText etCorreu = vistaDialeg.findViewById(R.id.et_correu_recuperacio);
@@ -127,20 +158,5 @@ public class LoginActivity extends AppCompatActivity  {
             Utils.mostrarToast(getApplicationContext(), "Enviar correu a: " + correu);
             dialegAlerta.dismiss();
         });
-    }
-
-    private void obrirActivitat(String tipusUsuari) {
-        Intent intent;
-        if (tipusUsuari.equals("client")) {
-            intent = new Intent(LoginActivity.this, ClientActivity.class);
-            startActivity(intent);
-            Utils.mostrarToast(getApplicationContext(), "Benvingut, client");
-        } else if (tipusUsuari.equals("admin")) {
-            intent = new Intent(LoginActivity.this, AdminActivity.class);
-            startActivity(intent);
-            Utils.mostrarToast(getApplicationContext(), "Benvingut, administrador");
-        } else {
-            Utils.mostrarToast(getApplicationContext(), "No s'ha pogut iniciar sessió. Tipus d'usuari desconegut.");
-        }
     }
 }

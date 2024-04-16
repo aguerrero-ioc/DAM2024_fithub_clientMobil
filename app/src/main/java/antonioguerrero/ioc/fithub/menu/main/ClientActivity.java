@@ -2,6 +2,7 @@ package antonioguerrero.ioc.fithub.menu.main;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -15,6 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,8 +24,7 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPasadesFragment;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesRealitzadesFragment;
+
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
@@ -45,6 +46,17 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
         // Configurar ViewPager y TabLayout per a les reserves
         ViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
+
+        // Crear una llista de reserves falses per a les proves
+        List<HashMap<String, String>> reservasFalsas = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            HashMap<String, String> reservaFalsa = new HashMap<>();
+            reservaFalsa.put("id", "reserva" + i);
+            reservaFalsa.put("fecha", "data" + i);
+            reservaFalsa.put("hora", "hora" + i);
+            reservasFalsas.add(reservaFalsa);
+        }
+
 
         PaginesReservesAdapter reservasPagerAdapter = new PaginesReservesAdapter(getSupportFragmentManager());
         viewPager.setAdapter(reservasPagerAdapter);
@@ -96,14 +108,12 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
             super(fm);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
-            return switch (position) {
-                case 0 -> new ReservesRealitzadesFragment();
-                case 1 -> new ReservesPasadesFragment();
-                default -> null;
-            };
+            return null;
         }
+
 
         @Override
         public int getCount() {

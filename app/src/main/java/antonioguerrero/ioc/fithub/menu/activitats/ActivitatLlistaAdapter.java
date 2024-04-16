@@ -34,7 +34,6 @@ public class ActivitatLlistaAdapter extends RecyclerView.Adapter<ActivitatLlista
     public void onBindViewHolder(@NonNull ActivitatViewHolder holder, int position) {
         Activitat activitat = llistaActivitats.get(position);
         holder.nomActivitat.setText(activitat.getNom());
-        // Configurar las demás vistas del ViewHolder según sea necesario
     }
 
     @Override
@@ -44,12 +43,10 @@ public class ActivitatLlistaAdapter extends RecyclerView.Adapter<ActivitatLlista
 
     static class ActivitatViewHolder extends RecyclerView.ViewHolder {
         TextView nomActivitat;
-        // Otras vistas según sea necesario
 
         public ActivitatViewHolder(@NonNull View itemView) {
             super(itemView);
             nomActivitat = itemView.findViewById(R.id.nomActivitat);
-            // Inicializar las demás vistas
         }
     }
 }*/

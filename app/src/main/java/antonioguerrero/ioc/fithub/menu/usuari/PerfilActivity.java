@@ -31,7 +31,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
  * Classe que representa l'activitat del perfil de l'usuari a l'aplicació FitHub.
  * Aquesta activitat permet a l'usuari veure i modificar les seves dades personals.
  * A més, també permet canviar la contrasenya de l'usuari.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -47,9 +47,13 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
     private ModificarUsuari modificarUsuari;
 
-    private CanviarContrasenya canviarContrasenya ;
+    public PerfilActivity() {
+    }
 
-
+    /**
+     * Mètode que s'executa quan es crea l'activitat.
+     * @param savedInstanceState L'estat guardat de l'activitat.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +80,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
-        });;
+        });
 
         // Inicialització de les vistes
         etNomUsuari = findViewById(R.id.et_nom_usuari);
@@ -98,50 +102,29 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
         // Configuració del clic al ImageView
         ImageView ivImatgeUsuari = findViewById(R.id.iv_imatge_usuari);
-        ivImatgeUsuari.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.mostrarToast(PerfilActivity.this, "Pendent d'implementar");
-            }
-        });
+        ivImatgeUsuari.setOnClickListener(v -> Utils.mostrarToast(PerfilActivity.this, "Pendent d'implementar"));
 
         // Configuració del clic del botó per editar el perfil
-        btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                habilitarEdicioDades();
-            }
-        });
+        btnEditarPerfil.setOnClickListener(v -> habilitarEdicioDades());
 
         // Configuració del clic del botó per desar els canvis de les dades d'Usuari
-        btnGuardarCanvis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    guardarCanvis();
-                } catch (ConnectException e) {
-                    throw new RuntimeException(e);
-                }
+        btnGuardarCanvis.setOnClickListener(v -> {
+            try {
+                guardarCanvis();
+            } catch (ConnectException e) {
+                throw new RuntimeException(e);
             }
         });
 
         // Configuració del clic del botó per canviar la contrasenya
-        btnCanviContrasenya.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                habilitarEdicioContrasenya();
-            }
-        });
+        btnCanviContrasenya.setOnClickListener(v -> habilitarEdicioContrasenya());
 
         // Configuració del clic del botó per desar els canvis de la contrasenya
-        btnGuardarCanviContrasenya.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    onCanviContrasenyaButtonClick();
-                } catch (ConnectException e) {
-                    throw new RuntimeException(e);
-                }
+        btnGuardarCanviContrasenya.setOnClickListener(v -> {
+            try {
+                onCanviContrasenyaButtonClick();
+            } catch (ConnectException e) {
+                throw new RuntimeException(e);
             }
         });
         // Obtenir sessioID de l'usuari
@@ -184,7 +167,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
         };
 
-        canviarContrasenya = new CanviarContrasenya(this, this, sessioID) {
+        CanviarContrasenya canviarContrasenya = new CanviarContrasenya(this, this, sessioID) {
 
             @Override
             protected Object doInBackground(Void... voids) {
@@ -222,11 +205,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         }
         etIDusuari.setText(String.valueOf(usuari.getIDusuari()));
     }
-
-
-
-
-
 
     /**
      * Mètode per habilitar l'edició dels camps de text de dades personals de l'usuari.
@@ -327,7 +305,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         usuari.setTelefon(telefon);
         usuari.setCorreuUsuari(correuUsuari);
 
-            //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
+        //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
         ModificarUsuari modificarUsuari = new ModificarUsuari((ModificarUsuari.ModificarUsuariListener) this, this, sessioID) {
 
             @Override
@@ -350,9 +328,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         deshabilitarEdicioDades();
         btnEditarPerfil.setEnabled(true);
         btnGuardarCanvis.setEnabled(false);
-
     }
-
 
     /**
      * Mètode per canviar la contrasenya
@@ -364,7 +340,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
         CanviarContrasenya canviarContrasenya = new CanviarContrasenya((ModificarUsuari.ModificarUsuariListener) this, this, sessioID) {
-
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
@@ -386,7 +361,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
 
     /**
-     * Mètode que maneja el clic del botó per canviar la contrasenya
+     * Mètode que gestiona el clic del botó per canviar la contrasenya
      */
     private void onCanviContrasenyaButtonClick() throws ConnectException {
         String contrasenyaActual = etContrasenyaActual.getText().toString();
@@ -433,7 +408,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         deshabilitarEdicioContrasenya(); // Després de guardar, deshabilitar l'edició de nou
     }
 
-
     @Override
     public void respostaServidor(Object resposta) throws ConnectException {
 
@@ -443,8 +417,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         return null;
     }
-
-
 
     @Override
     public void onUsuariObtingut(Usuari usuari) {
@@ -459,8 +431,4 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         this.usuari = usuari;
         actualitzarUsuari(usuari);
     }
-
-
-
-
 }

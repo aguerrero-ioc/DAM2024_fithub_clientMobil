@@ -3,8 +3,6 @@ package antonioguerrero.ioc.fithub.peticions.reserves;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
@@ -14,20 +12,17 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per eliminar una reserva.
- * Hereta de la classe BasePeticions.
- *
+ * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per eliminar una reserva.
- *
- * @Author Antonio Guerrero
- * @Version 1.0
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public abstract class EliminarReserva extends ConnexioServidor {
 
     private int IDReserva;
     private Context context;
-
     private static final String ETIQUETA = "EliminarReserva";
-
 
     SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
     String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
@@ -37,7 +32,7 @@ public abstract class EliminarReserva extends ConnexioServidor {
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public EliminarReserva(ConnexioServidor.respostaServidorListener listener, Context context, int IDReserva, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+    public EliminarReserva(ConnexioServidor.respostaServidorListener listener, Context context, int IDReserva) {
         super(listener);
         this.context = context;
         this.IDReserva = IDReserva;

@@ -15,6 +15,12 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
+/**
+ * Classe que s'encarrega de fer la petició al servidor per modificar un usuari
+ * <p>
+ * @autor Antonio Guerrero
+ * @version 1.0
+ */
 public abstract class ModificarUsuari extends ConnexioServidor {
 
     private static final String ETIQUETA = "ModificarUsuari";
@@ -23,7 +29,12 @@ public abstract class ModificarUsuari extends ConnexioServidor {
     private SharedPreferences preferencies;
     private String sessioID;
 
-
+    /**
+     * Constructor de la classe
+     * @param listener Listener per a la resposta del servidor
+     * @param context Context de l'aplicació
+     * @param sessioID Sessió de l'usuari
+     */
     public ModificarUsuari(ModificarUsuariListener listener, Context context, String sessioID) {
         super((respostaServidorListener) listener);
         this.context = context;
@@ -32,15 +43,24 @@ public abstract class ModificarUsuari extends ConnexioServidor {
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
+    /**
+     * Interfície que conté el mètode onUsuariModificat
+     */
     public interface ModificarUsuariListener {
         void onUsuariModificat(Usuari usuari);
     }
 
+    /**
+     * Mètode que retorna l'usuari
+     * @return Usuari
+     */
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
     }
 
-
+    /**
+     * Mètode que modifica un usuari
+     */
     @SuppressLint("StaticFieldLeak")
     public void modificarUsuari() {
         new AsyncTask<Void, Void, Object>() {
@@ -65,7 +85,11 @@ public abstract class ModificarUsuari extends ConnexioServidor {
         return Object[].class;
     }
 
-
+    /**
+     * Mètode que retorna la resposta del servidor
+     * @param resposta Resposta del servidor
+     * @return Llista de HashMaps
+     */
     @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
@@ -90,14 +114,29 @@ public abstract class ModificarUsuari extends ConnexioServidor {
         return null;
     }
 
+    /**
+     * Mètode que executa la petició
+     * @throws ConnectException Excepció de connexió
+     */
     @Override
     public void execute() throws ConnectException {
         modificarUsuari();
     }
 
+    /**
+     * Mètode que retorna la resposta del servidor
+     * @param resposta Resposta del servidor
+     */
     public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
 
+    /**
+     * Mètode que retorna la resposta del servidor
+     * @param resposta Resposta del servidor
+     */
     public abstract void respostaServidor(Object[] resposta);
 
+    /**
+     * Mètode que s'executa en segon pla
+     */
     protected abstract Object doInBackground(Void... voids);
 }

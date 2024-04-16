@@ -4,23 +4,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.objectes.Servei;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Servei;
 
 
 /**
  * Classe per obtenir un servei.
- * Hereta de la classe BasePeticions.
- *
+ * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir un servei.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -36,7 +33,7 @@ public abstract class ConsultarServei extends ConnexioServidor {
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarServei(respostaServidorListener listener, Context context, String nomServei, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+    public ConsultarServei(respostaServidorListener listener, Context context, String nomServei) {
         super(listener);
         this.context = context;
         this.nomServei = nomServei;
@@ -98,11 +95,6 @@ public abstract class ConsultarServei extends ConnexioServidor {
      * @param servei El servei a guardar.
      */
     private void guardarDadesServei(Servei servei) {
-
-        Utils.guardarDadesObjecte(context, servei, Servei.class);
-
-        /* Comparar amb aquesta implementacio
-
         SharedPreferences preferencies = context.getSharedPreferences("Preferències", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
@@ -115,10 +107,7 @@ public abstract class ConsultarServei extends ConnexioServidor {
         editor.putString("personalServei", servei.getPersonalServei());
         editor.putInt("preuServei", servei.getPreuServei());
 
-
         // Aplicar els canvis
         editor.apply();
-
-         */
     }
 }

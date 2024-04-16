@@ -1,3 +1,4 @@
+/* PENDENT D'IMPLEMENTAR
 package antonioguerrero.ioc.fithub.menu.reserves;
 
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
@@ -22,6 +24,28 @@ public class ReservesPasadesFragment extends Fragment {
     private RecyclerView recyclerView;
     private ReservesAdapter adapter;
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_reserves_pasades, container, false);
+
+        // Obtener las reservas de los argumentos del fragmento
+        Bundle arguments = getArguments();
+        List<HashMap<String, String>> reserves = null;
+        if (arguments != null) {
+            reserves = (List<HashMap<String, String>>) arguments.getSerializable("reserves");
+        }
+        // Inicializar el RecyclerView
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_reserves_pasades);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Crear y configurar el adaptador con las reservas
+        ReservesAdapter adapter = new ReservesAdapter(reserves);
+        recyclerView.setAdapter(adapter);
+
+        return view;
+    }
+
     /**
      * Crea la vista del fragment amb el RecyclerView que mostra les reserves passades
      * @param inflater
@@ -29,7 +53,7 @@ public class ReservesPasadesFragment extends Fragment {
      * @param savedInstanceState
      * @return la vista del fragment
      */
-    @Nullable
+    /*@Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reserves_pasades, container, false);
@@ -45,5 +69,4 @@ public class ReservesPasadesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
-    }
-}
+    }*/

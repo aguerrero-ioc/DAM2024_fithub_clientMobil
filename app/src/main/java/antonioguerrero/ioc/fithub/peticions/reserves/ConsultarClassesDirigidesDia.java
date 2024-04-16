@@ -3,8 +3,6 @@ package antonioguerrero.ioc.fithub.peticions.reserves;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +12,14 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 //import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 
-
+/**
+ * Classe per obtenir les classes dirigides d'un dia.
+ * <p>
+ * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir les classes dirigides d'un dia.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
 
     private String dia;
@@ -23,8 +28,14 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
     private String sessioID;
     private static final String ETIQUETA = "ConsultarClasseDirigidaDia";
 
-
-    public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context, ObjectOutputStream objectOut, ObjectInputStream objectIn) {
+    /**
+     * Constructor de la classe.
+     *
+     * @param listener Listener de la classe.
+     * @param context  Context de l'aplicació.
+     * @param dia      Dia de les classes dirigides a obtenir.
+     */
+    public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context, String dia) {
         super(listener);
         this.context = context;
         this.dia = dia;
@@ -32,15 +43,29 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
+    /**
+     * Mètode per obtenir les classes dirigides d'un dia del servidor.
+     */
     public void obtenirClassesDirigides() throws ConnectException {
         enviarPeticioString("selectAll", "classe", dia, this.sessioID);
     }
 
+    /**
+     * Mètode per obtenir el tipus de l'objecte.
+     *
+     * @return La classe de l'objecte.
+     */
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
     }
 
+    /**
+     * Mètode per gestionar la resposta del servidor.
+     *
+     * @param resposta La resposta del servidor.
+     * @return La llista de dades de les classes dirigides.
+     */
     @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         if (resposta instanceof Object[]) {
@@ -87,8 +112,9 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
         editor.apply();
     }
 
-
-
+    /**
+     * Mètode per executar la petició.
+     */
     @Override
     public void execute() throws ConnectException {
         obtenirClassesDirigides();

@@ -1,4 +1,6 @@
+/* PENDENT D'IMPLEMENTAR
 package antonioguerrero.ioc.fithub.menu.reserves;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,18 +9,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.HashMap;
 import java.util.List;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.objectes.Activitat;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
 
-/**
- * Classe que implementa l'adaptador per a la llista de reserves.
- * Hereta de RecyclerView.Adapter.
- *
- * @autor Antonio Guerrero
- * @version 1.0
- */
+
 public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ReservesViewHolder> {
 
     private List<Reserva> reserves;
@@ -27,6 +25,9 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.Reserv
     public ReservesAdapter(List<Reserva> reserves, Activitat[][] llistaActivitats) {
         this.reserves = reserves;
         this.llistaActivitats = llistaActivitats;
+    }
+
+    public ReservesAdapter(List<HashMap<String, String>> reservas) {
     }
 
     @NonNull
@@ -88,4 +89,4 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.Reserv
             }
         }
 }
-}
+ */

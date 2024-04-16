@@ -19,6 +19,9 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per gestionar la petició de tancament de sessió.
+ * <p>
+ * @autor Antonio Guerrero
+ * @version 1.0
  */
 public class PeticioLogout extends ConnexioServidor {
     private static final String ETIQUETA = "PeticioLogout";
@@ -76,10 +79,6 @@ public class PeticioLogout extends ConnexioServidor {
         return Object[].class;
     }
 
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
 
     /**
      * Mètode per gestionar la resposta del servidor a la petició de tancament de sessió.
@@ -114,6 +113,16 @@ public class PeticioLogout extends ConnexioServidor {
         return null;
     }
 
+    /**
+     * Mètode per obtenir la resposta del servidor.
+     *
+     * @param resposta La resposta del servidor.
+     * @return La resposta del servidor.
+     */
+    @Override
+    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+        return null;
+    }
     /**
      * Mètode per executar la petició de tancament de sessió.
      */

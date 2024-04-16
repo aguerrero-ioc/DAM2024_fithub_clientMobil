@@ -2,8 +2,11 @@ package antonioguerrero.ioc.fithub.objectes;
 
 /**
  * Classe que representa un missatge en l'aplicació FitHub.
- *
+ * <p>
  *  Cada missatge té una data, una hora, un remitent i un contingut.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class Missatge {
     private String data;

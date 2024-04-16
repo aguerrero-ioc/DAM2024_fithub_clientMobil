@@ -18,18 +18,27 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
+/**
+ * Activitat base de la que hereten la resta d'activitats de l'aplicació.
+ * Conté mètodes comuns a totes les activitats.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class BaseActivity extends AppCompatActivity{
 
     public LinearLayout layoutMenuPerfil;
 
     public Context context;
 
+    /**
+     * Mètode que s'executa quan es crea l'activitat.
+     * @param savedInstanceState L'estat guardat de l'activitat.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
-
     }
 
     /**
@@ -42,7 +51,11 @@ public class BaseActivity extends AppCompatActivity{
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
-
+    /**
+     * Mètode per obrir una nova activitat.
+     *
+     * @param activityClass La classe de l'activitat a obrir.
+     */
     public void obrirActivity(Class<? extends AppCompatActivity> activityClass) {
         startActivity(new Intent(this, activityClass));
     }
@@ -79,6 +92,4 @@ public class BaseActivity extends AppCompatActivity{
             Log.e("ETIQUETA", "IDusuari no encontrado en SharedPreferences");
         }
     }
-
-
 }

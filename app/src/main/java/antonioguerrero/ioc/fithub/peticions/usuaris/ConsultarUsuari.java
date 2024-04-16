@@ -17,10 +17,9 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per obtenir un usuari.
- * Hereta de la classe BasePeticions.
  * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir un usuari.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -31,9 +30,12 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
     private String sessioID;
 
     /**
-     * Constructor de la classe ConsultarUsuari.
+     * Constructor de la classe.
      *
-     * @param listener L'objecte que escoltarà les respostes del servidor.
+     * @param listener     Listener per obtenir la resposta del servidor.
+     * @param context      Context de l'aplicació.
+     * @param correuUsuari Correu de l'usuari.
+     * @param sessioID     Sessió de l'usuari.
      */
     public ConsultarUsuari(ConsultarUsuariListener listener, Context context, String correuUsuari, String sessioID) {
         super((respostaServidorListener) listener);
@@ -45,6 +47,9 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
+    /**
+     * Interfície per obtenir la resposta del servidor.
+     */
     public interface ConsultarUsuariListener {
         void onUsuariObtingut(Usuari usuari);
     }
@@ -56,7 +61,6 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
     public void consultarUsuari() {
         final String correuUsuari = this.correuUsuari;
         final String sessioID = this.sessioID;
-
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
@@ -66,7 +70,6 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -117,6 +120,11 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
         return null;
     }
 
+    /**
+     * Mètode per guardar les dades de l'usuari.
+     *
+     * @param usuari Usuari a guardar.
+     */
     private void guardarDadesUsuari(Usuari usuari) {
         SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
@@ -144,8 +152,19 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
         consultarUsuari();
     }
 
+    /**
+     * Mètode per obtenir la resposta del servidor.
+     *
+     * @param resposta Resposta del servidor.
+     */
     public abstract void respostaServidor(Object[] resposta);
 
+    /**
+     * Mètode que s'executa en segon pla.
+     *
+     * @param voids Paràmetres de tipus void.
+     * @return
+     */
     protected Object doInBackground(Void... voids) {
         return null;
     }

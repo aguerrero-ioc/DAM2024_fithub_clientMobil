@@ -13,10 +13,9 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe per obtenir tots els serveis.
- * Hereta de la classe BasePeticions.
  * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir tots els serveis.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
@@ -30,6 +29,7 @@ public abstract class ConsultarTotsServeis extends ConnexioServidor {
      * Constructor de la classe ConsultarTotsServeis.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
+     * @param context El context de l'aplicació.
      */
     public ConsultarTotsServeis(respostaServidorListener listener, Context context) {
         super(listener);
@@ -68,8 +68,7 @@ public abstract class ConsultarTotsServeis extends ConnexioServidor {
             if (estat != null && estat.equals("serveiLlista")) {
                 // Obtenir la llista de serveis
                 List<HashMap<String, String>> llistaServeis = (List<HashMap<String, String>>) respostaArray[1];
-                /*// Iniciar l'activitat ServeisActivity
-                Utils.iniciarActivitatLlista(context, ServeisActivity.class, llistaServeis, "llistaServeis");*/
+
                 // Guardar les dades dels serveis a SharedPreferences
                 guardarDadesServeis(llistaServeis);
             } else {
