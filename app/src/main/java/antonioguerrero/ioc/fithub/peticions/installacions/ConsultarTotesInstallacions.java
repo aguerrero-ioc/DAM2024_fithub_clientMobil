@@ -7,13 +7,15 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
-import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
+import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 /**
  * Classe per obtenir totes les instal·lacions.
@@ -25,22 +27,26 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
-    private final Context context;
+    protected static respostaServidorListener ConsultarTotesInstallacionsListener;
+    private Context context;
     private static final String ETIQUETA = "ConsultarInstallacions";
-    SharedPreferences preferencies;
     String sessioID;
-    private respostaServidorListener listener;
 
     /**
      * Constructor de la classe ConsultarTotesInstallacions.
      */
-    public ConsultarTotesInstallacions(Context context, respostaServidorListener listener) {
+    public ConsultarTotesInstallacions(respostaServidorListener listener, Context context, String sessioID) {
         super(listener);
         this.context = context;
-        this.listener = listener;
-        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = sessioID;
+
+        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
+    public interface ConsultarTotesInstallacionsListener {
+        void onInstallacionsObtingudes(List<HashMap<String, String>> installacions);
+    }
+
 
     /**
      * Mètode per obtenir totes les instal·lacions.
@@ -85,26 +91,35 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         if (resposta instanceof Object[]) {
             Object[] respostaArray = (Object[]) resposta;
-            String estat = (String) respostaArray[0];
-            if (estat != null && estat.equals("llistaInstallacions")) {
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String && respostaArray[1] instanceof List) {
+                String estat = (String) respostaArray[0];
+                if ("installacioLlista".equals(estat)) {
                 // Obtenir la llista d'instal·lacions
-                List<HashMap<String, String>> llistaInstallacions = (List<HashMap<String, String>>) respostaArray[1];
-                // Convertir cada HashMap en un objeto Installacio
+                    @SuppressWarnings("unchecked")
+                    List<HashMap<String, String>> llistaInstallacions = (List<HashMap<String, String>>) respostaArray[1];
+                    // Convertir cada HashMap en un objeto Installacio
                 List<Installacio> installacions = new ArrayList<>();
                 for (HashMap<String, String> mapaInstallacio : llistaInstallacions) {
                     Installacio installacio = Installacio.hashmap_a_installacio(mapaInstallacio);
                     installacions.add(installacio);
                 }
 
+                // Llamar al método onInstallacionsObtingudes con la lista de HashMaps
+                ((ConsultarTotesInstallacionsListener) listener).onInstallacionsObtingudes(llistaInstallacions);
+
+                Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
                 // Guardar les dades de les instal·lacions a SharedPreferences
                 guardarDadesInstallacions(llistaInstallacions);
                 // Devolver la lista de instalaciones en lugar de iniciar la actividad
-                return llistaInstallacions;
+                    return llistaInstallacions;
+                } else {
+                    Utils.mostrarToast(context, "Error en la consulta de instalaciones");
+                }
             } else {
-                Utils.mostrarToast(context, "Error en la consulta d'instal·lacions");
+                Utils.mostrarToast(context, "Respuesta del servidor mal formada");
             }
         } else {
-            Utils.mostrarToast(context, "Error de connexió");
+            Utils.mostrarToast(context, "Error de conexión");
         }
         return null;
     }
@@ -116,6 +131,9 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
     public void execute() throws ConnectException {
         consultarTotesInstallacions();
     }
+
+
+
 
     /**
      * Guarda les propietats de l'objecte Installacio a SharedPreferences.
@@ -129,7 +147,7 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         // Guardar les propietats de cada objecte installacio a SharedPreferences
         for (int i = 0; i < llistaInstallacions.size(); i++) {
             HashMap<String, String> mapaInstallacions = llistaInstallacions.get(i);
-            editor.putInt("IDInstallacio"+ i, Integer.parseInt(mapaInstallacions.get("IDInstallacio")));
+            editor.putInt("IDinstallacio"+ i, Integer.parseInt(mapaInstallacions.get("IDinstallacio")));
             editor.putString("nomInstallacio" + i, mapaInstallacions.get("nomInstallacio"));
             editor.putString("descripcioInstallacio" + i, mapaInstallacions.get("descripcioInstallacio"));
             editor.putString("tipusInstallacio" + i, mapaInstallacions.get("tipusInstallacio"));
@@ -141,6 +159,5 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         // Aplicar els canvis a SharedPreferences
         editor.apply();
     }
-
 
 }

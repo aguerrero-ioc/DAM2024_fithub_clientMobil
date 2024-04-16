@@ -37,7 +37,7 @@ public abstract class ConsultarInstallacio extends ConnexioServidor {
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      */
-    public ConsultarInstallacio(respostaServidorListener listener, ObjectOutputStream objectOut, ObjectInputStream objectIn, Context context, String nomInstallacio) {
+    public ConsultarInstallacio(respostaServidorListener listener, Context context, String nomInstallacio) {
         super(listener);
         this.context = context;
         this.nomInstallacio = nomInstallacio;

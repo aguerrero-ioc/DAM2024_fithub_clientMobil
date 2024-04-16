@@ -22,14 +22,11 @@ public abstract class ModificarUsuari extends ConnexioServidor {
     private Context context;
     private SharedPreferences preferencies;
     private String sessioID;
-    private String correuUsuari;
 
 
-
-    public ModificarUsuari(ModificarUsuariListener listener, Context context, String correuUsuari, String sessioID) {
+    public ModificarUsuari(ModificarUsuariListener listener, Context context, String sessioID) {
         super((respostaServidorListener) listener);
         this.context = context;
-        this.correuUsuari = correuUsuari;
         this.sessioID = sessioID;
         this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
@@ -77,19 +74,16 @@ public abstract class ModificarUsuari extends ConnexioServidor {
             String estat = (String) arrayResposta[0];
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
-
                 Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
-
 
                 ((ModificarUsuariListener) listener).onUsuariModificat(usuari);
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
-
                 Utils.mostrarToast(context, "S'han desat els canvis correctament");
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la modificació de l'usuari");
             }
         } else {
-            String missatgeError = "Error: La resposta del servidor no és un array d'objectes. Resposta rebuda: " + resposta.toString();
+            String missatgeError = "Error: La resposta del servidor no és un array d'objectes. Resposta rebuda: " + resposta;
             Log.e(ETIQUETA, missatgeError);
             Utils.mostrarToast(context, "Error en la resposta del servidor");
         }

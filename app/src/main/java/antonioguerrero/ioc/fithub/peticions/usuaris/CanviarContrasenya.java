@@ -23,18 +23,14 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
     private SharedPreferences preferencies;
     private String sessioID;
 
-    public CanviarContrasenya(CanviarContrasenyaListener listener, Context context, Usuari usuari, String sessioID) {
+    public CanviarContrasenya(ModificarUsuari.ModificarUsuariListener listener, Context context, String sessioID) {
         super((respostaServidorListener) listener);
         this.context = context;
-        this.usuari = usuari;
         this.sessioID = sessioID;
         this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
-    public interface CanviarContrasenyaListener {
-        void onUsuariModificat(Usuari usuari);
-    }
 
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
@@ -43,6 +39,7 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
 
     @SuppressLint("StaticFieldLeak")
     public void canviarContrasenya() {
+
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
@@ -76,7 +73,7 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
                 Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
 
-                ((CanviarContrasenyaListener) listener).onUsuariModificat(usuari);
+                ((ModificarUsuari.ModificarUsuariListener) listener).onUsuariModificat(usuari);
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
 
                 Utils.mostrarToast(context, "Contrasenya modificada correctament");

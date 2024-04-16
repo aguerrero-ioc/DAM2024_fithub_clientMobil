@@ -1,10 +1,7 @@
 package antonioguerrero.ioc.fithub.connexio;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,83 +14,31 @@ import java.util.Scanner;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 
-
+/**
+ * Classe abstracta per connectar-se al servidor.
+ * <p>
+ * Aquesta classe és la base per a totes les peticions que es facin al servidor.
+ *
+ */
 public abstract class ConnexioServidor {
 
     //LOCAL "192.168.0.252"
     protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
-
-    public static class ConnectToServerTask extends AsyncTask<Object[], Void, Object[]> {
-        private ConnexioServidor.respostaServidorListener listener;
-
-        public ConnectToServerTask(ConnexioServidor.respostaServidorListener listener) {
-            this.listener = listener;
-        }
-
-        @Override
-        protected Object[] doInBackground(Object[]... params) {
-            Object[] peticioArray = params[0];
-            try {
-                Socket socket = new Socket(SERVIDOR_IP, SERVIDOR_PORT);
-
-                ObjectOutputStream sortida = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream entrada = new ObjectInputStream(socket.getInputStream());
-
-                // Llegir la resposta inicial del servidor
-                String respostaHandshake = (String) entrada.readObject();
-                Log.d("ConnexioServidor", "Resposta del handshake: " + respostaHandshake);
-
-                // Enviar la petició al servidor com un array d'objectes
-                sortida.writeObject(peticioArray);
-
-                // Llegir la resposta del servidor com un array d'objectes
-                Object[] resposta = (Object[]) entrada.readObject();
-
-                sortida.close();
-                entrada.close();
-                socket.close();
-
-                return resposta;
-            } catch (IOException | ClassNotFoundException e) {
-                Log.e("ConnexioServidor", "Error de connexió: " + e.getMessage());
-                return null;
-            }
-        }
-
-
-        @Override
-        protected void onPostExecute(Object[] resposta) {
-            if (listener != null) {
-                try {
-                    listener.respostaServidor(resposta);
-                } catch (ConnectException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
-    }
-
-    public void setUsuari(Usuari usuari) {
-    }
-
+    protected respostaServidorListener listener;
 
     public interface respostaServidorListener {
         void respostaServidor(Object resposta) throws ConnectException;
 
         List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
 
-        void onRespostaServidorMultiple(Object resposta);
     }
-
-    protected respostaServidorListener listener;
 
     public ConnexioServidor(respostaServidorListener listener) {
         this.listener = listener;
     }
 
-    public ConnexioServidor(Context context, String correuUsuari, String passUsuari) {
+    public ConnexioServidor() {
     }
 
     public abstract List<HashMap<String, String>> respostaServidor(Object resposta);
@@ -106,7 +51,7 @@ public abstract class ConnexioServidor {
 
 
     public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
-        String respostaHandshake = "";
+        String respostaHandshake;
         Object[] resposta = null;
         Socket clientSocket = null;
         //Handshake
@@ -142,8 +87,6 @@ public abstract class ConnexioServidor {
 
         } catch (ConnectException cx) {
             throw cx;
-        } catch (EOFException eq) {
-            eq.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -162,7 +105,7 @@ public abstract class ConnexioServidor {
     }
 
     public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
-        String respostaHandshake = "";
+        String respostaHandshake;
         Object[] resposta = null;
         Socket clientSocket = null;
 
@@ -198,9 +141,6 @@ public abstract class ConnexioServidor {
 
         } catch (ConnectException cx) {
             throw cx;
-        } catch (EOFException eq) {
-
-            eq.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException e) {

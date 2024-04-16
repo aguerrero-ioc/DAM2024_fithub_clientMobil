@@ -1,6 +1,9 @@
 package antonioguerrero.ioc.fithub.menu.installacions;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,7 +24,7 @@ import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
 
-public class InstallacionsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener {
+public class InstallacionsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesInstallacions.ConsultarTotesInstallacionsListener {
 
     private RecyclerView recyclerView;
     private InstallacionsAdapter adapter;
@@ -59,46 +62,33 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
-        });;
+        });
 
-
-
-
-
-        ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, new ConsultarTotesInstallacions.respostaServidorListener() {
-            @Override
-            public void respostaServidor(Object resposta) {
-                // Implementació del mètode respostaServidor
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                if (resposta instanceof List) {
-                    List<HashMap<String, String>> llistaInstallacions = (List<HashMap<String, String>>) resposta;
-                    // Verificar si la llista no està buida abans de configurar l'adaptador
-                    if (!llistaInstallacions.isEmpty()) {
-                        adapter = new InstallacionsAdapter(llistaInstallacions);
-                        recyclerView.setAdapter(adapter);
-                    } else {
-                        Utils.mostrarToast(InstallacionsActivity.this, "La llista d'instal·lacions està buida");
-                    }
-                } else {
-                    Utils.mostrarToast(InstallacionsActivity.this, "No s'han pogut obtenir les dades");
-                }
-                return null;
-            }
-
-            @Override
-            public void onRespostaServidorMultiple(Object resposta) {
-
-            }
-        }) {
+        // Obtenir sessioID de l'usuari
+        SharedPreferences preferences = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, this, sessioID) {
             @Override
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
-
                 return null;
             }
         };
+
+        consulta.consultarTotesInstallacions();
+    }
+
+    public void consultarTotesInstallacions(View view) {
+        // Obtenir sessioID de l'usuari
+        SharedPreferences preferences = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+
+        ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, this, sessioID) {
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+        };
+
         consulta.consultarTotesInstallacions();
     }
 
@@ -113,8 +103,18 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
         return null;
     }
 
-    @Override
-    public void onRespostaServidorMultiple(Object resposta) {
 
+
+
+
+    @Override
+    public void onInstallacionsObtingudes(List<HashMap<String, String>> installacions) {
+        if (installacions != null && !installacions.isEmpty()) {
+            adapter = new InstallacionsAdapter(installacions);
+            recyclerView.setAdapter(adapter);
+        } else {
+            Utils.mostrarToast(InstallacionsActivity.this, "No hi ha instal·lacions disponibles");
+        }
     }
+
 }

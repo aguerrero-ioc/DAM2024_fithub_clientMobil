@@ -147,9 +147,7 @@ public class RegistreActivity extends AppCompatActivity {
                 return null;
             }
 
-            @Override
-            public void onRespostaServidorMultiple(Object resposta) {
-            }
+
         }, usuari, RegistreActivity.this) {
 
 
