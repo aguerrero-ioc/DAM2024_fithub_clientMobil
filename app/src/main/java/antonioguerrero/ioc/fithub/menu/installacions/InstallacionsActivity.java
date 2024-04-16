@@ -1,6 +1,9 @@
 package antonioguerrero.ioc.fithub.menu.installacions;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,9 +22,11 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
+import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
+import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
-public class InstallacionsActivity extends BaseActivity {
+public class InstallacionsActivity extends BaseActivity implements BasePeticions.respostaServidorListener {
 
     private RecyclerView recyclerView;
     private InstallacionsAdapter adapter;
@@ -60,6 +66,10 @@ public class InstallacionsActivity extends BaseActivity {
             return true;
         });;
 
+
+
+
+
         ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, new ConsultarTotesInstallacions.respostaServidorListener() {
             @Override
             public void respostaServidor(Object resposta) {
@@ -98,4 +108,18 @@ public class InstallacionsActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void respostaServidor(Object resposta) throws ConnectException {
+
+    }
+
+    @Override
+    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+        return null;
+    }
+
+    @Override
+    public void onRespostaServidorMultiple(Object resposta) {
+
+    }
 }

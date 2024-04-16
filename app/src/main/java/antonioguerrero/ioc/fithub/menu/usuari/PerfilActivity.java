@@ -3,6 +3,7 @@ package antonioguerrero.ioc.fithub.menu.usuari;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import antonioguerrero.ioc.fithub.peticions.BasePeticions;
 import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ConsultarUsuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
+import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
 /**
  * Classe que representa l'activitat del perfil de l'usuari a l'aplicació FitHub.
@@ -209,29 +211,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         etIDusuari.setText(String.valueOf(usuari.getIDusuari()));
     }
 
-    /**
-     * Mètode per retornar les dades de l'usuari a l'activitat.
-     *
-     * @param usuari L'objecte Usuari amb les dades a desactualitzar.
-     */
-    private void desactualitzarUsuari(Usuari usuari) {
-        etNomUsuari.setText(usuari.getNomUsuari());
-        etCognoms.setText(usuari.getCognomsUsuari());
-        etDataNaixement.setText(usuari.getDataNaixement());
-        etAdreca.setText(usuari.getAdreca());
-        etCorreuUsuari.setText(usuari.getCorreuUsuari());
-        etTelefon.setText(usuari.getTelefon());
-        etDataInscripcio.setText(usuari.getDataInscripcio());
-        String tipusUsuariStr = etTipusUsuari.getText().toString();
-        int tipusUsuari;
-
-        if (tipusUsuariStr.equals("Administrador")) {
-            tipusUsuari = 1;
-        } else if (tipusUsuariStr.equals("Client")) {
-            tipusUsuari = 2;
-        }
-        etIDusuari.setText(String.valueOf(usuari.getIDusuari()));
-    }
 
 
 
@@ -467,10 +446,12 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         modificarUsuari.setUsuari(usuari);
     }
 
-
     @Override
     public void onUsuariModificat(Usuari usuari) {
         this.usuari = usuari;
         actualitzarUsuari(usuari);
     }
+
+
+
 }

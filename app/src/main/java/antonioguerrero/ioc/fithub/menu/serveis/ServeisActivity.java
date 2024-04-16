@@ -1,6 +1,10 @@
 package antonioguerrero.ioc.fithub.menu.serveis;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -14,6 +18,8 @@ import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
+import antonioguerrero.ioc.fithub.peticions.BasePeticions;
+import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
 /**
  * Activitat per mostrar els serveis disponibles al centre esportiu.
@@ -55,4 +61,22 @@ public class ServeisActivity extends BaseActivity {
             return true;
         });;
     }
+
+    /**
+     * Mètode per tancar la sessió de l'usuari.
+     */
+    public void tancarSessioClicat() {
+        SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        int IDUsuari = preferencies.getInt("IDusuari", -1);
+        String IDUsuariStr = String.valueOf(IDUsuari);
+
+        if (!IDUsuariStr.equals("-1")) {
+            PeticioLogout peticioLogout = new PeticioLogout((BasePeticions.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
+            peticioLogout.execute();
+            preferencies.edit().clear().apply();
+        } else {
+            Log.e("ETIQUETA", "IDusuari no definit");
+        }
+    }
+
 }

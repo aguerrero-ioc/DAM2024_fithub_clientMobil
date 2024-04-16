@@ -57,52 +57,45 @@ public class BaseActivity extends AppCompatActivity{
     }
 
 
-
     public void obrirActivity(Class<? extends AppCompatActivity> activityClass) {
         startActivity(new Intent(this, activityClass));
     }
-
-
-    /**
-     * Mètode per obtenir una dada de l'usuari a partir de la clau.
-     */
-    public static String obtenirDadaUsuari(Context context, String clau) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        String valor;
-        try {
-            valor = preferencies.getString(clau, null);
-            if (valor == null) {
-                int valorInt = preferencies.getInt(clau, Integer.MIN_VALUE);
-                if (valorInt != Integer.MIN_VALUE) {
-                    valor = String.valueOf(valorInt);
-                } else {
-                    valor = Utils.VALOR_DEFAULT;
-                }
-            }
-        } catch (ClassCastException e) {
-            int valorInt = preferencies.getInt(clau, Integer.MIN_VALUE);
-            if (valorInt != Integer.MIN_VALUE) {
-                valor = String.valueOf(valorInt);
-            } else {
-                valor = Utils.VALOR_DEFAULT;
-            }
-        }
-        return valor;
-    }
-
 
     /**
      * Mètode per tancar la sessió de l'usuari.
      */
     public void tancarSessioClicat() {
         SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        String IDUsuariStr = preferencies.getString("IDusuari", "-1");
+        Object IDUsuariObject = preferencies.getAll().get("IDusuari");
 
-        if (!IDUsuariStr.equals("-1")) {
-            PeticioLogout peticioLogout = new PeticioLogout((BasePeticions.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
-            peticioLogout.execute();
+        if (IDUsuariObject != null) {
+            String IDUsuariStr;
+
+            if (IDUsuariObject instanceof Integer) {
+                // Si el valor es un entero, conviértelo a cadena
+                IDUsuariStr = String.valueOf((int) IDUsuariObject);
+            } else if (IDUsuariObject instanceof String) {
+                // Si el valor es una cadena, úsalo directamente
+                IDUsuariStr = (String) IDUsuariObject;
+            } else {
+                // Si el valor no es ni entero ni cadena, maneja el caso según tus necesidades
+                Log.e("ETIQUETA", "Tipo de dato no soportado para IDusuari");
+                return;
+            }
+
+            if (!IDUsuariStr.equals("-1")) {
+                PeticioLogout peticioLogout = new PeticioLogout((BasePeticions.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
+                peticioLogout.execute();
+            } else {
+                Log.e("ETIQUETA", "IDusuari no definit");
+            }
         } else {
-            Log.e("ClientActivity", "IDusuari no definit");
+            Log.e("ETIQUETA", "IDusuari no encontrado en SharedPreferences");
         }
     }
+
+
+
+
+
 }
