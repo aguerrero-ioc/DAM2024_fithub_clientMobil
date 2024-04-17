@@ -59,28 +59,13 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        // Configura el menú lateral
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigation = findViewById(R.id.nav_view);
-
-        navigation.setNavigationItemSelectedListener(menuItem -> {
-            int id = menuItem.getItemId();
-            if (id == R.id.nav_perfil_usuari) {
-                obrirActivity(PerfilActivity.class);
-            } else if(id == R.id.nav_activitats) {
-                Utils.mostrarToast(PerfilActivity.this, Utils.PENDENT_IMPLEMENTAR);
-            } else if (id == R.id.nav_serveis) {
-                Utils.mostrarToast(PerfilActivity.this, Utils.PENDENT_IMPLEMENTAR);
-            } else if (id == R.id.nav_installacions) {
-                obrirActivity(InstallacionsActivity.class);
-            } else if (id == R.id.nav_reserves) {
-                Utils.mostrarToast(PerfilActivity.this, Utils.PENDENT_IMPLEMENTAR);
-            } else if (id == R.id.nav_tancar_sessio) {
-                tancarSessioClicat();
-            }
-            drawerLayout.closeDrawer(GravityCompat.START);
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
             return true;
         });
+
 
         // Inicialització de les vistes
         etNomUsuari = findViewById(R.id.et_nom_usuari);

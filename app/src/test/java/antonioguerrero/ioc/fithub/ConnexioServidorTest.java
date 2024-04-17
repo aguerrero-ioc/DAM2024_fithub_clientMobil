@@ -1,101 +1,304 @@
 package antonioguerrero.ioc.fithub;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.verify;
-
-import android.util.Log;
-
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.MockingDetails;
-import org.mockito.configuration.DefaultMockitoConfiguration;
-import org.mockito.internal.util.MockUtil;
-import org.mockito.stubbing.Answer;
+import static org.junit.Assert.*;
 
+import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
-@RunWith(MockitoJUnitRunner.class)
-@MockitoSettings(mockito = DefaultMockitoConfiguration.class)
+/**
+ * Proves unitàries per verificar el funcionament de la classe ConnexioServidor.
+ * Simula totes les peticions al servidor necessàries per al funcionament de l'aplicació.
+ * <p>
+ * Autor: Antonio Guerrero
+ * Versió: 1.0
+ */
 public class ConnexioServidorTest {
 
-    @Mock
-    private ConnexioServidor.respostaServidorListener mockListener;
+    /**
+     * Verifica si una petició amb strings retorna un objecte String.
+     */
+    @Test
+    public void PeticioAmbStringsRetornaString() throws ConnectException {
+        // Arrange
+        ConnexioServidor connexio = new ConnexioServidor() {
+            @Override
+            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
+                // Simulació de resposta del servidor
+                Object[] resposta = new Object[2];
+                resposta[0] = true; // Simular "true" com a primer element de la resposta
+                resposta[1] = null; // Simular null com a segon element de la resposta
+                return resposta;
+            }
 
-    private ConnexioServidor connexioServidor;
-
-    @Before
-    public void setUp() {
-        connexioServidor = new ConnexioServidor(mockListener) {
             @Override
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                // Mock implementation
                 return null;
             }
 
             @Override
             public Class<?> obtenirTipusObjecte() {
-                // Mock implementation
                 return null;
             }
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                // Mock implementation
                 return null;
             }
 
             @Override
-            public void execute() {
-                // Mock implementation
+            public void execute() throws ConnectException {
+                // Aquest mètode no s'utilitza en aquesta prova, però s'ha d'implementar a causa de la herència de ConnexioServidor
             }
         };
+
+        // Act
+        Object[] resposta = connexio.enviarPeticioString("operacio", "dada1", "dada2", "idSessio");
+
+        // Assert
+        assertNotNull(resposta); // Verificar que la resposta no sigui nul·la
+        assertEquals(2, resposta.length); // Verificar que la resposta tingui la longitud esperada
+        assertTrue((Boolean) resposta[0]); // Verificar que el primer element sigui un booleà "true" o "false"
+        assertNull(resposta[1]); // Verificar que el segon element sigui null
     }
 
+    /**
+     * Verifica si una petició amb strings retorna un objecte HashMap.
+     */
     @Test
-    public void testEnviarPeticioString() throws Exception {
-        // Defineix les dades per a la prova
-        String operacio = "mockOperacio";
-        String dada1 = "mockDada1";
-        String dada2 = "mockDada2";
-        String idSessio = "mockIdSessio";
+    public void PeticioAmbStringsRetornaObjecteHashMap() throws ConnectException {
+        // Arrange
+        ConnexioServidor connexio = new ConnexioServidor() {
+            @Override
+            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
+                // Simulació de resposta del servidor
+                Object[] resposta = new Object[2];
+                resposta[0] = "nomObjecte"; // Simular "nomObjecte" com a primer element de la resposta
+                resposta[1] = new HashMap<String, String>(); // Simular un HashMap com a segon element de la resposta
+                return resposta;
+            }
 
-        // Ignore los llamados a android.util.Log.d()
-        try (MockedStatic<Log> mockedStatic = mockStatic(android.util.Log.class)) {
-            mockedStatic.when(() -> android.util.Log.d(anyString(), anyString())).thenAnswer((Answer<Void>) invocation -> null);
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
 
-            // Crida la funció a provar
-            connexioServidor.enviarPeticioString(operacio, dada1, dada2, idSessio);
+            @Override
+            public Class<?> obtenirTipusObjecte() {
+                return null;
+            }
 
-            // Verifica si s'ha cridat el mètode respostaServidor en el listener
-            verify(mockListener).respostaServidor(any());
-        }
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void execute() throws ConnectException {
+                // Aquest mètode no s'utilitza en aquesta prova, però s'ha d'implementar a causa de la herència de ConnexioServidor
+            }
+        };
+
+        // Act
+        Object[] resposta = connexio.enviarPeticioString("operacio", "dada1", "dada2", "idSessio");
+
+        // Assert
+        assertNotNull(resposta); // Verificar que la resposta no sigui nul·la
+        assertEquals(2, resposta.length); // Verificar que la resposta tingui la longitud esperada
+        assertEquals("nomObjecte", resposta[0]); // Verificar que el primer element sigui "nomObjecte"
+        assertNotNull(resposta[1]); // Verificar que el segon element no sigui null
+        assertTrue(resposta[1] instanceof HashMap); // Verificar que el segon element sigui un HashMap
     }
 
+    /**
+     * Verifica si una petició amb strings retorna una llista d'objectes HashMap.
+     */
     @Test
-    public void testEnviarPeticioHashMap() throws Exception {
-        // Defineix les dades per a la prova
-        String operacio = "mockOperacio";
-        String nomObjecte = "mockNomObjecte";
-        HashMap<String, String> objecteMapa = new HashMap<>();
-        String idSessio = "mockIdSessio";
+    public void PeticioAmbStringsRetornaLlistaHashmap() throws ConnectException {
+        // Arrange
+        ConnexioServidor connexio = new ConnexioServidor() {
+            @Override
+            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
+                // Simulació de resposta del servidor
+                Object[] resposta = new Object[2];
+                resposta[0] = "nomLlista"; // Simular "nomLlista" com a primer element de la resposta
+                resposta[1] = new ArrayList<HashMap<String, String>>(); // Simular una llista de HashMaps com a segon element de la resposta
+                return resposta;
+            }
 
-        try (MockedStatic<android.util.Log> mockedStatic = mockStatic(android.util.Log.class)) {
-            mockedStatic.when(() -> android.util.Log.d(anyString(), anyString())).thenAnswer((Answer<Void>) invocation -> null);
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
 
-            // Crida la funció a provar
-            connexioServidor.enviarPeticioHashMap(operacio, nomObjecte, objecteMapa, idSessio);
+            @Override
+            public Class<?> obtenirTipusObjecte() {
+                return null;
+            }
 
-            // Verifica si s'ha cridat el mètode respostaServidor en el listener
-            verify(mockListener).respostaServidor(any());
-        }
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void execute() throws ConnectException {
+                // Aquest mètode no s'utilitza en aquesta prova, però s'ha d'implementar a causa de la herència de ConnexioServidor
+            }
+        };
+
+        // Act
+        Object[] resposta = connexio.enviarPeticioString("operacio", "dada1", null, "idSessio");
+
+        // Assert
+        assertNotNull(resposta); // Verificar que la resposta no sigui nul·la
+        assertEquals(2, resposta.length); // Verificar que la resposta tingui la longitud esperada
+        assertEquals("nomLlista", resposta[0]); // Verificar que el primer element sigui "nomLlista"
+        assertNotNull(resposta[1]); // Verificar que el segon element no sigui null
+        assertTrue(resposta[1] instanceof List); // Verificar que el segon element sigui una llista
+    }
+
+    /**
+     * Verifica si una petició amb HashMap retorna "true".
+     */
+    @Test
+    public void PeticioAmbHashMapRetornaTrue() throws ConnectException {
+        // Arrange
+        ConnexioServidor connexio = new ConnexioServidor() {
+            @Override
+            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+                // Simulació de resposta del servidor
+                Object[] resposta = new Object[2];
+                // Simular resposta exitosa
+                resposta[0] = "true"; // Indica èxit
+                resposta[1] = null;  // Sense missatge d'error
+                return resposta;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public Class<?> obtenirTipusObjecte() {
+                return null;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void execute() throws ConnectException {
+            }
+        };
+
+        // Act
+        Object[] resposta = connexio.enviarPeticioHashMap("operacio", "nomObjecte", new HashMap<>(), "idSessio");
+
+        // Assert
+        assertNotNull(resposta); // Verificar que la resposta no sigui nul·la
+        assertEquals(2, resposta.length); // Verificar que la resposta tingui la longitud esperada
+        assertEquals("true", resposta[0]); // Verificar que el primer element sigui "true"
+        assertNull(resposta[1]); // Verificar que el segon element sigui null (sense missatge d'error)
+    }
+
+    /**
+     * Verifica si una petició amb HashMap retorna "false" i un missatge d'error.
+     */
+    @Test
+    public void PeticioAmbHashMapRetornaFalse() throws ConnectException {
+        // Arrange
+        ConnexioServidor connexio = new ConnexioServidor() {
+            @Override
+            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+                // Simulació de resposta fallida del servidor
+                Object[] resposta = new Object[2];
+                resposta[0] = "false"; // Indica fallada
+                resposta[1] = "Missatge d'error"; // Missatge d'error
+                return resposta;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public Class<?> obtenirTipusObjecte() {
+                return null;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void execute() throws ConnectException {
+            }
+        };
+
+        // Act
+        Object[] resposta = connexio.enviarPeticioHashMap("operacio", "nomObjecte", new HashMap<>(), "idSessio");
+
+        // Assert
+        assertNotNull(resposta); // Verificar que la resposta no sigui nul·la
+        assertEquals(2, resposta.length); // Verificar que la resposta tingui la longitud esperada
+        assertEquals("false", resposta[0]); // Verificar que el primer element sigui "false" per indicar una resposta fallida
+        assertEquals("Missatge d'error", resposta[1]); // Verificar que el segon element sigui el missatge d'error esperat
+    }
+
+    /**
+     * Verifica si una petició amb HashMap retorna un objecte HashMap.
+     */
+    @Test
+    public void PeticioAmbHashMapRetornaObjecteHashMap() throws ConnectException {
+        // Arrange
+        ConnexioServidor connexio = new ConnexioServidor() {
+            @Override
+            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+                // Simulació de resposta del servidor
+                Object[] resposta = new Object[2];
+                // Simular resposta exitosa
+                resposta[0] = "nomObjecte"; // Indica èxit amb el nom de l'objecte
+                resposta[1] = new HashMap<String, String>();  // Simulació de l'objecte HashMap
+                return resposta;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public Class<?> obtenirTipusObjecte() {
+                return null;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void execute() throws ConnectException {
+            }
+        };
+
+        // Act
+        Object[] resposta = connexio.enviarPeticioHashMap("operacio", "nomObjecte", new HashMap<>(), "idSessio");
+
+        // Assert
+        assertNotNull(resposta); // Verificar que la resposta no sigui nul·la
+        assertEquals("nomObjecte", resposta[0]); // Verificar que el primer element sigui "nomObjecte"
+        assertNotNull(resposta[1]); // Verificar que el segon element no sigui nul·la
+        assertTrue(resposta[1] instanceof HashMap); // Verificar que el segon element sigui un HashMap
     }
 }

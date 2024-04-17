@@ -1,3 +1,4 @@
+
 plugins {
     id("com.android.application")
 }
@@ -30,6 +31,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+
 }
 
 
@@ -47,7 +49,8 @@ dependencies {
     testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
     testImplementation("org.powermock:powermock-module-junit4:2.0.9")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:4.2.0")
+    testImplementation("org.mockito:mockito-core:2.23.0")
+    testImplementation("junit:junit:4.12")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")

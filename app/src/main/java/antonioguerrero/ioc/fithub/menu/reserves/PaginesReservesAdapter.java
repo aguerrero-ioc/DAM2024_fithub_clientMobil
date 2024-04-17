@@ -49,10 +49,12 @@ public class PaginesReservesAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return switch (position) {
-            case 0 -> "Reserves Realitzades";
-            case 1 -> "Reserves Pasades";
-            default -> null;
-        };
+        if (position == 0) {
+            return "Reserves Realitzades";
+        } else if (position == 1) {
+            return "Reserves Pasades";
+        } else {
+            return null;
+        }
     }
 }

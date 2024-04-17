@@ -17,7 +17,7 @@ import java.util.Scanner;
  * <p>
  * Aquesta classe és la base per a totes les peticions que es facin al servidor.
  *
- * @version 1.0
+ * @author Antonio Guerrero
  * @version 1.0
  */
 public abstract class ConnexioServidor {
@@ -25,6 +25,7 @@ public abstract class ConnexioServidor {
     //LOCAL "192.168.0.252"
     protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
+    public Socket clientSocket;
 
     protected respostaServidorListener listener;
 

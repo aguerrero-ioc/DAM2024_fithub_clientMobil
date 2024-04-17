@@ -60,7 +60,6 @@
                 android:padding="16dp"
                 android:layout_marginBottom="24dp">
 
-
                 <!-- Títol del formulari de registre -->
                 <TextView
                     android:id="@+id/tv_titol_formulari"

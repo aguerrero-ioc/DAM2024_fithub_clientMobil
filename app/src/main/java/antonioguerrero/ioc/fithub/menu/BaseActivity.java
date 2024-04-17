@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.view.MenuItem;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -15,6 +17,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
+import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
+import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
@@ -39,6 +44,28 @@ public class BaseActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+    }
+
+    /**
+     * Mètode per gestionar la selecció d'un element del menú de navegació.
+     *
+     * @param menuItem L'element del menú seleccionat.
+     */
+    public void handleNavigationItemSelected(MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        if (id == R.id.nav_perfil_usuari) {
+            obrirActivity(PerfilActivity.class);
+        } else if(id == R.id.nav_activitats) {
+            obrirActivity(ActivitatsActivity.class);
+        } else if (id == R.id.nav_serveis || id == R.id.nav_reserves) {
+            Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR);
+        } else if (id == R.id.nav_installacions) {
+            obrirActivity(InstallacionsActivity.class);
+        } else if (id == R.id.nav_tancar_sessio) {
+            tancarSessioClicat();
+        }
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     /**

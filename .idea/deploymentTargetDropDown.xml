@@ -2,13 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ClientActivityTest">
+      <entry key="TestPantallaInstallacions">
         <State />
       </entry>
-      <entry key="LoginActivityTest">
+      <entry key="TestPantallaPerfil">
         <State />
       </entry>
-      <entry key="PeticioLoginTest">
+      <entry key="Tests in 'antonioguerrero.ioc.fithub'">
         <State />
       </entry>
       <entry key="app">

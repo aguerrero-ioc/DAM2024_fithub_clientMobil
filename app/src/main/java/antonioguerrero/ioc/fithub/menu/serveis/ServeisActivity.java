@@ -42,26 +42,10 @@ public class ServeisActivity extends BaseActivity {
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR));
 
-        // Configura el menú lateral
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigation = findViewById(R.id.nav_view);
-
-        navigation.setNavigationItemSelectedListener(menuItem -> {
-            int id = menuItem.getItemId();
-            if (id == R.id.nav_perfil_usuari) {
-                obrirActivity(PerfilActivity.class);
-            } else if (id == R.id.nav_activitats) {
-                obrirActivity(ActivitatsActivity.class);
-            } else if (id == R.id.nav_serveis) {
-                Utils.mostrarToast(ServeisActivity.this, Utils.PENDENT_IMPLEMENTAR);
-            } else if (id == R.id.nav_installacions) {
-                obrirActivity(InstallacionsActivity.class);
-            } else if (id == R.id.nav_reserves) {
-                Utils.mostrarToast(ServeisActivity.this, Utils.PENDENT_IMPLEMENTAR);
-            } else if (id == R.id.nav_tancar_sessio) {
-                tancarSessioClicat();
-            }
-            drawerLayout.closeDrawer(GravityCompat.START);
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
             return true;
         });
     }
