@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <!-- Nom de l'instal·lació -->
+    <TextView
+        android:id="@+id/tvNomInstallacioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvNomInstallacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomInstallacioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Descripció de l'instal·lació -->
+    <TextView
+        android:id="@+id/tvDescripcioInstallacioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomInstallacio"
+        android:layout_marginTop="16dp"
+        android:text="Descripció: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvDescripcioInstallacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescripcioInstallacioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Tipus d'instal·lació -->
+    <TextView
+        android:id="@+id/tvTipusInstallacioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescripcioInstallacio"
+        android:layout_marginTop="16dp"
+        android:text="Tipus: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvTipusInstallacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTipusInstallacioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+</RelativeLayout>

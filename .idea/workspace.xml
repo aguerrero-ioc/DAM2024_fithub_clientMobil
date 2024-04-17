@@ -1,51 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="8" />
     <option name="CUSTOM_SCOPE_NAME" value="Unnamed" />
+  </component>
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <device id="pixel_8" />
+      </config>
+    </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_activitats.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_admin.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_base.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_classes.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_client.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_installacions.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_missatges.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_perfil.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_registre.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_reserves.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_serveis.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialeg_detalls_activitats.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialeg_detalls_installacio.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialeg_recuperar_contrasenya.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dialeg_reserva.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_activitat_detail.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_activitat_list.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_missatges.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_reserves_pasades.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_reserves_realitzades.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_activitat.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_classe_dirigida.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_installacio.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_missatge.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_reserva.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/nav_capcelera.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_navigation_usuari.xml">
+        <config>
+          <theme>@style/Theme.Fithub</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86e27104-0ae9-4fa9-a015-cf2c88f3068c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/migrations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/checksums/sha1-checksums.bin" afterDir="false" />
+    <list default="true" id="86e27104-0ae9-4fa9-a015-cf2c88f3068c" name="Changes" comment="20240418 Test creats">
       <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/androidTestResultsUserPreferences.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LoginTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LogoutAdminTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LogoutAdminTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LogoutClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/antonioguerrero/ioc/fithub/LogoutClientTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/antonioguerrero/ioc/fithub/ConnexioServidorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/antonioguerrero/ioc/fithub/ConnexioServidorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager" show_ignored="true" />
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\restever\.android\avd\Pixel_8_Pro_API_33.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\restever\.android\avd\Pixel_8_Pro_API_33_2.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -57,6 +188,9 @@
         <task path="$PROJECT_DIR$/app">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -66,41 +200,89 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="valueResourceFile" />
+        <option value="resourceFile" />
+        <option value="AnnotationType" />
+        <option value="layoutResourceFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="TEA3-SE_proves" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="NamedScopeManager">
     <scope name="Unnamed" pattern="src[fithub.app.main]:*..*" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2dyUvd9iowcjjcsb9EVrZSBUEhH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build DAM2024_fithub_clientMobil.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Dependencies&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build DAM2024_fithub_clientMobil.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "TEA3-WW",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sesa697418/AndroidStudioProjects/DAM2024_fithub_clientMobil/app/src/main/res/layout",
+    "project.structure.last.edited": "SDK Location",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable",
+    "show.do.not.copy.http.proxy.settings.to.gradle": "false"
   }
-}</component>
+}]]></component>
   <component name="PsdUISettings">
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="antonioguerrero.ioc.fithub.menu.activitats" />
+      <recent name="antonioguerrero.ioc.fithub" />
+      <recent name="antonioguerrero.ioc.fithub.menu.classes" />
+      <recent name="antonioguerrero.ioc.fithub.menuInici" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sesa697418\AndroidStudioProjects\DAM2024_fithub_clientMobil\app\src\main\res\layout" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sesa697418\AndroidStudioProjects\DAM2024_fithub_clientMobil\app\src\main\res\mipmap-hdpi" />
+      <recent name="C:\Users\sesa697418\AndroidStudioProjects\DAM2024_fithub_clientMobil\app\src\main\res\layout" />
+      <recent name="C:\Users\sesa697418\AndroidStudioProjects\DAM2024_fithub_clientMobil\app\src\androidTest\java\antonioguerrero\ioc\fithub" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="antonioguerrero.ioc.fithub.menu.installacions" />
+      <recent name="antonioguerrero.ioc.fithub.menu.usuari" />
+      <recent name="antonioguerrero.ioc.fithub.peticions.installacions" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="antonioguerrero.ioc.fithub.menu.classes" />
+      <recent name="antonioguerrero.ioc.fithub.peticions" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android Instrumented Tests.Tests in 'antonioguerrero.ioc.fithub'">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="fithub.app.main" />
       <option name="DEPLOY" value="true" />
@@ -168,6 +350,211 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestPantallaPerfil" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="fithub.app.androidTest" />
+      <option name="TESTING_TYPE" value="2" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="antonioguerrero.ioc.fithub.TestPantallaPerfil" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_NAME_REGEX" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="RETENTION_ENABLED" value="No" />
+      <option name="RETENTION_MAX_SNAPSHOTS" value="2" />
+      <option name="RETENTION_COMPRESS_SNAPSHOTS" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tests in 'antonioguerrero.ioc.fithub'" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="fithub.app.androidTest" />
+      <option name="TESTING_TYPE" value="1" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="antonioguerrero.ioc.fithub" />
+      <option name="TEST_NAME_REGEX" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="RETENTION_ENABLED" value="No" />
+      <option name="RETENTION_MAX_SNAPSHOTS" value="2" />
+      <option name="RETENTION_COMPRESS_SNAPSHOTS" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConnexioServidorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;antonioguerrero.ioc.fithub.ConnexioServidorTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PeticioLoginTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;antonioguerrero.ioc.fithub.PeticioLoginTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'antonioguerrero.ioc.fithub'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;antonioguerrero.ioc.fithub.*&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Android Instrumented Tests.Tests in 'antonioguerrero.ioc.fithub'" />
+        <item itemvalue="Gradle.Tests in 'antonioguerrero.ioc.fithub'" />
+        <item itemvalue="Gradle.PeticioLoginTest" />
+        <item itemvalue="Gradle.ConnexioServidorTest" />
+        <item itemvalue="Android Instrumented Tests.TestPantallaPerfil" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -186,6 +573,318 @@
       <option name="presentableId" value="Default" />
       <updated>1710980045003</updated>
     </task>
+    <task id="LOCAL-00001" summary="Implementació menú perfil i missatges">
+      <option name="closed" value="true" />
+      <created>1711311554559</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1711311554559</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Implementació menú perfil i missatges">
+      <option name="closed" value="true" />
+      <created>1711314778792</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711314778792</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Implementació menú perfil i missatges">
+      <option name="closed" value="true" />
+      <created>1711320011724</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1711320011724</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implementació menú perfil i missatges (3)">
+      <option name="closed" value="true" />
+      <created>1711320100429</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1711320100429</updated>
+    </task>
+    <task id="LOCAL-00005" summary="20240401 Implementació recuperar contrasenya, RegistreActivity, PerfilActivity, modificació ConnexioServidor, creacio de subcarpetes de peticions.">
+      <option name="closed" value="true" />
+      <created>1711987851053</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1711987851053</updated>
+    </task>
+    <task id="LOCAL-00006" summary="20240401 modificacions a peticions">
+      <option name="closed" value="true" />
+      <created>1712011810431</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1712011810431</updated>
+    </task>
+    <task id="LOCAL-00007" summary="20240401 modificacions a peticions">
+      <option name="closed" value="true" />
+      <created>1712011828550</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712011828550</updated>
+    </task>
+    <task id="LOCAL-00008" summary="20240404 modificacions per rectificar proves">
+      <option name="closed" value="true" />
+      <created>1712308356434</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1712308356434</updated>
+    </task>
+    <task id="LOCAL-00009" summary="20240407 creacio de estructura sencera de classes de l'APP. Creacio i modificacions de peticions amb format final. Modificacio classes objectes. Modificacio ClientActivity. Principi de activity de reserves i de missatges. Millores a interfícies.">
+      <option name="closed" value="true" />
+      <created>1712525467802</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1712525467802</updated>
+    </task>
+    <task id="LOCAL-00010" summary="20240409 nova peticio logout i modificacions a la resta de peticions">
+      <option name="closed" value="true" />
+      <created>1712699505106</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1712699505106</updated>
+    </task>
+    <task id="LOCAL-00011" summary="20240410 nova pantalla installacions i modificacio ConsultarTotesInstallacions i millores al codi.">
+      <option name="closed" value="true" />
+      <created>1712702472430</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1712702472430</updated>
+    </task>
+    <task id="LOCAL-00012" summary="20240411 modificacions a peticions per reduir codi i creacio de peticio ConsultarClassesDirigidesDia i ClasseDirigida">
+      <option name="closed" value="true" />
+      <created>1712867349643</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1712867349643</updated>
+    </task>
+    <task id="LOCAL-00013" summary="20240413 cambios en peticions">
+      <option name="closed" value="true" />
+      <created>1713022449907</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1713022449907</updated>
+    </task>
+    <task id="LOCAL-00014" summary="20240413 cambios en peticions">
+      <option name="closed" value="true" />
+      <created>1713032181016</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1713032181016</updated>
+    </task>
+    <task id="LOCAL-00015" summary="20240413 cambios en peticions">
+      <option name="closed" value="true" />
+      <created>1713035166623</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1713035166623</updated>
+    </task>
+    <task id="LOCAL-00016" summary="20240413 cambios en peticions (funcionando login i registro)">
+      <option name="closed" value="true" />
+      <created>1713054201737</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1713054201737</updated>
+    </task>
+    <task id="LOCAL-00017" summary="20240414 cambios en peticions (funcionando login, logout, registro)">
+      <option name="closed" value="true" />
+      <created>1713115190569</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1713115190569</updated>
+    </task>
+    <task id="LOCAL-00018" summary="20240414 cambios en peticions (funcionando login, logout, registro) 2">
+      <option name="closed" value="true" />
+      <created>1713118902277</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1713118902277</updated>
+    </task>
+    <task id="LOCAL-00019" summary="20240414 cambios en peticions (funcionando login, logout, registro, consultarUsuari) i canvis layouts">
+      <option name="closed" value="true" />
+      <created>1713130962862</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1713130962862</updated>
+    </task>
+    <task id="LOCAL-00020" summary="20240414 cambios en peticions (funcionando login, logout, registro, consultarUsuari) i canvis layouts 2">
+      <option name="closed" value="true" />
+      <created>1713138722891</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1713138722891</updated>
+    </task>
+    <task id="LOCAL-00021" summary="20240415 cambios en peticions (F login, logout, registro, consultarUsuari, modUsuari)">
+      <option name="closed" value="true" />
+      <created>1713204776698</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1713204776698</updated>
+    </task>
+    <task id="LOCAL-00022" summary="20240415 cambios en peticions (F todo usuari)">
+      <option name="closed" value="true" />
+      <created>1713217350998</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1713217350998</updated>
+    </task>
+    <task id="LOCAL-00023" summary="20240415 cambios en peticions (F todo usuari)">
+      <option name="closed" value="true" />
+      <created>1713221370414</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1713221370414</updated>
+    </task>
+    <task id="LOCAL-00024" summary="20240417 canvis a canviarContrasenya">
+      <option name="closed" value="true" />
+      <created>1713287193832</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1713287193832</updated>
+    </task>
+    <task id="LOCAL-00025" summary="20240416 canvis a ConsultarTotesInstallacions">
+      <option name="closed" value="true" />
+      <created>1713295377646</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1713295377646</updated>
+    </task>
+    <task id="LOCAL-00026" summary="20240417 reserves">
+      <option name="closed" value="true" />
+      <created>1713344989328</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1713344989328</updated>
+    </task>
+    <task id="LOCAL-00027" summary="20240417 reserves">
+      <option name="closed" value="true" />
+      <created>1713346466964</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1713346466964</updated>
+    </task>
+    <task id="LOCAL-00028" summary="20240417 Llista d'Activitats i Installacions funcionant">
+      <option name="closed" value="true" />
+      <created>1713356566204</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1713356566204</updated>
+    </task>
+    <task id="LOCAL-00029" summary="20240418 Test creats">
+      <option name="closed" value="true" />
+      <created>1713394208802</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1713394208802</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="b96fef9b-0e28-49a6-a276-680f528671a1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="TEA3-WW" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="b96fef9b-0e28-49a6-a276-680f528671a1">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implementació menú perfil i missatges" />
+    <MESSAGE value="Implementació menú perfil i missatges (3)" />
+    <MESSAGE value="20240401 Implementació recuperar contrasenya, RegistreActivity, PerfilActivity, modificació ConnexioServidor, creacio de subcarpetes de peticions." />
+    <MESSAGE value="20240401 modificacions a peticions" />
+    <MESSAGE value="20240404 modificacions" />
+    <MESSAGE value="20240404 modificacions per rectificar proves" />
+    <MESSAGE value="20240407 creacio de estructura sencera de classes de l'APP. Creacio i modificacions de peticions amb format final. Modificacio classes objectes. Modificacio ClientActivity. Principi de activity de reserves i de missatges. Millores a interfícies." />
+    <MESSAGE value="20240409 nova peticio logout i modificacions a la resta de peticions" />
+    <MESSAGE value="20240410 nova pantalla installacions i modificacio ConsultarTotesInstallacions i millores al codi." />
+    <MESSAGE value="20240411 modificacions a peticions per reduir codi i creacio de peticio ConsultarClassesDirigidesDia i ClasseDirigida" />
+    <MESSAGE value="20240412 Canvis a main de client i exclou ReservesActivity per fer proves" />
+    <MESSAGE value="20240413 cambios en peticions" />
+    <MESSAGE value="20240413 cambios en peticions (funcionando login i registro)" />
+    <MESSAGE value="20240414 cambios en peticions (funcionando login, logout, registro)" />
+    <MESSAGE value="20240414 cambios en peticions (funcionando login, logout, registro) 2" />
+    <MESSAGE value="20240414 cambios en peticions (funcionando login, logout, registro, consultarUsuari) i canvis layouts" />
+    <MESSAGE value="20240414 cambios en peticions (funcionando login, logout, registro, consultarUsuari) i canvis layouts 2" />
+    <MESSAGE value="20240415 cambios en peticions (F login, logout, registro, consultarUsuari, modUsuari)" />
+    <MESSAGE value="20240415 cambios en peticions (F todo usuari)" />
+    <MESSAGE value="20240417 canvis a canviarContrasenya" />
+    <MESSAGE value="20240416 canvis a ConsultarTotesInstallacions" />
+    <MESSAGE value="20240417 reserves" />
+    <MESSAGE value="20240417 Llista d'Activitats i Installacions funcionant" />
+    <MESSAGE value="20240418 Test creats" />
+    <option name="LAST_COMMIT_MESSAGE" value="20240418 Test creats" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.NoClassDefFoundError" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.net.ConnectException" package="java.net" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="AndroidRunConfigurationType">
+        <watch expression="((ClientActivity)this).mStopped" custom="antonioguerrero.ioc.fithub.menu.main.ClientActivity" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

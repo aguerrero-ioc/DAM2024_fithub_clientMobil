@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,7 +16,7 @@
         android:theme="@style/Theme.Fithub"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".menu.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdminActivity" />
-        <activity android:name=".ClientActivity" />
+        <activity android:name=".menu.login.RegistreActivity" />
+        <activity android:name=".menu.BaseActivity" />
+        <activity android:name=".menu.main.AdminActivity" />
+        <activity android:name=".menu.main.ClientActivity" />
+        <activity android:name=".menu.usuari.PerfilActivity" />
+        <activity android:name=".menu.activitats.ActivitatsActivity" />
+        <activity android:name=".menu.serveis.ServeisActivity" />
+        <activity android:name=".menu.installacions.InstallacionsActivity" />
     </application>
 
 </manifest>

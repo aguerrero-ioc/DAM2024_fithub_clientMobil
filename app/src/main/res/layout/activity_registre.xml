@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Títol de l'aplicació -->
+        <TextView
+            android:id="@+id/tv_titol_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FITHUB"
+            android:textSize="24sp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Títol del formulari de registre -->
+        <TextView
+            android:id="@+id/tv_titol_formulari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Formulari de Registre"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Secció de Dades Personals -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tv_seccio_dades_personals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dades Personals"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- TextInputLayout per al nom -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_nom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nom"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per als cognoms -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_cognoms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_cognoms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Cognoms"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per al telèfon de contacte -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_telefon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_telefon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Telèfon de contacte"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Secció de Dades d'Inici de Sessió -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:id="@+id/tv_seccio_contrasenya"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dades d'Inici de Sessió"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- TextInputLayout per al correu electrònic -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_correu_electronic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_correu_electronic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Correu electrònic"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per a la contrasenya -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_contrasenya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_contrasenya"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contrasenya"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per a repetir la contrasenya -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_repetir_contrasenya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_repetir_contrasenya"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Repetir contrasenya"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    android:inputType="textPassword"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- CheckBox per mostrar/ocultar la contrasenya -->
+            <CheckBox
+                android:id="@+id/check_mostrar_contrasenya"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mostrar contrasenya"/>
+
+        </LinearLayout>
+
+        <!-- Botó de Registre -->
+        <Button
+            android:id="@+id/btn_registrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
