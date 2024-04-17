@@ -21,6 +21,7 @@ public class ConnexioServidorTest {
 
     /**
      * Verifica si una petició amb strings retorna un objecte String.
+     * Simula una petició de Logout.
      */
     @Test
     public void PeticioAmbStringsRetornaString() throws ConnectException {
@@ -52,7 +53,6 @@ public class ConnexioServidorTest {
 
             @Override
             public void execute() throws ConnectException {
-                // Aquest mètode no s'utilitza en aquesta prova, però s'ha d'implementar a causa de la herència de ConnexioServidor
             }
         };
 
@@ -68,6 +68,7 @@ public class ConnexioServidorTest {
 
     /**
      * Verifica si una petició amb strings retorna un objecte HashMap.
+     * Simula una petició de consulta d'un objecte.
      */
     @Test
     public void PeticioAmbStringsRetornaObjecteHashMap() throws ConnectException {
@@ -104,7 +105,7 @@ public class ConnexioServidorTest {
         };
 
         // Act
-        Object[] resposta = connexio.enviarPeticioString("operacio", "dada1", "dada2", "idSessio");
+        Object[] resposta = connexio.enviarPeticioString("operacio", "nomObjecte", "dada", "idSessio");
 
         // Assert
         assertNotNull(resposta); // Verificar que la resposta no sigui nul·la
@@ -116,6 +117,7 @@ public class ConnexioServidorTest {
 
     /**
      * Verifica si una petició amb strings retorna una llista d'objectes HashMap.
+     * Simula una petició de Consulta de tots els objectes d'un tipus.
      */
     @Test
     public void PeticioAmbStringsRetornaLlistaHashmap() throws ConnectException {
@@ -164,9 +166,58 @@ public class ConnexioServidorTest {
 
     /**
      * Verifica si una petició amb HashMap retorna "true".
+     * Simula una petició de Registre.
      */
     @Test
-    public void PeticioAmbHashMapRetornaTrue() throws ConnectException {
+    public void PeticioAmbHashMapSenseIDRetornaTrue() throws ConnectException {
+        // Arrange
+        ConnexioServidor connexio = new ConnexioServidor() {
+            @Override
+            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+                // Simulació de resposta del servidor
+                Object[] resposta = new Object[2];
+                // Simular resposta exitosa
+                resposta[0] = "true"; // Indica èxit
+                resposta[1] = null;  // Sense missatge d'error
+                return resposta;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public Class<?> obtenirTipusObjecte() {
+                return null;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void execute() throws ConnectException {
+            }
+        };
+
+        // Act
+        Object[] resposta = connexio.enviarPeticioHashMap("operacio", "nomObjecte", new HashMap<>(), null);
+
+        // Assert
+        assertNotNull(resposta); // Verificar que la resposta no sigui nul·la
+        assertEquals(2, resposta.length); // Verificar que la resposta tingui la longitud esperada
+        assertEquals("true", resposta[0]); // Verificar que el primer element sigui "true"
+        assertNull(resposta[1]); // Verificar que el segon element sigui null (sense missatge d'error)
+    }
+
+    /**
+     * Verifica si una petició amb HashMap retorna "true".
+     * Simula una petició de Creació d'un objecte
+     */
+    @Test
+    public void PeticioAmbHashMapAmbIDRetornaTrue() throws ConnectException {
         // Arrange
         ConnexioServidor connexio = new ConnexioServidor() {
             @Override
@@ -211,6 +262,7 @@ public class ConnexioServidorTest {
 
     /**
      * Verifica si una petició amb HashMap retorna "false" i un missatge d'error.
+     * Simula la resposta negativa a la petició de creació d'un objecte.
      */
     @Test
     public void PeticioAmbHashMapRetornaFalse() throws ConnectException {
@@ -257,6 +309,7 @@ public class ConnexioServidorTest {
 
     /**
      * Verifica si una petició amb HashMap retorna un objecte HashMap.
+     * Simula una petició de Modificació (d'usuari o contrasenya)
      */
     @Test
     public void PeticioAmbHashMapRetornaObjecteHashMap() throws ConnectException {
