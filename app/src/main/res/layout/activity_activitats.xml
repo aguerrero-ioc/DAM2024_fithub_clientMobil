@@ -42,15 +42,15 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <TextView
+         <TextView
             android:id="@+id/tvData"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:padding="10dp"
-            tools:text="Activitats disponibles al centre" />
+            android:padding="20dp"
+            android:text="Activitats disponibles al centre:" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvActivitats"

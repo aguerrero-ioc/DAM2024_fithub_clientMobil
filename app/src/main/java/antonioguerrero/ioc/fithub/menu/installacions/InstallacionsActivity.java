@@ -20,6 +20,7 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
+import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
@@ -56,7 +57,7 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
             if (id == R.id.nav_perfil_usuari) {
                 obrirActivity(PerfilActivity.class);
             } else if(id == R.id.nav_activitats) {
-                Utils.mostrarToast(InstallacionsActivity.this, Utils.PENDENT_IMPLEMENTAR);
+                obrirActivity(ActivitatsActivity.class);
             } else if (id == R.id.nav_serveis) {
                 Utils.mostrarToast(InstallacionsActivity.this, Utils.PENDENT_IMPLEMENTAR);
             } else if (id == R.id.nav_installacions) {
@@ -78,6 +79,11 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
                 return null;
             }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
         };
 
         consulta.consultarTotesInstallacions();
@@ -93,6 +99,11 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
                 return null;
             }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
         };
 
         consulta.consultarTotesInstallacions();
@@ -104,7 +115,7 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
     @Override
     public void onInstallacionsObtingudes(List<HashMap<String, String>> installacions) {
         if (installacions != null && !installacions.isEmpty()) {
-            adapter = new InstallacionsAdapter(installacions);
+            adapter = new InstallacionsAdapter(this, installacions);
             recyclerView.setAdapter(adapter);
         } else {
             Utils.mostrarToast(InstallacionsActivity.this, "No hi ha instal·lacions disponibles");

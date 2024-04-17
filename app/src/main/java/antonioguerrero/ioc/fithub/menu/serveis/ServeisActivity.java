@@ -14,7 +14,9 @@ import com.google.android.material.navigation.NavigationView;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
+import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
+import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
@@ -48,8 +50,8 @@ public class ServeisActivity extends BaseActivity {
             int id = menuItem.getItemId();
             if (id == R.id.nav_perfil_usuari) {
                 obrirActivity(PerfilActivity.class);
-            } else if(id == R.id.nav_activitats) {
-                Utils.mostrarToast(ServeisActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_activitats) {
+                obrirActivity(ActivitatsActivity.class);
             } else if (id == R.id.nav_serveis) {
                 Utils.mostrarToast(ServeisActivity.this, Utils.PENDENT_IMPLEMENTAR);
             } else if (id == R.id.nav_installacions) {
@@ -61,7 +63,7 @@ public class ServeisActivity extends BaseActivity {
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
-        });;
+        });
     }
 
     /**

@@ -66,13 +66,41 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
             }
             @Override
             protected void onPostExecute(Object resposta) {
-                try {
-                    listener.respostaServidor(resposta);
-                } catch (ConnectException e) {
-                    e.printStackTrace();
-                }
+                processarResposta(resposta);
             }
         }.execute();
+    }
+
+    /**
+     * Mètode per processar la resposta del servidor.
+     *
+     * @param resposta Resposta del servidor.
+     */
+    private void processarResposta(Object resposta) {
+        // Verificar que la resposta no sigui nula i sigui un array d'objectes
+        if (resposta != null && resposta instanceof Object[]) {
+            Object[] respostaArray = (Object[]) resposta;
+            // Verificar que el array tingui almenys dos elements i que el primer element sigui un String
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
+                String estat = (String) respostaArray[0];
+                // Verificar si el primer element és "installacioLlista"
+                if ("installacioLlista".equals(estat)) {
+                    // Verificar si el segon element és una llista
+                    if (respostaArray[1] instanceof List) {
+                        // Convertir el segon element a una llista de HashMaps
+                        List<HashMap<String, String>> installacions = (List<HashMap<String, String>>) respostaArray[1];
+                        if (listener instanceof ConsultarTotesInstallacionsListener) {
+                            ((ConsultarTotesInstallacionsListener) listener).onInstallacionsObtingudes(installacions);
+                        }
+                        guardarDadesInstallacions(installacions);
+                        return;
+                    }
+                } else {
+                    Utils.mostrarToast(context, "Error en la consulta de instal·lacions");
+                }
+            }
+        }
+        Utils.mostrarToast(context, "Error en la resposta del servidor");
     }
 
     /**
@@ -85,48 +113,6 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         return Object[].class;
     }
 
-    /**
-     * Mètode per gestionar la resposta del servidor.
-     *
-     * @param resposta La resposta del servidor.
-     */
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
-        if (resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
-            if (respostaArray.length >= 2 && respostaArray[0] instanceof String && respostaArray[1] instanceof List) {
-                String estat = (String) respostaArray[0];
-                if ("installacioLlista".equals(estat)) {
-                    // Obtenir la llista d'instal·lacions
-                    @SuppressWarnings("unchecked")
-                    List<HashMap<String, String>> llistaInstallacions = (List<HashMap<String, String>>) respostaArray[1];
-                    // Convertir la llista d'instal·lacions a una llista d'objectes Installacio
-                    List<Installacio> installacions = new ArrayList<>();
-                    for (HashMap<String, String> mapaInstallacio : llistaInstallacions) {
-                        Installacio installacio = Installacio.hashmap_a_installacio(mapaInstallacio);
-                        installacions.add(installacio);
-                    }
-
-                    // Enviar la llista d'instal·lacions al listener
-                    ((ConsultarTotesInstallacionsListener) listener).onInstallacionsObtingudes(llistaInstallacions);
-
-                    Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
-                    // Guardar les dades de les instal·lacions a SharedPreferences
-                    guardarDadesInstallacions(llistaInstallacions);
-                    // Retornar la llista d'instal·lacions
-                    return llistaInstallacions;
-                } else {
-                    Utils.mostrarToast(context, "Error en la consulta de instalaciones");
-                }
-            } else {
-                Utils.mostrarToast(context, "Respuesta del servidor mal formada");
-            }
-        } else {
-            Utils.mostrarToast(context, "Error de conexión");
-        }
-        return null;
-    }
 
     /**
      * Mètode per executar la petició.

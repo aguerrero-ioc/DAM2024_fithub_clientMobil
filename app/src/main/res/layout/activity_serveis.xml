@@ -44,13 +44,13 @@
 
         <TextView
             android:id="@+id/tvData"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:padding="10dp"
-            tools:text="Serveis disponibles al centre" />
+            android:padding="20dp"
+            tools:text="Serveis disponibles al centre:" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvServeis"

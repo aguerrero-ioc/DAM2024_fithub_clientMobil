@@ -1,5 +1,7 @@
 package antonioguerrero.ioc.fithub.menu.installacions;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +25,19 @@ import antonioguerrero.ioc.fithub.R;
 public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdapter.ViewHolder> {
 
     private List<HashMap<String, String>> installacionsList;
+    private Context mContext;
 
     /**
      * Constructor de la classe.
      * <p>
      * @param installacionsList Llista de les instal·lacions disponibles al centre esportiu.
      */
-    public InstallacionsAdapter(List<HashMap<String, String>> installacionsList) {
+    public InstallacionsAdapter(Context context, List<HashMap<String, String>> installacionsList) {
+        this.mContext = context;
         this.installacionsList = installacionsList;
     }
+
+
 
     /**
      * Mètode que crea una nova instància de la classe ViewHolder.
@@ -57,8 +63,38 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
         HashMap<String, String> installacio = installacionsList.get(position);
         holder.nomInstallacio.setText(installacio.get("nomInstallacio"));
-        holder.descripcioInstallacio.setText(installacio.get("descripcioInstallacio"));
-        holder.tipusInstallacio.setText(installacio.get("tipusInstallacio"));
+
+        // Obtener el tipo de instalación y asignar el texto adecuado
+        String tipusInstallacio = installacio.get("tipusInstallacio");
+        if (tipusInstallacio != null) {
+            switch (tipusInstallacio) {
+                case "1":
+                    holder.tipusInstallacio.setText("Sala");
+                    break;
+                case "2":
+                    holder.tipusInstallacio.setText("Piscina");
+                    break;
+                default:
+                    holder.tipusInstallacio.setText("Desconegut");
+                    break;
+            }
+        } else {
+            holder.tipusInstallacio.setText("No definit");
+        }
+
+        // Agregar un listener de clics al botón "Més detalls"
+        holder.btnMesDetalls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Obtener los datos de la instalación para mostrar en el diálogo
+                String nom = installacio.get("nomInstallacio");
+                String descripcio = installacio.get("descripcioInstallacio");
+                String tipus = holder.tipusInstallacio.getText().toString(); // Obtener el tipo de la vista
+
+                // Crear y mostrar el diálogo con la información de la instalación
+                dialegDetallsInstallacio(nom, descripcio, tipus);
+            }
+        });
     }
 
     /**
@@ -75,13 +111,45 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
      * Classe interna que representa una vista de la llista.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nomInstallacio, descripcioInstallacio, tipusInstallacio;
+        public View btnMesDetalls;
+        TextView nomInstallacio, tipusInstallacio;
 
         public ViewHolder(View itemView) {
             super(itemView);
             nomInstallacio = itemView.findViewById(R.id.nomInstallacio);
-            descripcioInstallacio = itemView.findViewById(R.id.descripcioInstallacio);
             tipusInstallacio = itemView.findViewById(R.id.tipusInstallacio);
+            btnMesDetalls = itemView.findViewById(R.id.btnMesDetalls);
         }
     }
+
+
+    /**
+     * Mètode que mostra un diàleg amb els detalls de la instal·lació.
+     * <p>
+     * @param nomInstallacio Nom de la instal·lació.
+     * @param descripcioInstallacio Descripció de la instal·lació.
+     * @param tipusInstallacio Tipus de la instal·lació.
+     */
+    private void dialegDetallsInstallacio(String nomInstallacio, String descripcioInstallacio, String tipusInstallacio) {
+        // Inflar el diseño personalizado del diálogo
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View dialogView = inflater.inflate(R.layout.dialeg_detalls_installacio, null);
+
+        // Configurar las vistas del diseño personalizado
+        TextView tvNomInstallacio = dialogView.findViewById(R.id.tvNomInstallacio);
+        TextView tvDescripcioInstallacio = dialogView.findViewById(R.id.tvDescripcioInstallacio);
+        TextView tvTipusInstallacio = dialogView.findViewById(R.id.tvTipusInstallacio);
+
+        tvNomInstallacio.setText(nomInstallacio);
+        tvDescripcioInstallacio.setText(descripcioInstallacio);
+        tvTipusInstallacio.setText(tipusInstallacio);
+
+        // Crear el diálogo con el diseño personalizado
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(dialogView);
+        builder.setPositiveButton("D'acord", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }

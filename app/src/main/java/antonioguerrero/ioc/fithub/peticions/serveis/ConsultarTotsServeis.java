@@ -1,8 +1,9 @@
 package antonioguerrero.ioc.fithub.peticions.serveis;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.os.AsyncTask;
 
 import java.net.ConnectException;
 import java.util.HashMap;
@@ -11,108 +12,85 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
-/**
- * Classe per obtenir tots els serveis.
- * <p>
- * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir tots els serveis.
- * <p>
- * @author Antonio Guerrero
- * @version 1.0
- */
-public abstract class ConsultarTotsServeis extends ConnexioServidor {
-    private Context context;
-    private static final String ETIQUETA = "ConsultarTotsServeis";
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-    /**
-     * Constructor de la classe ConsultarTotsServeis.
-     *
-     * @param listener L'objecte que escoltarà les respostes del servidor.
-     * @param context El context de l'aplicació.
-     */
-    public ConsultarTotsServeis(respostaServidorListener listener, Context context) {
+public abstract class ConsultarTotsServeis extends ConnexioServidor {
+    private final Context context;
+    private final String sessioID;
+
+    public ConsultarTotsServeis(respostaServidorListener listener, Context context, String sessioID) {
         super(listener);
         this.context = context;
+        this.sessioID = sessioID;
     }
 
-    /**
-     * Mètode per obtenir les dades de tots els serveis.
-     */
-    public void obtenirTotsServeis() throws ConnectException {
-        enviarPeticioString("select", "serveis", null, this.sessioID);
+    public interface ConsultarTotesServeisListener {
+        void onServeisObtinguts(List<HashMap<String, String>> serveis);
     }
 
-    /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
+    @SuppressLint("StaticFieldLeak")
+    public void consultarTotesServeis() {
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    return enviarPeticioString("selectAll", "servei", null, sessioID);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object resposta) {
+                processarResposta(resposta);
+            }
+        }.execute();
+    }
+
+    private void processarResposta(Object resposta) {
+        if (resposta != null && resposta instanceof Object[]) {
+            Object[] respostaArray = (Object[]) resposta;
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
+                String estat = (String) respostaArray[0];
+                if ("serveiLlista".equals(estat)) {
+                    if (respostaArray[1] instanceof List) {
+                        List<HashMap<String, String>> serveis = (List<HashMap<String, String>>) respostaArray[1];
+                        if (listener instanceof ConsultarTotesServeisListener) {
+                            ((ConsultarTotesServeisListener) listener).onServeisObtinguts(serveis);
+                        }
+                        guardarDadesServeis(serveis);
+                        return;
+                    }
+                } else {
+                    Utils.mostrarToast(context, "Error en la consulta de servicios");
+                }
+            }
+        }
+        Utils.mostrarToast(context, "Error en la respuesta del servidor");
+    }
+
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
     }
 
-    /**
-     * Mètode per gestionar la resposta del servidor.
-     *
-     * @param resposta La resposta del servidor.
-     * @return
-     */
-    @Override
-    public List<HashMap<String, String>> respostaServidor(Object resposta) {
-        Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
-        if (resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
-            String estat = (String) respostaArray[0];
-            if (estat != null && estat.equals("serveiLlista")) {
-                // Obtenir la llista de serveis
-                List<HashMap<String, String>> llistaServeis = (List<HashMap<String, String>>) respostaArray[1];
-
-                // Guardar les dades dels serveis a SharedPreferences
-                guardarDadesServeis(llistaServeis);
-            } else {
-                Utils.mostrarToast(context, "Error en la consulta de serveis");
-            }
-        } else {
-            Utils.mostrarToast(context, "Error de connexió");
-        }
-        return null;
-    }
-
-    /**
-     * Mètode per executar la petició.
-     */
     @Override
     public void execute() throws ConnectException {
-        obtenirTotsServeis();
+        consultarTotesServeis();
     }
 
-    /**
-     * Mètode per guardar les dades dels serveis a SharedPreferences.
-     *
-     * @param llistaServeis La llista de serveis.
-     */
     private void guardarDadesServeis(List<HashMap<String, String>> llistaServeis) {
         SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
-        // Guardar les propietats de cada objecte servei a SharedPreferences
         for (int i = 0; i < llistaServeis.size(); i++) {
-            HashMap<String, String> serveiMap = llistaServeis.get(i);
-            editor.putString("IDServei" + i, serveiMap.get("IDServei"));
-            editor.putString("nomServei" + i, serveiMap.get("nomServei"));
-            editor.putString("descripcioServei" + i, serveiMap.get("descripcioServei"));
-            editor.putString("aforamentServei", serveiMap.get("aforamentServei"));
-            editor.putString("tipusInstallacio", serveiMap.get("tipusInstallacio"));
-            editor.putString("personalServei" + i, serveiMap.get("personalServei"));
-            editor.putString("preuServei" + i, serveiMap.get("preuServei"));
+            HashMap<String, String> mapaServei = llistaServeis.get(i);
+            editor.putInt("IDservei" + i, Integer.parseInt(mapaServei.get("IDservei")));
+            editor.putString("nomServei" + i, mapaServei.get("nomServei"));
+            editor.putString("descripcioServei" + i, mapaServei.get("descripcioServei"));
+            editor.putString("tipusInstallacio" + i, mapaServei.get("tipusInstallacio"));
         }
 
-        // Guardar el número de serveis
         editor.putInt("numServeis", llistaServeis.size());
-
-        // Aplicar els canvis a SharedPreferences
         editor.apply();
     }
 }

@@ -3,45 +3,40 @@ package antonioguerrero.ioc.fithub.menu.activitats;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import java.net.ConnectException;
+import java.util.HashMap;
+import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
-import antonioguerrero.ioc.fithub.objectes.Activitat;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarActivitat;
-import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
+import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
 
-/**
- * Activitat per mostrar les activitats disponibles al centre esportiu.
- *
- * @author Antonio Guerrero
- * @version 1.0
- */
-public class ActivitatsActivity extends BaseActivity implements ConsultarActivitat.ConsultarActivitatListener {
-    private Context context;
-    private String sessioID;
-    private Activitat activitat;
+public class ActivitatsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesActivitats.ConsultarTotesActivitatsListener {
 
+    private RecyclerView recyclerView;
+    private ActivitatsAdapter adapter;
 
-    /**
-     * Mètode que s'executa quan es crea l'activitat.
-     * @param savedInstanceState L'estat guardat de l'activitat.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activitats);
+
+        recyclerView = findViewById(R.id.rvActivitats);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
@@ -55,8 +50,8 @@ public class ActivitatsActivity extends BaseActivity implements ConsultarActivit
             int id = menuItem.getItemId();
             if (id == R.id.nav_perfil_usuari) {
                 obrirActivity(PerfilActivity.class);
-            } else if(id == R.id.nav_activitats) {
-                Utils.mostrarToast(ActivitatsActivity.this, Utils.PENDENT_IMPLEMENTAR);
+            } else if (id == R.id.nav_activitats) {
+                obrirActivity(ActivitatsActivity.class);
             } else if (id == R.id.nav_serveis) {
                 Utils.mostrarToast(ActivitatsActivity.this, Utils.PENDENT_IMPLEMENTAR);
             } else if (id == R.id.nav_installacions) {
@@ -68,32 +63,62 @@ public class ActivitatsActivity extends BaseActivity implements ConsultarActivit
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
-        });;
+        });
 
-        // Configura el fragment de les activitats
+        // Obtenir sessioID de l'usuari
+        SharedPreferences preferences = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        ConsultarTotesActivitats consulta = new ConsultarTotesActivitats(this, this, sessioID) {
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
 
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+        };
+
+        consulta.consultarTotesActivitats();
     }
 
-    /**
-     * Mètode per tancar la sessió de l'usuari.
-     */
-    public void tancarSessioClicat() {
-        SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        int IDUsuari = preferencies.getInt("IDusuari", -1);
-        String IDUsuariStr = String.valueOf(IDUsuari);
+    public void consultarTotesActivitats(View view) {
+        // Obtenir sessioID de l'usuari
+        SharedPreferences preferences = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
 
-        if (!IDUsuariStr.equals("-1")) {
-            PeticioLogout peticioLogout = new PeticioLogout((ConnexioServidor.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
-            peticioLogout.execute();
-            preferencies.edit().clear().apply();
+        ConsultarTotesActivitats consulta = new ConsultarTotesActivitats(this, this, sessioID) {
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+        };
+
+        consulta.consultarTotesActivitats();
+    }
+
+    @Override
+    public void onActivitatsObtingudes(List<HashMap<String, String>> activitats) {
+        if (activitats != null && !activitats.isEmpty()) {
+            adapter = new ActivitatsAdapter(this, activitats);
+            recyclerView.setAdapter(adapter);
         } else {
-            Log.e("ETIQUETA", "IDusuari no definit");
+            Utils.mostrarToast(ActivitatsActivity.this, "No hi ha activitats disponibles");
         }
     }
 
+    @Override
+    public void respostaServidor(Object resposta) throws ConnectException {
+    }
 
     @Override
-    public void onActivitatObtinguda(Activitat activitat) {
-
+    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+        return null;
     }
 }

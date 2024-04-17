@@ -22,6 +22,7 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
+import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPassadesFragment;
@@ -111,7 +112,7 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
             if (id == R.id.nav_perfil_usuari) {
                 obrirActivity(PerfilActivity.class);
             } else if(id == R.id.nav_activitats) {
-                Utils.mostrarToast(ClientActivity.this, Utils.PENDENT_IMPLEMENTAR);
+                obrirActivity(ActivitatsActivity.class);
             } else if (id == R.id.nav_serveis) {
                 Utils.mostrarToast(ClientActivity.this, Utils.PENDENT_IMPLEMENTAR);
             } else if (id == R.id.nav_installacions) {
