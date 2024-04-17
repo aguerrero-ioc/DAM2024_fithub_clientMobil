@@ -66,7 +66,11 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
             }
             @Override
             protected void onPostExecute(Object resposta) {
-                respostaServidor(resposta);
+                try {
+                    listener.respostaServidor(resposta);
+                } catch (ConnectException e) {
+                    e.printStackTrace();
+                }
             }
         }.execute();
     }

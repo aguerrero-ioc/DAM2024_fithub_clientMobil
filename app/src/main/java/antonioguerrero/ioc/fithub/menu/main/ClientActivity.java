@@ -25,6 +25,8 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesPasadesFragment;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesRealitzadesFragment;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
@@ -58,7 +60,7 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
         }
 
 
-        PaginesReservesAdapter reservasPagerAdapter = new PaginesReservesAdapter(getSupportFragmentManager());
+        PaginesReservesAdapter reservasPagerAdapter = new PaginesReservesAdapter(getSupportFragmentManager(), reservasFalsas);
         viewPager.setAdapter(reservasPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -104,14 +106,24 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
 
 
     private static class PaginesReservesAdapter extends FragmentPagerAdapter {
-        public PaginesReservesAdapter(FragmentManager fm) {
+        public PaginesReservesAdapter(FragmentManager fm, List<HashMap<String, String>> reserves) {
             super(fm);
         }
 
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            return null;
+            switch (position) {
+                case 0:
+                    ReservesRealitzadesFragment reservesRealitzadesFragment = new ReservesRealitzadesFragment();
+                    return reservesRealitzadesFragment;
+                case 1:
+                    ReservesPasadesFragment reservesPasadesFragment = new ReservesPasadesFragment();
+                    // Aquí puedes añadir argumentos al fragmento si es necesario
+                    return reservesPasadesFragment;
+                default:
+                    throw new IllegalArgumentException("Invalid position: " + position);
+            }
         }
 
 
