@@ -32,7 +32,7 @@ public class PaginesReservesAdapter extends FragmentPagerAdapter {
                 ReservesRealitzadesFragment reservesRealitzadesFragment = ReservesRealitzadesFragment.newInstance(reservas);
                 return reservesRealitzadesFragment;
             case 1:
-                ReservesPasadesFragment reservesPasadesFragment = ReservesPasadesFragment.newInstance(reservas);
+                ReservesPassadesFragment reservesPasadesFragment = ReservesPassadesFragment.newInstance(reservas);
                 return reservesPasadesFragment;
             default:
                 throw new IllegalArgumentException("Invalid position: " + position);

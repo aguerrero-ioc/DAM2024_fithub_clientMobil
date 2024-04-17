@@ -16,7 +16,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.net.ConnectException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +24,7 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPasadesFragment;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesPassadesFragment;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesRealitzadesFragment;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
@@ -45,24 +44,59 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
 
-        // Configurar ViewPager y TabLayout per a les reserves
+        // Configurar ViewPager i TabLayout per a les pàgines de reserves
         ViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
 
-        // Crear una llista de reserves falses per a les proves
-        List<HashMap<String, String>> reservasFalsas = new ArrayList<>();
+
+        // Crear el adaptador
+        PaginesReservesAdapter reservesAdapter = new PaginesReservesAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(reservesAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        // CODI PENDENT D'IMPLEMENTAR PER A OBTENIR LES RESERVES
+        /*List<HashMap<String, String>> reservesPassades = new ArrayList<>();
+        List<HashMap<String, String>> reservesRealitzades = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             HashMap<String, String> reservaFalsa = new HashMap<>();
             reservaFalsa.put("id", "reserva" + i);
-            reservaFalsa.put("fecha", "data" + i);
+            reservaFalsa.put("data", "data" + i);
             reservaFalsa.put("hora", "hora" + i);
-            reservasFalsas.add(reservaFalsa);
+            // Afegeix la reserva a la llista corresponent
+            if (esReservaPassada(reservaFalsa.get("data"))) { // Comprovar si la reserva és passada
+                reservesPassades.add(reservaFalsa);
+            } else {
+                reservesRealitzades.add(reservaFalsa);
+            }
         }
 
-
-        PaginesReservesAdapter reservasPagerAdapter = new PaginesReservesAdapter(getSupportFragmentManager(), reservasFalsas);
-        viewPager.setAdapter(reservasPagerAdapter);
+        // Crear el adaptador de pàgines de reserves passades
+        PaginesReservesAdapter reservesPassadesAdapter = new PaginesReservesAdapter(getSupportFragmentManager(), reservesPassades);
+        // Crear el adaptador de pàgines de reserves realitzades
+        PaginesReservesAdapter reservesRealitzadesAdapter = new PaginesReservesAdapter(getSupportFragmentManager(), reservesRealitzades);
+        viewPager.setAdapter(reservesAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+    private boolean esReservaPassada(HashMap<String, String> reserva) {
+        // Obtenir la data actual
+        Calendar calendar = Calendar.getInstance();
+        Date dataActual = calendar.getTime();
+
+        // Obtenir la data de la reserva
+        String fechaReservaString = reserva.get("data");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date dataReserva;
+        try {
+            dataReserva = dateFormat.parse(dataReservaString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false; // La reserva no es passada
+        }
+
+        // Comparar les dates
+        return dataReserva.before(dataActual);
+    }*/
+
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
@@ -106,7 +140,7 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
 
 
     private static class PaginesReservesAdapter extends FragmentPagerAdapter {
-        public PaginesReservesAdapter(FragmentManager fm, List<HashMap<String, String>> reserves) {
+        public PaginesReservesAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -118,7 +152,7 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
                     ReservesRealitzadesFragment reservesRealitzadesFragment = new ReservesRealitzadesFragment();
                     return reservesRealitzadesFragment;
                 case 1:
-                    ReservesPasadesFragment reservesPasadesFragment = new ReservesPasadesFragment();
+                    ReservesPassadesFragment reservesPasadesFragment = new ReservesPassadesFragment();
                     // Aquí puedes añadir argumentos al fragmento si es necesario
                     return reservesPasadesFragment;
                 default:
