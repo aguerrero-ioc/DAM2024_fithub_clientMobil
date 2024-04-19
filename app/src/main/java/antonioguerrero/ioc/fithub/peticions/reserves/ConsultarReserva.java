@@ -23,32 +23,34 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 public abstract class ConsultarReserva extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultarReserva";
-    private int IDReserva;
+    private int IDreserva;
 
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    SharedPreferences preferencies;
+    String sessioID;
 
     /**
      * Constructor de la classe ConsultarReserva.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
      * @param context  Context de l'aplicació.
-     * @param idReserva  ID de la reserva a consultar.
+     * @param IDreserva  ID de la reserva a consultar.
      */
-    public ConsultarReserva(respostaServidorListener listener, Context context, int idReserva) {
+    public ConsultarReserva(respostaServidorListener listener, Context context, int IDreserva) {
         super(listener);
         this.context = context;
-        this.IDReserva = IDReserva;
+        this.IDreserva = IDreserva;
+        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     /**
      * Mètode per consultar les dades d'una reserva.
      *
-     * @param idReserva L'ID de la reserva a consultar.
+     * @param IDreserva L'ID de la reserva a consultar.
      */
-    public void consultarReserva(int idReserva) throws ConnectException {
-        String idReservaString = Integer.toString(idReserva);
-        enviarPeticioString("select", "reserva", idReservaString, this.sessioID);
+    public void consultarReserva(int IDreserva) throws ConnectException {
+        String IDreservaString = Integer.toString(IDreserva);
+        enviarPeticioString("select", "reserva", IDreservaString, this.sessioID);
     }
 
     /**

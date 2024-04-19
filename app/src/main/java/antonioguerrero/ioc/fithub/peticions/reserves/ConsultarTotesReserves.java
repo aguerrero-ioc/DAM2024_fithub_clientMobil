@@ -23,8 +23,8 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
     private Usuari usuari;
     private static final String ETIQUETA = "ConsultarTotesReserves";
 
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    SharedPreferences preferencies;
+    String sessioID;
 
     /**
      * Constructor de la classe
@@ -36,7 +36,7 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
         super(listener);
         this.context = context;
         this.usuari = usuari;
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
