@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Reserva {
 
     // Dades obligatòries de la reserva
-    private int IDReserva;
+    private int IDreserva;
     private int IDusuari;
 
 
@@ -23,7 +23,7 @@ public class Reserva {
      * Constructor de la classe Reserva reduït.
      */
     public Reserva() {
-        this.IDReserva = IDReserva;
+        this.IDreserva = IDreserva;
         this.IDusuari = IDusuari;
     }
 
@@ -36,18 +36,18 @@ public class Reserva {
      * @return L'identificador de la reserva.
      */
 
-    public int getIDReserva() {
-        return IDReserva;
+    public int getIDreserva() {
+        return IDreserva;
     }
 
     /**
      * Estableix l'identificador de la reserva.
      *
-     * @param IDReserva L'identificador de la reserva.
+     * @param IDreserva L'identificador de la reserva.
      */
 
-    public void setIDReserva(int IDReserva) {
-        this.IDReserva = IDReserva;
+    public void setIDreserva(int IDreserva) {
+        this.IDreserva = IDreserva;
     }
 
     /**
@@ -77,8 +77,8 @@ public class Reserva {
     public HashMap<String, String> reserva_a_hashmap(Reserva reserva) {
         HashMap<String, String> mapaReserva = new HashMap<>();
         mapaReserva.put("objectType","reserva");
-        mapaReserva.put("id",Integer.toString(reserva.getIDReserva()));
-        mapaReserva.put("idUsuari",Integer.toString(reserva.getIDusuari()));
+        mapaReserva.put("IDreserva",Integer.toString(reserva.getIDreserva()));
+        mapaReserva.put("IDusuari",Integer.toString(reserva.getIDusuari()));
         return mapaReserva;
     }
 
@@ -90,8 +90,8 @@ public class Reserva {
      */
     public Reserva hashmap_a_reserva(HashMap<String, String> mapaReserva) {
         Reserva reserva = new Reserva();
-        reserva.setIDReserva(Integer.parseInt(mapaReserva.get("id")));
-        reserva.setIDusuari(Integer.parseInt(mapaReserva.get("idUsuari")));
+        reserva.setIDreserva(Integer.parseInt(mapaReserva.get("IDreserva")));
+        reserva.setIDusuari(Integer.parseInt(mapaReserva.get("IDusuari")));
         return reserva;
     }
 

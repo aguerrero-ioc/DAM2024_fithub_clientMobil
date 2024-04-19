@@ -20,29 +20,32 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  */
 public abstract class EliminarReserva extends ConnexioServidor {
 
-    private int IDReserva;
+    private int IDreserva;
     private Context context;
     private static final String ETIQUETA = "EliminarReserva";
-
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    SharedPreferences preferencies;
+    String sessioID;
 
     /**
      * Constructor de la classe EliminarReserva.
      *
      * @param listener L'objecte que escoltarà les respostes del servidor.
+     * @param context  Context de l'aplicació.
+     * @param IDreserva  ID de la reserva a eliminar.
      */
-    public EliminarReserva(ConnexioServidor.respostaServidorListener listener, Context context, int IDReserva) {
+    public EliminarReserva(ConnexioServidor.respostaServidorListener listener, Context context, int IDreserva) {
         super(listener);
         this.context = context;
-        this.IDReserva = IDReserva;
+        this.IDreserva = IDreserva;
+        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     /**
      * Mètode per eliminar una reserva.
      */
     public void eliminarReserva() throws ConnectException {
-        String IDReservaString = Integer.toString(IDReserva);
+        String IDReservaString = Integer.toString(IDreserva);
 
         enviarPeticioString("delete", "reserva", IDReservaString, this.sessioID);
     }

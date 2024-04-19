@@ -23,17 +23,21 @@ public abstract class CrearReserva extends ConnexioServidor {
     private Reserva reserva;
     private Context context;
     private static final String ETIQUETA = "CrearReserva";
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    SharedPreferences preferencies;
+    String sessioID;
 
     /**
      * Constructor de la classe
-     * @param listener Listener que s'encarrega de gestionar la resposta del servidor
-     * @param reserva Objecte Reserva que es vol crear
+     * @param listener Listener per a la resposta del servidor
+     * @param reserva Reserva a crear
+     * @param context Context de l'aplicació
      */
-    public CrearReserva(ConnexioServidor.respostaServidorListener listener, Reserva reserva) {
+    public CrearReserva(ConnexioServidor.respostaServidorListener listener, Reserva reserva, Context context) {
         super(listener);
         this.reserva = reserva;
+        this.context = context;
+        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
 
     /**
@@ -43,8 +47,8 @@ public abstract class CrearReserva extends ConnexioServidor {
     public void crearReserva() throws ConnectException {
         // Convertir el objecte Reserva a un HashMap
         HashMap<String, String> mapaReserva = Utils.ObjecteAHashMap(reserva);
-        mapaReserva.put("IDReserva", String.valueOf(reserva.getIDReserva()));
-        mapaReserva.put("IDUsuari", String.valueOf(reserva.getIDusuari()));
+        mapaReserva.put("IDreserva", String.valueOf(reserva.getIDreserva()));
+        mapaReserva.put("IDusuari", String.valueOf(reserva.getIDusuari()));
 
         enviarPeticioHashMap("insert", "reserva", mapaReserva, this.sessioID);
     }
