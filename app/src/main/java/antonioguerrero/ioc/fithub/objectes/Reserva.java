@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Reserva {
 
     // Dades obligatòries de la reserva
-    private int IDreserva;
+    private int IDclasseDirigida;
     private int IDusuari;
 
 
@@ -23,7 +23,7 @@ public class Reserva {
      * Constructor de la classe Reserva reduït.
      */
     public Reserva() {
-        this.IDreserva = IDreserva;
+        this.IDclasseDirigida = IDclasseDirigida;
         this.IDusuari = IDusuari;
     }
 
@@ -36,18 +36,18 @@ public class Reserva {
      * @return L'identificador de la reserva.
      */
 
-    public int getIDreserva() {
-        return IDreserva;
+    public int getIDclasseDirigida() {
+        return IDclasseDirigida;
     }
 
     /**
      * Estableix l'identificador de la reserva.
      *
-     * @param IDreserva L'identificador de la reserva.
+     * @param IDclasseDirigida L'identificador de la reserva.
      */
 
-    public void setIDreserva(int IDreserva) {
-        this.IDreserva = IDreserva;
+    public void setIDclasseDirigida(int IDclasseDirigida) {
+        this.IDclasseDirigida = IDclasseDirigida;
     }
 
     /**

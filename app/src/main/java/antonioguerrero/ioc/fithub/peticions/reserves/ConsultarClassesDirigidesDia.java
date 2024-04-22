@@ -1,16 +1,16 @@
 package antonioguerrero.ioc.fithub.peticions.reserves;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 
 import java.net.ConnectException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-//import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 
 /**
  * Classe per obtenir les classes dirigides d'un dia.
@@ -24,9 +24,7 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
 
     private String dia;
     private Context context;
-    private SharedPreferences preferencies;
     private String sessioID;
-    private static final String ETIQUETA = "ConsultarClasseDirigidaDia";
 
     /**
      * Constructor de la classe.
@@ -35,29 +33,42 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
      * @param context  Context de l'aplicació.
      * @param dia      Dia de les classes dirigides a obtenir.
      */
-    public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context, String dia) {
+    public ConsultarClassesDirigidesDia(respostaServidorListener listener, Context context, String dia, String sessioID) {
         super(listener);
         this.context = context;
         this.dia = dia;
-        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        this.sessioID = sessioID;
+    }
+
+    public abstract void onClassesDirigidesDiaObtingudes(List<HashMap<String, String>> classesDirigides);
+
+    /**
+     * Interfície per obtenir la resposta del servidor.
+     */
+    public interface ConsultarClassesDirigidesDiaListener {
+        void onClassesDirigidesDiaObtingudes(List<HashMap<String, String>> classesDirigides);
     }
 
     /**
-     * Mètode per obtenir les classes dirigides d'un dia del servidor.
+     * Mètode per obtenir les classes dirigides d'un dia.
      */
-    public void obtenirClassesDirigides() throws ConnectException {
-        enviarPeticioString("selectAll", "classe", dia, this.sessioID);
-    }
+    @SuppressLint("StaticFieldLeak")
+    public void consultarClassesDirigidesDia() {
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    return enviarPeticioString("selectAll", "classeDirigida", dia, sessioID);
+                } catch (ConnectException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
-    /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
+            @Override
+            protected void onPostExecute(Object resposta) {
+                processarResposta(resposta);
+            }
+        }.execute();
     }
 
     /**
@@ -66,23 +77,32 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
      * @param resposta La resposta del servidor.
      * @return La llista de dades de les classes dirigides.
      */
-    @Override
-    public List<HashMap<String, String>> respostaServidor(Object resposta) {
-        if (resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
-            String estat = (String) respostaArray[0];
-            if (estat != null && estat.equals("classeDirigida")) {
-                ArrayList<HashMap<String, String>> dadesClassesDirigides = (ArrayList<HashMap<String, String>>) respostaArray[1];
 
-                // Guardar les dades de les instal·lacions a SharedPreferences
-                guardarDadesClassesDirigides(dadesClassesDirigides);
-            } else {
-                Utils.mostrarToast(context, "Error en la consulta de clases dirigidas");
+    public void processarResposta(Object resposta) {
+        // Verificar que la resposta no sigui nula i sigui un array d'objectes
+        if (resposta != null && resposta instanceof Object[]) {
+            Object[] respostaArray = (Object[]) resposta;
+            // Verificar que el array tingui almenys dos elements i que el primer element sigui un String
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
+                String estat = (String) respostaArray[0];
+                // Verificar si el primer element és "classeDirigidaLlista"
+                if ("classeDirigidaLlista".equals(estat)) {
+                    // Verificar si el segon element és una llista
+                    if (respostaArray[1] instanceof List) {
+                        // Convertir el segon element a una llista de HashMaps
+                        List<HashMap<String, String>> classesDirigides = (List<HashMap<String, String>>) respostaArray[1];
+                        if (listener instanceof ConsultarClassesDirigidesDiaListener) {
+                            ((ConsultarClassesDirigidesDiaListener) listener).onClassesDirigidesDiaObtingudes(classesDirigides);
+                        }
+                        guardarDadesClassesDirigides(classesDirigides);
+                        return;
+                    }
+                } else {
+                    Utils.mostrarToast(context, "Error en la consulta de instal·lacions");
+                }
             }
-        } else {
-            Utils.mostrarToast(context, "Error de conexión");
         }
-        return null;
+        Utils.mostrarToast(context, "Error en la resposta del servidor");
     }
 
     /**
@@ -97,12 +117,11 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
         // Guardar les dades de les classes dirigides a SharedPreferences
         for (int i = 0; i < dadesClassesDirigides.size(); i++) {
             HashMap<String, String> mapaClassesDirigides = dadesClassesDirigides.get(i);
-            editor.putInt("IDActivitat" + i, Integer.parseInt(mapaClassesDirigides.get("IDActivitat")));
-            editor.putInt("IDInstallacio" + i, Integer.parseInt(mapaClassesDirigides.get("IDInstallacio")));
+            editor.putInt("IDactivitat" + i, Integer.parseInt(mapaClassesDirigides.get("IDactivitat")));
+            editor.putInt("IDinstallacio" + i, Integer.parseInt(mapaClassesDirigides.get("IDinstallacio")));
             editor.putString("dia" + i, mapaClassesDirigides.get("dia"));
             editor.putString("horaInici" + i, mapaClassesDirigides.get("horaInici"));
             editor.putInt("duracio" + i, Integer.parseInt(mapaClassesDirigides.get("duracio")));
-
         }
 
         // Guardar la quantitat de classes dirigides a SharedPreferences
@@ -110,13 +129,5 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
 
         // Aplicar els canvis a SharedPreferences
         editor.apply();
-    }
-
-    /**
-     * Mètode per executar la petició.
-     */
-    @Override
-    public void execute() throws ConnectException {
-        obtenirClassesDirigides();
     }
 }

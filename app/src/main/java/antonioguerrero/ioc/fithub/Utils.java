@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Classe d'utilitats amb mètodes útils per a diverses funcionalitats.
@@ -50,16 +51,29 @@ public class Utils {
     public static final String FORMAT_DATA = "dd-MM-yyyy";
 
     /**
-     * Obté la data actual en format de cadena.
+     * Método para obtener la fecha actual formateada como "ddMMyyyy".
      *
-     * @return Data actual en format "dd-MM-yyyy"
+     * @return Fecha actual formateada como "ddMMyyyy".
      */
     public static String obtenirDataActual() {
-        // Obté la data actual
-        Date dataActual = Calendar.getInstance().getTime();
-        // Formateja la data en el format desitjat
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatData = new SimpleDateFormat("ddMMyyyy");
-        return formatData.format(dataActual);
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes = calendar.get(Calendar.MONTH) + 1; // Se agrega 1 ya que enero se considera como 0
+        int any = calendar.get(Calendar.YEAR);
+
+        return obtenirDataFormatejada(dia, mes, any);
+    }
+
+    /**
+     * Método para obtener la fecha formateada como "ddMMyyyy".
+     *
+     * @param dia Día.
+     * @param mes Mes.
+     * @param any Año.
+     * @return Fecha formateada como "ddMMyyyy".
+     */
+    public static String obtenirDataFormatejada(int dia, int mes, int any) {
+        return String.format(Locale.getDefault(), "%02d%02d%04d", dia, mes, any);
     }
 
     /**

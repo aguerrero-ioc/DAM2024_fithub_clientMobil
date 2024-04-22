@@ -45,6 +45,10 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
     }
+
+    /**
+     * Interfície per obtenir la resposta del servidor.
+     */
     public interface ConsultarTotesInstallacionsListener {
         void onInstallacionsObtingudes(List<HashMap<String, String>> installacions);
     }

@@ -19,6 +19,7 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
@@ -57,10 +58,12 @@ public class BaseActivity extends AppCompatActivity{
             obrirActivity(PerfilActivity.class);
         } else if(id == R.id.nav_activitats) {
             obrirActivity(ActivitatsActivity.class);
-        } else if (id == R.id.nav_serveis || id == R.id.nav_reserves) {
+        } else if (id == R.id.nav_serveis) {
             Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR);
         } else if (id == R.id.nav_installacions) {
             obrirActivity(InstallacionsActivity.class);
+        } else if (id == R.id.nav_reserves) {
+            obrirActivity(ReservesActivity.class);
         } else if (id == R.id.nav_tancar_sessio) {
             tancarSessioClicat();
         }

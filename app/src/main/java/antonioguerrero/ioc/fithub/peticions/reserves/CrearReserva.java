@@ -47,7 +47,7 @@ public abstract class CrearReserva extends ConnexioServidor {
     public void crearReserva() throws ConnectException {
         // Convertir el objecte Reserva a un HashMap
         HashMap<String, String> mapaReserva = Utils.ObjecteAHashMap(reserva);
-        mapaReserva.put("IDreserva", String.valueOf(reserva.getIDreserva()));
+        mapaReserva.put("IDclasseDirigida", String.valueOf(reserva.getIDclasseDirigida()));
         mapaReserva.put("IDusuari", String.valueOf(reserva.getIDusuari()));
 
         enviarPeticioHashMap("insert", "reserva", mapaReserva, this.sessioID);
@@ -84,10 +84,6 @@ public abstract class CrearReserva extends ConnexioServidor {
             Log.d(ETIQUETA, "Reserva creada con éxito");
             // Mostra un missatge de confirmació a l'usuari
             Utils.mostrarToast(context, "Reserva confirmada");
-            // Redirigeix a l'usuari a la pantalla de Reserves
-        /*Intent intent = new Intent(context, ReservesActivity.class);
-        context.startActivity(intent);
-        ((Activity) context).finish();*/
         } else {
             String missatgeError = (String) respostaArray[1];
             Log.d(ETIQUETA, "Error en crear la reserva: " + missatgeError);

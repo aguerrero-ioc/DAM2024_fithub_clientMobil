@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <!-- Nom de la classe dirigida -->
+    <TextView
+        android:id="@+id/tvNomClasseDirigidaEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvNomClasseDirigida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomClasseDirigidaEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Hora d'inici de la classe dirigida -->
+    <TextView
+        android:id="@+id/tvHoraIniciEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomClasseDirigida"
+        android:layout_marginTop="16dp"
+        android:text="Hora d'inici: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvHoraInici"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvHoraIniciEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Duració de la classe dirigida -->
+    <TextView
+        android:id="@+id/tvDuracioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvHoraInici"
+        android:layout_marginTop="16dp"
+        android:text="Duració: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvDuracio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDuracioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+</RelativeLayout>

@@ -45,9 +45,7 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
      * @throws ConnectException
      */
     public void consultarTotesReserves() throws ConnectException {
-        String IDUsuariString = Integer.toString(usuari.getIDusuari());
-
-        enviarPeticioString("selectAll", "reserva", IDUsuariString, this.sessioID);
+        enviarPeticioString("selectAll", "reserva", usuari.getCorreuUsuari(), this.sessioID);
     }
 
     /**
