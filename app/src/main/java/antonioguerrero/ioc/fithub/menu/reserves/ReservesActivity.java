@@ -1,28 +1,41 @@
 package antonioguerrero.ioc.fithub.menu.reserves;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
 import java.net.ConnectException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.peticions.reserves.ConsultarClassesDirigidesDia;
 
 /**
- * Activitat per mostrar les classes dirigides disponibles per a un dia concret.
+ * Activitat que mostra les reserves de classes dirigides.
+ * <p>
+ * Aquesta activitat permet consultar les classes dirigides disponibles per a una data concreta.
+ * L'usuari pot seleccionar una data i consultar les classes dirigides disponibles per a aquesta data.
+ * Les classes dirigides es mostren en una llista, on per a cada classe dirigida es mostra el nom, l'hora d'inici i un botó per a més detalls.
+ * Quan es fa clic al botó "Més detalls", es mostra un diàleg amb la informació de la classe dirigida.
+ * Aquest diàleg mostra el nom de la classe, l'hora d'inici i la durada de la classe.
  * <p>
  * @author Antonio Guerrero
  * @version 1.0
@@ -30,9 +43,16 @@ import antonioguerrero.ioc.fithub.peticions.reserves.ConsultarClassesDirigidesDi
 public class ReservesActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarClassesDirigidesDia.ConsultarClassesDirigidesDiaListener {
 
     private RecyclerView recyclerView;
+    private TextView tvTitol;
     private TextView tvData;
-    private DatePicker datePicker;
+    private ImageView ivEdit;
+    private Calendar calendari;
 
+    /**
+     * Mètode que s'executa quan es crea l'activitat.
+     *
+     * @param savedInstanceState L'estat guardat de l'activitat.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,35 +60,70 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
 
         recyclerView = findViewById(R.id.rvClassesDirigides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        tvTitol = findViewById(R.id.tvTitol);
         tvData = findViewById(R.id.tvData);
-        datePicker = findViewById(R.id.datePicker);
+        ivEdit = findViewById(R.id.ivEdit);
 
-        // Obtenir la data actual
-        String dataActual = Utils.obtenirDataActual();
-        tvData.setText(dataActual);
+        // Configura el botó flotant de missatges
+        FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR));
 
-        consultarClassesDirigides(dataActual);
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
+            return true;
+        });
+
+        // Obte la data actual
+        String currentDate = Utils.obtenirDataActual();
+        tvTitol.setText("Classes disponibles:");
+        tvData.setText(convertirData(currentDate));
+
+        // Establece la acción al hacer clic en el TextView de la fecha
+        tvData.setOnClickListener(v -> mostrarDialegSeleccioData());
+
+        // Establece la acción al hacer clic en el icono de edición de la fecha
+        ivEdit.setOnClickListener(v -> mostrarDialegSeleccioData());
+
+        consultarClassesDirigides(currentDate);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
 
-    public void consultarClassesDirigidesDia(View view) {
-        // Obtenir la data seleccionada
-        int dia = datePicker.getDayOfMonth();
-        int mes = datePicker.getMonth() + 1; // Se agrega 1 ya que enero se considera como 0
-        int any = datePicker.getYear();
-        String dataSeleccionada = Utils.obtenirDataFormatejada(dia, mes, any);
-        tvData.setText(dataSeleccionada);
-
-        consultarClassesDirigides(dataSeleccionada);
+        calendari = Calendar.getInstance();
     }
 
     /**
-     * Consulta las clases dirigidas para una fecha específica.
+     * Mostra un diàleg de selecció de data.
+     */
+    private void mostrarDialegSeleccioData() {
+        DatePickerDialog.OnDateSetListener listenerDataSeleccionada = (view, any, mes, dia) -> {
+            calendari.set(Calendar.YEAR, any);
+            calendari.set(Calendar.MONTH, mes);
+            calendari.set(Calendar.DAY_OF_MONTH, dia);
+
+            String dataSeleccionada = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(calendari.getTime());
+            tvData.setText(convertirData(dataSeleccionada));
+            consultarClassesDirigides(dataSeleccionada);
+        };
+
+        new DatePickerDialog(
+                this,
+                listenerDataSeleccionada,
+                calendari.get(Calendar.YEAR),
+                calendari.get(Calendar.MONTH),
+                calendari.get(Calendar.DAY_OF_MONTH)
+        ).show();
+    }
+
+
+
+    /**
+     * Mètode per consultar les classes dirigides disponibles per a una data concreta.
      *
-     * @param dataSeleccionada Fecha para la que se consultan las clases dirigidas.
+     * @param dataSeleccionada Data seleccionada.
      */
     private void consultarClassesDirigides(String dataSeleccionada) {
         // Obtenir sessioID de l'usuari
@@ -102,7 +157,7 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
             }
 
             @Override
-            public void execute() throws ConnectException {
+            public void execute() {
 
             }
         };
@@ -110,6 +165,11 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
         consulta.consultarClassesDirigidesDia();
     }
 
+    /**
+     * Mètode per gestionar les classes dirigides obtingudes.
+     *
+     * @param classesDirigides Llista de classes dirigides.
+     */
     @Override
     public void onClassesDirigidesDiaObtingudes(List<HashMap<String, String>> classesDirigides) {
         if (classesDirigides != null && !classesDirigides.isEmpty()) {
@@ -120,12 +180,43 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
         }
     }
 
+    /**
+     * Mètode per gestionar la resposta del servidor.
+     *
+     * @param resposta Resposta del servidor.
+     */
     @Override
     public void respostaServidor(Object resposta) throws ConnectException {
     }
 
+    /**
+     * Mètode per obtenir una llista de hashmaps.
+     *
+     * @param resposta Resposta del servidor.
+     * @return Llista de hashmaps.
+     */
     @Override
     public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         return null;
     }
+
+    /**
+     * Converteix la data al format "Dia de la setmana, dd de mes de any".
+     *
+     * @param data Data en format "ddMMyyyy".
+     * @return Data formatada com a "Dia de la setmana, dd de mes de any".
+     */
+    private String convertirData(String data) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+            Date date = sdf.parse(data);
+            sdf.applyPattern("EEEE, dd MMMM 'de' yyyy");
+            String dataFormatejada = sdf.format(date);
+            return dataFormatejada.substring(0, 1).toUpperCase() + dataFormatejada.substring(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 }

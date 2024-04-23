@@ -16,22 +16,27 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.R;
 
 /**
- * Adaptador para la lista de clases dirigidas disponibles en el centro deportivo.
+ * Adaptador per a la llista de classes dirigides disponibles en el centre esportiu.
  * <p>
- * Este adaptador se encarga de mostrar los datos de las clases dirigidas en una lista.
+ * Aquest adaptador s'encarrega de mostrar les classes dirigides disponibles en el centre esportiu.
+ * Per a cada classe dirigida, es mostra el nom, l'hora d'inici i un botó per a més detalls.
+ * Quan es fa clic al botó "Més detalls", es mostra un diàleg amb la informació de la classe dirigida.
+ * Aquest diàleg mostra el nom de la classe, l'hora d'inici i la durada de la classe.
  * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
+
 public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigidesAdapter.ViewHolder> {
 
     private final List<HashMap<String, String>> classesDirigidesList;
     private final Context mContext;
 
     /**
-     * Constructor de la clase.
+     * Constructor de la classe.
      * <p>
-     * @param classesDirigidesList Lista de clases dirigidas disponibles en el centro deportivo.
+     * @param context Context de l'aplicació.
+     * @param classesDirigidesList Llista de classes dirigides.
      */
     public ClassesDirigidesAdapter(Context context, List<HashMap<String, String>> classesDirigidesList) {
         this.mContext = context;
@@ -39,11 +44,11 @@ public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigid
     }
 
     /**
-     * Método que crea una nueva instancia de la clase ViewHolder.
+     * Mètode que crea una nova instància de la classe ViewHolder.
      * <p>
-     * @param parent Vista padre.
-     * @param viewType Tipo de vista.
-     * @return Instancia de la clase ViewHolder.
+     * @param parent Vista pare on es mostrarà la nova vista.
+     * @param viewType Tipus de la nova vista.
+     * @return Instància de la classe ViewHolder.
      */
     @NonNull
     @Override
@@ -53,11 +58,10 @@ public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigid
     }
 
     /**
-     * Método que se ejecuta para cada elemento de la lista.
-     * Se encarga de mostrar los datos de las clases dirigidas.
+     * Mètode que enllaça les dades de la llista amb les vistes de la llista.
      * <p>
-     * @param holder Instancia de la clase ViewHolder.
-     * @param position Posición del elemento en la lista.
+     * @param holder Vista de la llista.
+     * @param position Posició de l'element de la llista.
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -78,9 +82,9 @@ public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigid
     }
 
     /**
-     * Método que retorna el número de elementos de la lista.
+     * Mètode que retorna el nombre d'elements de la llista.
      * <p>
-     * @return Número de elementos de la lista.
+     * @return Nombre d'elements de la llista.
      */
     @Override
     public int getItemCount() {
@@ -88,7 +92,9 @@ public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigid
     }
 
     /**
-     * Clase interna que representa una vista de la lista.
+     * Classe interna que representa una vista de la llista.
+     * <p>
+     * Aquesta classe conté les vistes que es mostraran per a cada element de la llista.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View btnReservar;
@@ -103,11 +109,14 @@ public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigid
     }
 
     /**
-     * Método que muestra un diálogo con los detalles de la clase dirigida.
+     * Mètode per mostrar un diàleg amb els detalls de la classe dirigida.
      * <p>
-     * @param nomClasseDirigida Nombre de la clase dirigida.
-     * @param horaInici Hora de inicio de la clase dirigida.
-     * @param duracio Duración de la clase dirigida.
+     * Aquest mètode crea un diàleg personalitzat amb la informació de la classe dirigida.
+     * El diàleg mostra el nom de la classe, l'hora d'inici i la durada de la classe.
+     * <p>
+     * @param nomClasseDirigida Nom de la classe dirigida.
+     * @param horaInici Hora d'inici de la classe dirigida.
+     * @param duracio Durada de la classe dirigida.
      */
     private void dialegDetallsClasseDirigida(String nomClasseDirigida, String horaInici, String duracio) {
         // Inflar el diseño personalizado del diálogo

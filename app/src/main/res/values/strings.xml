@@ -20,5 +20,6 @@
     <string name="iniciar_sessio">Iniciar sessió</string>
     <string name="oblidat_contrasenya">He oblidat la contrasenya</string>
     <string name="registra_t">No tens usuari? Registra\'t ara</string>
+    <string name="selecciona_data">Selecciona data</string>
 
 </resources>

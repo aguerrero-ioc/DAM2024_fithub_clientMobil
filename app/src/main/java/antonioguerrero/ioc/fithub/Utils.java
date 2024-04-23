@@ -50,30 +50,43 @@ public class Utils {
     public static final String FORMAT_DATA = "dd-MM-yyyy";
 
     /**
-     * Método para obtener la fecha actual formateada como "ddMMyyyy".
+     * Mètode per obtenir la data actual en format "ddMMyyyy".
      *
-     * @return Fecha actual formateada como "ddMMyyyy".
+     * @return Data actual en format "ddMMyyyy".
      */
     public static String obtenirDataActual() {
-        Calendar calendar = Calendar.getInstance();
-        int dia = calendar.get(Calendar.DAY_OF_MONTH);
-        int mes = calendar.get(Calendar.MONTH) + 1; // Se agrega 1 ya que enero se considera como 0
-        int any = calendar.get(Calendar.YEAR);
-
-        return obtenirDataFormatejada(dia, mes, any);
+        return obtenirDataFormatejada(Calendar.getInstance());
     }
 
     /**
-     * Método para obtener la fecha formateada como "ddMMyyyy".
+     * Mètode per obtenir la data formatejada com a "ddMMyyyy".
      *
-     * @param dia Día.
-     * @param mes Mes.
-     * @param any Año.
-     * @return Fecha formateada como "ddMMyyyy".
+     * @param calendar Instància de Calendar.
+     * @return Data formatejada com a "ddMMyyyy".
      */
-    public static String obtenirDataFormatejada(int dia, int mes, int any) {
+    public static String obtenirDataFormatejada(Calendar calendar) {
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes = calendar.get(Calendar.MONTH) + 1; // S'afegeix 1 ja que gener es considera com a 0
+        int any = calendar.get(Calendar.YEAR);
         return String.format(Locale.getDefault(), "%02d%02d%04d", dia, mes, any);
     }
+
+    /**
+     * Mètode per obtenir una llista de dates disponibles.
+     *
+     * @return Llista de dates disponibles en format ddMMyyyy
+     */
+    public static List<String> obtenirDatesDisponibles() {
+        List<String> datesDisponibles = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+        for (int i = 0; i < 7; i++) { // Obtenir les dates dels pròxims 7 dies
+            datesDisponibles.add(dateFormat.format(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return datesDisponibles;
+    }
+
 
     /**
      * Obté l'hora actual en format de cadena.

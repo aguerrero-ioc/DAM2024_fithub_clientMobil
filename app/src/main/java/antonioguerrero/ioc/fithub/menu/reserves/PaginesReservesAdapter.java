@@ -19,11 +19,23 @@ import java.util.List;
 public class PaginesReservesAdapter extends FragmentPagerAdapter {
     private List<HashMap<String, String>> reservas;
 
+    /**
+     * Constructor de la classe.
+     *
+     * @param fm       FragmentManager.
+     * @param reserves Llista de reserves.
+     */
     public PaginesReservesAdapter(FragmentManager fm, List<HashMap<String, String>> reserves) {
         super(fm);
         this.reservas = reserves;
     }
 
+    /**
+     * Mètode que retorna la pàgina de reserves corresponent a la posició indicada.
+     *
+     * @param position Posició de la pàgina.
+     * @return Fragment de la pàgina.
+     */
     @NonNull
     @Override
     public Fragment getItem(int position) {
@@ -40,12 +52,22 @@ public class PaginesReservesAdapter extends FragmentPagerAdapter {
     }
 
 
-
+    /**
+     * Mètode que retorna el nombre de pàgines.
+     *
+     * @return Nombre de pàgines.
+     */
     @Override
     public int getCount() {
         return 2;
     }
 
+    /**
+     * Mètode que retorna el títol de la pàgina.
+     *
+     * @param position Posició de la pàgina.
+     * @return Títol de la pàgina.
+     */
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {

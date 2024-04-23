@@ -23,7 +23,8 @@ import java.util.Scanner;
 public abstract class ConnexioServidor {
 
     //LOCAL "192.168.0.252"
-    protected static final String SERVIDOR_IP = "10.2.36.102";
+    // ISARD "10.2.36.102"
+    protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
     public Socket clientSocket;
 
@@ -37,11 +38,11 @@ public abstract class ConnexioServidor {
     }
 
     /**
-     * Mètode per enviar una petició al servidor amb un Object[] de Strings.
+     * Mètode per enviar una petició al servidor amb un Object[] amb Strings.
      *
      * @param operacio Tipus de petició que es vol fer.
-     * @param dada1    Dada 1 de la petició.
-     * @param dada2    Dada 2 de la petició.
+     * @param dada1 Dada 1 de la petició.
+     * @param dada2 Dada 2 de la petició.
      * @param idSessio Identificador de la sessió.
      * @return Object[] Resposta del servidor.
      * @throws ConnectException

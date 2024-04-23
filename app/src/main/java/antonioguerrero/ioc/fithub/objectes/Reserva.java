@@ -23,8 +23,6 @@ public class Reserva {
      * Constructor de la classe Reserva reduït.
      */
     public Reserva() {
-        this.IDclasseDirigida = IDclasseDirigida;
-        this.IDusuari = IDusuari;
     }
 
 
@@ -77,7 +75,7 @@ public class Reserva {
     public HashMap<String, String> reserva_a_hashmap(Reserva reserva) {
         HashMap<String, String> mapaReserva = new HashMap<>();
         mapaReserva.put("objectType","reserva");
-        mapaReserva.put("IDreserva",Integer.toString(reserva.getIDreserva()));
+        mapaReserva.put("IDreserva",Integer.toString(reserva.getIDclasseDirigida()));
         mapaReserva.put("IDusuari",Integer.toString(reserva.getIDusuari()));
         return mapaReserva;
     }
@@ -90,7 +88,7 @@ public class Reserva {
      */
     public Reserva hashmap_a_reserva(HashMap<String, String> mapaReserva) {
         Reserva reserva = new Reserva();
-        reserva.setIDreserva(Integer.parseInt(mapaReserva.get("IDreserva")));
+        reserva.setIDclasseDirigida(Integer.parseInt(mapaReserva.get("IDclasseDirigida")));
         reserva.setIDusuari(Integer.parseInt(mapaReserva.get("IDusuari")));
         return reserva;
     }
