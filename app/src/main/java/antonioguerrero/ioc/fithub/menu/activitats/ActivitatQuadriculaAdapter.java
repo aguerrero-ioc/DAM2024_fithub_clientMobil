@@ -1,15 +1,5 @@
 package antonioguerrero.ioc.fithub.menu.activitats;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import antonioguerrero.ioc.fithub.R;
-import antonioguerrero.ioc.fithub.objectes.Activitat;
 /*
 PENDENT D'IMPLEMENTAR
 

@@ -19,8 +19,6 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
-import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogin;
 
 /**

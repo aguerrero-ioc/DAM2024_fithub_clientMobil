@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.view.MenuItem;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -21,7 +20,6 @@ import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
 /**

@@ -3,13 +3,9 @@ package antonioguerrero.ioc.fithub.menu.usuari;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -19,10 +15,9 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.menu.BaseActivity;
-import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.BaseActivity;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ConsultarUsuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;

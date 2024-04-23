@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe que representa una petició de login al servidor.

@@ -3,8 +3,6 @@ package antonioguerrero.ioc.fithub.peticions.reserves;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;

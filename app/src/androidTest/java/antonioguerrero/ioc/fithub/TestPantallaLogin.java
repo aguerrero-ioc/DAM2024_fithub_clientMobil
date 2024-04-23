@@ -52,7 +52,7 @@ public class TestPantallaLogin {
 
         // Escriure credencials als camps de text
         Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText("client@fithub.es"));
-        Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText("clientpass1"));
+        Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText("clientpass"));
 
         // Fer clic al botó d'inici de sessió
         Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());
@@ -74,7 +74,7 @@ public class TestPantallaLogin {
 
         // Escriure credencials als camps de text
         Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText("admin@fithub.es"));
-        Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText("adminpass"));
+        Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText("Adminpass37"));
 
         // Fer clic al botó d'inici de sessió
         Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());

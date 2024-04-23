@@ -4,8 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -21,14 +19,10 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
-import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
-import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
-
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPassadesFragment;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesRealitzadesFragment;
-import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe que representa l'activitat del client a l'aplicació FitHub.

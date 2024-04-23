@@ -15,11 +15,11 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe que representa l'activitat de l'administrador a l'aplicació FitHub.

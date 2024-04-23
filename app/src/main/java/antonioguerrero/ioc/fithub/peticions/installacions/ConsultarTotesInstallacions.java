@@ -4,17 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 /**
  * Classe per obtenir totes les instal·lacions.
