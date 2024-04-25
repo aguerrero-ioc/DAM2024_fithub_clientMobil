@@ -166,32 +166,20 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86e27104-0ae9-4fa9-a015-cf2c88f3068c" name="Changes" comment="20240423 Millores al codi">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_editable.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_editar_data.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="86e27104-0ae9-4fa9-a015-cf2c88f3068c" name="Changes" comment="20240425 Modificacions a utils (metodes per data i hora)">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_22_03_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_04_2024_22_03__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_04_2024_18_49_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_04_2024_18_49_[Changes]1/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_04_2024_18_49_[Changes]1/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_04_2024_18_49_[Changes]1/dependencies-accessors.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_04_2024_18_49_[Changes]1/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_04_2024_18_49_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_04_2024_18_49__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_04_2024_18_49__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_04_2024_19_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_04_2024_19_26__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/ConnexioServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/connexio/ConnexioServidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/ClassesDirigidesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/ClassesDirigidesAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/PaginesReservesAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/PaginesReservesAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/ReservesActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/menu/reserves/ReservesActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/antonioguerrero/ioc/fithub/objectes/Reserva.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/background_personalitzat.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_reserves.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_reserves.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +190,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\restever\.android\avd\Pixel_8_Pro_API_33_2.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\sesa697418\.android\avd\Pixel_8_API_33.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -268,9 +256,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "android.gradle.sync.needed": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "TEA4-WW",
+    "git-widget-placeholder": "TEA4-SE",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/sesa697418/AndroidStudioProjects/DAM2024_fithub_clientMobil/app/src/main/res/layout",
     "project.structure.last.edited": "SDK Location",
@@ -874,7 +863,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/TEA4-SE" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -892,7 +881,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implementació menú perfil i missatges (3)" />
     <MESSAGE value="20240401 Implementació recuperar contrasenya, RegistreActivity, PerfilActivity, modificació ConnexioServidor, creacio de subcarpetes de peticions." />
     <MESSAGE value="20240401 modificacions a peticions" />
     <MESSAGE value="20240404 modificacions" />
@@ -917,7 +905,8 @@
     <MESSAGE value="20240418 Test creats" />
     <MESSAGE value="20240419 Modificaciones en reserva" />
     <MESSAGE value="20240423 Millores al codi" />
-    <option name="LAST_COMMIT_MESSAGE" value="20240423 Millores al codi" />
+    <MESSAGE value="20240425 Modificacions a utils (metodes per data i hora)" />
+    <option name="LAST_COMMIT_MESSAGE" value="20240425 Modificacions a utils (metodes per data i hora)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

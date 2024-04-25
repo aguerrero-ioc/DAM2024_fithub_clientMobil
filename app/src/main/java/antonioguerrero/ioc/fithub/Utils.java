@@ -1,14 +1,16 @@
 package antonioguerrero.ioc.fithub;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.core.net.ParseException;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,11 +22,14 @@ import java.util.Locale;
 /**
  * Classe d'utilitats amb mètodes útils per a diverses funcionalitats.
  * <p>
- * Aquesta classe conté mètodes per a la gestió de dades, la validació de correus electrònics,
- * la conversió d'objectes a HashMap i viceversa, la gestió de SharedPreferences, la creació de
- * Toasts, la conversió de dates a cadenes de text i altres funcionalitats útils per a l'aplicació.
+ * Aquesta classe conté mètodes per obtenir la data i l'hora actuals, convertir una cadena de text
+ * a una data o hora, comprovar si una data o hora és anterior a la data o hora actual, obtenir el
+ * tipus d'usuari a partir de la resposta del servidor, mostrar un Toast, convertir un objecte a
+ * un HashMap i viceversa, guardar les dades d'un objecte a SharedPreferences, obrir una nova
+ * activitat, iniciar una nova activitat amb llista, validar el format d'un correu electrònic,
+ * entre d'altres.
  * <p>
- * @autor Antonio Guerrero
+ * @author Antonio Guerrero
  * @version 1.0
  */
 public class Utils {
@@ -72,34 +77,138 @@ public class Utils {
     }
 
     /**
-     * Mètode per obtenir una llista de dates disponibles.
+     * Mètode per convertir una cadena de text a una data.
      *
-     * @return Llista de dates disponibles en format ddMMyyyy
+     * @param cadenaData Cadena de text amb la data en format "ddMMyyyy".
+     * @return Data convertida.
      */
-    public static List<String> obtenirDatesDisponibles() {
-        List<String> datesDisponibles = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
-        for (int i = 0; i < 7; i++) { // Obtenir les dates dels pròxims 7 dies
-            datesDisponibles.add(dateFormat.format(calendar.getTime()));
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+    public static Date convertirStringAFecha(String cadenaData) {
+        // Comprova si la cadena de data no és nul·la i té el format correcte
+        if (cadenaData != null && cadenaData.matches("\\d{2}\\d{2}\\d{4}")) {
+            try {
+                // Crea un objecte SimpleDateFormat amb el format ddmmyyyy
+                SimpleDateFormat formatData = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+
+                // Analitza la cadena de data a un objecte Date
+                Date data = formatData.parse(cadenaData);
+
+                // Retorna la data convertida
+                return data;
+            } catch (ParseException | java.text.ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            System.out.println("El format de la data no és vàlid: " + cadenaData);
+            return null;
         }
-        return datesDisponibles;
+    }
+
+    /**
+     * Mètode per comprovar si una data és anterior a la data actual.
+     *
+     * @param stringData Data en format "ddMMyyyy".
+     * @return Cert si la data és anterior a la data actual, fals altrament.
+     */
+    public static boolean esDataAnterior(String stringData) {
+        // Creem un objecte SimpleDateFormat amb el format "ddMMyyyy"
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+        try {
+            // Convertim la cadena de text a un objecte Date
+            Date data = format.parse(stringData);
+
+            // Obtenim la data actual
+            Date dataActual = new Date();
+
+            // Comprovem si la data donada és anterior a la data actual
+            if (data != null) {
+                return data.before(dataActual);
+            }
+        } catch (ParseException | java.text.ParseException e) {
+            // En cas d'error en la conversió de la cadena de text a Date, imprimeix l'error i retornem fals
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Mètode per obtenir l'hora actual en format "HHmm".
+     *
+     * @return Hora actual en format "HHmm".
+     */
+    public static String obtenirHoraActual() {
+        return obtenirHoraFormatejada(Calendar.getInstance());
+    }
+
+    /**
+     * Mètode per obtenir l'hora formatejada com a "HHmm".
+     *
+     * @param calendar Instància de Calendar.
+     * @return Hora formatejada com a "HHmm".
+     */
+    public static String obtenirHoraFormatejada(Calendar calendar) {
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minut = calendar.get(Calendar.MINUTE);
+        return String.format(Locale.getDefault(), "%02d%02d", hora, minut);
+    }
+
+    /**
+     * Mètode per convertir una cadena de text a una hora.
+     *
+     * @param cadenaHora Cadena de text amb l'hora en format "HHmm".
+     * @return Hora convertida.
+     */
+    public static Time convertirStringAHora(String cadenaHora) {
+        // Comprova si la cadena d'hora no és nul·la i té el format correcte
+        if (cadenaHora != null && cadenaHora.matches("\\d{2}\\d{2}")) {
+            try {
+                // Crea un objecte SimpleDateFormat amb el format "HHmm"
+                SimpleDateFormat formatHora = new SimpleDateFormat("HHmm", Locale.getDefault());
+
+                // Analitza la cadena d'hora a un objecte Time
+                Time hora = new Time(formatHora.parse(cadenaHora).getTime());
+
+                // Retorna l'hora convertida
+                return hora;
+            } catch (ParseException | java.text.ParseException e) {
+                // En cas d'error en la conversió de la cadena de text a Time, imprimeix l'error i retorna null
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            // Si el format de l'hora no és vàlid, imprimeix un missatge d'error i retorna null
+            System.out.println("El format de l'hora no és vàlid: " + cadenaHora);
+            return null;
+        }
     }
 
 
     /**
-     * Obté l'hora actual en format de cadena.
+     * Mètode per comprovar si una hora donada és anterior a l'hora actual.
      *
-     * @return Hora actual en format "HH:mm:ss"
+     * @param stringHora Hora en format "HHmm".
+     * @return Cert si l'hora és anterior a l'hora actual, fals en cas contrari.
      */
-    public static String obtenirHoraActual() {
-        // Obté l'hora actual
-        Date horaActual = Calendar.getInstance().getTime();
-        // Formateja l'hora en el format desitjat
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
-        return formatHora.format(horaActual);
+    public static boolean esHoraAnterior(String stringHora) {
+        // Creem un objecte SimpleDateFormat amb el format "HHmm"
+        SimpleDateFormat format = new SimpleDateFormat("HHmm");
+        try {
+            // Convertim la cadena de text a un objecte Time
+            Time hora = new Time(format.parse(stringHora).getTime());
+
+            // Obtenim l'hora actual
+            Time horaActual = new Time(System.currentTimeMillis());
+
+            // Comprovem si l'hora donada és anterior a l'hora actual
+            return hora.before(horaActual);
+        } catch (ParseException | java.text.ParseException e) {
+            // En cas d'error en la conversió de la cadena de text a Time, imprimim l'error i retornem fals
+            e.printStackTrace();
+            return false;
+        }
     }
+
+
 
     /**
      * Obté el tipus d'usuari a partir de la resposta del servidor.
