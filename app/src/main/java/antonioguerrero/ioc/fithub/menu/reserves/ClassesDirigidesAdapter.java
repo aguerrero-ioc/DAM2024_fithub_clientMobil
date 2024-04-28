@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
+import antonioguerrero.ioc.fithub.Utils;
 
 /**
  * Adaptador per a la llista de classes dirigides disponibles en el centre esportiu.
@@ -61,25 +62,46 @@ public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigid
      * Mètode que enllaça les dades de la llista amb les vistes de la llista.
      * <p>
      * @param holder Vista de la llista.
-     * @param position Posició de l'element de la llista.
+     * @param posicio Posició de l'element de la llista.
      */
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        HashMap<String, String> classeDirigida = classesDirigidesList.get(position);
+    public void onBindViewHolder(ViewHolder holder, int posicio) {
+        HashMap<String, String> classeDirigida = classesDirigidesList.get(posicio);
         holder.nomClasseDirigida.setText(classeDirigida.get("nomClasseDirigida"));
         holder.horaInici.setText(classeDirigida.get("horaInici"));
 
-        // Agregar un listener de clics al botón "Más detalles"
+        // Obtenir la data i hora actual
+        String dataActual = Utils.obtenirDataActual();
+        String horaActual = Utils.obtenirHoraActual();
+
+        // Verificar si la data o hora d'inici és anterior a la data o hora actual
+        if (Utils.esDataAnterior(classeDirigida.get("data")) || Utils.esHoraAnterior(classeDirigida.get("horaInici"))) {
+            // Si la data o hora d'inici és anterior, inhabilitar el botó o establir un altre estat
+            holder.btnReservar.setEnabled(false);
+            // També pots canviar el color de fons o qualsevol altra propietat visual per indicar que està inhabilitat
+        } else {
+            // Si la data i hora d'inici són posteriors, habilitar el botó i establir l'estat desitjat
+            holder.btnReservar.setEnabled(true);
+        }
+
+        // Afegir un listener de clics al botó "Més detalls"
         holder.btnReservar.setOnClickListener(v -> {
-            // Obtener los datos de la clase dirigida para mostrar en el diálogo
+            // Obtenir les dades de la classe dirigida per mostrar en el diàleg
             String nom = classeDirigida.get("nomClasseDirigida");
+            String IDclasseDirigida = classeDirigida.get("IDclasseDirigida");
+            String nomActivitat = classeDirigida.get("nomActivitat");
+            String nomInstallacio = classeDirigida.get("nomInstallacio");
+            String data = classeDirigida.get("data");
             String horaInici = classeDirigida.get("horaInici");
             String duracio = classeDirigida.get("duracio");
+            String reservesActuals = classeDirigida.get("reservesActuals");
 
-            // Crear y mostrar el diálogo con la información de la clase dirigida
+
+            // Crear i mostrar el diàleg amb la informació de la classe dirigida
             dialegDetallsClasseDirigida(nom, horaInici, duracio);
         });
     }
+
 
     /**
      * Mètode que retorna el nombre d'elements de la llista.

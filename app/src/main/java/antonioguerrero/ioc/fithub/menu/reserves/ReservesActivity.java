@@ -26,7 +26,7 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
-import antonioguerrero.ioc.fithub.peticions.reserves.ConsultarClassesDirigidesDia;
+import antonioguerrero.ioc.fithub.peticions.classes.ConsultarClassesDirigidesDia;
 
 /**
  * Activitat que mostra les reserves de classes dirigides.

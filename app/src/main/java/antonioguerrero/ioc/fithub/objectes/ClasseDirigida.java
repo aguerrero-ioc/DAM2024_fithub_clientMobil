@@ -15,27 +15,27 @@ import java.util.HashMap;
 public class ClasseDirigida implements Serializable {
 
     // Atributs de la classe
-    private String IDClasseDirigida; // Nuevo atributo
+    private String IDclasseDirigida; // Nuevo atributo
     private Activitat activitat;
     private Installacio installacio;
-    private String dia;
+    private String data;
     private String horaInici;
     private int duracio;
     private int reservesActuals;
-    private boolean estaReservat;
+    private boolean estat;
 
     /**
      * Constructor de la classe ClasseDirigida.
      */
     public ClasseDirigida() {
-        this.IDClasseDirigida = IDClasseDirigida;
+        this.IDclasseDirigida = IDclasseDirigida;
         this.activitat = activitat;
         this.installacio = installacio;
-        this.dia = dia;
+        this.data = data;
         this.horaInici = horaInici;
         this.duracio = duracio;
         this.reservesActuals = reservesActuals;
-        this.estaReservat = false; // Inicialment, no reservada
+        this.estat = false; // Inicialment, no reservada
     }
 
     // Getters y setters
@@ -46,7 +46,7 @@ public class ClasseDirigida implements Serializable {
      * @return Identificador de la classe dirigida
      */
     public String getIDClasseDirigida() {
-        return IDClasseDirigida;
+        return IDclasseDirigida;
     }
 
     /**
@@ -55,7 +55,7 @@ public class ClasseDirigida implements Serializable {
      * @param IDClasseDirigida Identificador de la classe dirigida
      */
     public void setIDClasseDirigida(String IDClasseDirigida) {
-        this.IDClasseDirigida = IDClasseDirigida;
+        this.IDclasseDirigida = IDClasseDirigida;
     }
 
     /**
@@ -126,22 +126,14 @@ public class ClasseDirigida implements Serializable {
     public void setNomInstallacio(String nomInstallacio) {
     }
 
-    /**
-     * Obté el dia de la setmana en què es realitza la classe dirigida.
-     *
-     * @return Dia de la setmana en què es realitza la classe dirigida
-     */
-    public String getDia() {
-        return dia;
+  
+    public String getData() {
+        return data;
     }
 
-    /**
-     * Estableix el dia de la setmana en què es realitza la classe dirigida.
-     *
-     * @param dia Dia de la setmana en què es realitza la classe dirigida
-     */
-    public void setDia(String dia) {
-        this.dia = dia;
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     /**
@@ -202,17 +194,17 @@ public class ClasseDirigida implements Serializable {
      *
      * @return Indica si la classe dirigida està reservada
      */
-    public boolean estaReservat() {
-        return estaReservat;
+    public boolean getEstat() {
+        return estat;
     }
 
     /**
      * Estableix si la classe dirigida està reservada.
      *
-     * @param estaReservat Indica si la classe dirigida està reservada
+     * @param estat Indica si la classe dirigida està reservada
      */
-    public void setEstaReservat(boolean estaReservat) {
-        this.estaReservat = estaReservat;
+    public void setEstat(boolean estat) {
+        this.estat = estat;
     }
 
     /**
@@ -227,7 +219,7 @@ public class ClasseDirigida implements Serializable {
         mapaClasseDirigida.put("IDclasseDirigida",classeDirigida.getIDClasseDirigida());
         mapaClasseDirigida.put("nomActivitat",classeDirigida.getNomActivitat());
         mapaClasseDirigida.put("nomInstallacio",classeDirigida.getNomInstallacio());
-        mapaClasseDirigida.put("dia",classeDirigida.getDia());
+        mapaClasseDirigida.put("data",classeDirigida.getData());
         mapaClasseDirigida.put("horaInici",classeDirigida.getHoraInici());
         mapaClasseDirigida.put("duracio",Integer.toString(classeDirigida.getDuracio()));
         mapaClasseDirigida.put("reservesActuals",Integer.toString(classeDirigida.getReservesActuals()));
@@ -245,7 +237,7 @@ public class ClasseDirigida implements Serializable {
         classeDirigida.setIDClasseDirigida(mapaClasseDirigida.get("IDclasseDirigida"));
         classeDirigida.setNomActivitat(mapaClasseDirigida.get("nomActivitat"));
         classeDirigida.setNomInstallacio(mapaClasseDirigida.get("nomInstallacio"));
-        classeDirigida.setDia(mapaClasseDirigida.get("dia"));
+        classeDirigida.setData(mapaClasseDirigida.get("data"));
         classeDirigida.setHoraInici(mapaClasseDirigida.get("horaInici"));
         classeDirigida.setDuracio(Integer.parseInt(mapaClasseDirigida.get("duracio")));
         classeDirigida.setReservesActuals(Integer.parseInt(mapaClasseDirigida.get("reservesActuals")));

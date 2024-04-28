@@ -1,4 +1,4 @@
-package antonioguerrero.ioc.fithub.peticions.reserves;
+package antonioguerrero.ioc.fithub.peticions.classes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
