@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
@@ -57,7 +58,7 @@ public class BaseActivity extends AppCompatActivity{
         } else if(id == R.id.nav_activitats) {
             obrirActivity(ActivitatsActivity.class);
         } else if (id == R.id.nav_serveis) {
-            Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR);
+            Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR);
         } else if (id == R.id.nav_installacions) {
             obrirActivity(InstallacionsActivity.class);
         } else if (id == R.id.nav_reserves) {
@@ -92,7 +93,7 @@ public class BaseActivity extends AppCompatActivity{
      * Mètode per tancar la sessió de l'usuari.
      */
     public void tancarSessioClicat() {
-        SharedPreferences preferencies = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         Object IDUsuariObject = preferencies.getAll().get("IDusuari");
 
         if (IDUsuariObject != null) {
@@ -111,13 +112,13 @@ public class BaseActivity extends AppCompatActivity{
             }
 
             if (!IDUsuariStr.equals("-1")) {
-                PeticioLogout peticioLogout = new PeticioLogout((ConnexioServidor.respostaServidorListener) this, this, IDUsuariStr, Utils.SESSIO_ID);
+                PeticioLogout peticioLogout = new PeticioLogout((ConnexioServidor.respostaServidorListener) this, this, IDUsuariStr, Constants.SESSIO_ID);
                 peticioLogout.execute();
             } else {
                 Log.e("ETIQUETA", "IDusuari no definit");
             }
         } else {
-            Log.e("ETIQUETA", "IDusuari no encontrado en SharedPreferences");
+            Log.e("ETIQUETA", "IDusuari no trobat en SharedPreferences");
         }
     }
 }

@@ -11,6 +11,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
@@ -88,7 +89,7 @@ public abstract class PeticioLogin extends ConnexioServidor {
         Usuari.setContext(context);
 
         if (context != null) {
-            SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+            SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
 
             Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
             if (resposta instanceof Object[]) {
@@ -112,10 +113,10 @@ public abstract class PeticioLogin extends ConnexioServidor {
                     Log.d(ETIQUETA, "Tipus d'objecte no vàlid en la resposta");
                 }
             } else {
-                Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
+                Utils.mostrarToast(context, Constants.ERROR_CONNEXIO);
             }
         } else {
-            Log.e("PeticioLogin", "El context es nul");
+            Log.e(ETIQUETA, "El context es nul");
         }
         return null;
     }
@@ -135,11 +136,11 @@ public abstract class PeticioLogin extends ConnexioServidor {
      * @param sessioID L'identificador de sessió que es guardarà a SharedPreferences.
      */
     public void guardarSessioID(String sessioID) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
-        editor.putString(Utils.SESSIO_ID, sessioID);
+        editor.putString(Constants.SESSIO_ID, sessioID);
         editor.apply();
-        Log.d("PeticioLogin", "sessioID guardat: " + sessioID);
+        Log.d(ETIQUETA, "sessioID guardat: " + sessioID);
     }
 
 

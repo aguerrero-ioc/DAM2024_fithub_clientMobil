@@ -2,6 +2,8 @@ package antonioguerrero.ioc.fithub.objectes;
 
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Constants;
+
 /**
  * Classe que representa una instal·lació on es realitzen activitats, classes o serveis.
  * <p>
@@ -76,7 +78,7 @@ public class Installacio {
      *
      * @param nomInstallacio El nom de la instal·lació
      */
-    public void setNom(String nomInstallacio) {
+    public void setNomInstallacio(String nomInstallacio) {
         this.nomInstallacio = nomInstallacio;
     }
 
@@ -182,13 +184,13 @@ public class Installacio {
      * @param installacio La instal·lació a convertir
      * @return El HashMap amb les dades de la instal·lació
      */
-    public HashMap<String, String> installacio_a_hashmap(Installacio installacio) {
+    public static HashMap<String, String> installacio_a_hashmap(Installacio installacio) {
         HashMap<String, String> mapaInstallacio = new HashMap<>();
-        mapaInstallacio.put("objectType","installacio");
-        mapaInstallacio.put("IDinstallacio",Integer.toString(installacio.getIDInstallacio()));
-        mapaInstallacio.put("nomInstallacio",installacio.getNomInstallacio());
-        mapaInstallacio.put("descripcioInstallacio", installacio.getDescripcioInstallacio());
-        mapaInstallacio.put("tipusInstallacio",Integer.toString(installacio.getTipusInstallacio()));
+        mapaInstallacio.put(Constants.OBJTYPE, Constants.OBJ_INS);
+        mapaInstallacio.put(Constants.INS_ID, Integer.toString(installacio.getIDInstallacio()));
+        mapaInstallacio.put(Constants.INS_NOM, installacio.getNomInstallacio());
+        mapaInstallacio.put(Constants.INS_DESC, installacio.getDescripcioInstallacio());
+        mapaInstallacio.put(Constants.INS_TIPUS, Integer.toString(installacio.getTipusInstallacio()));
         return mapaInstallacio;
     }
 
@@ -200,10 +202,10 @@ public class Installacio {
      */
     public static Installacio hashmap_a_installacio(HashMap<String, String> mapaInstallacio) {
         Installacio installacio = new Installacio();
-        installacio.setIDInstallacio(Integer.parseInt(mapaInstallacio.get("IDinstallacio")));
-        installacio.setNom(mapaInstallacio.get("nomInstallacio"));
-        installacio.setDescripcioInstallacio(mapaInstallacio.get("descripcioInstallacio"));;
-        installacio.setTipus(Integer.parseInt(mapaInstallacio.get("tipusInstallacio")));
+        installacio.setIDInstallacio(Integer.parseInt(mapaInstallacio.get(Constants.INS_ID)));
+        installacio.setNomInstallacio(mapaInstallacio.get(Constants.INS_NOM));
+        installacio.setDescripcioInstallacio(mapaInstallacio.get(Constants.INS_DESC));
+        installacio.setTipus(Integer.parseInt(mapaInstallacio.get(Constants.INS_TIPUS)));
         return installacio;
     }
 }

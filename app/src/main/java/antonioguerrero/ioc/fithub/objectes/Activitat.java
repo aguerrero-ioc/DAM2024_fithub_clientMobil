@@ -3,6 +3,8 @@ package antonioguerrero.ioc.fithub.objectes;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Constants;
+
 /**
  * Classe que representa una activitat que es realitza en una instal·lació.
  * <p>
@@ -20,7 +22,6 @@ public class Activitat implements Serializable {
     private String nomActivitat;
     private String descripcioActivitat;
     private int aforamentActivitat;
-
     private int tipusInstallacio;
 
     // Altres atributs que podrien ser necessaris
@@ -141,12 +142,12 @@ public class Activitat implements Serializable {
      */
     public HashMap<String, String> activitat_a_hashmap(Activitat activitat) {
         HashMap<String, String> mapaActivitat = new HashMap<>();
-        mapaActivitat.put("objectType","activitat");
-        mapaActivitat.put("IDactivitat",Integer.toString(activitat.getIDActivitat()));
-        mapaActivitat.put("nomActivitat",activitat.getNomActivitat());
-        mapaActivitat.put("descripcioActivitat", activitat.getDescripcioActivitat());
-        mapaActivitat.put("aforamentActivitat",Integer.toString(activitat.getAforamentActivitat()));
-        mapaActivitat.put("tipusActivitat",Integer.toString(activitat.getTipusInstallacio()));
+        mapaActivitat.put(Constants.OBJTYPE,Constants.OBJ_ACT);
+        mapaActivitat.put(Constants.ACT_ID,Integer.toString(activitat.getIDActivitat()));
+        mapaActivitat.put(Constants.ACT_NOM,activitat.getNomActivitat());
+        mapaActivitat.put(Constants.ACT_DESC, activitat.getDescripcioActivitat());
+        mapaActivitat.put(Constants.ACT_AFORAMENT,Integer.toString(activitat.getAforamentActivitat()));
+        mapaActivitat.put(Constants.ACT_TIPUS,Integer.toString(activitat.getTipusInstallacio()));
         return mapaActivitat;
     }
 
@@ -158,11 +159,11 @@ public class Activitat implements Serializable {
      */
     public static Activitat hashmap_a_activitat(HashMap<String, String> mapaActivitat) {
         Activitat activitat = new Activitat();
-        activitat.setIDActivitat(Integer.parseInt(mapaActivitat.get("IDactivitat")));
-        activitat.setNomActivitat(mapaActivitat.get("nomActivitat"));
-        activitat.setDescripcioActivitat(mapaActivitat.get("descripcioActivitat"));;
-        activitat.setAforamentActivitat(Integer.parseInt(mapaActivitat.get("aforamentActivitat")));
-        activitat.setTipusInstallacio(Integer.parseInt(mapaActivitat.get("tipusActivitat")));
+        activitat.setIDActivitat(Integer.parseInt(mapaActivitat.get(Constants.ACT_ID)));
+        activitat.setNomActivitat(mapaActivitat.get(Constants.ACT_NOM));
+        activitat.setDescripcioActivitat(mapaActivitat.get(Constants.ACT_DESC));;
+        activitat.setAforamentActivitat(Integer.parseInt(mapaActivitat.get(Constants.ACT_AFORAMENT)));
+        activitat.setTipusInstallacio(Integer.parseInt(mapaActivitat.get(Constants.ACT_TIPUS)));
         return activitat;
     }
 }

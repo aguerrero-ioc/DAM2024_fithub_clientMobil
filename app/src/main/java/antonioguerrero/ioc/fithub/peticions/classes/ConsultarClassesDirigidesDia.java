@@ -9,6 +9,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
@@ -111,7 +112,7 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
      * @param dadesClassesDirigides La llista de dades de les classes dirigides.
      */
     private void guardarDadesClassesDirigides(List<HashMap<String, String>> dadesClassesDirigides) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les dades de les classes dirigides a SharedPreferences

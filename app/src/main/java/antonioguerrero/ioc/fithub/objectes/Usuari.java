@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 
 /**
@@ -47,13 +48,13 @@ public class Usuari implements Serializable {
         this.passUsuari = passUsuari;
         this.IDusuari = -1;
 
-        this.tipusUsuari = Integer.parseInt(Utils.VALOR_DEFAULT);
-        this.nomUsuari = Utils.VALOR_DEFAULT;
-        this.cognomsUsuari = Utils.VALOR_DEFAULT;
-        this.dataNaixement = Utils.VALOR_DEFAULT;
-        this.adreca = Utils.VALOR_DEFAULT;
-        this.telefon = Utils.VALOR_DEFAULT;
-        this.dataInscripcio = Utils.VALOR_DEFAULT;
+        this.tipusUsuari = Integer.parseInt(Constants.VALOR_DEFAULT);
+        this.nomUsuari = Constants.VALOR_DEFAULT;
+        this.cognomsUsuari = Constants.VALOR_DEFAULT;
+        this.dataNaixement = Constants.VALOR_DEFAULT;
+        this.adreca = Constants.VALOR_DEFAULT;
+        this.telefon = Constants.VALOR_DEFAULT;
+        this.dataInscripcio = Constants.VALOR_DEFAULT;
     }
 
     /**
@@ -82,17 +83,17 @@ public class Usuari implements Serializable {
      */
     public HashMap<String, String> usuari_a_hashmap(Usuari usuari) {
         HashMap<String, String> mapaUsuari = new HashMap<>();
-        mapaUsuari.put("objectType", "usuari");
-        mapaUsuari.put("IDusuari", String.valueOf(usuari.getIDusuari()));
-        mapaUsuari.put("correuUsuari", usuari.getCorreuUsuari());
-        mapaUsuari.put("passUsuari", usuari.getPassUsuari());
-        mapaUsuari.put("nomUsuari", usuari.getNomUsuari());
-        mapaUsuari.put("cognomsUsuari", usuari.getCognomsUsuari());
-        mapaUsuari.put("dataNaixement", usuari.getDataNaixement());
-        mapaUsuari.put("dataInscripcio", usuari.getDataNaixement());
-        mapaUsuari.put("adreca", usuari.getAdreca());
-        mapaUsuari.put("telefon", usuari.getTelefon());
-        mapaUsuari.put("tipusUsuari", String.valueOf(usuari.getTipusUsuari()));
+        mapaUsuari.put(Constants.OBJTYPE, Constants.OBJ_USUARI);
+        mapaUsuari.put(Constants.ID_USUARI, String.valueOf(usuari.getIDusuari()));
+        mapaUsuari.put(Constants.CORREU_USUARI, usuari.getCorreuUsuari());
+        mapaUsuari.put(Constants.PASS_USUARI, usuari.getPassUsuari());
+        mapaUsuari.put(Constants.NOM_USUARI, usuari.getNomUsuari());
+        mapaUsuari.put(Constants.COGNOMS_USUARI, usuari.getCognomsUsuari());
+        mapaUsuari.put(Constants.DATA_NAIXEMENT, usuari.getDataNaixement());
+        mapaUsuari.put(Constants.DATA_INSCRIPCIO, usuari.getDataNaixement());
+        mapaUsuari.put(Constants.ADRECA, usuari.getAdreca());
+        mapaUsuari.put(Constants.TELEFON, usuari.getTelefon());
+        mapaUsuari.put(Constants.TIPUS_USUARI, String.valueOf(usuari.getTipusUsuari()));
         return mapaUsuari;
     }
 
@@ -102,16 +103,16 @@ public class Usuari implements Serializable {
      */
     public static Usuari hashmap_a_usuari(HashMap<String, String> map) {
         Usuari usuari = new Usuari();
-        usuari.setIDusuari(Integer.parseInt(map.get("IDusuari")));
-        usuari.setCorreuUsuari(map.get("correuUsuari"));
-        usuari.setPassUsuari(map.get("passUsuari"));
-        usuari.setNomUsuari(map.get("nomUsuari"));
-        usuari.setCognomsUsuari(map.get("cognomsUsuari"));
-        usuari.setDataNaixement(map.get("dataNaixement"));
-        usuari.setAdreca(map.get("adreca"));
-        usuari.setTelefon(map.get("telefon"));
-        usuari.setTipusUsuari(Integer.parseInt(map.get("tipusUsuari")));
-        usuari.setDataInscripcio(map.get("dataInscripcio"));
+        usuari.setIDusuari(Integer.parseInt(map.get(Constants.ID_USUARI)));
+        usuari.setCorreuUsuari(map.get(Constants.CORREU_USUARI));
+        usuari.setPassUsuari(map.get(Constants.PASS_USUARI));
+        usuari.setNomUsuari(map.get(Constants.NOM_USUARI));
+        usuari.setCognomsUsuari(map.get(Constants.COGNOMS_USUARI));
+        usuari.setDataNaixement(map.get(Constants.DATA_NAIXEMENT));
+        usuari.setAdreca(map.get(Constants.ADRECA));
+        usuari.setTelefon(map.get(Constants.TELEFON));
+        usuari.setTipusUsuari(Integer.parseInt(map.get(Constants.TIPUS_USUARI)));
+        usuari.setDataInscripcio(map.get(Constants.DATA_INSCRIPCIO));
         return usuari;
     }
 
@@ -328,20 +329,20 @@ public class Usuari implements Serializable {
      */
     public static void guardarDadesUsuari(Usuari usuari) {
 
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de l'objecte usuari a SharedPreferences
-        editor.putString("nomUsuari", usuari.getNomUsuari());
-        editor.putString("IDusuari", String.valueOf(usuari.getIDusuari()));
-        editor.putString("tipusUsuari", String.valueOf(usuari.getTipusUsuari()));
-        editor.putString("correuUsuari", usuari.getCorreuUsuari());
-        editor.putString("passUsuari", usuari.getPassUsuari());
-        editor.putString("dataInscripcio", usuari.getDataInscripcio());
-        editor.putString("cognomsUsuari", usuari.getCognomsUsuari());
-        editor.putString("dataNaixement", usuari.getDataNaixement());
-        editor.putString("adreca", usuari.getAdreca());
-        editor.putString("telefon", usuari.getTelefon());
+        editor.putString(Constants.NOM_USUARI, usuari.getNomUsuari());
+        editor.putString(Constants.ID_USUARI, String.valueOf(usuari.getIDusuari()));
+        editor.putString(Constants.TIPUS_USUARI, String.valueOf(usuari.getTipusUsuari()));
+        editor.putString(Constants.CORREU_USUARI, usuari.getCorreuUsuari());
+        editor.putString(Constants.PASS_USUARI, usuari.getPassUsuari());
+        editor.putString(Constants.DATA_INSCRIPCIO, usuari.getDataInscripcio());
+        editor.putString(Constants.COGNOMS_USUARI, usuari.getCognomsUsuari());
+        editor.putString(Constants.DATA_NAIXEMENT, usuari.getDataNaixement());
+        editor.putString(Constants.ADRECA, usuari.getAdreca());
+        editor.putString(Constants.TELEFON, usuari.getTelefon());
 
         // Aplicar els canvis a SharedPreferences
         editor.apply();

@@ -3,6 +3,8 @@ package antonioguerrero.ioc.fithub.objectes;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Constants;
+
 /**
  * Classe que representa una classe dirigida que es realitza en una instal·lació.
  * <p>
@@ -15,7 +17,7 @@ import java.util.HashMap;
 public class ClasseDirigida implements Serializable {
 
     // Atributs de la classe
-    private String IDclasseDirigida; // Nuevo atributo
+    private int IDclasseDirigida;
     private Activitat activitat;
     private Installacio installacio;
     private String data;
@@ -45,7 +47,7 @@ public class ClasseDirigida implements Serializable {
      *
      * @return Identificador de la classe dirigida
      */
-    public String getIDClasseDirigida() {
+    public int getIDClasseDirigida() {
         return IDclasseDirigida;
     }
 
@@ -54,7 +56,7 @@ public class ClasseDirigida implements Serializable {
      *
      * @param IDClasseDirigida Identificador de la classe dirigida
      */
-    public void setIDClasseDirigida(String IDClasseDirigida) {
+    public void setIDClasseDirigida(int IDClasseDirigida) {
         this.IDclasseDirigida = IDClasseDirigida;
     }
 
@@ -215,16 +217,21 @@ public class ClasseDirigida implements Serializable {
      */
     public HashMap<String, String> classeDirigida_a_hashmap(ClasseDirigida classeDirigida) {
         HashMap<String, String> mapaClasseDirigida = new HashMap<>();
-        mapaClasseDirigida.put("objectType","classeDirigida");
-        mapaClasseDirigida.put("IDclasseDirigida",classeDirigida.getIDClasseDirigida());
-        mapaClasseDirigida.put("nomActivitat",classeDirigida.getNomActivitat());
-        mapaClasseDirigida.put("nomInstallacio",classeDirigida.getNomInstallacio());
-        mapaClasseDirigida.put("data",classeDirigida.getData());
-        mapaClasseDirigida.put("horaInici",classeDirigida.getHoraInici());
-        mapaClasseDirigida.put("duracio",Integer.toString(classeDirigida.getDuracio()));
-        mapaClasseDirigida.put("reservesActuals",Integer.toString(classeDirigida.getReservesActuals()));
+
+        // Obtener los datos de Activitat y Installacio directamente de las instancias
+        mapaClasseDirigida.put(Constants.ACT_NOM, classeDirigida.getNomActivitat());
+        mapaClasseDirigida.put(Constants.INS_NOM, classeDirigida.getNomInstallacio());
+
+        // Agregar otros atributos de la clase dirigida
+        mapaClasseDirigida.put(Constants.OBJTYPE, Constants.OBJ_CLASSE);
+        mapaClasseDirigida.put(Constants.CLASSE_ID, String.valueOf(classeDirigida.getIDClasseDirigida()));
+        mapaClasseDirigida.put(Constants.CLASSE_HORA, classeDirigida.getHoraInici());
+        mapaClasseDirigida.put(Constants.CLASSE_DURACIO, String.valueOf(classeDirigida.getDuracio()));
+        mapaClasseDirigida.put(Constants.CLASSE_OCUPACIO, String.valueOf(classeDirigida.getReservesActuals()));
+
         return mapaClasseDirigida;
     }
+
 
     /**
      * Mètode per convertir un HashMap a una classe dirigida.
@@ -234,13 +241,27 @@ public class ClasseDirigida implements Serializable {
      */
     public ClasseDirigida hashmap_a_classeDirigida(HashMap<String, String> mapaClasseDirigida) {
         ClasseDirigida classeDirigida = new ClasseDirigida();
-        classeDirigida.setIDClasseDirigida(mapaClasseDirigida.get("IDclasseDirigida"));
-        classeDirigida.setNomActivitat(mapaClasseDirigida.get("nomActivitat"));
-        classeDirigida.setNomInstallacio(mapaClasseDirigida.get("nomInstallacio"));
+        classeDirigida.setIDClasseDirigida(Integer.parseInt(mapaClasseDirigida.get(Constants.CLASSE_ID)));
+
+        // Crear una nueva instancia de Activitat y asignarle los datos del mapa
+        Activitat activitat = new Activitat();
+        activitat.setNomActivitat(mapaClasseDirigida.get(Constants.ACT_NOM));
+
+        // Crear una nueva instancia de Installacio y asignarle los datos del mapa
+        Installacio installacio = new Installacio();
+        installacio.setNomInstallacio(mapaClasseDirigida.get(Constants.INS_NOM));
+
+        // Asignar las instancias de Activitat e Installacio a la ClasseDirigida
+        classeDirigida.setActivitat(activitat);
+        classeDirigida.setInstallacio(installacio);
+
+        // Asignar los otros atributos de ClasseDirigida
         classeDirigida.setData(mapaClasseDirigida.get("data"));
-        classeDirigida.setHoraInici(mapaClasseDirigida.get("horaInici"));
-        classeDirigida.setDuracio(Integer.parseInt(mapaClasseDirigida.get("duracio")));
-        classeDirigida.setReservesActuals(Integer.parseInt(mapaClasseDirigida.get("reservesActuals")));
+        classeDirigida.setHoraInici(mapaClasseDirigida.get(Constants.CLASSE_HORA));
+        classeDirigida.setDuracio(Integer.parseInt(mapaClasseDirigida.get(Constants.CLASSE_DURACIO)));
+        classeDirigida.setReservesActuals(Integer.parseInt(mapaClasseDirigida.get(Constants.CLASSE_OCUPACIO)));
+
         return classeDirigida;
     }
+
 }

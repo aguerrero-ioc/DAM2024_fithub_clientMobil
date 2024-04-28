@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
@@ -43,8 +44,8 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
         this.correuUsuari = correuUsuari;
         this.sessioID = sessioID;
 
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
@@ -126,19 +127,19 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
      * @param usuari Usuari a guardar.
      */
     private void guardarDadesUsuari(Usuari usuari) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
-        editor.putInt(Utils.ID_USUARI, usuari.getIDusuari());
-        editor.putString(Utils.NOM_USUARI, usuari.getNomUsuari());
-        editor.putString(Utils.PASS_USUARI, usuari.getPassUsuari());
-        editor.putInt(Utils.TIPUS_USUARI, usuari.getTipusUsuari());
-        editor.putString(Utils.CORREU_USUARI, usuari.getCorreuUsuari());
-        editor.putString(Utils.COGNOMS_USUARI, usuari.getCognomsUsuari());
-        editor.putString(Utils.TELEFON, usuari.getTelefon());
-        editor.putString(Utils.ADRECA, usuari.getAdreca());
-        editor.putString(Utils.DATA_NAIXEMENT, usuari.getDataNaixement());
-        editor.putString(Utils.DATA_INSCRIPCIO, usuari.getDataInscripcio());
+        editor.putInt(Constants.ID_USUARI, usuari.getIDusuari());
+        editor.putString(Constants.NOM_USUARI, usuari.getNomUsuari());
+        editor.putString(Constants.PASS_USUARI, usuari.getPassUsuari());
+        editor.putInt(Constants.TIPUS_USUARI, usuari.getTipusUsuari());
+        editor.putString(Constants.CORREU_USUARI, usuari.getCorreuUsuari());
+        editor.putString(Constants.COGNOMS_USUARI, usuari.getCognomsUsuari());
+        editor.putString(Constants.TELEFON, usuari.getTelefon());
+        editor.putString(Constants.ADRECA, usuari.getAdreca());
+        editor.putString(Constants.DATA_NAIXEMENT, usuari.getDataNaixement());
+        editor.putString(Constants.DATA_INSCRIPCIO, usuari.getDataInscripcio());
 
         editor.apply();
     }

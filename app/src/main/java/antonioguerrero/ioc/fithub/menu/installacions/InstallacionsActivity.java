@@ -15,6 +15,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
@@ -42,7 +43,7 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR));
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
 
         // Configura el menú desplegable
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -52,8 +53,8 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
         });
 
         // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, this, sessioID) {
             @Override
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
@@ -71,8 +72,8 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
 
     public void consultarTotesInstallacions(View view) {
         // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
 
         ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, this, sessioID) {
             @Override

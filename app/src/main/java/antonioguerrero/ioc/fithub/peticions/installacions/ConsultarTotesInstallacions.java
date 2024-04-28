@@ -9,6 +9,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
@@ -38,8 +39,8 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         this.context = context;
         this.sessioID = sessioID;
 
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
@@ -128,7 +129,7 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
      * @param llistaInstallacions La llista d'objectes Installacio que es guardarà a SharedPreferences.
      */
     private void guardarDadesInstallacions(List<HashMap<String, String>> llistaInstallacions) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de cada objecte installacio a SharedPreferences

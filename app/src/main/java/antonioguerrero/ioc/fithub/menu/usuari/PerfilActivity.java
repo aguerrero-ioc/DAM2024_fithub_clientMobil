@@ -13,6 +13,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
@@ -108,9 +109,9 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
         });
         // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
-        String correuUsuari = preferences.getString("correuUsuari", Utils.VALOR_DEFAULT);
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
+        String correuUsuari = preferences.getString("correuUsuari", Constants.VALOR_DEFAULT);
 
         // Obtenir les dades de l'usuari
         ConsultarUsuari consultarUsuari = new ConsultarUsuari(this, this, correuUsuari, sessioID) {

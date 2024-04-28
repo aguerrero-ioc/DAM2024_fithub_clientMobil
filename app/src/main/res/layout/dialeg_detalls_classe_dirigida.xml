@@ -1,34 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="24dp">
 
-    <!-- Nom de la classe dirigida -->
+    <!-- Nom de l'activitat -->
     <TextView
-        android:id="@+id/tvNomClasseDirigidaEtiqueta"
+        android:id="@+id/tvNomActivitatEtiqueta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nom: "
+        android:text="Nom de l'activitat: "
         android:textSize="16sp"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/tvNomClasseDirigida"
+        android:id="@+id/tvNomActivitat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvNomClasseDirigidaEtiqueta"
+        android:layout_below="@id/tvNomActivitatEtiqueta"
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Hora d'inici de la classe dirigida -->
+
+    <!-- Nom de l'instal·lació -->
+    <TextView
+        android:id="@+id/tvNomInstallacioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomActivitat"
+        android:layout_marginTop="16dp"
+        android:text="Instal·lació: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvNomInstallacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomInstallacioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Data de la classe -->
+    <TextView
+        android:id="@+id/tvDataClasseEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomInstallacio"
+        android:layout_marginTop="16dp"
+        android:text="Data: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvDataClasse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDataClasseEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Hora inici de la classe -->
     <TextView
         android:id="@+id/tvHoraIniciEtiqueta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvNomClasseDirigida"
+        android:layout_below="@id/tvDataClasse"
         android:layout_marginTop="16dp"
-        android:text="Hora d'inici: "
+        android:text="Hora d'Inici: "
         android:textSize="16sp"
         android:textStyle="bold"/>
 
@@ -40,23 +78,85 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Duració de la classe dirigida -->
+
+    <!-- Durada de la classe -->
     <TextView
-        android:id="@+id/tvDuracioEtiqueta"
+        android:id="@+id/tvDuradaEtiqueta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvHoraInici"
         android:layout_marginTop="16dp"
-        android:text="Duració: "
+        android:text="Durada de la classe: "
         android:textSize="16sp"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/tvDuracio"
+        android:id="@+id/tvDurada"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvDuracioEtiqueta"
+        android:layout_below="@id/tvDuradaEtiqueta"
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
+
+    <!-- Durada de la classe -->
+    <TextView
+        android:id="@+id/tvOcupacioClasseEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDurada"
+        android:layout_marginTop="16dp"
+        android:text="Ocupació de la classe: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvOcupacioClasse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOcupacioClasseEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Estat de la classe -->
+    <TextView
+        android:id="@+id/tvEstatClasseEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOcupacioClasse"
+        android:layout_marginTop="16dp"
+        android:text="Estat de la classe: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvEstatClasse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvEstatClasseEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btnReservar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reservar"
+            android:layout_marginRight="8dp" />
+
+        <Button
+            android:id="@+id/btnCancelarReserva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar reserva"
+            android:enabled="false" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -13,6 +13,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
@@ -51,7 +52,7 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Utils.PENDENT_IMPLEMENTAR));
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
 
         // Configura el menú lateral
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
@@ -64,11 +65,11 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
             } else if (id == R.id.nav_activitats) {
                 obrirActivity(ActivitatsActivity.class);
             } else if (id == R.id.nav_serveis) {
-                Utils.mostrarToast(AdminActivity.this, Utils.PENDENT_IMPLEMENTAR);
+                Utils.mostrarToast(AdminActivity.this, Constants.PENDENT_IMPLEMENTAR);
             } else if (id == R.id.nav_installacions) {
                 obrirActivity(InstallacionsActivity.class);
             } else if (id == R.id.nav_reserves) {
-                Utils.mostrarToast(AdminActivity.this, Utils.PENDENT_IMPLEMENTAR);
+                Utils.mostrarToast(AdminActivity.this, Constants.PENDENT_IMPLEMENTAR);
             } else if (id == R.id.nav_tancar_sessio) {
                 tancarSessioClicat();
             }

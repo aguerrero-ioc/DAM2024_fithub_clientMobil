@@ -9,8 +9,10 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+
 
 public abstract class ConsultarTotesActivitats extends ConnexioServidor {
     private Context context;
@@ -37,7 +39,6 @@ public abstract class ConsultarTotesActivitats extends ConnexioServidor {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 processarResposta(resposta);
@@ -60,11 +61,11 @@ public abstract class ConsultarTotesActivitats extends ConnexioServidor {
                         return;
                     }
                 } else {
-                    Utils.mostrarToast(context, "Error en la consulta de actividades");
+                    Utils.mostrarToast(context, "Error en la consulta de activitats");
                 }
             }
         }
-        Utils.mostrarToast(context, "Error en la respuesta del servidor");
+        Utils.mostrarToast(context, "Error en la resposta del servidor");
     }
 
     @Override
@@ -78,7 +79,7 @@ public abstract class ConsultarTotesActivitats extends ConnexioServidor {
     }
 
     private void guardarDadesActivitats(List<HashMap<String, String>> llistaActivitats) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         for (int i = 0; i < llistaActivitats.size(); i++) {

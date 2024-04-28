@@ -52,6 +52,11 @@ public class ReservesPassadesFragment extends Fragment {
         return view;
     }
 
+    public void actualitzarReserves(List<HashMap<String, String>> reserves) {
+        if (adapter != null) {
+            adapter.actualitzarReserves(reserves);
+        }
+    }
 }
 
 

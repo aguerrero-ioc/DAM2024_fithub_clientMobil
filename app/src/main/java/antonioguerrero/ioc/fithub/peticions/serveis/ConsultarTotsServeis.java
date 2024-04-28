@@ -9,6 +9,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
@@ -23,12 +24,12 @@ public abstract class ConsultarTotsServeis extends ConnexioServidor {
         this.sessioID = sessioID;
     }
 
-    public interface ConsultarTotesServeisListener {
+    public interface ConsultarTotsServeisListener {
         void onServeisObtinguts(List<HashMap<String, String>> serveis);
     }
 
     @SuppressLint("StaticFieldLeak")
-    public void consultarTotesServeis() {
+    public void consultarTotsServeis() {
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
@@ -54,8 +55,8 @@ public abstract class ConsultarTotsServeis extends ConnexioServidor {
                 if ("serveiLlista".equals(estat)) {
                     if (respostaArray[1] instanceof List) {
                         List<HashMap<String, String>> serveis = (List<HashMap<String, String>>) respostaArray[1];
-                        if (listener instanceof ConsultarTotesServeisListener) {
-                            ((ConsultarTotesServeisListener) listener).onServeisObtinguts(serveis);
+                        if (listener instanceof ConsultarTotsServeisListener) {
+                            ((ConsultarTotsServeisListener) listener).onServeisObtinguts(serveis);
                         }
                         guardarDadesServeis(serveis);
                         return;
@@ -75,11 +76,11 @@ public abstract class ConsultarTotsServeis extends ConnexioServidor {
 
     @Override
     public void execute() throws ConnectException {
-        consultarTotesServeis();
+        consultarTotsServeis();
     }
 
     private void guardarDadesServeis(List<HashMap<String, String>> llistaServeis) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         for (int i = 0; i < llistaServeis.size(); i++) {

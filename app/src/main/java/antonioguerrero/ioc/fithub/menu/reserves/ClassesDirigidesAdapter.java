@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -77,28 +78,28 @@ public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigid
         // Verificar si la data o hora d'inici és anterior a la data o hora actual
         if (Utils.esDataAnterior(classeDirigida.get("data")) || Utils.esHoraAnterior(classeDirigida.get("horaInici"))) {
             // Si la data o hora d'inici és anterior, inhabilitar el botó o establir un altre estat
-            holder.btnReservar.setEnabled(false);
+            holder.btnMesDetalls.setEnabled(false);
             // També pots canviar el color de fons o qualsevol altra propietat visual per indicar que està inhabilitat
         } else {
             // Si la data i hora d'inici són posteriors, habilitar el botó i establir l'estat desitjat
-            holder.btnReservar.setEnabled(true);
+            holder.btnMesDetalls.setEnabled(true);
         }
 
         // Afegir un listener de clics al botó "Més detalls"
-        holder.btnReservar.setOnClickListener(v -> {
+        holder.btnMesDetalls.setOnClickListener(v -> {
             // Obtenir les dades de la classe dirigida per mostrar en el diàleg
-            String nom = classeDirigida.get("nomClasseDirigida");
             String IDclasseDirigida = classeDirigida.get("IDclasseDirigida");
             String nomActivitat = classeDirigida.get("nomActivitat");
             String nomInstallacio = classeDirigida.get("nomInstallacio");
-            String data = classeDirigida.get("data");
+            String dataClasse = classeDirigida.get("dataClasse");
             String horaInici = classeDirigida.get("horaInici");
             String duracio = classeDirigida.get("duracio");
-            String reservesActuals = classeDirigida.get("reservesActuals");
+            String ocupacioClasse = classeDirigida.get("ocupacioClasse");
+            String estatClasse = classeDirigida.get("estatClasse");
 
 
             // Crear i mostrar el diàleg amb la informació de la classe dirigida
-            dialegDetallsClasseDirigida(nom, horaInici, duracio);
+            dialegDetallsClasseDirigida(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse);
         });
     }
 
@@ -119,46 +120,70 @@ public class ClassesDirigidesAdapter extends RecyclerView.Adapter<ClassesDirigid
      * Aquesta classe conté les vistes que es mostraran per a cada element de la llista.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View btnReservar;
-        TextView nomClasseDirigida, horaInici;
+        public View btnMesDetalls;
+        TextView nomClasseDirigida, horaInici, estatClasse;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            nomClasseDirigida = itemView.findViewById(R.id.nomClasseDirigida);
-            horaInici = itemView.findViewById(R.id.horaInici);
-            btnReservar = itemView.findViewById(R.id.btnMesDetalls);
+            nomClasseDirigida = itemView.findViewById(R.id.tvNomActivitat);
+            horaInici = itemView.findViewById(R.id.tvHoraInici);
+            estatClasse = itemView.findViewById(R.id.tvEstatClasse);
+            btnMesDetalls = itemView.findViewById(R.id.btnMesDetalls);
         }
     }
 
+
     /**
-     * Mètode per mostrar un diàleg amb els detalls de la classe dirigida.
+     * Mètode per mostrar el diàleg amb els detalls de la classe dirigida.
      * <p>
-     * Aquest mètode crea un diàleg personalitzat amb la informació de la classe dirigida.
-     * El diàleg mostra el nom de la classe, l'hora d'inici i la durada de la classe.
-     * <p>
-     * @param nomClasseDirigida Nom de la classe dirigida.
+     * Aquest mètode mostra un diàleg amb els detalls de la classe dirigida seleccionada.
+     *
+     * @param nomActivitat Nom de l'activitat.
+     * @param nomInstallacio Nom de la instal·lació on es realitza l'activitat.
+     * @param dataClasse Data de la classe dirigida.
      * @param horaInici Hora d'inici de la classe dirigida.
      * @param duracio Durada de la classe dirigida.
+     * @param ocupacioClasse Ocupació de la classe dirigida.
+     * @param estatClasse Estat de la classe dirigida.
      */
-    private void dialegDetallsClasseDirigida(String nomClasseDirigida, String horaInici, String duracio) {
-        // Inflar el diseño personalizado del diálogo
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        View dialogView = inflater.inflate(R.layout.dialeg_detalls_classe_dirigida, null);
+private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse){
+    // Inflar el diseño personalizado del diálogo
+    LayoutInflater inflater = LayoutInflater.from(mContext);
+    View dialogView = inflater.inflate(R.layout.dialeg_detalls_classe_dirigida, null);
 
-        // Configurar las vistas del diseño personalizado
-        TextView tvNomClasseDirigida = dialogView.findViewById(R.id.tvNomClasseDirigida);
-        TextView tvHoraInici = dialogView.findViewById(R.id.tvHoraInici);
-        TextView tvDuracio = dialogView.findViewById(R.id.tvDuracio);
+    // Configurar las vistas del diseño personalizado
+    TextView tvNomActivitat = dialogView.findViewById(R.id.tvNomActivitat);
+    TextView tvNomInstallacio = dialogView.findViewById(R.id.tvNomInstallacio);
+    TextView tvDataClasse = dialogView.findViewById(R.id.tvDataClasse);
+    TextView tvHoraInici = dialogView.findViewById(R.id.tvHoraInici);
+    TextView tvDuracio = dialogView.findViewById(R.id.tvDurada);
+    TextView tvOcupacioClasse = dialogView.findViewById(R.id.tvOcupacioClasse);
+    TextView tvEstatClasse = dialogView.findViewById(R.id.tvEstatClasse);
 
-        tvNomClasseDirigida.setText(nomClasseDirigida);
-        tvHoraInici.setText(horaInici);
-        tvDuracio.setText(duracio);
+    tvNomActivitat.setText(nomActivitat);
+    tvNomInstallacio.setText(nomInstallacio);
+    tvDataClasse.setText(dataClasse);
+    tvHoraInici.setText(horaInici);
+    tvDuracio.setText(duracio);
+    tvOcupacioClasse.setText(ocupacioClasse);
+    tvEstatClasse.setText(estatClasse);
 
-        // Crear el diálogo con el diseño personalizado
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setView(dialogView);
-        builder.setPositiveButton("D'acord", null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
+    // Configurar los botones de "Reservar" y "Cancelar reserva"
+    Button btnReservar = dialogView.findViewById(R.id.btnReservar);
+    Button btnCancelarReserva = dialogView.findViewById(R.id.btnCancelarReserva);
+
+    btnReservar.setOnClickListener(v -> {
+        // Aquí va el código para manejar el clic en el botón "Reservar"
+    });
+
+    btnCancelarReserva.setOnClickListener(v -> {
+        // Aquí va el código para manejar el clic en el botón "Cancelar reserva"
+    });
+
+    // Crear el diálogo con el diseño personalizado
+    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+    builder.setView(dialogView);
+    AlertDialog dialog = builder.create();
+    dialog.show();
+}
 }

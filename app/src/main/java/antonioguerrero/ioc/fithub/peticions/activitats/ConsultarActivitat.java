@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Activitat;
@@ -26,8 +27,8 @@ public abstract class ConsultarActivitat extends ConnexioServidor {
     private Context context;
     private static final String ETIQUETA = "ConsultaActivitat";
     private String nomActivitat;
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
 
     /**
      * Constructor de la classe.
@@ -43,8 +44,8 @@ public abstract class ConsultarActivitat extends ConnexioServidor {
         this.nomActivitat = nomActivitat;
         this.sessioID = sessioID;
 
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
@@ -128,7 +129,7 @@ public abstract class ConsultarActivitat extends ConnexioServidor {
      */
     private void guardarDadesActivitat(Activitat activitat) {
 
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar las propiedades del objeto activitat en SharedPreferences

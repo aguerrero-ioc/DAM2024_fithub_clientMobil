@@ -8,6 +8,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Installacio;
@@ -25,8 +26,8 @@ public abstract class ConsultarInstallacio extends ConnexioServidor {
     private static final String ETIQUETA = "ConsultarInstallacio";
     private final String nomInstallacio;
 
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+    String sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
 
     /**
      * Constructor de la classe ConsultarInstallacio.
@@ -100,7 +101,7 @@ public abstract class ConsultarInstallacio extends ConnexioServidor {
      * @param installacio L'objecte Installacio que es guardarà a SharedPreferences.
      */
     private void guardarDadesInstallacio(Installacio installacio) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de l'objecte installacio a SharedPreferences

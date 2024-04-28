@@ -3,6 +3,8 @@ package antonioguerrero.ioc.fithub.objectes;
 
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Constants;
+
 /**
  * Classe que representa una reserva d'una classe.
  * <p>
@@ -15,8 +17,10 @@ import java.util.HashMap;
 public class Reserva {
 
     // Dades obligatòries de la reserva
-    private int IDclasseDirigida;
-    private int IDusuari;
+
+    private ClasseDirigida classeDirigida;
+
+    private Usuari usuari;
 
 
     /**
@@ -28,68 +32,59 @@ public class Reserva {
 
     // Getters y setters
 
-    /**
-     * Obté l'identificador de la reserva.
-     *
-     * @return L'identificador de la reserva.
-     */
+    public ClasseDirigida getClasseDirigida() {
+        return classeDirigida;
+    }
 
-    public int getIDclasseDirigida() {
-        return IDclasseDirigida;
+    public void setClasseDirigida(ClasseDirigida classeDirigida) {
+        this.classeDirigida = classeDirigida;
+    }
+
+    public Usuari getUsuari() {
+        return usuari;
+    }
+
+    public void setUsuari(Usuari usuari) {
+        this.usuari = usuari;
     }
 
     /**
-     * Estableix l'identificador de la reserva.
+     * Mètode per convertir una reserva a un HashMap.
      *
-     * @param IDclasseDirigida L'identificador de la reserva.
-     */
-
-    public void setIDclasseDirigida(int IDclasseDirigida) {
-        this.IDclasseDirigida = IDclasseDirigida;
-    }
-
-    /**
-     * Obté l'identificador de l'usuari.
-     *
-     * @return L'identificador de l'usuari.
-     */
-    public int getIDusuari() {
-        return IDusuari;
-    }
-
-    /**
-     * Estableix l'identificador de l'usuari.
-     *
-     * @param IDusuari L'identificador de l'usuari.
-     */
-    public void setIDusuari(int IDusuari) {
-        this.IDusuari = IDusuari;
-    }
-
-    /**
-     * Converteix una reserva a un HashMap.
-     *
-     * @param reserva La reserva a convertir.
-     * @return El HashMap resultant.
+     * @param reserva La reserva que es vol convertir.
+     * @return HashMap amb les dades de la reserva.
      */
     public HashMap<String, String> reserva_a_hashmap(Reserva reserva) {
         HashMap<String, String> mapaReserva = new HashMap<>();
-        mapaReserva.put("objectType","reserva");
-        mapaReserva.put("IDreserva",Integer.toString(reserva.getIDclasseDirigida()));
-        mapaReserva.put("IDusuari",Integer.toString(reserva.getIDusuari()));
+
+        // Obtener los datos de la clase dirigida y el usuario directamente de las instancias
+        mapaReserva.put(Constants.CLASSE_ID, String.valueOf(reserva.getClasseDirigida().getIDClasseDirigida()));
+        mapaReserva.put(Constants.ID_USUARI, String.valueOf(reserva.getUsuari().getIDusuari()));
+
         return mapaReserva;
     }
 
     /**
-     * Converteix un HashMap a una reserva.
+     * Mètode per convertir un HashMap a una reserva.
      *
-     * @param mapaReserva El HashMap a convertir.
-     * @return La reserva resultant.
+     * @param mapaReserva El HashMap que es vol convertir.
+     * @return La reserva amb les dades del HashMap.
      */
     public Reserva hashmap_a_reserva(HashMap<String, String> mapaReserva) {
         Reserva reserva = new Reserva();
-        reserva.setIDclasseDirigida(Integer.parseInt(mapaReserva.get("IDclasseDirigida")));
-        reserva.setIDusuari(Integer.parseInt(mapaReserva.get("IDusuari")));
+
+        // Crear una nueva instancia de ClasseDirigida y asignarle los datos del mapa
+        ClasseDirigida classeDirigida = new ClasseDirigida();
+        classeDirigida.setIDClasseDirigida(Integer.parseInt(mapaReserva.get(Constants.CLASSE_ID)));
+
+        // Crear una nueva instancia de Usuari y asignarle los datos del mapa
+        Usuari usuari = new Usuari();
+        usuari.setIDusuari(Integer.parseInt(mapaReserva.get(Constants.ID_USUARI)));
+
+        // Asignar las instancias de ClasseDirigida y Usuari a la Reserva
+        reserva.setClasseDirigida(classeDirigida);
+        reserva.setUsuari(usuari);
+
         return reserva;
     }
 

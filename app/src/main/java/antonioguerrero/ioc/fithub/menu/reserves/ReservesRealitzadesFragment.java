@@ -53,5 +53,9 @@ public class ReservesRealitzadesFragment extends Fragment {
     }
 
 
-
+    public void actualitzarReserves(List<HashMap<String, String>> reserves) {
+        if (adapter != null) {
+            adapter.actualitzarReserves(reserves);
+        }
+    }
 }

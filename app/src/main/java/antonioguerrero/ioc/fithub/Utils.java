@@ -34,25 +34,6 @@ import java.util.Locale;
  */
 public class Utils {
 
-    //USUARI
-    public static final String ID_USUARI = "IDusuari";
-    public static final String NOM_USUARI = "nomUsuari";
-    public static final String PASS_USUARI = "passUsuari";
-    public static final String TIPUS_USUARI = "tipusUsuari";
-    public static final String CORREU_USUARI = "correuUsuari";
-    public static final String COGNOMS_USUARI = "cognomsUsuari";
-    public static final String TELEFON = "telefon";
-    public static final String ADRECA = "adreca";
-    public static final String DATA_NAIXEMENT = "dataNaixement";
-    public static final String DATA_INSCRIPCIO = "dataInscripcio";
-
-    // RESTA
-    public static final String PREFERENCIES = "Preferències";
-    public static final String SESSIO_ID = "sessioID";
-    public static final String VALOR_DEFAULT = "";
-    public static final String ERROR_CONNEXIO = "Error de connexió";
-    public static final String PENDENT_IMPLEMENTAR = "Pendent d'implementar. Aviat disponible!";
-    public static final String FORMAT_DATA = "dd-MM-yyyy";
 
     /**
      * Mètode per obtenir la data actual en format "ddMMyyyy".
@@ -311,9 +292,9 @@ public class Utils {
      * @param clazz   Classe de l'objecte.
      */
     public static void guardarDadesObjecte(Context context, Object object, Class<?> clazz) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
-        SimpleDateFormat format = new SimpleDateFormat(Utils.FORMAT_DATA);
+        SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT_DATA);
 
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
