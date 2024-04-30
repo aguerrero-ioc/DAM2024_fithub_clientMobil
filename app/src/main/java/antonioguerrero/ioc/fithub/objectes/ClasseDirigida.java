@@ -22,7 +22,7 @@ public class ClasseDirigida implements Serializable {
     private Installacio installacio;
     private String data;
     private String horaInici;
-    private int duracio;
+    private String duracio;
     private int reservesActuals;
     private boolean estat;
 
@@ -47,17 +47,17 @@ public class ClasseDirigida implements Serializable {
      *
      * @return Identificador de la classe dirigida
      */
-    public int getIDClasseDirigida() {
+    public int getIDclasseDirigida() {
         return IDclasseDirigida;
     }
 
     /**
      * Estableix l'identificador de la classe dirigida.
      *
-     * @param IDClasseDirigida Identificador de la classe dirigida
+     * @param IDclasseDirigida Identificador de la classe dirigida
      */
-    public void setIDClasseDirigida(int IDClasseDirigida) {
-        this.IDclasseDirigida = IDClasseDirigida;
+    public void setIDclasseDirigida(int IDclasseDirigida) {
+        this.IDclasseDirigida = IDclasseDirigida;
     }
 
     /**
@@ -161,7 +161,7 @@ public class ClasseDirigida implements Serializable {
      *
      * @return Duració de la classe dirigida
      */
-    public int getDuracio() {
+    public String getDuracio() {
         return duracio;
     }
 
@@ -170,7 +170,7 @@ public class ClasseDirigida implements Serializable {
      *
      * @param duracio Duració de la classe dirigida
      */
-    public void setDuracio(int duracio) {
+    public void setDuracio(String duracio) {
         this.duracio = duracio;
     }
 
@@ -224,7 +224,7 @@ public class ClasseDirigida implements Serializable {
 
         // Agregar otros atributos de la clase dirigida
         mapaClasseDirigida.put(Constants.OBJTYPE, Constants.OBJ_CLASSE);
-        mapaClasseDirigida.put(Constants.CLASSE_ID, String.valueOf(classeDirigida.getIDClasseDirigida()));
+        mapaClasseDirigida.put(Constants.CLASSE_ID, String.valueOf(classeDirigida.getIDclasseDirigida()));
         mapaClasseDirigida.put(Constants.CLASSE_HORA, classeDirigida.getHoraInici());
         mapaClasseDirigida.put(Constants.CLASSE_DURACIO, String.valueOf(classeDirigida.getDuracio()));
         mapaClasseDirigida.put(Constants.CLASSE_OCUPACIO, String.valueOf(classeDirigida.getReservesActuals()));
@@ -239,9 +239,9 @@ public class ClasseDirigida implements Serializable {
      * @param mapaClasseDirigida El HashMap que es vol convertir.
      * @return La classe dirigida amb les dades del HashMap.
      */
-    public ClasseDirigida hashmap_a_classeDirigida(HashMap<String, String> mapaClasseDirigida) {
+    public static ClasseDirigida hashmap_a_classeDirigida(HashMap<String, String> mapaClasseDirigida) {
         ClasseDirigida classeDirigida = new ClasseDirigida();
-        classeDirigida.setIDClasseDirigida(Integer.parseInt(mapaClasseDirigida.get(Constants.CLASSE_ID)));
+        classeDirigida.setIDclasseDirigida(Integer.parseInt(mapaClasseDirigida.get(Constants.CLASSE_ID)));
 
         // Crear una nueva instancia de Activitat y asignarle los datos del mapa
         Activitat activitat = new Activitat();
@@ -258,7 +258,7 @@ public class ClasseDirigida implements Serializable {
         // Asignar los otros atributos de ClasseDirigida
         classeDirigida.setData(mapaClasseDirigida.get("data"));
         classeDirigida.setHoraInici(mapaClasseDirigida.get(Constants.CLASSE_HORA));
-        classeDirigida.setDuracio(Integer.parseInt(mapaClasseDirigida.get(Constants.CLASSE_DURACIO)));
+        classeDirigida.setDuracio(mapaClasseDirigida.get(Constants.CLASSE_DURACIO));
         classeDirigida.setReservesActuals(Integer.parseInt(mapaClasseDirigida.get(Constants.CLASSE_OCUPACIO)));
 
         return classeDirigida;

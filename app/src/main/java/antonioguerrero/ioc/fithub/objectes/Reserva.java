@@ -58,7 +58,7 @@ public class Reserva {
         HashMap<String, String> mapaReserva = new HashMap<>();
 
         // Obtener los datos de la clase dirigida y el usuario directamente de las instancias
-        mapaReserva.put(Constants.CLASSE_ID, String.valueOf(reserva.getClasseDirigida().getIDClasseDirigida()));
+        mapaReserva.put(Constants.CLASSE_ID, String.valueOf(reserva.getClasseDirigida().getIDclasseDirigida()));
         mapaReserva.put(Constants.ID_USUARI, String.valueOf(reserva.getUsuari().getIDusuari()));
 
         return mapaReserva;
@@ -75,7 +75,7 @@ public class Reserva {
 
         // Crear una nueva instancia de ClasseDirigida y asignarle los datos del mapa
         ClasseDirigida classeDirigida = new ClasseDirigida();
-        classeDirigida.setIDClasseDirigida(Integer.parseInt(mapaReserva.get(Constants.CLASSE_ID)));
+        classeDirigida.setIDclasseDirigida(Integer.parseInt(mapaReserva.get(Constants.CLASSE_ID)));
 
         // Crear una nueva instancia de Usuari y asignarle los datos del mapa
         Usuari usuari = new Usuari();

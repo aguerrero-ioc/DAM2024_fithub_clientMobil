@@ -3,6 +3,25 @@
     android:layout_height="wrap_content"
     android:padding="24dp">
 
+    <!-- Contenidor del botó de tancar -->
+    <LinearLayout
+        android:id="@+id/botoTancarContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp">
+
+        <ImageButton
+            android:id="@+id/botoTancar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_tancar" />
+    </LinearLayout>
+
+
     <!-- Nom de l'activitat -->
     <TextView
         android:id="@+id/tvNomActivitatEtiqueta"
@@ -10,7 +29,9 @@
         android:layout_height="wrap_content"
         android:text="Nom de l'activitat: "
         android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_below="@id/botoTancarContainer"/>
+
 
     <TextView
         android:id="@+id/tvNomActivitat"
@@ -19,7 +40,6 @@
         android:layout_below="@id/tvNomActivitatEtiqueta"
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
-
 
     <!-- Nom de l'instal·lació -->
     <TextView
@@ -78,7 +98,6 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-
     <!-- Durada de la classe -->
     <TextView
         android:id="@+id/tvDuradaEtiqueta"
@@ -136,20 +155,20 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/tvEstatClasse"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp">
 
         <Button
             android:id="@+id/btnReservar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Reservar"
-            android:layout_marginRight="8dp" />
+            android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/btnCancelarReserva"

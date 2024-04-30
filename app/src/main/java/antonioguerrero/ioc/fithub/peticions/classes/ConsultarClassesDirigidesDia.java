@@ -99,7 +99,7 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
                         return;
                     }
                 } else {
-                    Utils.mostrarToast(context, "Error en la consulta de instal·lacions");
+                    Utils.mostrarToast(context, "Error en la consulta de classes dirigides");
                 }
             }
         }
@@ -118,11 +118,11 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
         // Guardar les dades de les classes dirigides a SharedPreferences
         for (int i = 0; i < dadesClassesDirigides.size(); i++) {
             HashMap<String, String> mapaClassesDirigides = dadesClassesDirigides.get(i);
-            editor.putInt("IDactivitat" + i, Integer.parseInt(mapaClassesDirigides.get("IDactivitat")));
-            editor.putInt("IDinstallacio" + i, Integer.parseInt(mapaClassesDirigides.get("IDinstallacio")));
+            editor.putString("nomActivitat" + i, mapaClassesDirigides.get("nomActivitat"));
+            editor.putString("nomInstallacio" + i, mapaClassesDirigides.get("nomInstallacio"));
             editor.putString("dia" + i, mapaClassesDirigides.get("dia"));
             editor.putString("horaInici" + i, mapaClassesDirigides.get("horaInici"));
-            editor.putInt("duracio" + i, Integer.parseInt(mapaClassesDirigides.get("duracio")));
+            editor.putString("duracio" + i, mapaClassesDirigides.get("duracio"));
         }
 
         // Guardar la quantitat de classes dirigides a SharedPreferences

@@ -32,7 +32,8 @@
         <activity android:name=".menu.activitats.ActivitatsActivity" />
         <activity android:name=".menu.serveis.ServeisActivity" />
         <activity android:name=".menu.installacions.InstallacionsActivity" />
-        <activity android:name=".menu.reserves.ReservesActivity" />
+        <activity android:name=".menu.reserves.ReservesPerDiaActivity" />
+        <activity android:name=".menu.reserves.ReservesPerNomActivity" />
     </application>
 
 </manifest>

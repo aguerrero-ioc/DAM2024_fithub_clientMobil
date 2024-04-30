@@ -88,7 +88,7 @@ public abstract class ConsultarTotsServeis extends ConnexioServidor {
             editor.putInt("IDservei" + i, Integer.parseInt(mapaServei.get("IDservei")));
             editor.putString("nomServei" + i, mapaServei.get("nomServei"));
             editor.putString("descripcioServei" + i, mapaServei.get("descripcioServei"));
-            editor.putString("tipusInstallacio" + i, mapaServei.get("tipusInstallacio"));
+            editor.putString("preu" + i, mapaServei.get("preu"));
         }
 
         editor.putInt("numServeis", llistaServeis.size());

@@ -97,7 +97,7 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
                 return null;
             }
         };
-        consultaReserves.consultarTotesReserves();
+        //consultaReserves.consultarTotesReserves();
     }
 
 
