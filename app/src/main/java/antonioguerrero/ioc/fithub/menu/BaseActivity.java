@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +24,15 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
+import antonioguerrero.ioc.fithub.menu.activitats.GestioActivitatsActivity;
+import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
+import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
+import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerNomActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerDiaActivity;
+import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
+import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
@@ -47,6 +54,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private Menu menu;
     private SubMenu reservesSubMenu;
 
+    private TextView tvNomUsuari;
+    private TextView tvCorreuElectronic;
+
     /**
      * Mètode que s'executa quan es crea l'activitat.
      * @param savedInstanceState L'estat guardat de l'activitat.
@@ -56,11 +66,31 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
+            return true;
+        });
+        // Inflar el layout de la cabecera del NavigationView
+
+        View headerView = navigationView.getHeaderView(0);
+
+        // Obtenir referències a les vistes en el nav_header
+        tvNomUsuari = headerView.findViewById(R.id.tvNomUsuari);
+        tvCorreuElectronic = headerView.findViewById(R.id.tvCorreuElectronic);
+
+        // Obtenir les dades de l'usuari de SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         menu = navigationView.getMenu();
-        reservesSubMenu = menu.findItem(R.id.nav_reserves).getSubMenu();
+
+
     }
 
     @Override
@@ -78,32 +108,66 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
      */
     public void handleNavigationItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
-        if (id == R.id.nav_perfil_usuari) {
+        int tipusUsuari = obtenirTipusUsuari();
+
+        if (id == R.id.nav_menu) {
+            if (tipusUsuari == 1) {
+                obrirActivity(AdminActivity.class);
+            } else if (tipusUsuari == 2) {
+                obrirActivity(ClientActivity.class);
+            }
+        } else if (id == R.id.nav_perfil_usuari) {
             obrirActivity(PerfilActivity.class);
         } else if (id == R.id.nav_activitats) {
-            obrirActivity(ActivitatsActivity.class);
+            if (tipusUsuari == 1) {
+                obrirActivity(GestioActivitatsActivity.class);
+            } else if (tipusUsuari == 2) {
+                obrirActivity(ActivitatsActivity.class);
+            }
         } else if (id == R.id.nav_serveis) {
-            Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR);
+            if (tipusUsuari == 1) {
+                //obrirActivity(GestioServeisActivity.class);
+            } else if (tipusUsuari == 2) {
+                obrirActivity(ServeisActivity.class);
+            }
         } else if (id == R.id.nav_installacions) {
-            obrirActivity(InstallacionsActivity.class);
-        } else if (id == R.id.nav_reserves) {
-            MenuItem reservesPerDiaItem = menu.findItem(R.id.nav_reserves_per_dia);
-            MenuItem reservesPerActivitatItem = menu.findItem(R.id.nav_reserves_per_activitat);
-
-            if (reservesPerDiaItem.isVisible()) {
-                reservesPerDiaItem.setVisible(false);
-                reservesPerActivitatItem.setVisible(false);
-            } else {
-                reservesPerDiaItem.setVisible(true);
-                reservesPerActivitatItem.setVisible(true);
+            if (tipusUsuari == 1) {
+                obrirActivity(GestioInstallacionsActivity.class);
+            } else if (tipusUsuari == 2) {
+                obrirActivity(InstallacionsActivity.class);
             }
         } else if (id == R.id.nav_reserves_per_dia) {
-            obrirActivity(ReservesPerDiaActivity.class);
+            if (tipusUsuari == 1) {
+                Utils.mostrarToast(this, Constants.NO_ADMIN);
+            } else if (tipusUsuari == 2) {
+                obrirActivity(ReservesPerDiaActivity.class);
+            }
         } else if (id == R.id.nav_reserves_per_activitat) {
-            obrirActivity(ReservesPerNomActivity.class);
+            if (tipusUsuari == 1) {
+                Utils.mostrarToast(this, Constants.NO_ADMIN);
+            } else if (tipusUsuari == 2) {
+                obrirActivity(ReservesPerNomActivity.class);
+            }
         } else if (id == R.id.nav_tancar_sessio) {
             tancarSessioClicat();
         }
+    }
+
+    /**
+     * Mètode per obtenir el tipus d'usuari.
+     *
+     * @return El tipus d'usuari.
+     */
+    private int obtenirTipusUsuari() {
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String tipusUsuariString = preferences.getString(Constants.TIPUS_USUARI, Constants.VALOR_DEFAULT);
+        int tipusUsuari;
+        try {
+            tipusUsuari = Integer.parseInt(tipusUsuariString);
+        } catch (NumberFormatException e) {
+            tipusUsuari = 0;
+        }
+        return tipusUsuari;
     }
 
     /**

@@ -70,12 +70,7 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
 
 
-        // Configura el menú desplegable
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(menuItem -> {
-            handleNavigationItemSelected(menuItem);
-            return true;
-        });
+
 
         // Iniciar la consulta de reserves
         iniciarConsultaReserves();

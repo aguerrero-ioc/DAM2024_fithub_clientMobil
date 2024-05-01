@@ -91,7 +91,7 @@ android:layout_height="match_parent">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
-            android:text="Gestió d'usuari"
+            android:text="Gestió d'usuaris"
             android:background="@drawable/boto_personalitzat"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
@@ -103,7 +103,7 @@ android:layout_height="match_parent">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
-            android:text="Gestió d'activitat"
+            android:text="Gestió d'activitats"
             android:background="@drawable/boto_personalitzat"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
@@ -115,7 +115,19 @@ android:layout_height="match_parent">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
-            android:text="Gestió d'instal·lació"
+            android:text="Gestió d'instal·lacions"
+            android:background="@drawable/boto_personalitzat"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"/>
+
+        <Button
+            android:id="@+id/boto_gestio4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:text="Gestió de serveis"
             android:background="@drawable/boto_personalitzat"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
@@ -134,21 +146,29 @@ android:layout_height="match_parent">
         android:src="@drawable/ic_missatge"
         android:backgroundTint="?attr/colorPrimary"
 
-        android:onClick="mostrarFragmentMissatges"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- NavigationView per el panell desplegable -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:backgroundTint="@color/gray"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:headerLayout="@layout/nav_capcelera"
         app:menu="@menu/menu_navigation_usuari">
+
+        <!-- Divisor -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:orientation="vertical"/>
 
     </com.google.android.material.navigation.NavigationView>
 

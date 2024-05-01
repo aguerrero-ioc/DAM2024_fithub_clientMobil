@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 
 /**
@@ -62,10 +63,10 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HashMap<String, String> installacio = installacionsList.get(position);
-        holder.nomInstallacio.setText(installacio.get("nomInstallacio"));
+        holder.nomInstallacio.setText(installacio.get(Constants.INS_NOM));
 
-        // Obtener el tipo de instalación y asignar el texto adecuado
-        String tipusInstallacio = installacio.get("tipusInstallacio");
+        // Obtenir el tipus de la instal·lació i mostrar-lo en la vista
+        String tipusInstallacio = installacio.get(Constants.INS_TIPUS);
         if (tipusInstallacio != null) {
             switch (tipusInstallacio) {
                 case "1":
@@ -86,12 +87,12 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
         holder.btnMesDetalls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obtener los datos de la instalación para mostrar en el diálogo
+                // Obtenir les dades de la instal·lació per a mostrar-les en el diàleg
                 String nom = installacio.get("nomInstallacio");
                 String descripcio = installacio.get("descripcioInstallacio");
                 String tipus = holder.tipusInstallacio.getText().toString(); // Obtener el tipo de la vista
 
-                // Crear y mostrar el diálogo con la información de la instalación
+                // Crear i mostrar el diàleg amb els detalls de la instal·lació
                 dialegDetallsInstallacio(nom, descripcio, tipus);
             }
         });
@@ -131,11 +132,11 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
      * @param tipusInstallacio Tipus de la instal·lació.
      */
     private void dialegDetallsInstallacio(String nomInstallacio, String descripcioInstallacio, String tipusInstallacio) {
-        // Inflar el diseño personalizado del diálogo
+        // Infletem el disseny personalitzat
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View dialogView = inflater.inflate(R.layout.dialeg_detalls_installacio, null);
 
-        // Configurar las vistas del diseño personalizado
+        // Configurar les vistes del diàleg amb les dades de la instal·lació
         TextView tvNomInstallacio = dialogView.findViewById(R.id.tvNomInstallacio);
         TextView tvDescripcioInstallacio = dialogView.findViewById(R.id.tvDescripcioInstallacio);
         TextView tvTipusInstallacio = dialogView.findViewById(R.id.tvTipusInstallacio);

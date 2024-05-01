@@ -1,0 +1,121 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <!-- Contenidor del botó de tancar -->
+    <LinearLayout
+        android:id="@+id/botoTancarContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp">
+
+        <ImageButton
+            android:id="@+id/botoTancar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_tancar" />
+    </LinearLayout>
+
+    <!-- Nom de l'activitat -->
+    <TextView
+        android:id="@+id/tvNomActivitatEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/botoTancarContainer"/>
+
+    <TextView
+        android:id="@+id/tvNomActivitat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomActivitatEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Descripció de l'activitat -->
+    <TextView
+        android:id="@+id/tvDescripcioActivitatEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomActivitat"
+        android:layout_marginTop="16dp"
+        android:text="Descripció: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvDescripcioActivitat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescripcioActivitatEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Aforament màxim de l'activitat -->
+    <TextView
+        android:id="@+id/tvAforamentActivitatEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescripcioActivitat"
+        android:layout_marginTop="16dp"
+        android:text="Aforament màxim: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvAforamentActivitat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAforamentActivitatEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Tipus d'activitat -->
+    <TextView
+        android:id="@+id/tvTipusActivitatEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAforamentActivitat"
+        android:layout_marginTop="16dp"
+        android:text="Tipus: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvTipusActivitat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTipusActivitatEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTipusActivitat"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp">
+
+        <Button
+            android:id="@+id/btnModificar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modificar activitat"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eliminar activitat"/>
+    </LinearLayout>
+
+</RelativeLayout>

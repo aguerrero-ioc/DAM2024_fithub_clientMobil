@@ -3,6 +3,8 @@ package antonioguerrero.ioc.fithub.objectes;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Constants;
+
 /**
  * Classe que representa un servei reservat en una instal·lació.
  * <p>
@@ -18,14 +20,11 @@ public class Servei implements Serializable {
     private int IDServei;
     private String nomServei;
     private String descripcioServei;
-    private int aforamentServei;
+    private String preuServei;
 
-    private String tipusInstallacio;
 
     // Altres atributs que podrien ser necessaris
     private String personalServei;
-    private int preuServei;
-
 
     /**
      * Constructor de la classe Servei.
@@ -33,20 +32,28 @@ public class Servei implements Serializable {
      * @param IDServei Identificador del servei
      * @param nomServei Nom del servei
      * @param descripcioServei Descripció del servei
-     * @param aforamentServei Aforament del servei
-     * @param tipusInstallacio Tipus de la instal·lació on es realitza el servei
+     * @param preuServei Preu del servei
      */
 
-    public Servei(int IDServei, String nomServei, String descripcioServei, int aforamentServei, String tipusInstallacio) {
+    public Servei(int IDServei, String nomServei, String descripcioServei, String preuServei) {
         this.IDServei = IDServei;
         this.nomServei = nomServei;
         this.descripcioServei = descripcioServei;
-        this.aforamentServei = aforamentServei;
-        this.tipusInstallacio = tipusInstallacio;
+        this.preuServei = preuServei;
     }
 
-    public Servei() {
 
+    /**
+     * Constructor de la classe Servei amb paràmetres.
+     *
+     * @param nomServei Nom del servei
+     * @param descripcioServei Descripció del servei
+     * @param preuServei Preu del servei
+     */
+    public Servei(String nomServei, String descripcioServei, String preuServei) {
+        this.nomServei = nomServei;
+        this.descripcioServei = descripcioServei;
+        this.preuServei = preuServei;
     }
 
 
@@ -113,65 +120,7 @@ public class Servei implements Serializable {
         this.descripcioServei = descripcioServei;
     }
 
-/**
-     * Obté l'aforament del servei.
-     *
-     * @return L'aforament del servei
-     */
 
-    public int getAforamentServei() {
-        return aforamentServei;
-    }
-
-    /**
-     * Estableix l'aforament del servei
-     *
-     * @param aforamentServei L'aforament del servei
-     */
-
-    public void setAforamentServei(int aforamentServei) {
-        this.aforamentServei = aforamentServei;
-    }
-
-    /**
-     * Obté el tipus de la instal·lació on es realitza el servei.
-     *
-     * @return El tipus de la instal·lació
-     */
-
-    public String getTipusInstallacio() {
-        return tipusInstallacio;
-    }
-
-    /**
-     * Estableix el tipus de la instal·lació on es realitza el servei
-     *
-     * @param tipusInstallacio El tipus de la instal·lació
-     */
-
-    public void setTipusInstallacio(String tipusInstallacio) {
-        this.tipusInstallacio = tipusInstallacio;
-    }
-
-    /**
-     * Obté el personal assignat al servei.
-     *
-     * @return El personal assignat al servei
-     */
-
-    public String getPersonalServei() {
-        return personalServei;
-    }
-
-    /**
-     * Estableix el personal assignat al servei
-     *
-     * @param personalServei El personal assignat al servei
-     */
-
-    public void setPersonalServei(String personalServei) {
-        this.personalServei = personalServei;
-    }
 
     /**
      * Obté el preu del servei.
@@ -179,7 +128,7 @@ public class Servei implements Serializable {
      * @return El preu del servei
      */
 
-    public int getPreuServei() {
+    public String getPreuServei() {
         return preuServei;
     }
 
@@ -189,7 +138,7 @@ public class Servei implements Serializable {
      * @param preuServei El preu del servei
      */
 
-    public void setPreuServei(int preuServei) {
+    public void setPreuServei(String preuServei) {
         this.preuServei = preuServei;
     }
 
@@ -201,14 +150,11 @@ public class Servei implements Serializable {
      */
     public HashMap<String, String> servei_a_hashmap(Servei servei) {
         HashMap<String, String> mapaServei = new HashMap<>();
-        mapaServei.put("objectType","servei");
-        mapaServei.put("id",Integer.toString(servei.getIDServei()));
+        mapaServei.put(Constants.OBJTYPE,"servei");
+        mapaServei.put("IDservei",Integer.toString(servei.getIDServei()));
         mapaServei.put("nomServei",servei.getNomServei());
         mapaServei.put("descripcioServei", servei.getDescripcioServei());
-        mapaServei.put("aforamentServei",Integer.toString(servei.getAforamentServei()));
-        mapaServei.put("tipusInstallacio",servei.getTipusInstallacio());
-        mapaServei.put("personalServei",servei.getPersonalServei());
-        mapaServei.put("preuServei",Integer.toString(servei.getPreuServei()));
+        mapaServei.put("preuServei",servei.getPreuServei());
         return mapaServei;
     }
 
@@ -219,14 +165,11 @@ public class Servei implements Serializable {
      * @return El servei resultant
      */
     public Servei hashmap_a_servei(HashMap<String, String> mapaServei) {
-        Servei servei = new Servei();
-        servei.setIDServei(Integer.parseInt(mapaServei.get("id")));
+        Servei servei = new Servei(nomServei, descripcioServei, preuServei);
+        servei.setIDServei(Integer.parseInt(mapaServei.get("IDservei")));
         servei.setNomServei(mapaServei.get("nomServei"));
         servei.setDescripcioServei(mapaServei.get("descripcioServei"));
-        servei.setAforamentServei(Integer.parseInt(mapaServei.get("aforamentServei")));
-        servei.setTipusInstallacio(mapaServei.get("tipusInstallacio"));
-        servei.setPersonalServei(mapaServei.get("personalServei"));
-        servei.setPreuServei(Integer.parseInt(mapaServei.get("preuServei")));
+        servei.setPreuServei(mapaServei.get("preuServei"));
         return servei;
     }
 

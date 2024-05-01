@@ -30,8 +30,12 @@
         <activity android:name=".menu.main.ClientActivity" />
         <activity android:name=".menu.usuari.PerfilActivity" />
         <activity android:name=".menu.activitats.ActivitatsActivity" />
+        <activity android:name=".menu.activitats.GestioActivitatsActivity" />
+        <activity android:name=".menu.activitats.CrearActivitatActivity" />
         <activity android:name=".menu.serveis.ServeisActivity" />
         <activity android:name=".menu.installacions.InstallacionsActivity" />
+        <activity android:name=".menu.installacions.GestioInstallacionsActivity" />
+        <activity android:name=".menu.installacions.CrearInstallacioActivity" />
         <activity android:name=".menu.reserves.ReservesPerDiaActivity" />
         <activity android:name=".menu.reserves.ReservesPerNomActivity" />
     </application>

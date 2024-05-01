@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/nav_menu"
+        android:title="Menú d'usuari" />
+    <item
         android:id="@+id/nav_perfil_usuari"
         android:title="Perfil d'usuari" />
     <item
@@ -13,17 +16,11 @@
         android:id="@+id/nav_installacions"
         android:title="Instal·lacions" />
     <item
-        android:id="@+id/nav_reserves"
-        android:title="Reserves">
-        <menu>
-            <item
-                android:id="@+id/nav_reserves_per_dia"
-                android:title="Per dia" />
-            <item
-                android:id="@+id/nav_reserves_per_activitat"
-                android:title="Per activitat" />
-        </menu>
-    </item>
+        android:id="@+id/nav_reserves_per_dia"
+        android:title="Reserva per dia" />
+    <item
+        android:id="@+id/nav_reserves_per_activitat"
+        android:title="Reserva per activitat" />
     <item
         android:id="@+id/nav_tancar_sessio"
         android:title="Tancar sessió" />

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 
 public class ServeisAdapter extends RecyclerView.Adapter<ServeisAdapter.ViewHolder> {
@@ -33,16 +34,15 @@ public class ServeisAdapter extends RecyclerView.Adapter<ServeisAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HashMap<String, String> servei = serveisList.get(position);
-        holder.nomServei.setText(servei.get("nomServei"));
-        holder.descripcioServei.setText(servei.get("descripcioServei"));
-
+        holder.nomServei.setText(servei.get(Constants.SERVEI_NOM));
+        holder.preuServei.setText(servei.get(Constants.SERVEI_PREU));
         holder.btnMesDetalls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nomServei = servei.get("nomServei");
-                String descripcioServei = servei.get("descripcioServei");
-                String tarifaServei = servei.get("tarifaServei");
-                dialegDetallsServei(nomServei, descripcioServei, tarifaServei);
+                String nomServei = servei.get(Constants.SERVEI_NOM);
+                String descripcioServei = servei.get(Constants.SERVEI_DESC);
+                String preuServei = servei.get(Constants.SERVEI_PREU);
+                dialegDetallsServei(nomServei, descripcioServei, preuServei);
             }
         });
     }
@@ -54,11 +54,12 @@ public class ServeisAdapter extends RecyclerView.Adapter<ServeisAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View btnMesDetalls;
-        TextView nomServei, descripcioServei;
+        TextView nomServei, preuServei;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            nomServei = itemView.findViewById(R.id.nomServei);
+            nomServei = itemView.findViewById(R.id.tvNomServei);
+            preuServei = itemView.findViewById(R.id.tvPreuServei);
             btnMesDetalls = itemView.findViewById(R.id.btnMesDetalls);
         }
     }

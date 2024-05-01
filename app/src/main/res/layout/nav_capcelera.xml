@@ -6,17 +6,19 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/tvNomUsuari"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre de Usuario"
+        android:text="Nom d'usuari"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="8dp"/>
 
     <TextView
+        android:id="@+id/tvCorreuElectronic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Correo electrónico"
+        android:text="Correu electrònic"
         android:textSize="14sp"/>
 
 </LinearLayout>

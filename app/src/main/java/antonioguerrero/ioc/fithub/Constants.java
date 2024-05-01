@@ -52,6 +52,20 @@ public class Constants {
     public static final String INS_DESC = "descripcioInstallacio";
     public static final String INS_TIPUS = "tipusInstallacio";
 
+    // SERVEI
+
+    public static final String OBJ_SERVEI = "servei";
+    public static final String SERVEI_ID = "IDservei";
+    public static final String SERVEI_NOM = "nomServei";
+    public static final String SERVEI_DESC = "descripcioServei";
+    public static final String SERVEI_PREU = "preu";
+
+    // RESERVA
+    public static final String OBJ_RESERVA = "reserva";
+    public static final String RESERVA_ID = "IDreserva";
+
+
+
    // CLASSE DIRIGIDA
    public static final String OBJ_CLASSE = "classeDirigida";
     public static final String CLASSE_ID = "IDclasseDirigida";
@@ -68,6 +82,7 @@ public class Constants {
     public static final String VALOR_DEFAULT = "";
     public static final String ERROR_CONNEXIO = "Error de connexió";
     public static final String PENDENT_IMPLEMENTAR = "Pendent d'implementar. Aviat disponible!";
+    public static final String NO_ADMIN = "No disponible per a administradors";
     public static final String FORMAT_DATA = "dd-MM-yyyy";
 
 }

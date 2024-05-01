@@ -40,6 +40,12 @@ public class Installacio {
         this.tipusInstallacio = tipusInstallacio;
     }
 
+    public Installacio(String nomInstallacio, String descripcioInstallacio, int tipusInstallacio) {
+        this.nomInstallacio = nomInstallacio;
+        this.descripcioInstallacio = descripcioInstallacio;
+        this.tipusInstallacio = tipusInstallacio;
+    }
+
     public Installacio() {
 
     }

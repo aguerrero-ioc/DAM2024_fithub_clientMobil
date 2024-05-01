@@ -41,6 +41,22 @@ public class Activitat implements Serializable {
     }
 
 
+    /**
+     * Constructor de la classe Activitat amb paràmetres.
+     * @param nomActivitat El nom de l'activitat
+     * @param descripcioActivitat La descripció de l'activitat
+     * @param aforamentActivitat L'aforament de l'activitat
+     * @param tipusInstallacio El tipus d'instal·lació on es realitza l'activitat
+     */
+    public Activitat(String nomActivitat, String descripcioActivitat, int aforamentActivitat, int tipusInstallacio) {
+        this.nomActivitat = nomActivitat;
+        this.descripcioActivitat = descripcioActivitat;
+        this.aforamentActivitat = aforamentActivitat;
+        this.tipusInstallacio = tipusInstallacio;
+    }
+
+
+
     // Getters i setters
 
     /**
