@@ -43,13 +43,29 @@ android:elevation="4dp">
         android:textSize="16sp"
         android:textStyle="normal" />
 
-    <Button
-        android:id="@+id/btnGestionar"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gestionar activitat"
-        android:layout_marginTop="18dp"
-        android:layout_gravity="center"/>
+        android:layout_below="@id/etTipusActivitat"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp">
+
+        <Button
+            android:id="@+id/btnModificar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modificar activitat"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eliminar activitat"
+            android:layout_marginEnd="8dp" />
+    </LinearLayout>
 
 </LinearLayout>
 

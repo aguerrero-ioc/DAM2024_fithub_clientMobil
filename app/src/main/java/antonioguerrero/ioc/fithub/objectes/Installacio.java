@@ -46,6 +46,9 @@ public class Installacio {
         this.tipusInstallacio = tipusInstallacio;
     }
 
+    /**
+     * Constructor de la classe Installacio buit.
+     */
     public Installacio() {
 
     }

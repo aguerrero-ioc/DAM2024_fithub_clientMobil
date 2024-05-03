@@ -137,7 +137,7 @@ public abstract class ConsultarActivitat extends ConnexioServidor {
         editor.putString("descripcioActivitat", activitat.getDescripcioActivitat());
         editor.putString("tipusInstallacio", String.valueOf(activitat.getTipusInstallacio()));
         editor.putInt("aforamentActivitat", activitat.getAforamentActivitat());
-        editor.putInt("idActivitat", activitat.getIDActivitat());
+        editor.putInt("idActivitat", activitat.getIDactivitat());
 
         // Aplicar los cambios a SharedPreferences
         editor.apply();

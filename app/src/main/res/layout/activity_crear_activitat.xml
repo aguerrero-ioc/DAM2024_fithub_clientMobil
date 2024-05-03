@@ -6,20 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Contenido principal -->
+    <!-- Contingut principal -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_gray">
 
-        <!-- Toolbar -->
+        <!-- Barra d'eines -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary">
 
-            <!-- Título de la aplicación -->
+            <!-- Títol de l'aplicació -->
             <TextView
                 android:id="@+id/text_titol_aplicacio"
                 android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <!-- Botón de acceso al panel izquierdo-->
+            <!-- Botó d'accés al panell esquerre -->
             <ImageButton
                 android:id="@+id/boto_acces_panell"
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                 android:padding="20dp"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                tools:text="Creació de nova activitat:" />
+                tools:text="Creació d'una nova activitat:" />
 
             <LinearLayout
             android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Tipus d'Instal·lació"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:textColorHint="@android:color/darker_gray"
                     android:textSize="16sp" />
 
@@ -176,7 +176,7 @@
 
     </RelativeLayout>
 
-    <!-- NavigationView para el panel desplegable -->
+    <!-- NavigationView per al panell desplegable -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

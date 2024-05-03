@@ -51,6 +51,9 @@ protected void onCreate(Bundle savedInstanceState) {
         return true;
         });
 
+        // Inflar el layout de la cabecera del NavigationView
+        View headerView = navigationView.getHeaderView(0);
+
         // Botó "Crear nova instal·lació"
         Button btnCrearNovaInstallacio = findViewById(R.id.btnCrearNovaInstallacio);
         btnCrearNovaInstallacio.setOnClickListener(new View.OnClickListener() {

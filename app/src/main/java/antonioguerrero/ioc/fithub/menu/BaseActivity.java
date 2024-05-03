@@ -126,7 +126,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             }
         } else if (id == R.id.nav_serveis) {
             if (tipusUsuari == 1) {
-                //obrirActivity(GestioServeisActivity.class);
+                obrirActivity(GestioServeisActivity.class);
             } else if (tipusUsuari == 2) {
                 obrirActivity(ServeisActivity.class);
             }

@@ -32,19 +32,22 @@ public class ServeisActivity extends BaseActivity implements ConnexioServidor.re
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_serveis);
 
-        recyclerView = findViewById(R.id.rvServeis);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Configura el botó flotant de missatges
-        FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-
         // Configura el menú desplegable
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             handleNavigationItemSelected(menuItem);
             return true;
         });
+
+        // Inflar el layout de la cabecera del NavigationView
+        View headerView = navigationView.getHeaderView(0);
+
+        recyclerView = findViewById(R.id.rvServeis);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Configura el botó flotant de missatges
+        FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
 
         // Obtenir sessioID de l'usuari
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);

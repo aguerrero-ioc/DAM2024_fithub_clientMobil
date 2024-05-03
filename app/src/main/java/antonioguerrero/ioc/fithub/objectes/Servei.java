@@ -42,6 +42,13 @@ public class Servei implements Serializable {
         this.preuServei = preuServei;
     }
 
+    /**
+     * Constructor de la classe Servei buit.
+     */
+    public Servei() {
+
+    }
+
 
     /**
      * Constructor de la classe Servei amb paràmetres.
@@ -151,10 +158,10 @@ public class Servei implements Serializable {
     public HashMap<String, String> servei_a_hashmap(Servei servei) {
         HashMap<String, String> mapaServei = new HashMap<>();
         mapaServei.put(Constants.OBJTYPE,"servei");
-        mapaServei.put("IDservei",Integer.toString(servei.getIDServei()));
-        mapaServei.put("nomServei",servei.getNomServei());
-        mapaServei.put("descripcioServei", servei.getDescripcioServei());
-        mapaServei.put("preuServei",servei.getPreuServei());
+        mapaServei.put(Constants.SERVEI_ID,Integer.toString(servei.getIDServei()));
+        mapaServei.put(Constants.SERVEI_NOM,servei.getNomServei());
+        mapaServei.put(Constants.SERVEI_DESC, servei.getDescripcioServei());
+        mapaServei.put(Constants.SERVEI_PREU,servei.getPreuServei());
         return mapaServei;
     }
 
@@ -164,12 +171,12 @@ public class Servei implements Serializable {
      * @param mapaServei El HashMap a convertir
      * @return El servei resultant
      */
-    public Servei hashmap_a_servei(HashMap<String, String> mapaServei) {
-        Servei servei = new Servei(nomServei, descripcioServei, preuServei);
-        servei.setIDServei(Integer.parseInt(mapaServei.get("IDservei")));
-        servei.setNomServei(mapaServei.get("nomServei"));
-        servei.setDescripcioServei(mapaServei.get("descripcioServei"));
-        servei.setPreuServei(mapaServei.get("preuServei"));
+    public static Servei hashmap_a_servei(HashMap<String, String> mapaServei) {
+        Servei servei = new Servei();
+        servei.setIDServei(Integer.parseInt(mapaServei.get(Constants.SERVEI_ID)));
+        servei.setNomServei(mapaServei.get(Constants.SERVEI_NOM));
+        servei.setDescripcioServei(mapaServei.get(Constants.SERVEI_DESC));
+        servei.setPreuServei(mapaServei.get(Constants.SERVEI_PREU));
         return servei;
     }
 

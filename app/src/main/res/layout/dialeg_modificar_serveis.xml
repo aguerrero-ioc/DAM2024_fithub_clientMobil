@@ -1,0 +1,125 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <!-- Contenidor del botó de tancar -->
+    <LinearLayout
+        android:id="@+id/botoTancarContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp">
+
+        <ImageButton
+            android:id="@+id/botoTancar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_tancar" />
+
+    </LinearLayout>
+
+    <!-- ID del servei -->
+    <TextView
+        android:id="@+id/tvIDserveiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/botoTancarContainer"/>
+
+    <EditText
+        android:id="@+id/etIDservei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvIDserveiEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Nom del servei -->
+    <TextView
+        android:id="@+id/tvNomServeiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etIDservei"/>
+
+    <EditText
+        android:id="@+id/etNomServei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomServeiEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Descripció del servei -->
+    <TextView
+        android:id="@+id/tvDescripcioServeiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etNomServei"
+        android:layout_marginTop="16dp"
+        android:text="Descripció: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/etDescripcioServei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescripcioServeiEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Preu del servei -->
+    <TextView
+        android:id="@+id/tvPreuServeiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etDescripcioServei"
+        android:layout_marginTop="16dp"
+        android:text="Preu: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/etPreuServei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPreuServeiEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPreuServei"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp">
+
+        <Button
+            android:id="@+id/btnModificar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modificar servei"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnDesar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desar Canvis"/>
+    </LinearLayout>
+
+</RelativeLayout>

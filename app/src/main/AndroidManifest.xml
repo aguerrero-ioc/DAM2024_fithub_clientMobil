@@ -33,6 +33,8 @@
         <activity android:name=".menu.activitats.GestioActivitatsActivity" />
         <activity android:name=".menu.activitats.CrearActivitatActivity" />
         <activity android:name=".menu.serveis.ServeisActivity" />
+        <activity android:name=".menu.serveis.GestioServeisActivity" />
+        <activity android:name=".menu.serveis.CrearServeiActivity" />
         <activity android:name=".menu.installacions.InstallacionsActivity" />
         <activity android:name=".menu.installacions.GestioInstallacionsActivity" />
         <activity android:name=".menu.installacions.CrearInstallacioActivity" />

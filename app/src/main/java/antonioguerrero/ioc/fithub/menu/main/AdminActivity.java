@@ -25,6 +25,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.activitats.GestioActivitatsActivity;
+import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerDiaActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerNomActivity;
@@ -59,7 +60,6 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
             return true;
         });
         // Inflar el layout de la cabecera del NavigationView
-
         View headerView = navigationView.getHeaderView(0);
 
         // Obtenir referències a les vistes en el nav_header
@@ -84,7 +84,7 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
         // Configura els listeners pels botons de reserva d'activitats
         botoGestio1.setOnClickListener(v -> Utils.mostrarToast(AdminActivity.this, Constants.PENDENT_IMPLEMENTAR));
         botoGestio2.setOnClickListener(v -> ferGestio(GestioActivitatsActivity.class));
-        //botoGestio3.setOnClickListener(v -> ferGestio(GestioInstallacionsActivity.class));
+        botoGestio3.setOnClickListener(v -> ferGestio(GestioInstallacionsActivity.class));
         //botoGestio3.setOnClickListener(v -> ferGestio(GestioServeisActivity.class));
 
         // Configura el botó flotant de missatges

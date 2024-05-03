@@ -18,7 +18,7 @@ public class Activitat implements Serializable {
 
     // Atributs de la classe
 
-    private int IDActivitat;
+    private int IDactivitat;
     private String nomActivitat;
     private String descripcioActivitat;
     private int aforamentActivitat;
@@ -29,15 +29,10 @@ public class Activitat implements Serializable {
     private int horaInici;
 
     /**
-     * Constructor de la classe Activitat.
+     * Constructor de la classe Activitat buit.
      */
 
     public Activitat() {
-        this.IDActivitat = IDActivitat;
-        this.nomActivitat = nomActivitat;
-        this.descripcioActivitat = descripcioActivitat;
-        this.aforamentActivitat = aforamentActivitat;
-        this.tipusInstallacio = tipusInstallacio;
     }
 
 
@@ -64,17 +59,17 @@ public class Activitat implements Serializable {
      *
      * @return Identificador de l'activitat
      */
-    public int getIDActivitat() {
-        return IDActivitat;
+    public int getIDactivitat() {
+        return IDactivitat;
     }
 
     /**
      * Estableix l'identificador de l'activitat.
      *
-     * @param IDActivitat Identificador de l'activitat
+     * @param IDactivitat Identificador de l'activitat
      */
-    public void setIDActivitat(int IDActivitat) {
-        this.IDActivitat = IDActivitat;
+    public void setIDactivitat(int IDactivitat) {
+        this.IDactivitat = IDactivitat;
     }
 
     /**
@@ -159,11 +154,11 @@ public class Activitat implements Serializable {
     public HashMap<String, String> activitat_a_hashmap(Activitat activitat) {
         HashMap<String, String> mapaActivitat = new HashMap<>();
         mapaActivitat.put(Constants.OBJTYPE,Constants.OBJ_ACT);
-        mapaActivitat.put(Constants.ACT_ID,Integer.toString(activitat.getIDActivitat()));
+        mapaActivitat.put(Constants.ACT_ID,Integer.toString(activitat.getIDactivitat()));
         mapaActivitat.put(Constants.ACT_NOM,activitat.getNomActivitat());
         mapaActivitat.put(Constants.ACT_DESC, activitat.getDescripcioActivitat());
-        mapaActivitat.put(Constants.ACT_AFORAMENT,Integer.toString(activitat.getAforamentActivitat()));
         mapaActivitat.put(Constants.ACT_TIPUS,Integer.toString(activitat.getTipusInstallacio()));
+        mapaActivitat.put(Constants.ACT_AFORAMENT,Integer.toString(activitat.getAforamentActivitat()));
         return mapaActivitat;
     }
 
@@ -175,11 +170,11 @@ public class Activitat implements Serializable {
      */
     public static Activitat hashmap_a_activitat(HashMap<String, String> mapaActivitat) {
         Activitat activitat = new Activitat();
-        activitat.setIDActivitat(Integer.parseInt(mapaActivitat.get(Constants.ACT_ID)));
+        activitat.setIDactivitat(Integer.parseInt(mapaActivitat.get(Constants.ACT_ID)));
         activitat.setNomActivitat(mapaActivitat.get(Constants.ACT_NOM));
         activitat.setDescripcioActivitat(mapaActivitat.get(Constants.ACT_DESC));;
-        activitat.setAforamentActivitat(Integer.parseInt(mapaActivitat.get(Constants.ACT_AFORAMENT)));
         activitat.setTipusInstallacio(Integer.parseInt(mapaActivitat.get(Constants.ACT_TIPUS)));
+        activitat.setAforamentActivitat(Integer.parseInt(mapaActivitat.get(Constants.ACT_AFORAMENT)));
         return activitat;
     }
 }

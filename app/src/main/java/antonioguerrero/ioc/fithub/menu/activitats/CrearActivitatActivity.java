@@ -10,25 +10,53 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.objectes.Activitat;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.peticions.activitats.CrearActivitat;
 
-public class CrearActivitatActivity extends AppCompatActivity {
+/**
+ * Activitat que permet a l'usuari crear una nova activitat.
+ * <p>
+ * Aquesta activitat conté camps per a introduir el nom, la descripció, l'aforament i el tipus d'instal·lació de la nova activitat.
+ * <p>
+ * Aquesta activitat envia una petició al servidor per a crear la nova activitat amb els valors introduïts.
+ * <p>
+ * @autor Antonio Guerrero
+ * @version 1.0
+ */
+public class CrearActivitatActivity extends BaseActivity {
 
     private EditText etNomActivitat, etDescripcioActivitat, etAforamentActivitat, etTipusInstallacio;
     private Button btnCrearActivitat;
 
+    /**
+     * Mètode que s'executa en la creació de l'activitat.
+     *
+     * @param savedInstanceState Estat de l'activitat
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_activitat);
+
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
+            return true;
+        });
+
+        // Inflar el layout de la cabecera del NavigationView
+        View headerView = navigationView.getHeaderView(0);
 
         // Referenciar els elements del layout
         etNomActivitat = findViewById(R.id.et_nom_activitat);

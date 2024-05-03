@@ -13,7 +13,9 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
+import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 import antonioguerrero.ioc.fithub.objectes.Servei;
 
 /**
@@ -94,7 +96,7 @@ public abstract class CrearServei extends ConnexioServidor {
             // Mostra un missatge de confirmació a l'usuari
             Utils.mostrarToast(context, "Servei creat amb èxit.");
             // Redirigeix a l'usuari a la pantalla d'inici de sessió
-            Intent intent = new Intent(context, LoginActivity.class);
+            Intent intent = new Intent(context, GestioServeisActivity.class);
             context.startActivity(intent);
             ((Activity) context).finish();
         } else {

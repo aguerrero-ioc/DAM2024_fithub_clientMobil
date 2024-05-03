@@ -10,37 +10,65 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.objectes.Installacio;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.peticions.installacions.CrearInstallacio;
 
-public class CrearInstallacioActivity extends AppCompatActivity {
+/**
+ * Activitat que permet a l'usuari crear una nova instal·lació.
+ * <p>
+ * Aquesta activitat conté camps per a introduir el nom, la descripció i el tipus de la nova instal·lació.
+ * <p>
+ * Aquesta activitat envia una petició al servidor per a crear la nova instal·lació amb els valors introduïts.
+ * <p>
+ * @autor Antonio Guerrero
+ * @version 1.0
+ */
+public class CrearInstallacioActivity extends BaseActivity {
 
-    private EditText etNomInstallacio, etDescripcioInstallacio, etCapacitatInstallacio, etTipusInstallacio;
+    private EditText etNomInstallacio, etDescripcioInstallacio, etTipusInstallacio;
     private Button btnCrearInstallacio;
 
+    /**
+     * Mètode que s'executa en la creació de l'activitat.
+     *
+     * @param savedInstanceState Estat de l'activitat
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_installacio);
 
-        // Referenciar los elementos del layout
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
+            return true;
+        });
+
+        // Inflar el layout de la cabecera del NavigationView
+        View headerView = navigationView.getHeaderView(0);
+
+        // Referenciar els elements del layout
         etNomInstallacio = findViewById(R.id.et_nom_installacio);
         etDescripcioInstallacio = findViewById(R.id.et_descripcio_installacio);
         etTipusInstallacio = findViewById(R.id.et_tipus_installacio);
         btnCrearInstallacio = findViewById(R.id.btn_creacio_installacio);
 
-        // Configurar el clic del botón
+        // Configurar el clic del botó
         btnCrearInstallacio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obtener los valores de los EditText
+                // Obtenció dels valors dels EditText
                 String nomInstallacio = etNomInstallacio.getText().toString().trim();
                 String descripcioInstallacio = etDescripcioInstallacio.getText().toString().trim();
 
@@ -58,14 +86,14 @@ public class CrearInstallacioActivity extends AppCompatActivity {
                     Toast.makeText(CrearInstallacioActivity.this, "Tipus d'instal·lació no vàlid", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Obtener sessioID del usuario
+                // Obtenir sessioID de l'usuari
                 SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
                 String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
 
-                // Crear un objeto Installacio con los valores obtenidos
+                // Crear un objecte Installacio amb els valors obtinguts
                 Installacio installacio = new Installacio(nomInstallacio, descripcioInstallacio, tipusInstallacio);
 
-                // Crear y ejecutar la petición al servidor para crear la instalación
+                // Crear i executar la petició al servidor per a crear la instal·lació
                 CrearInstallacio crearInstallacio = new CrearInstallacio(new ConnexioServidor.respostaServidorListener() {
                     @Override
                     public void respostaServidor(Object resposta) {
@@ -87,17 +115,16 @@ public class CrearInstallacioActivity extends AppCompatActivity {
                     }
                 };
 
-                // Ejecutar la petición en un hilo en segundo plano
+                // Executar la petició en un fil en segon pla
                 try {
                     crearInstallacio.execute();
                 } catch (ConnectException e) {
                     e.printStackTrace();
                 }
 
-                // Limpiar los EditText
+                // Netegem els EditText
                 etNomInstallacio.setText("");
                 etDescripcioInstallacio.setText("");
-                etCapacitatInstallacio.setText("");
                 etTipusInstallacio.setText("");
             }
         });
