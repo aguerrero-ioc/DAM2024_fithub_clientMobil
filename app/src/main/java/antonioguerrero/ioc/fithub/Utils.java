@@ -363,4 +363,7 @@ public class Utils {
         // Comprova si el correu electrònic coincideix amb el patró
         return correu.matches(patroCorreu);
     }
+
+
+
 }

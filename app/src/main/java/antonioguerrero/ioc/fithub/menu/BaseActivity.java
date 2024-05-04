@@ -54,8 +54,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private Menu menu;
     private SubMenu reservesSubMenu;
 
-    private TextView tvNomUsuari;
-    private TextView tvCorreuElectronic;
+    public TextView tvNomUsuari;
+    public TextView tvCorreuElectronic;
 
     /**
      * Mètode que s'executa quan es crea l'activitat.
@@ -159,14 +159,35 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
      * @return El tipus d'usuari.
      */
     private int obtenirTipusUsuari() {
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String tipusUsuariString = preferences.getString(Constants.TIPUS_USUARI, Constants.VALOR_DEFAULT);
+        SharedPreferences preferencies = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+
+        // Obtenir el tipus d'usuari emmagatzemat a SharedPreferences
+        Object tipusUsuariObject = preferencies.getAll().get(Constants.TIPUS_USUARI);
         int tipusUsuari;
-        try {
-            tipusUsuari = Integer.parseInt(tipusUsuariString);
-        } catch (NumberFormatException e) {
+
+        // Verificar si el tipus d'usuari és una cadena o un enter
+        if (tipusUsuariObject instanceof String) {
+            // Convertir la cadena a enter
+            String tipusUsuariString = (String) tipusUsuariObject;
+            if (tipusUsuariString.equals("Administrador")) {
+                tipusUsuari = 1;
+            } else if (tipusUsuariString.equals("Client")) {
+                tipusUsuari = 2;
+            } else {
+                try {
+                    tipusUsuari = Integer.parseInt(tipusUsuariString);
+                } catch (NumberFormatException e) {
+                    tipusUsuari = 0;
+                }
+            }
+        } else if (tipusUsuariObject instanceof Integer) {
+            // Si ja és un enter, simplement assignar el seu valor
+            tipusUsuari = (int) tipusUsuariObject;
+        } else {
+            // En cas d'un altre tipus o si no es troba, assignar un valor predeterminat
             tipusUsuari = 0;
         }
+
         return tipusUsuari;
     }
 

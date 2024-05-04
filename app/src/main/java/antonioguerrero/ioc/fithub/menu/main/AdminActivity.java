@@ -60,7 +60,8 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
             handleNavigationItemSelected(menuItem);
             return true;
         });
-        // Inflar el layout de la cabecera del NavigationView
+
+        // Infla el layout de la capçalera del NavigationView
         View headerView = navigationView.getHeaderView(0);
 
         // Obtenir referències a les vistes en el nav_header

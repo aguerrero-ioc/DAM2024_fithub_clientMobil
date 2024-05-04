@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">fithub</string>
     <string name="reserves_client">Reserves del client:</string>
+    <string name="reservar">Què vols reservar?</string>
     <string name="gestionar">Què vols gestionar?</string>
     <string name="classe">Classe col·lectiva</string>
     <string name="activitat">Activitat</string>
@@ -12,7 +13,7 @@
     <string name="tipus_de_client">Tipus de Client</string>
     <string name="el_meu_compte">El meu compte</string>
     <string name="tancar_sessio">Tancar sessió</string>
-    <string name="inicia_sessio">Inici de Sessió</string>
+    <string name="inicia_sessio">INICI DE SESSIÓ</string>
     <string name="correu_usuari">Correu electrònic</string>
     <string name="contrasenya">Contrasenya</string>
     <string name="mostrar_contrasenya">Mostrar contrasenya</string>

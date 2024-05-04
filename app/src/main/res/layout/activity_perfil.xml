@@ -18,17 +18,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary">
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Títol de l'aplicació -->
-            <TextView
-                android:id="@+id/text_titol_aplicacio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/nom_app"
-                android:textSize="30sp"
-                android:textStyle="bold" />
 
             <!-- Botó d'accés a panell esquerre-->
             <ImageButton
@@ -41,6 +36,15 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="accedirPanell"
                 android:src="@drawable/ic_menu" />
+
+            <!-- Logo de l'aplicació -->
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="95dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/fithub_logo"
+                android:contentDescription="logo" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -336,7 +340,6 @@
                             android:hint="ID d'Usuari"
                             android:inputType="none"
                             android:enabled="false" />
-
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Tipus d'Usuari -->
@@ -362,7 +365,6 @@
                             android:hint="Tipus d'Usuari"
                             android:inputType="none"
                             android:enabled="false" />
-
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Data d'Inscripció -->
@@ -388,7 +390,6 @@
                             android:hint="Data d'Inscripció"
                             android:inputType="none"
                             android:enabled="false" />
-
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 <!-- Secció de Canvi de Contrasenya -->
@@ -489,8 +490,6 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Botó canvi contrasenya -->
-
-                    <!-- Botons -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -514,21 +513,23 @@
                             android:layout_marginTop="16dp"
                             android:enabled="false"
                             android:text="Desar Canvi" />
-
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
 
-
-
     <!-- NavigationView del panell desplegable -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        app:menu="@menu/menu_navigation_usuari" />
+        android:backgroundTint="@color/light_gray"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:headerLayout="@layout/nav_capcalera"
+        app:menu="@menu/menu_navigation_usuari">
 
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

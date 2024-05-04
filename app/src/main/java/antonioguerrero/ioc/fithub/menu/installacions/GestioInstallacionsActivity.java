@@ -40,19 +40,32 @@ protected void onCreate(Bundle savedInstanceState) {
         recyclerView = findViewById(R.id.rvInstallacions);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Configura el botó flotant de missatges
-        FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-
         // Configura el menú desplegable
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
-        handleNavigationItemSelected(menuItem);
-        return true;
+                handleNavigationItemSelected(menuItem);
+                return true;
         });
 
-        // Inflar el layout de la cabecera del NavigationView
+        // Infla el layout de la capçalera del NavigationView
         View headerView = navigationView.getHeaderView(0);
+
+        // Obtenir referències a les vistes en el nav_header
+        tvNomUsuari = headerView.findViewById(R.id.tvNomUsuari);
+        tvCorreuElectronic = headerView.findViewById(R.id.tvCorreuElectronic);
+
+        // Obtenir les dades de l'usuari de SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+
+        // Actualitzar el text de les vistes amb les dades de l'usuari
+        tvNomUsuari.setText(nomUsuari);
+        tvCorreuElectronic.setText(correuElectronic);
+
+        // Configura el botó flotant de missatges
+        FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
+        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
 
         // Botó "Crear nova instal·lació"
         Button btnCrearNovaInstallacio = findViewById(R.id.btnCrearNovaInstallacio);
@@ -66,7 +79,7 @@ public void onClick(View v) {
         });
 
         // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, this, sessioID) {
 @Override

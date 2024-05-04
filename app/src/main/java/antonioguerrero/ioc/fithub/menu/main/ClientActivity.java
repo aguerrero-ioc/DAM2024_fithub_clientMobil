@@ -1,20 +1,18 @@
 package antonioguerrero.ioc.fithub.menu.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 import java.net.ConnectException;
 import java.util.HashMap;
@@ -26,97 +24,83 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
-import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsAdapter;
-import antonioguerrero.ioc.fithub.menu.reserves.PaginesReservesAdapter;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPassadesFragment;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesRealitzadesFragment;
-import antonioguerrero.ioc.fithub.objectes.Reserva;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
-import antonioguerrero.ioc.fithub.peticions.reserves.ConsultarTotesReserves;
-
+import antonioguerrero.ioc.fithub.menu.activitats.GestioActivitatsActivity;
+import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
+import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerDiaActivity;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerNomActivity;
+import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
+import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
+import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 
 /**
  * Classe que representa l'activitat del client a l'aplicació FitHub.
  * <p>
- * Aquesta classe permet als clients realitzar diverses operacions com fer reserves i gestionar el seu perfil.
- *
+ * Aquesta classe permet als clients realitzar diverses operacions com gestionar les seves reserves.
+ * També poden veure les seves dades personals i editar-les.
+ * <p>
+ * Aquesta classe hereta de BaseActivity.
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class ClientActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesReserves.ConsultarTotesReservesListener {
+public class ClientActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener {
 
-    private RecyclerView recyclerView;
-    private ActivitatsAdapter adapter;
-    private Usuari usuari;
+    private TextView tvNomUsuari;
+    private TextView tvCorreuElectronic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
 
-        // Configurar ViewPager i TabLayout per a les pàgines de reserves
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
+            return true;
+        });
 
+        // Infla el layout de la capçalera del NavigationView
+        View headerView = navigationView.getHeaderView(0);
 
-        // Crear el adaptador
-        PaginesReservesAdapter reservesAdapter = new PaginesReservesAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(reservesAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        // Obtenir referències a les vistes en el nav_header
+        tvNomUsuari = headerView.findViewById(R.id.tvNomUsuari);
+        tvCorreuElectronic = headerView.findViewById(R.id.tvCorreuElectronic);
 
-        // Configura el botó flotant de missatges
-        FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
-        botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-
-
-
-
-        // Iniciar la consulta de reserves
-        iniciarConsultaReserves();
-
-    }
-
-    private void iniciarConsultaReserves() {
-        // Obtenir sessioID de l'usuari
+        // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
-        ConsultarTotesReserves consultaReserves = new ConsultarTotesReserves(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
 
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        };
-        //consultaReserves.consultarTotesReserves();
+        // Actualitzar el text de les vistes amb les dades de l'usuari
+        tvNomUsuari.setText(nomUsuari);
+        tvCorreuElectronic.setText(correuElectronic);
+
+        // Inicialitza els botons de reserva d'activitats
+        Button botoReserva1 = findViewById(R.id.boto_reserva1);
+        Button botoReserva2 = findViewById(R.id.boto_reserva2);
+        Button botoReserva3 = findViewById(R.id.boto_reserva3);
+
+        // Configura els listeners pels botons de reserva d'activitats
+        botoReserva1.setOnClickListener(v -> ferReserva(ReservesPerDiaActivity.class));
+        botoReserva2.setOnClickListener(v -> ferReserva(ReservesPerNomActivity.class));
+        botoReserva3.setOnClickListener(v -> Utils.mostrarToast(ClientActivity.this, Constants.PENDENT_IMPLEMENTAR));
+
+        // Configura el botó flotant de perfil
+        FloatingActionButton botoPerfil = findViewById(R.id.boto_perfil);
+        botoPerfil.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
     }
 
-
-
-    @Override
-    public void onReservesObtingudes(List<HashMap<String, String>> reserves) {
-        // Esta función se llama cuando se obtienen las reservas del servidor
-        // Aquí puedes actualizar las listas de reservas en los fragmentos correspondientes
-        ReservesRealitzadesFragment fragmentRealitzades = (ReservesRealitzadesFragment) getSupportFragmentManager().findFragmentByTag(makeFragmentName(R.id.view_pager, 0));
-        ReservesPassadesFragment fragmentPassades = (ReservesPassadesFragment) getSupportFragmentManager().findFragmentByTag(makeFragmentName(R.id.view_pager, 1));
-
-        if (fragmentRealitzades != null) {
-            fragmentRealitzades.actualitzarReserves(reserves);
-        }
-
-        if (fragmentPassades != null) {
-            fragmentPassades.actualitzarReserves(reserves);
-        }
+    /**
+     * Mètode que obre l'activitat corresponent a la reserva seleccionada.
+     * <p>
+     * @param activityACarregar Activitat a carregar.
+     */
+    private void ferReserva(Class<?> activityACarregar) {
+        Intent intent = new Intent(this, activityACarregar);
+        startActivity(intent);
     }
-
-    private String makeFragmentName(int viewId, long id) {
-        return "android:switcher:" + viewId + ":" + id;
-    }
-
 
     @Override
     public void respostaServidor(Object resposta) throws ConnectException {

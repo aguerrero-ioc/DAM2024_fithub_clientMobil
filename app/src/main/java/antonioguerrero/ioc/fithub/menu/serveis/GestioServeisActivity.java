@@ -57,8 +57,21 @@ public class GestioServeisActivity extends BaseActivity implements ConnexioServi
             return true;
         });
 
-        // Inflar el layout de la cabecera del NavigationView
+        // Infla el layout de la capçalera del NavigationView
         View headerView = navigationView.getHeaderView(0);
+
+        // Obtenir referències a les vistes en el nav_header
+        tvNomUsuari = headerView.findViewById(R.id.tvNomUsuari);
+        tvCorreuElectronic = headerView.findViewById(R.id.tvCorreuElectronic);
+
+        // Obtenir les dades de l'usuari de SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+
+        // Actualitzar el text de les vistes amb les dades de l'usuari
+        tvNomUsuari.setText(nomUsuari);
+        tvCorreuElectronic.setText(correuElectronic);
 
         recyclerView = findViewById(R.id.rvServeis);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -81,7 +94,7 @@ public class GestioServeisActivity extends BaseActivity implements ConnexioServi
         });
 
         // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotsServeis consulta = new ConsultarTotsServeis(this, this, sessioID) {
             @Override

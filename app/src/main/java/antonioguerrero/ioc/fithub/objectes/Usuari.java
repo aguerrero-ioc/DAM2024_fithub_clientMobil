@@ -359,4 +359,24 @@ public class Usuari implements Serializable {
                 ", adreca: " + usuari.getAdreca() +
                 ", telefon: " + usuari.getTelefon());
     }
+
+    public static Usuari obtenirUsuari() {
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        Usuari usuari = new Usuari();
+
+        // Obtenir les dades de l'usuari des de SharedPreferences i assignar-les a l'objecte Usuari
+        usuari.setIDusuari(Integer.parseInt(preferencies.getString(Constants.ID_USUARI, "0")));
+        usuari.setNomUsuari(preferencies.getString(Constants.NOM_USUARI, ""));
+        usuari.setCognomsUsuari(preferencies.getString(Constants.COGNOMS_USUARI, ""));
+        usuari.setCorreuUsuari(preferencies.getString(Constants.CORREU_USUARI, ""));
+        usuari.setPassUsuari(preferencies.getString(Constants.PASS_USUARI, ""));
+        usuari.setDataInscripcio(preferencies.getString(Constants.DATA_INSCRIPCIO, ""));
+        usuari.setDataNaixement(preferencies.getString(Constants.DATA_NAIXEMENT, ""));
+        usuari.setAdreca(preferencies.getString(Constants.ADRECA, ""));
+        usuari.setTelefon(preferencies.getString(Constants.TELEFON, ""));
+
+        // Retornar l'objecte Usuari amb les dades obtingudes
+        return usuari;
+    }
+
 }

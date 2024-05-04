@@ -68,25 +68,23 @@ public class ReservesPerNomAdapter extends RecyclerView.Adapter<ReservesPerNomAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicio) {
         HashMap<String, String> classeDirigida = classesDirigidesList.get(posicio);
-        holder.dataClasse.setText(classeDirigida.get("dataClasseDirigida"));
-        holder.horaInici.setText(classeDirigida.get("horaInici"));
-        holder.estatClasse.setText(classeDirigida.get("estatClasse"));
-
+        holder.dataClasse.setText(classeDirigida.get(Constants.CLASSE_DATA));
+        holder.horaInici.setText(classeDirigida.get(Constants.CLASSE_HORA));
+        holder.estatClasse.setText(classeDirigida.get(Constants.CLASSE_ESTAT));
 
         // Obtenir el ID de la classe
-        int IDclasse = Integer.parseInt(classeDirigida.get("IDclasse"));
+        int IDclasse = Integer.parseInt(classeDirigida.get(Constants.CLASSE_ID));
 
         // Afegir un listener de clics al botó "Més detalls"
         holder.btnMesDetalls.setOnClickListener(v -> {
             // Obtenir les dades de la classe dirigida per mostrar en el diàleg
-            String nomActivitat = classeDirigida.get("nomActivitat");
-            String nomInstallacio = classeDirigida.get("nomInstallacio");
-            String dataClasse = classeDirigida.get("dataClasseDirigida");
-            String horaInici = classeDirigida.get("horaInici");
-            String duracio = classeDirigida.get("duracio");
-            String ocupacioClasse = classeDirigida.get("ocupacio");
-            String estatClasse = classeDirigida.get("estatClasse");
-
+            String nomActivitat = classeDirigida.get(Constants.ACT_NOM);
+            String nomInstallacio = classeDirigida.get(Constants.INS_NOM);
+            String dataClasse = classeDirigida.get(Constants.CLASSE_DATA);
+            String horaInici = classeDirigida.get(Constants.CLASSE_HORA);
+            String duracio = classeDirigida.get(Constants.CLASSE_DURACIO);
+            String ocupacioClasse = classeDirigida.get(Constants.CLASSE_OCUPACIO);
+            String estatClasse = classeDirigida.get(Constants.CLASSE_ESTAT);
 
             // Crear i mostrar el diàleg amb la informació de la classe dirigida
             dialegDetallsClasseDirigida(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDclasse);

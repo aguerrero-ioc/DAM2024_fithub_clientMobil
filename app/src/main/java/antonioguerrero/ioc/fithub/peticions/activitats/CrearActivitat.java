@@ -38,6 +38,7 @@ public abstract class CrearActivitat extends ConnexioServidor {
      * @param listener Listener per a la resposta del servidor
      * @param activitat Activitat a crear
      * @param context Context de l'aplicació
+     * @param sessioID Sessió de l'usuari
      */
     public CrearActivitat(respostaServidorListener listener, Activitat activitat, Context context, String sessioID) {
         super(listener);

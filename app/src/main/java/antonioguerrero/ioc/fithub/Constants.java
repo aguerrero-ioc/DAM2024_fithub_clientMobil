@@ -68,11 +68,13 @@ public class Constants {
 
    // CLASSE DIRIGIDA
    public static final String OBJ_CLASSE = "classeDirigida";
-    public static final String CLASSE_ID = "IDclasseDirigida";
+    public static final String CLASSE_ID = "IDclasse";
     public static final String CLASSE_DATA = "dataClasseDirigida";
     public static final String CLASSE_HORA = "horaInici";
     public static final String CLASSE_DURACIO = "duracio";
     public static final String CLASSE_OCUPACIO = "ocupacio";
+    public static final String CLASSE_ESTAT = "estatClasse";
+
 
     // RESTA
     public static final String OBJTYPE = "objectType";

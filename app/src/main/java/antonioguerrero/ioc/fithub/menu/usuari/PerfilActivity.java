@@ -3,6 +3,7 @@ package antonioguerrero.ioc.fithub.menu.usuari;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,6 +63,22 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             return true;
         });
 
+        // Infla el layout de la capçalera del NavigationView
+        View headerView = navigationView.getHeaderView(0);
+
+        // Obtenir referències a les vistes en el nav_header
+        tvNomUsuari = headerView.findViewById(R.id.tvNomUsuari);
+        tvCorreuElectronic = headerView.findViewById(R.id.tvCorreuElectronic);
+
+        // Obtenir les dades de l'usuari de SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+
+        // Actualitzar el text de les vistes amb les dades de l'usuari
+        tvNomUsuari.setText(nomUsuari);
+        tvCorreuElectronic.setText(correuElectronic);
+
 
         // Inicialització de les vistes
         etNomUsuari = findViewById(R.id.et_nom_usuari);
@@ -109,7 +126,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
         });
         // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         String correuUsuari = preferences.getString("correuUsuari", Constants.VALOR_DEFAULT);
 
@@ -403,7 +420,6 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     public void onUsuariObtingut(Usuari usuari) {
         this.usuari = usuari;
         actualitzarUsuari(usuari);
-
         modificarUsuari.setUsuari(usuari);
     }
 
@@ -412,4 +428,5 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         this.usuari = usuari;
         actualitzarUsuari(usuari);
     }
+
 }

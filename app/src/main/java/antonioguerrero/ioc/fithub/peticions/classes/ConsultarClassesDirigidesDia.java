@@ -118,11 +118,12 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
         // Guardar les dades de les classes dirigides a SharedPreferences
         for (int i = 0; i < dadesClassesDirigides.size(); i++) {
             HashMap<String, String> mapaClassesDirigides = dadesClassesDirigides.get(i);
-            editor.putString("nomActivitat" + i, mapaClassesDirigides.get("nomActivitat"));
-            editor.putString("nomInstallacio" + i, mapaClassesDirigides.get("nomInstallacio"));
-            editor.putString("dia" + i, mapaClassesDirigides.get("dia"));
-            editor.putString("horaInici" + i, mapaClassesDirigides.get("horaInici"));
-            editor.putString("duracio" + i, mapaClassesDirigides.get("duracio"));
+            editor.putString(Constants.ACT_NOM + i, mapaClassesDirigides.get(Constants.ACT_NOM));
+            editor.putString(Constants.INS_NOM + i, mapaClassesDirigides.get(Constants.INS_NOM));
+            editor.putString(Constants.CLASSE_ID + i, mapaClassesDirigides.get(Constants.CLASSE_ID));
+            editor.putString(Constants.CLASSE_DATA + i, mapaClassesDirigides.get(Constants.CLASSE_DATA));
+            editor.putString(Constants.CLASSE_HORA + i, mapaClassesDirigides.get(Constants.CLASSE_HORA));
+            editor.putString(Constants.CLASSE_DURACIO + i, mapaClassesDirigides.get(Constants.CLASSE_DURACIO));
         }
 
         // Guardar la quantitat de classes dirigides a SharedPreferences

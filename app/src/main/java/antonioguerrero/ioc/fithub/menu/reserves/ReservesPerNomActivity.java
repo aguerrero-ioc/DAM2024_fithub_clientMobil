@@ -59,6 +59,29 @@ public class ReservesPerNomActivity extends BaseActivity implements ConnexioServ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserves_nom);
 
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
+            return true;
+        });
+
+        // Infla el layout de la capçalera del NavigationView
+        View headerView = navigationView.getHeaderView(0);
+
+        // Obtenir referències a les vistes en el nav_header
+        tvNomUsuari = headerView.findViewById(R.id.tvNomUsuari);
+        tvCorreuElectronic = headerView.findViewById(R.id.tvCorreuElectronic);
+
+        // Obtenir les dades de l'usuari de SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+
+        // Actualitzar el text de les vistes amb les dades de l'usuari
+        tvNomUsuari.setText(nomUsuari);
+        tvCorreuElectronic.setText(correuElectronic);
+
         recyclerView = findViewById(R.id.rvClassesDirigides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         tvTitol = findViewById(R.id.tvTitol);
@@ -68,13 +91,6 @@ public class ReservesPerNomActivity extends BaseActivity implements ConnexioServ
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-
-        // Configura el menú desplegable
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(menuItem -> {
-            handleNavigationItemSelected(menuItem);
-            return true;
-        });
 
         tvTitol.setText("Classes disponibles per activitat:");
         tvSeleccionar.setText("Seleccionar activitat:");
@@ -92,6 +108,8 @@ public class ReservesPerNomActivity extends BaseActivity implements ConnexioServ
             }
         };
         consultarTotesActivitats.consultarTotesActivitats();
+
+
 
         // Configurar listener para el spinner de actividades
         spinnerActivitats.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -146,9 +164,9 @@ public class ReservesPerNomActivity extends BaseActivity implements ConnexioServ
 
     // Método para consultar las clases dirigidas por el nombre de la actividad seleccionada
     private void consultarClassesDirigides(String nomActivitat) {
+
         // Obtener sesión ID del usuario
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
+        String sessioID = obtenirSessioID();
 
         // Realizar la consulta de clases dirigidas por el nombre de la actividad seleccionada
         ConsultarClassesDirigidesNom consulta = new ConsultarClassesDirigidesNom(this, this, nomActivitat, sessioID) {
@@ -174,17 +192,15 @@ public class ReservesPerNomActivity extends BaseActivity implements ConnexioServ
 
             @Override
             public void onClassesDirigidesNomObtingudes(List<HashMap<String, String>> classesDirigides) {
-                // Aquí puedes manejar la respuesta de la consulta de clases dirigidas
-                // Por ejemplo, actualizar el RecyclerView con las clases dirigidas obtenidas
                 if (classesDirigides != null && !classesDirigides.isEmpty()) {
-                    ReservesPerDiaAdapter adapter = new ReservesPerDiaAdapter(ReservesPerNomActivity.this, classesDirigides);
+                    ReservesPerNomAdapter adapter = new ReservesPerNomAdapter(ReservesPerNomActivity.this, classesDirigides);
                     recyclerView.setAdapter(adapter);
                 } else {
                     Utils.mostrarToast(ReservesPerNomActivity.this, "No hi ha classes dirigides disponibles per a aquesta activitat");
                 }
             }
         };
-        consulta.consultarClasseDirigida();
+        consulta.consultarClasseDirigidaNom();
     }
 
     @Override

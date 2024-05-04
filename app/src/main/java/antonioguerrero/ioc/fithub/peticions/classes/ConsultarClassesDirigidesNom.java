@@ -16,6 +16,14 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.ClasseDirigida;
 
+/**
+ * Classe per obtenir les classes dirigides disponibles per un nom d'activitat.
+ * <p>
+ * Aquesta classe és la que s'encarrega de fer la petició al servidor per obtenir totes les classes dirigides disponibles per un nom d'activitat.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
     private static final String ETIQUETA = "ConsultarClasseDirigida";
     private String nomClasseDirigida;
@@ -40,7 +48,7 @@ public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
 
 
     @SuppressLint("StaticFieldLeak")
-    public void consultarClasseDirigida() {
+    public void consultarClasseDirigidaNom() {
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
@@ -71,8 +79,8 @@ public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
                     if (respostaArray[1] instanceof List) {
                         // Convertir el segon element a una llista de HashMaps
                         List<HashMap<String, String>> classesDirigides = (List<HashMap<String, String>>) respostaArray[1];
-                        if (listener instanceof ConsultarClassesDirigidesDia.ConsultarClassesDirigidesDiaListener) {
-                            ((ConsultarClassesDirigidesDia.ConsultarClassesDirigidesDiaListener) listener).onClassesDirigidesDiaObtingudes(classesDirigides);
+                        if (listener instanceof ConsultarClassesDirigidesNomListener) {
+                            ((ConsultarClassesDirigidesNomListener) listener).onClassesDirigidesNomObtingudes(classesDirigides);
                         }
                         guardarDadesClassesDirigides(classesDirigides);
                         return;
@@ -93,11 +101,12 @@ public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
         // Guardar les dades de les classes dirigides a SharedPreferences
         for (int i = 0; i < dadesClassesDirigides.size(); i++) {
             HashMap<String, String> mapaClassesDirigides = dadesClassesDirigides.get(i);
-            editor.putString("nomActivitat" + i, mapaClassesDirigides.get("nomActivitat"));
-            editor.putString("nomInstallacio" + i, mapaClassesDirigides.get("nomInstallacio"));
-            editor.putString("dia" + i, mapaClassesDirigides.get("dia"));
-            editor.putString("horaInici" + i, mapaClassesDirigides.get("horaInici"));
-            editor.putString("duracio" + i, mapaClassesDirigides.get("duracio"));
+            editor.putString(Constants.ACT_NOM + i, mapaClassesDirigides.get(Constants.ACT_NOM));
+            editor.putString(Constants.INS_NOM + i, mapaClassesDirigides.get(Constants.INS_NOM));
+            editor.putString(Constants.CLASSE_ID + i, mapaClassesDirigides.get(Constants.CLASSE_ID));
+            editor.putString(Constants.CLASSE_DATA + i, mapaClassesDirigides.get(Constants.CLASSE_DATA));
+            editor.putString(Constants.CLASSE_HORA + i, mapaClassesDirigides.get(Constants.CLASSE_HORA));
+            editor.putString(Constants.CLASSE_DURACIO + i, mapaClassesDirigides.get(Constants.CLASSE_DURACIO));
         }
 
         // Guardar la quantitat de classes dirigides a SharedPreferences

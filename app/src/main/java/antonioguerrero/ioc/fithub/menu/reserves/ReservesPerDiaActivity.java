@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +60,29 @@ public class ReservesPerDiaActivity extends BaseActivity implements ConnexioServ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserves_dia);
 
+        // Configura el menú desplegable
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            handleNavigationItemSelected(menuItem);
+            return true;
+        });
+
+        // Infla el layout de la capçalera del NavigationView
+        View headerView = navigationView.getHeaderView(0);
+
+        // Obtenir referències a les vistes en el nav_header
+        tvNomUsuari = headerView.findViewById(R.id.tvNomUsuari);
+        tvCorreuElectronic = headerView.findViewById(R.id.tvCorreuElectronic);
+
+        // Obtenir les dades de l'usuari de SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+
+        // Actualitzar el text de les vistes amb les dades de l'usuari
+        tvNomUsuari.setText(nomUsuari);
+        tvCorreuElectronic.setText(correuElectronic);
+
         recyclerView = findViewById(R.id.rvClassesDirigides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         tvTitol = findViewById(R.id.tvTitol);
@@ -70,13 +94,6 @@ public class ReservesPerDiaActivity extends BaseActivity implements ConnexioServ
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-
-        // Configura el menú desplegable
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(menuItem -> {
-            handleNavigationItemSelected(menuItem);
-            return true;
-        });
 
         // Obte la data actual
         String currentDate = Utils.obtenirDataActual();

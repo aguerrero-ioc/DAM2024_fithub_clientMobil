@@ -13,31 +13,28 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerDiaAdapter;
-import antonioguerrero.ioc.fithub.objectes.ClasseDirigida;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 public abstract class CrearReserva extends ConnexioServidor {
     private Reserva reserva;
     private Context context;
     private static final String ETIQUETA = "CrearReserva";
 
-    private ClasseDirigida IDclasseDirigida;
-    private Usuari IDusuari;
+    private String IDclasseDirigida;
+    private String IDusuari;
     private SharedPreferences preferencies;
 
     private String sessioID;
 
-    public CrearReserva(ReservesPerDiaAdapter listener, Context context, String sessioID) {
+    public CrearReserva(respostaServidorListener listener, Context context, String IDusuari, String IDclasseDirigida, String sessioID) {
         super((respostaServidorListener) listener);
         this.context = context;
+        this.IDusuari = IDusuari;
+        this.IDclasseDirigida = IDclasseDirigida;
         this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
-    public CrearReserva(ReservesPerDiaAdapter listener, ReservesPerDiaAdapter reservesAdapter, String sessioID) {
-    }
 
 
     public interface CrearReservaListener {
@@ -51,6 +48,7 @@ public abstract class CrearReserva extends ConnexioServidor {
             @Override
             protected Object doInBackground(Void... voids) {
                 try {
+                    Reserva reserva = new Reserva(IDclasseDirigida, IDusuari);
                     HashMap<String, String> mapaReserva = reserva.reserva_a_hashmap(reserva);
                     return enviarPeticioHashMap("insert", "reserva", mapaReserva,sessioID);
                 } catch (ConnectException e) {

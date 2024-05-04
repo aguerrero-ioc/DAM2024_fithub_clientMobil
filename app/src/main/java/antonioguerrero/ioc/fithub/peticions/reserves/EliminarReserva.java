@@ -22,7 +22,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  */
 public abstract class EliminarReserva extends ConnexioServidor {
 
-    private int IDreserva;
+    private String IDreserva;
     private Context context;
     private static final String ETIQUETA = "EliminarReserva";
     SharedPreferences preferencies;
@@ -35,7 +35,7 @@ public abstract class EliminarReserva extends ConnexioServidor {
      * @param context  Context de l'aplicació.
      * @param IDreserva  ID de la reserva a eliminar.
      */
-    public EliminarReserva(ConnexioServidor.respostaServidorListener listener, Context context, int IDreserva) {
+    public EliminarReserva(ConnexioServidor.respostaServidorListener listener, Context context, String IDreserva) {
         super(listener);
         this.context = context;
         this.IDreserva = IDreserva;
@@ -47,7 +47,7 @@ public abstract class EliminarReserva extends ConnexioServidor {
      * Mètode per eliminar una reserva.
      */
     public void eliminarReserva() throws ConnectException {
-        String IDReservaString = Integer.toString(IDreserva);
+        String IDReservaString = IDreserva;
 
         enviarPeticioString("delete", "reserva", IDReservaString, this.sessioID);
     }

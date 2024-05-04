@@ -17,36 +17,35 @@ import antonioguerrero.ioc.fithub.Constants;
 public class Reserva {
 
     // Dades obligatòries de la reserva
-
-    private ClasseDirigida classeDirigida;
-
-    private Usuari usuari;
+    private String IDclasseDirigida;
+    private String IDusuari;
 
 
     /**
      * Constructor de la classe Reserva reduït.
      */
-    public Reserva() {
+    public Reserva(String IDclasseDirigida, String IDusuari) {
+        this.IDclasseDirigida = IDclasseDirigida;
+        this.IDusuari = IDusuari;
     }
-
 
     // Getters y setters
-
-    public ClasseDirigida getClasseDirigida() {
-        return classeDirigida;
+    public String getIDclasseDirigida() {
+        return IDclasseDirigida;
     }
 
-    public void setClasseDirigida(ClasseDirigida classeDirigida) {
-        this.classeDirigida = classeDirigida;
+    public void setIDclasseDirigida(String IDclasseDirigida) {
+        this.IDclasseDirigida = IDclasseDirigida;
     }
 
-    public Usuari getUsuari() {
-        return usuari;
+    public String getIDusuari() {
+        return IDusuari;
     }
 
-    public void setUsuari(Usuari usuari) {
-        this.usuari = usuari;
+    public void setIDusuari(String IDusuari) {
+        this.IDusuari = IDusuari;
     }
+
 
     /**
      * Mètode per convertir una reserva a un HashMap.
@@ -56,11 +55,8 @@ public class Reserva {
      */
     public HashMap<String, String> reserva_a_hashmap(Reserva reserva) {
         HashMap<String, String> mapaReserva = new HashMap<>();
-
-        // Obtener los datos de la clase dirigida y el usuario directamente de las instancias
-        mapaReserva.put(Constants.CLASSE_ID, String.valueOf(reserva.getClasseDirigida().getIDclasseDirigida()));
-        mapaReserva.put(Constants.ID_USUARI, String.valueOf(reserva.getUsuari().getIDusuari()));
-
+        mapaReserva.put(Constants.CLASSE_ID, IDclasseDirigida);
+        mapaReserva.put(Constants.ID_USUARI, IDusuari);
         return mapaReserva;
     }
 
@@ -71,21 +67,9 @@ public class Reserva {
      * @return La reserva amb les dades del HashMap.
      */
     public Reserva hashmap_a_reserva(HashMap<String, String> mapaReserva) {
-        Reserva reserva = new Reserva();
-
-        // Crear una nueva instancia de ClasseDirigida y asignarle los datos del mapa
-        ClasseDirigida classeDirigida = new ClasseDirigida();
-        classeDirigida.setIDclasseDirigida(Integer.parseInt(mapaReserva.get(Constants.CLASSE_ID)));
-
-        // Crear una nueva instancia de Usuari y asignarle los datos del mapa
-        Usuari usuari = new Usuari();
-        usuari.setIDusuari(Integer.parseInt(mapaReserva.get(Constants.ID_USUARI)));
-
-        // Asignar las instancias de ClasseDirigida y Usuari a la Reserva
-        reserva.setClasseDirigida(classeDirigida);
-        reserva.setUsuari(usuari);
-
-        return reserva;
+        String IDclasseDirigida = mapaReserva.get(Constants.CLASSE_ID);
+        String IDusuari = mapaReserva.get(Constants.ID_USUARI);
+        return new Reserva(IDclasseDirigida, IDusuari);
     }
 
 }
