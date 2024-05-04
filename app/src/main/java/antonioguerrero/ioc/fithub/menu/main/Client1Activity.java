@@ -6,11 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -27,14 +22,8 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
-import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsAdapter;
-import antonioguerrero.ioc.fithub.menu.reserves.PaginesReservesAdapter;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPassadesFragment;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesRealitzadesFragment;
-import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
 import antonioguerrero.ioc.fithub.peticions.reserves.ConsultarTotesReserves;
 
 
@@ -46,7 +35,7 @@ import antonioguerrero.ioc.fithub.peticions.reserves.ConsultarTotesReserves;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class Client1Activity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesReserves.ConsultarTotesReservesListener {
+/*public class Client1Activity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesReserves.ConsultarTotesReservesListener {
 
     private RecyclerView recyclerView;
     private ActivitatsAdapter adapter;
@@ -151,4 +140,4 @@ public class Client1Activity extends BaseActivity implements ConnexioServidor.re
     public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         return null;
     }
-}
+}*/

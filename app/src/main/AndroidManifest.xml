@@ -38,8 +38,10 @@
         <activity android:name=".menu.installacions.InstallacionsActivity" />
         <activity android:name=".menu.installacions.GestioInstallacionsActivity" />
         <activity android:name=".menu.installacions.CrearInstallacioActivity" />
-        <activity android:name=".menu.reserves.ReservesPerDiaActivity" />
-        <activity android:name=".menu.reserves.ReservesPerNomActivity" />
+        <activity android:name=".menu.classesdirigides.ClassesPerDiaActivity" />
+        <activity android:name=".menu.classesdirigides.ClassesPerNomActivity" />
+        <activity android:name=".menu.reserves.ReservesActivity" />
+
     </application>
 
 </manifest>

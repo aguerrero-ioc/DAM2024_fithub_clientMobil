@@ -17,8 +17,10 @@ import antonioguerrero.ioc.fithub.Constants;
 public class Reserva {
 
     // Dades obligatòries de la reserva
+    private int IDreserva;
     private String IDclasseDirigida;
     private String IDusuari;
+    private String estatReserva;
 
 
     /**
@@ -29,21 +31,91 @@ public class Reserva {
         this.IDusuari = IDusuari;
     }
 
+    /**
+     * Constructor de la classe Reserva amb paràmetres.
+     *
+     * @param IDreserva        Identificador de la reserva
+     * @param IDclasseDirigida Identificador de la classe dirigida
+     * @param IDusuari         Identificador de l'usuari
+     * @param estatReserva     Estat de la reserva
+     */
+    public Reserva(int IDreserva, String IDclasseDirigida, String IDusuari, String estatReserva) {
+    }
+
     // Getters y setters
+
+    /**
+     * Mètode per obtenir l'identificador de la reserva.
+     *
+     * @return L'identificador de la reserva.
+     */
+    public int getIDreserva() {
+        return IDreserva;
+    }
+
+    /**
+     * Mètode per establir l'identificador de la reserva.
+     *
+     * @param IDreserva L'identificador de la reserva.
+     */
+
+    public void setIDreserva(int IDreserva) {
+        this.IDreserva = IDreserva;
+    }
+
+
+    /**
+     * Mètode per obtenir l'identificador de la classe dirigida.
+     *
+     * @return L'identificador de la classe dirigida.
+     */
     public String getIDclasseDirigida() {
         return IDclasseDirigida;
     }
 
+    /**
+     * Mètode per establir l'identificador de la classe dirigida.
+     *
+     * @param IDclasseDirigida L'identificador de la classe dirigida.
+     */
     public void setIDclasseDirigida(String IDclasseDirigida) {
         this.IDclasseDirigida = IDclasseDirigida;
     }
 
+    /**
+     * Mètode per obtenir l'identificador de l'usuari.
+     *
+     * @return L'identificador de l'usuari.
+     */
     public String getIDusuari() {
         return IDusuari;
     }
 
+    /**
+     * Mètode per establir l'identificador de l'usuari.
+     *
+     * @param IDusuari L'identificador de l'usuari.
+     */
     public void setIDusuari(String IDusuari) {
         this.IDusuari = IDusuari;
+    }
+
+    /**
+     * Mètode per obtenir l'estat de la reserva.
+     *
+     * @return L'estat de la reserva.
+     */
+    public String getEstatReserva() {
+        return estatReserva;
+    }
+
+    /**
+     * Mètode per establir l'estat de la reserva.
+     *
+     * @param estatReserva L'estat de la reserva.
+     */
+    public void setEstatReserva(String estatReserva) {
+        this.estatReserva = estatReserva;
     }
 
 
@@ -55,8 +127,11 @@ public class Reserva {
      */
     public HashMap<String, String> reserva_a_hashmap(Reserva reserva) {
         HashMap<String, String> mapaReserva = new HashMap<>();
-        mapaReserva.put(Constants.CLASSE_ID, IDclasseDirigida);
-        mapaReserva.put(Constants.ID_USUARI, IDusuari);
+        mapaReserva.put(Constants.OBJTYPE,Constants.OBJ_RESERVA);
+        mapaReserva.put(Constants.RESERVA_ID, String.valueOf(reserva.getIDreserva()));
+        mapaReserva.put(Constants.CLASSE_ID, reserva.getIDclasseDirigida());
+        mapaReserva.put(Constants.ID_USUARI, reserva.getIDusuari());
+        mapaReserva.put(Constants.RESERVA_ESTAT, reserva.getEstatReserva());
         return mapaReserva;
     }
 
@@ -67,9 +142,11 @@ public class Reserva {
      * @return La reserva amb les dades del HashMap.
      */
     public Reserva hashmap_a_reserva(HashMap<String, String> mapaReserva) {
+        int IDreserva = Integer.parseInt(mapaReserva.get(Constants.RESERVA_ID));
         String IDclasseDirigida = mapaReserva.get(Constants.CLASSE_ID);
         String IDusuari = mapaReserva.get(Constants.ID_USUARI);
-        return new Reserva(IDclasseDirigida, IDusuari);
+        String estatReserva = mapaReserva.get(Constants.RESERVA_ESTAT);
+        return new Reserva(IDreserva, IDclasseDirigida, IDusuari, estatReserva);
     }
 
 }

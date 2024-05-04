@@ -63,6 +63,7 @@ public class Constants {
     // RESERVA
     public static final String OBJ_RESERVA = "reserva";
     public static final String RESERVA_ID = "IDreserva";
+    public static final String RESERVA_ESTAT = "estatReserva";
 
 
 

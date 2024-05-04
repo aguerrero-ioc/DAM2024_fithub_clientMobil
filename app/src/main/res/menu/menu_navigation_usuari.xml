@@ -22,6 +22,9 @@
         android:id="@+id/nav_reserves_per_activitat"
         android:title="Reserva per activitat" />
     <item
+        android:id="@+id/nav_reserves_usuari"
+        android:title="Les meves reserves" />
+    <item
         android:id="@+id/nav_tancar_sessio"
         android:title="Tancar sessió" />
 </menu>

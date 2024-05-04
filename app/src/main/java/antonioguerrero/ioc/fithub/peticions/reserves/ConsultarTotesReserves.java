@@ -24,14 +24,18 @@ import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
 public abstract class ConsultarTotesReserves extends ConnexioServidor {
 
     private Context context;
-    private Usuari usuari;
+
+    private static final String ETIQUETA = "ConsultarTotesReserves";
+
+    private String correuUsuari;
     private String sessioID;
 
 
 
-    public ConsultarTotesReserves(respostaServidorListener listener, Context context, String sessioID) {
+    public ConsultarTotesReserves(respostaServidorListener listener, Context context, String correuUsuari, String sessioID) {
         super(listener);
         this.context = context;
+        this.correuUsuari = correuUsuari;
         this.sessioID = sessioID;
     }
 
@@ -43,11 +47,13 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
 
     @SuppressLint("StaticFieldLeak")
     public void consultarTotesReserves() {
+        final String correuUsuari = this.correuUsuari;
+        final String sessioID = this.sessioID;
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
                 try {
-                    return enviarPeticioString("selectAll", "reserva", usuari.getCorreuUsuari(), sessioID);
+                    return enviarPeticioString("selectAll", "reserva", correuUsuari, sessioID);
                 } catch (ConnectException e) {
                     throw new RuntimeException(e);
                 }

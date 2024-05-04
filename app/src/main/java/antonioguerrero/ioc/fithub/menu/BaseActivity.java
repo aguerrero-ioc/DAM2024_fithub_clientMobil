@@ -29,8 +29,9 @@ import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerNomActivity;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerDiaActivity;
+import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerNomActivity;
+import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerDiaActivity;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
@@ -140,13 +141,19 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             if (tipusUsuari == 1) {
                 Utils.mostrarToast(this, Constants.NO_ADMIN);
             } else if (tipusUsuari == 2) {
-                obrirActivity(ReservesPerDiaActivity.class);
+                obrirActivity(ClassesPerDiaActivity.class);
             }
         } else if (id == R.id.nav_reserves_per_activitat) {
             if (tipusUsuari == 1) {
                 Utils.mostrarToast(this, Constants.NO_ADMIN);
             } else if (tipusUsuari == 2) {
-                obrirActivity(ReservesPerNomActivity.class);
+                obrirActivity(ClassesPerNomActivity.class);
+            }
+        } else if (id == R.id.nav_reserves_usuari) {
+            if (tipusUsuari == 1) {
+                Utils.mostrarToast(this, Constants.NO_ADMIN);
+            } else if (tipusUsuari == 2) {
+                obrirActivity(ReservesActivity.class);
             }
         } else if (id == R.id.nav_tancar_sessio) {
             tancarSessioClicat();

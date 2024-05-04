@@ -80,26 +80,6 @@ public class ServeisActivity extends BaseActivity implements ConnexioServidor.re
         consulta.consultarTotsServeis();
     }
 
-    public void consultarTotsServeis(View view) {
-        // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
-
-        ConsultarTotsServeis consulta = new ConsultarTotsServeis(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        };
-
-        consulta.consultarTotsServeis();
-    }
-
     @Override
     public void onServeisObtinguts(List<HashMap<String, String>> serveis) {
         if (serveis != null && !serveis.isEmpty()) {

@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,15 +20,8 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
-import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
-import antonioguerrero.ioc.fithub.menu.activitats.GestioActivitatsActivity;
-import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
-import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerDiaActivity;
-import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerNomActivity;
-import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
-import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
-import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
+import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerDiaActivity;
+import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerNomActivity;
 
 /**
  * Classe que representa l'activitat del client a l'aplicació FitHub.
@@ -83,8 +73,8 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
         Button botoReserva3 = findViewById(R.id.boto_reserva3);
 
         // Configura els listeners pels botons de reserva d'activitats
-        botoReserva1.setOnClickListener(v -> ferReserva(ReservesPerDiaActivity.class));
-        botoReserva2.setOnClickListener(v -> ferReserva(ReservesPerNomActivity.class));
+        botoReserva1.setOnClickListener(v -> ferReserva(ClassesPerDiaActivity.class));
+        botoReserva2.setOnClickListener(v -> ferReserva(ClassesPerNomActivity.class));
         botoReserva3.setOnClickListener(v -> Utils.mostrarToast(ClientActivity.this, Constants.PENDENT_IMPLEMENTAR));
 
         // Configura el botó flotant de perfil
