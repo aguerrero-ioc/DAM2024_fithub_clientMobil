@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Etiqueta del nombre -->
+        <!-- Etiqueta del nom -->
         <TextView
             android:id="@+id/tvNomEtiqueta"
             android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
             android:textSize="18sp"
             android:layout_marginBottom="4dp"/>
 
-        <!-- Nombre de la instalación -->
+        <!-- Nom de la instal·lació -->
         <TextView
             android:id="@+id/nomInstallacio"
             android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
             android:textSize="16sp"
             android:textStyle="normal" />
 
-        <!-- Etiqueta del tipo -->
+        <!-- Etiqueta del tipus -->
         <TextView
             android:id="@+id/tvTipusEtiqueta"
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"/>
 
-        <!-- Tipo de la instalación -->
+        <!-- Tipus d'instal·lació -->
         <TextView
             android:id="@+id/tipusInstallacio"
             android:layout_width="wrap_content"
@@ -47,14 +47,28 @@
             android:textSize="16sp"
             android:textStyle="normal" />
 
-        <!-- Botón para gestionar la instalación -->
+        <!-- Botons per gestionar la instal·lació -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etTipusActivitat"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp">
         <Button
-            android:id="@+id/btnGestionar"
+            android:id="@+id/btnModificar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gestionar instal·lació"
-            android:layout_marginTop="18dp"
-            android:layout_gravity="center"/>
+            android:text="Modificar instal·lació"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eliminar instal·lació"
+            android:layout_marginEnd="8dp" />
+    </LinearLayout>
 
     </LinearLayout>
 

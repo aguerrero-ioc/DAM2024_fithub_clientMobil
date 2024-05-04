@@ -156,7 +156,7 @@ public abstract class ModificarInstallacio extends ConnexioServidor {
         editor.putString(Constants.INS_NOM, installacio.getNomInstallacio());
         editor.putString(Constants.INS_DESC, installacio.getDescripcioInstallacio());
         editor.putInt(Constants.INS_TIPUS, installacio.getTipusInstallacio());
-        editor.putInt(Constants.INS_ID, installacio.getIDInstallacio());
+        editor.putInt(Constants.INS_ID, installacio.getIDinstallacio());
 
         // Aplicar els canvis a SharedPreferences
         editor.apply();

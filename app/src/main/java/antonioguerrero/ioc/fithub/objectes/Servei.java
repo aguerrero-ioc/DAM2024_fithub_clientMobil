@@ -157,7 +157,7 @@ public class Servei implements Serializable {
      */
     public HashMap<String, String> servei_a_hashmap(Servei servei) {
         HashMap<String, String> mapaServei = new HashMap<>();
-        mapaServei.put(Constants.OBJTYPE,"servei");
+        mapaServei.put(Constants.OBJTYPE,Constants.OBJ_SERVEI);
         mapaServei.put(Constants.SERVEI_ID,Integer.toString(servei.getIDServei()));
         mapaServei.put(Constants.SERVEI_NOM,servei.getNomServei());
         mapaServei.put(Constants.SERVEI_DESC, servei.getDescripcioServei());

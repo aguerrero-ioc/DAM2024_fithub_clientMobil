@@ -29,6 +29,7 @@ import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerDiaActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesPerNomActivity;
+import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
 import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
 
@@ -85,13 +86,11 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
         botoGestio1.setOnClickListener(v -> Utils.mostrarToast(AdminActivity.this, Constants.PENDENT_IMPLEMENTAR));
         botoGestio2.setOnClickListener(v -> ferGestio(GestioActivitatsActivity.class));
         botoGestio3.setOnClickListener(v -> ferGestio(GestioInstallacionsActivity.class));
-        //botoGestio3.setOnClickListener(v -> ferGestio(GestioServeisActivity.class));
+        botoGestio4.setOnClickListener(v -> ferGestio(GestioServeisActivity.class));
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-
-
     }
 
     /**

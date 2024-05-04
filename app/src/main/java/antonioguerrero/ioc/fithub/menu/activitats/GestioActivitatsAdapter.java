@@ -17,6 +17,7 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
@@ -69,10 +70,10 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
         holder.btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String IDactivitat = activitat.get("IDactivitat");
-                String nomActivitat = activitat.get("nomActivitat");
-                String descripcioActivitat = activitat.get("descripcioActivitat");
-                String aforamentActivitat = activitat.get("aforamentActivitat");
+                String IDactivitat = activitat.get(Constants.ACT_ID);
+                String nomActivitat = activitat.get(Constants.ACT_NOM);
+                String descripcioActivitat = activitat.get(Constants.ACT_DESC);
+                String aforamentActivitat = activitat.get(Constants.ACT_AFORAMENT);
                 String tipusActivitat = holder.tipusActivitat.getText().toString();
                 dialegModificarActivitat(Integer.parseInt(IDactivitat), nomActivitat, descripcioActivitat, aforamentActivitat, tipusActivitat);
             }
@@ -81,10 +82,10 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
         holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String IDactivitat = activitat.get("IDactivitat");
-                String nomActivitat = activitat.get("nomActivitat");
-                String descripcioActivitat = activitat.get("descripcioActivitat");
-                String aforamentActivitat = activitat.get("aforamentActivitat");
+                String IDactivitat = activitat.get(Constants.ACT_ID);
+                String nomActivitat = activitat.get(Constants.ACT_NOM);
+                String descripcioActivitat = activitat.get(Constants.ACT_DESC);
+                String aforamentActivitat = activitat.get(Constants.ACT_AFORAMENT);
                 String tipusActivitat = holder.tipusActivitat.getText().toString();
                 dialegEliminarActivitat(Integer.parseInt(IDactivitat), nomActivitat, descripcioActivitat, aforamentActivitat, tipusActivitat);
             }
@@ -117,7 +118,6 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
             btnModificar = itemView.findViewById(R.id.btnModificar);
             btnDesar = itemView.findViewById(R.id.btnDesar);
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
-
         }
     }
 
@@ -140,14 +140,14 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
         dialegView = inflater.inflate(R.layout.dialeg_modificar_activitats, null);
 
         // Configurar les vistes del disseny personalitzat
-        configurarVistesDialeg(dialegView, IDactivitat, nomActivitat, descripcioActivitat, aforamentActivitat, tipusInstallacio, activitat);
+        configurarVistesDialegModificar(dialegView, IDactivitat, nomActivitat, descripcioActivitat, aforamentActivitat, tipusInstallacio, activitat);
 
         // Mostrar el diàleg
         mostrarDialeg(dialegView);
     }
 
     // Mètode per configurar les vistes del disseny personalitzat del diàleg de modificació de l'activitat
-    private void configurarVistesDialeg(View dialegView, int IDactivitat, String nomActivitat, String descripcioActivitat, String aforamentActivitat, String tipusInstallacio, Activitat activitat) {
+    private void configurarVistesDialegModificar(View dialegView, int IDactivitat, String nomActivitat, String descripcioActivitat, String aforamentActivitat, String tipusInstallacio, Activitat activitat) {
         // Obtenir referències als elements de la vista del dialeg
         EditText etIDactivitat = dialegView.findViewById(R.id.etIDactivitat);
         EditText etNomActivitat = dialegView.findViewById(R.id.etNomActivitat);
@@ -224,7 +224,13 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
         });
     }
 
-    // Mètode per configurar el comportament del botó de tancament
+    /**
+     * Mètode per configurar el comportament del botó de tancament.
+     * <p>
+     * Aquest mètode configura el comportament del botó de tancament del diàleg.
+     *
+     * @param botoTancar Botó de tancament.
+     */
     private void configurarBotoTancar(ImageButton botoTancar) {
         botoTancar.setOnClickListener(v -> {
             // Tancar el diàleg
@@ -232,7 +238,13 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
         });
     }
 
-    // Mètode per mostrar el diàleg amb el disseny personalitzat
+    /**
+     * Mètode per mostrar el diàleg amb el disseny personalitzat.
+     * <p>
+     * Aquest mètode mostra el diàleg amb el disseny personalitzat passat com a paràmetre.
+     *
+     * @param dialegView Vista del diàleg amb el disseny personalitzat.
+     */
     private void mostrarDialeg(View dialegView) {
         // Crear el diàleg amb el disseny personalitzat
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -244,6 +256,15 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
         this.dialegView = dialegView;
         dialegView.setTag(dialeg); // Permetre tancar el diàleg des del botó de tancament
     }
+
+    /**
+     * Mètode per convertir el tipus d'activitat a un valor numèric.
+     * <p>
+     * Aquest mètode converteix el tipus d'activitat a un valor numèric per a l'enviament al servidor.
+     *
+     * @param tipusActivitat Tipus de l'activitat.
+     * @return Valor numèric del tipus d'activitat.
+     */
     private String convertTipusActivitat(String tipusActivitat) {
         switch (tipusActivitat) {
             case "Sala":
@@ -260,22 +281,30 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
      * <p>
      * Aquest mètode habilita o deshabilita l'edició dels camps de text segons l'estat de l'edició.
      * <p>
-     * @param habilitar Estat de l'edició.
+     * @param habilitat Estat de l'edició.
      */
-    private void habilitarEdicio(boolean habilitar) {
+    private void habilitarEdicio(boolean habilitat) {
         // Habilitar o deshabilitar l'edició dels camps de text segons l'estat de l'edició
-        int visibility = habilitar ? View.VISIBLE : View.GONE;
+        int visibility = habilitat ? View.VISIBLE : View.GONE;
         // Obtenir referències als EditText dins del diàleg de modificació
         EditText etNomActivitat = dialegView.findViewById(R.id.etNomActivitat);
         EditText etDescripcioActivitat = dialegView.findViewById(R.id.etDescripcioActivitat);
         EditText etAforamentActivitat = dialegView.findViewById(R.id.etAforamentActivitat);
         EditText etTipusActivitat = dialegView.findViewById(R.id.etTipusActivitat);
         // Habilitar o deshabilitar l'edició segons l'estat
-        etNomActivitat.setEnabled(habilitar);
-        etDescripcioActivitat.setEnabled(habilitar);
-        etAforamentActivitat.setEnabled(habilitar);
-        etTipusActivitat.setEnabled(habilitar);
+        etNomActivitat.setEnabled(habilitat);
+        etDescripcioActivitat.setEnabled(habilitat);
+        etAforamentActivitat.setEnabled(habilitat);
+        etTipusActivitat.setEnabled(habilitat);
     }
+
+    /**
+     * Mètode per modificar una activitat.
+     * <p>
+     * Aquest mètode crida a la classe ModificarActivitat per modificar una activitat.
+     *
+     * @param activitat Activitat a modificar.
+     */
     private void modificarActivitat(Activitat activitat) {
         ModificarActivitat modificarActivitat = new ModificarActivitat(new ConnexioServidor.respostaServidorListener() {
             @Override
@@ -311,6 +340,17 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
         modificarActivitat.modificarActivitat();
     }
 
+    /**
+     * Mètode per mostrar el diàleg d'eliminació de l'activitat.
+     * <p>
+     * Aquest mètode mostra un diàleg amb els detalls de l'activitat seleccionada per a la seva eliminació.
+     *
+     * @param IDactivitat ID de l'activitat.
+     * @param nomActivitat Nom de l'activitat.
+     * @param descripcioActivitat Descripció de l'activitat.
+     * @param aforamentActivitat Aforament de l'activitat.
+     * @param tipusInstallacio Tipus de l'instal·lació on es realitza l'activitat.
+     */
     private void dialegEliminarActivitat(int IDactivitat, String nomActivitat, String descripcioActivitat, String aforamentActivitat, String tipusInstallacio) {
         // Inflar la vista del diàleg
         View dialegView = crearDialegEliminarActivitat(IDactivitat, nomActivitat, descripcioActivitat, aforamentActivitat, tipusInstallacio);
@@ -319,20 +359,31 @@ public class GestioActivitatsAdapter extends RecyclerView.Adapter<GestioActivita
         mostrarDialeg(dialegView);
     }
 
-    // Mètode per crear la vista del dialeg d'eliminació de l'activitat
+    /**
+     * Mètode per crear la vista del diàleg d'eliminació de l'activitat.
+     * <p>
+     * Aquest mètode crea la vista del diàleg d'eliminació de l'activitat amb les dades de l'activitat seleccionada.
+     *
+     * @param IDactivitat ID de l'activitat.
+     * @param nomActivitat Nom de l'activitat.
+     * @param descripcioActivitat Descripció de l'activitat.
+     * @param aforamentActivitat Aforament de l'activitat.
+     * @param tipusInstallacio Tipus de l'instal·lació on es realitza l'activitat.
+     * @return Vista del diàleg d'eliminació de l'activitat.
+     */
     private View crearDialegEliminarActivitat(int IDactivitat, String nomActivitat, String descripcioActivitat, String aforamentActivitat, String tipusInstallacio) {
         // Inflar la vista del disseny personalitzat del dialeg
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View dialogView = inflater.inflate(R.layout.dialeg_eliminar_activitats, null);
 
         // Configurar les vistes del disseny personalitzat
-        configurarVistesDialegEliminarActivitat(dialogView, IDactivitat, nomActivitat, descripcioActivitat, aforamentActivitat, tipusInstallacio);
+        configurarVistesDialegEliminar(dialogView, IDactivitat, nomActivitat, descripcioActivitat, aforamentActivitat, tipusInstallacio);
 
         return dialogView;
     }
 
     // Mètode per configurar les vistes del disseny personalitzat del dialeg d'eliminació de l'activitat
-    private void configurarVistesDialegEliminarActivitat(View dialogView, int IDactivitat, String nomActivitat, String descripcioActivitat, String aforamentActivitat, String tipusInstallacio) {
+    private void configurarVistesDialegEliminar(View dialogView, int IDactivitat, String nomActivitat, String descripcioActivitat, String aforamentActivitat, String tipusInstallacio) {
         // Obtindre referències als elements de la vista del dialeg
         TextView tvIDactivitat = dialogView.findViewById(R.id.tvIDactivitat);
         TextView tvNomActivitat = dialogView.findViewById(R.id.tvNomActivitat);

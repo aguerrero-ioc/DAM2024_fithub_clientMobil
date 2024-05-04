@@ -14,7 +14,7 @@ import antonioguerrero.ioc.fithub.Constants;
  * @version 1.0
  */
 public class Installacio {
-    private int IDInstallacio;
+    private int IDinstallacio;
     private String nomInstallacio;
     private String descripcioInstallacio;
     private int tipusInstallacio;
@@ -28,13 +28,13 @@ public class Installacio {
     /**
      * Constructor de la classe Installacio.
      *
-     * @param IDInstallacio Identificador de la instal·lació
+     * @param IDinstallacio Identificador de la instal·lació
      * @param nomInstallacio Nom de la instal·lació
      * @param descripcioInstallacio Descripció de la instal·lació
      * @param tipusInstallacio Tipus de la instal·lació
      */
-    public Installacio(int IDInstallacio, String nomInstallacio, String descripcioInstallacio, int tipusInstallacio) {
-        this.IDInstallacio = IDInstallacio;
+    public Installacio(int IDinstallacio, String nomInstallacio, String descripcioInstallacio, int tipusInstallacio) {
+        this.IDinstallacio = IDinstallacio;
         this.nomInstallacio = nomInstallacio;
         this.descripcioInstallacio = descripcioInstallacio;
         this.tipusInstallacio = tipusInstallacio;
@@ -60,17 +60,17 @@ public class Installacio {
      *
      * @return L'identificador de la instal·lació
      */
-    public int getIDInstallacio() {
-        return IDInstallacio;
+    public int getIDinstallacio() {
+        return IDinstallacio;
     }
 
     /**
      * Estableix l'identificador de la instal·lació.
      *
-     * @param IDInstallacio L'identificador de la instal·lació a establir
+     * @param IDinstallacio L'identificador de la instal·lació a establir
      */
-    public void setIDInstallacio(int IDInstallacio) {
-        this.IDInstallacio = IDInstallacio;
+    public void setIDinstallacio(int IDinstallacio) {
+        this.IDinstallacio = IDinstallacio;
     }
 
     /**
@@ -196,7 +196,7 @@ public class Installacio {
     public static HashMap<String, String> installacio_a_hashmap(Installacio installacio) {
         HashMap<String, String> mapaInstallacio = new HashMap<>();
         mapaInstallacio.put(Constants.OBJTYPE, Constants.OBJ_INS);
-        mapaInstallacio.put(Constants.INS_ID, Integer.toString(installacio.getIDInstallacio()));
+        mapaInstallacio.put(Constants.INS_ID, Integer.toString(installacio.getIDinstallacio()));
         mapaInstallacio.put(Constants.INS_NOM, installacio.getNomInstallacio());
         mapaInstallacio.put(Constants.INS_DESC, installacio.getDescripcioInstallacio());
         mapaInstallacio.put(Constants.INS_TIPUS, Integer.toString(installacio.getTipusInstallacio()));
@@ -211,7 +211,7 @@ public class Installacio {
      */
     public static Installacio hashmap_a_installacio(HashMap<String, String> mapaInstallacio) {
         Installacio installacio = new Installacio();
-        installacio.setIDInstallacio(Integer.parseInt(mapaInstallacio.get(Constants.INS_ID)));
+        installacio.setIDinstallacio(Integer.parseInt(mapaInstallacio.get(Constants.INS_ID)));
         installacio.setNomInstallacio(mapaInstallacio.get(Constants.INS_NOM));
         installacio.setDescripcioInstallacio(mapaInstallacio.get(Constants.INS_DESC));
         installacio.setTipus(Integer.parseInt(mapaInstallacio.get(Constants.INS_TIPUS)));

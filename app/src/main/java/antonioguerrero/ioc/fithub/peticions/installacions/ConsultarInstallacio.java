@@ -105,7 +105,7 @@ public abstract class ConsultarInstallacio extends ConnexioServidor {
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de l'objecte installacio a SharedPreferences
-        editor.putInt("idInstallacio", installacio.getIDInstallacio());
+        editor.putInt("idInstallacio", installacio.getIDinstallacio());
         editor.putString("nomInstallacio", installacio.getNomInstallacio());
         editor.putString("descripcioInstallacio", installacio.getDescripcioInstallacio());
         editor.putInt("tipusInstallacio", installacio.getTipusInstallacio());

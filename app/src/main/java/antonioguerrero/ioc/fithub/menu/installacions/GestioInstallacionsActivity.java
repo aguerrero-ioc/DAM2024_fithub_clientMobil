@@ -27,7 +27,7 @@ import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsAdapter;
 
 import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstallacions;
 
-public class GestioInstallacionsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesInstallacions.ConsultarTotesInstallacionsListener, GestioInstallacionsAdapter.OnInstallacioDeletedListener {
+public class GestioInstallacionsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesInstallacions.ConsultarTotesInstallacionsListener, GestioInstallacionsAdapter.OnInstallacioEliminadaListener {
 
 private RecyclerView recyclerView;
 private GestioInstallacionsAdapter adapter;
@@ -123,8 +123,8 @@ public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         }
 
 @Override
-public void onInstallacioDeleted() {
+public void onInstallacioEliminada() {
         Toast.makeText(this, "Instal·lació eliminada correctament", Toast.LENGTH_SHORT).show();
         consultarTotesInstallacions(null);
         }
-        }
+}

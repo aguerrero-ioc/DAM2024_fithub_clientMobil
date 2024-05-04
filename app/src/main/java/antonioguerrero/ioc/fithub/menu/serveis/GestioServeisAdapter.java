@@ -49,7 +49,6 @@ public class GestioServeisAdapter extends RecyclerView.Adapter<GestioServeisAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
         HashMap<String, String> servei = serveisList.get(position);
         holder.nomServei.setText(servei.get(Constants.SERVEI_NOM));
-        holder.descripcioServei.setText(servei.get(Constants.SERVEI_DESC));
         holder.preuServei.setText(servei.get(Constants.SERVEI_PREU));
 
         holder.btnModificar.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +86,6 @@ public class GestioServeisAdapter extends RecyclerView.Adapter<GestioServeisAdap
         public ViewHolder(View itemView) {
             super(itemView);
             nomServei = itemView.findViewById(R.id.nomServei);
-            descripcioServei = itemView.findViewById(R.id.descripcioServei);
             preuServei = itemView.findViewById(R.id.preuServei);
             btnModificar = itemView.findViewById(R.id.btnModificar);
             btnDesar = itemView.findViewById(R.id.btnDesar);

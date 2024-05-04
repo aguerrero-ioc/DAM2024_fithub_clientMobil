@@ -1,0 +1,125 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <!-- Contenidor del botó de tancar -->
+    <LinearLayout
+        android:id="@+id/botoTancarContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp">
+
+        <ImageButton
+            android:id="@+id/botoTancar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_tancar" />
+
+    </LinearLayout>
+
+    <!-- ID de la instal·lació -->
+    <TextView
+        android:id="@+id/tvIDinstallacioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/botoTancarContainer"/>
+
+    <EditText
+        android:id="@+id/etIDinstallacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvIDinstallacioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Nom de la instal·lació -->
+    <TextView
+        android:id="@+id/tvNomInstallacioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etIDinstallacio"/>
+
+    <EditText
+        android:id="@+id/etNomInstallacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomInstallacioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Descripció de la instal·lació -->
+    <TextView
+        android:id="@+id/tvDescripcioInstallacioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etNomInstallacio"
+        android:layout_marginTop="16dp"
+        android:text="Descripció: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/etDescripcioInstallacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescripcioInstallacioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Tipus de la instal·lació -->
+    <TextView
+        android:id="@+id/tvTipusInstallacioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etDescripcioInstallacio"
+        android:layout_marginTop="16dp"
+        android:text="Tipus: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/etTipusInstallacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTipusInstallacioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etTipusInstallacio"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp">
+
+        <Button
+            android:id="@+id/btnModificar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modificar instal·lació"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnDesar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desar Canvis"/>
+    </LinearLayout>
+
+</RelativeLayout>
