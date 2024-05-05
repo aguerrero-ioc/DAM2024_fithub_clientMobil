@@ -65,17 +65,38 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
         recyclerView = findViewById(R.id.rvReserves);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Obtener el sessioID del usuario
-        preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
-
+        // Obtenir el correu de l'usuari
         String correuUsuari = Usuari.obtenirUsuari().getCorreuUsuari();
 
-
         // Realizar la consulta de todas las reservas del usuario
-        ConsultarTotesReserves consulta = new ConsultarTotesReserves((ConnexioServidor.respostaServidorListener) this, this, correuUsuari, sessioID) {
+
+        consultarTotesReserves(correuUsuari);
+
+    }
+
+    private void consultarTotesReserves(String correuUsuari) {
+        // Obtenir sessioID de l'usuari
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
+
+        ConsultarTotesReserves consulta = new ConsultarTotesReserves(this, this, correuUsuari, sessioID) {
             @Override
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void onReservesObtingudes(List<HashMap<String, String>> reserves) {
+                if (reserves != null && !reserves.isEmpty()) {
+                    adapter = new ReservesAdapter(ReservesActivity.this, reserves);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Utils.mostrarToast(ReservesActivity.this, "No hi ha reserves disponibles");
+                }
+            }
+
+            @Override
+            public Class<?> obtenirTipusObjecte() {
                 return null;
             }
 
@@ -83,10 +104,21 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
             }
+
+            @Override
+            public void execute() {
+
+            }
         };
+
         consulta.consultarTotesReserves();
     }
 
+    /**
+     * Mètode per gestionar les reserves obtingudes.
+     *
+     * @param reserves Llista de reserves.
+     */
     @Override
     public void onReservesObtingudes(List<HashMap<String, String>> reserves) {
         if (reserves != null && !reserves.isEmpty()) {
@@ -97,11 +129,22 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
         }
     }
 
+    /**
+     * Mètode per gestionar la resposta del servidor.
+     *
+     * @param resposta Resposta del servidor.
+     */
     @Override
     public void respostaServidor(Object resposta) throws ConnectException {
 
     }
 
+    /**
+     * Mètode per obtenir una llista de hashmaps.
+     *
+     * @param resposta Resposta del servidor.
+     * @return Llista de hashmaps.
+     */
     @Override
     public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         return null;

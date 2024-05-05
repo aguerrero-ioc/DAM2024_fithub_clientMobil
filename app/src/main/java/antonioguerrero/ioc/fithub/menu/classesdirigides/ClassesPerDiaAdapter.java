@@ -205,9 +205,14 @@ public class ClassesPerDiaAdapter extends RecyclerView.Adapter<ClassesPerDiaAdap
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
             }
+
+            @Override
+            public void execute() throws ConnectException {
+
+            }
         };
 
-        crearReserva.crearReserva();
+        crearReserva.crearReserva(ClassesPerDiaActivity.class);
     });
 
     btnCancelarReserva.setOnClickListener(v -> {
@@ -223,19 +228,15 @@ public class ClassesPerDiaAdapter extends RecyclerView.Adapter<ClassesPerDiaAdap
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
             }
-        }, mContext, IDclasseDirigida) {
+        }, mContext) {
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
             }
         }; // Utilizar el ID de la reserva
 
-
-        try {
             eliminarReserva.eliminarReserva();
-        } catch (ConnectException e) {
-            throw new RuntimeException(e);
-        }
+
 
     });
 

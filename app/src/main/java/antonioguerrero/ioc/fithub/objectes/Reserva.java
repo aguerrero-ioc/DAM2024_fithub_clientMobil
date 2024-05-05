@@ -17,7 +17,7 @@ import antonioguerrero.ioc.fithub.Constants;
 public class Reserva {
 
     // Dades obligatòries de la reserva
-    private int IDreserva;
+    private String IDreserva;
     private String IDclasseDirigida;
     private String IDusuari;
     private String estatReserva;
@@ -26,7 +26,8 @@ public class Reserva {
     /**
      * Constructor de la classe Reserva reduït.
      */
-    public Reserva(String IDclasseDirigida, String IDusuari) {
+    public Reserva(String IDreserva, String IDclasseDirigida, String IDusuari) {
+        this.IDreserva = IDreserva;
         this.IDclasseDirigida = IDclasseDirigida;
         this.IDusuari = IDusuari;
     }
@@ -42,6 +43,9 @@ public class Reserva {
     public Reserva(int IDreserva, String IDclasseDirigida, String IDusuari, String estatReserva) {
     }
 
+    public Reserva(String iDclasseDirigida, String iDusuari) {
+    }
+
     // Getters y setters
 
     /**
@@ -49,7 +53,7 @@ public class Reserva {
      *
      * @return L'identificador de la reserva.
      */
-    public int getIDreserva() {
+    public String getIDreserva() {
         return IDreserva;
     }
 
@@ -59,7 +63,7 @@ public class Reserva {
      * @param IDreserva L'identificador de la reserva.
      */
 
-    public void setIDreserva(int IDreserva) {
+    public void setIDreserva(String IDreserva) {
         this.IDreserva = IDreserva;
     }
 

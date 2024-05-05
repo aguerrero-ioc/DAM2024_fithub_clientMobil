@@ -76,24 +76,16 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
 
         // Configura els listeners pels botons de reserva d'activitats
         botoGestio1.setOnClickListener(v -> Utils.mostrarToast(AdminActivity.this, Constants.PENDENT_IMPLEMENTAR));
-        botoGestio2.setOnClickListener(v -> ferGestio(GestioActivitatsActivity.class));
-        botoGestio3.setOnClickListener(v -> ferGestio(GestioInstallacionsActivity.class));
-        botoGestio4.setOnClickListener(v -> ferGestio(GestioServeisActivity.class));
+        botoGestio2.setOnClickListener(v -> obrirActivity(GestioActivitatsActivity.class));
+        botoGestio3.setOnClickListener(v -> obrirActivity(GestioInstallacionsActivity.class));
+        botoGestio4.setOnClickListener(v -> obrirActivity(GestioServeisActivity.class));
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
     }
 
-    /**
-     * Mètode que obre l'activitat corresponent a la gestió seleccionada.
-     * <p>
-     * @param activityACarregar Activitat a carregar.
-     */
-    private void ferGestio(Class<?> activityACarregar) {
-        Intent intent = new Intent(this, activityACarregar);
-        startActivity(intent);
-    }
+
     @Override
     public void respostaServidor(Object resposta) throws ConnectException {
 

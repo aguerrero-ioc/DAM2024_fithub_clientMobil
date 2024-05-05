@@ -22,6 +22,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerDiaActivity;
 import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerNomActivity;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 
 /**
  * Classe que representa l'activitat del client a l'aplicació FitHub.
@@ -73,23 +74,13 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
         Button botoReserva3 = findViewById(R.id.boto_reserva3);
 
         // Configura els listeners pels botons de reserva d'activitats
-        botoReserva1.setOnClickListener(v -> ferReserva(ClassesPerDiaActivity.class));
-        botoReserva2.setOnClickListener(v -> ferReserva(ClassesPerNomActivity.class));
-        botoReserva3.setOnClickListener(v -> Utils.mostrarToast(ClientActivity.this, Constants.PENDENT_IMPLEMENTAR));
+        botoReserva1.setOnClickListener(v -> obrirActivity(ClassesPerDiaActivity.class));
+        botoReserva2.setOnClickListener(v -> obrirActivity(ClassesPerNomActivity.class));
+        botoReserva3.setOnClickListener(v -> obrirActivity(ReservesActivity.class));
 
         // Configura el botó flotant de perfil
         FloatingActionButton botoPerfil = findViewById(R.id.boto_perfil);
         botoPerfil.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-    }
-
-    /**
-     * Mètode que obre l'activitat corresponent a la reserva seleccionada.
-     * <p>
-     * @param activityACarregar Activitat a carregar.
-     */
-    private void ferReserva(Class<?> activityACarregar) {
-        Intent intent = new Intent(this, activityACarregar);
-        startActivity(intent);
     }
 
     @Override

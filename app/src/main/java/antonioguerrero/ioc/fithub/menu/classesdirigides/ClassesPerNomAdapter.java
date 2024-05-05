@@ -13,16 +13,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
+import antonioguerrero.ioc.fithub.peticions.reserves.CrearReserva;
 
 
 public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdapter.ViewHolder> {
 
-    private final List<HashMap<String, String>> classesDirigidesList;
+    private final List<HashMap<String, String>> classesDirigidesLlista;
     private final Context mContext;
     private SharedPreferences preferencies;
     private String sessioID;
@@ -31,11 +35,11 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
      * Constructor de la classe.
      * <p>
      * @param context Context de l'aplicació.
-     * @param classesDirigidesList Llista de classes dirigides.
+     * @param classesDirigidesLlista Llista de classes dirigides.
      */
-    public ClassesPerNomAdapter(Context context, List<HashMap<String, String>> classesDirigidesList) {
+    public ClassesPerNomAdapter(Context context, List<HashMap<String, String>> classesDirigidesLlista) {
         this.mContext = context;
-        this.classesDirigidesList = classesDirigidesList;
+        this.classesDirigidesLlista = classesDirigidesLlista;
         this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
@@ -62,13 +66,13 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicio) {
-        HashMap<String, String> classeDirigida = classesDirigidesList.get(posicio);
+        HashMap<String, String> classeDirigida = classesDirigidesLlista.get(posicio);
         holder.dataClasse.setText(classeDirigida.get(Constants.CLASSE_DATA));
         holder.horaInici.setText(classeDirigida.get(Constants.CLASSE_HORA));
         holder.estatClasse.setText(classeDirigida.get(Constants.CLASSE_ESTAT));
 
         // Obtenir el ID de la classe
-        int IDclasse = Integer.parseInt(classeDirigida.get(Constants.CLASSE_ID));
+        String IDclasseDirigida = classeDirigida.get(Constants.CLASSE_ID);
 
         // Afegir un listener de clics al botó "Més detalls"
         holder.btnMesDetalls.setOnClickListener(v -> {
@@ -82,7 +86,7 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
             String estatClasse = classeDirigida.get(Constants.CLASSE_ESTAT);
 
             // Crear i mostrar el diàleg amb la informació de la classe dirigida
-            dialegDetallsClasseDirigida(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDclasse);
+            dialegDetallsClasseDirigida(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDclasseDirigida);
         });
     }
 
@@ -94,7 +98,7 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
      */
     @Override
     public int getItemCount() {
-        return classesDirigidesList.size();
+        return classesDirigidesLlista.size();
     }
 
     /**
@@ -129,7 +133,7 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
      * @param ocupacioClasse Ocupació de la classe dirigida.
      * @param estatClasse Estat de la classe dirigida.
      */
-    private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, int IDclasse) {
+    private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDclasseDirigida) {
     // Inflar el diseño personalizado del diálogo
     LayoutInflater inflater = LayoutInflater.from(mContext);
     View dialogView = inflater.inflate(R.layout.dialeg_detalls_classe_dirigida, null);
@@ -159,8 +163,41 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
 
 
     btnReservar.setOnClickListener(v -> {
-        // Crear una instancia de la clase CrearReserva y llamar al método para crear la reserva
+        int IDusuari = Usuari.obtenirUsuari().getIDusuari();
+        String IDusuariString = String.valueOf(IDusuari);
 
+        Context context = v.getContext();
+
+        // Crear una instancia de la clase CrearReserva y llamar al método para crear la reserva
+        CrearReserva crearReserva = new CrearReserva(new ConnexioServidor.respostaServidorListener() {
+            @Override
+            public void respostaServidor(Object resposta) throws ConnectException {
+
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+        }, context, IDusuariString, IDclasseDirigida, sessioID) {
+
+            @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public void execute() throws ConnectException {
+
+            }
+        };
+
+        crearReserva.crearReserva(ClassesPerNomActivity.class);
     });
 
     btnCancelarReserva.setOnClickListener(v -> {

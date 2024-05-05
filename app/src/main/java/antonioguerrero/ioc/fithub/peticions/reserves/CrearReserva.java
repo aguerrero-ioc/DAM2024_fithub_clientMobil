@@ -1,12 +1,15 @@
 package antonioguerrero.ioc.fithub.peticions.reserves;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,12 +40,8 @@ public abstract class CrearReserva extends ConnexioServidor {
 
 
 
-    public interface CrearReservaListener {
-        void onReservaCreada(Reserva reserva);
-    }
-
     @SuppressLint("StaticFieldLeak")
-    public void crearReserva() {
+    public void crearReserva(Class<?> activityClass) {
 
         new AsyncTask<Void, Void, Object>() {
             @Override
@@ -58,32 +57,37 @@ public abstract class CrearReserva extends ConnexioServidor {
 
             @Override
             protected void onPostExecute(Object resposta) {
-                respostaServidor(resposta);
+                processarResposta(resposta, activityClass);
             }
         }.execute();
     }
 
 
-    @Override
-    public List<HashMap<String, String>> respostaServidor(Object resposta) {
-        Log.d(ETIQUETA, "Resposta rebuda: " + resposta);
+    public List<HashMap<String, String>> processarResposta(Object resposta, Class<?> activityClass) {
+         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
+        Object[] respostaArray = (Object[]) resposta;
+        boolean exit = respostaArray[0].equals("true");
+        if (exit) {
+            Log.d(ETIQUETA, "Reserva confirmada");
+            Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
+            // Mostra un missatge de confirmació a l'usuari
+            Utils.mostrarToast(context, "Reserva confirmada");
 
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
-            boolean exit = respostaArray.length > 0 && "True".equals(respostaArray[0]);
-            if (exit) {
-                Log.d(ETIQUETA, "Reserva confirmada");
-                Utils.mostrarToast(context, "Reserva confirmada");
+            // Redirigeix a l'usuari a la pantalla anterior
+            Intent intent = new Intent(context, activityClass);
+            if (context instanceof Activity) {
+                ((Activity) context).startActivity(intent);
+                ((Activity) context).finish();
             } else {
-                String missatgeError = respostaArray.length > 1 ? (String) respostaArray[1] : "Error desconegut";
-                Log.d(ETIQUETA, "Error en crear la reserva: " + missatgeError);
-                Utils.mostrarToast(context.getApplicationContext(), "No s'ha pogut realitzar la reserva: " + missatgeError);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         } else {
-            Log.d(ETIQUETA, "Resposta del servidor inesperada o nula");
-            Utils.mostrarToast(context.getApplicationContext(), "Resposta del servidor inesperada o nula");
+            String missatgeError = (String) respostaArray[1];
+            Log.d(ETIQUETA, "Error en crear la reserva: " + missatgeError);
+            // Mostra el missatge d'error a l'usuari
+            Utils.mostrarToast(context.getApplicationContext(), missatgeError);
         }
-
         return null;
     }
 
@@ -96,13 +100,6 @@ public abstract class CrearReserva extends ConnexioServidor {
         return Object[].class;
     }
 
-    /**
-     * Mètode que executa la petició
-     * @throws ConnectException Excepció de connexió
-     */
-    @Override
-    public void execute() throws ConnectException {
-        crearReserva();
-    }
+
 
 }

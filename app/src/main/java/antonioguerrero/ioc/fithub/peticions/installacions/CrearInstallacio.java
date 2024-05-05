@@ -97,7 +97,7 @@ public abstract class CrearInstallacio extends ConnexioServidor {
             Log.d(ETIQUETA, "Instal·lació creada amb èxit");
             // Mostra un missatge de confirmació a l'usuari
             Utils.mostrarToast(context, "Instal·lació creada amb èxit.");
-            // Redirigeix a l'usuari a la pantalla d'inici de sessió
+            // Redirigeix a l'usuari a la pantalla anterior
             Intent intent = new Intent(context, GestioInstallacionsActivity.class);
             context.startActivity(intent);
             ((Activity) context).finish();

@@ -365,7 +365,8 @@ public class Usuari implements Serializable {
         Usuari usuari = new Usuari();
 
         // Obtenir les dades de l'usuari des de SharedPreferences i assignar-les a l'objecte Usuari
-        usuari.setIDusuari(Integer.parseInt(preferencies.getString(Constants.ID_USUARI, "0")));
+        usuari.setIDusuari(preferencies.getInt(Constants.ID_USUARI, 0));
+        usuari.setTipusUsuari(preferencies.getInt(Constants.TIPUS_USUARI, 0));
         usuari.setNomUsuari(preferencies.getString(Constants.NOM_USUARI, ""));
         usuari.setCognomsUsuari(preferencies.getString(Constants.COGNOMS_USUARI, ""));
         usuari.setCorreuUsuari(preferencies.getString(Constants.CORREU_USUARI, ""));

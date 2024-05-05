@@ -19,21 +19,22 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.peticions.reserves.EliminarReserva;
 
 
 public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHolder> {
 
-    private List<HashMap<String, String>> reservesList;
+    private List<HashMap<String, String>> reservesLlista;
     private Context mContext;
 
     private SharedPreferences preferencies;
     private String sessioID;
 
 
-    public ReservesAdapter(Context context, List<HashMap<String, String>> reservesList) {
+    public ReservesAdapter(Context context, List<HashMap<String, String>> reservesLlista) {
         this.mContext = context;
-        this.reservesList = reservesList;
+        this.reservesLlista = reservesLlista;
         this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
@@ -46,16 +47,18 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicio) {
-        HashMap<String, String> reserva = reservesList.get(posicio);
+        HashMap<String, String> reserva = reservesLlista.get(posicio);
         holder.nomActivitat.setText(reserva.get(Constants.ACT_NOM));
         holder.dataReserva.setText(reserva.get(Constants.CLASSE_DATA));
         holder.horaInici.setText(reserva.get(Constants.CLASSE_HORA));
         holder.estatClasse.setText(reserva.get(Constants.CLASSE_ESTAT));
 
-        holder.btnMesDetalls.setOnClickListener(v -> {
-            // Obtener el ID de la reserva
-            String IDreserva = reserva.get(Constants.RESERVA_ID);
+        // Obtenir els ID de la reserva
+        final String IDreserva = reserva.get(Constants.RESERVA_ID);
+        final String IDclasseDirigida = reserva.get(Constants.CLASSE_ID);
+        final String IDusuari = reserva.get(Constants.ID_USUARI);
 
+        holder.btnMesDetalls.setOnClickListener(v -> {
             // Obtenir les dades de la classe dirigida per mostrar en el diàleg
             String nomActivitat = reserva.get(Constants.ACT_NOM);
             String nomInstallacio = reserva.get(Constants.INS_NOM);
@@ -65,27 +68,16 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
             String ocupacioClasse = reserva.get(Constants.CLASSE_OCUPACIO);
             String estatClasse = reserva.get(Constants.CLASSE_ESTAT);
 
-
             // Crear i mostrar el diàleg amb la informació de la classe dirigida
-            dialegDetallsReserva(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDreserva);
+            dialegDetallsReserva(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDreserva, IDclasseDirigida, IDusuari);
         });
     }
 
-    /**
-     * Mètode que retorna el nombre d'elements de la llista.
-     * <p>
-     * @return Nombre d'elements de la llista.
-     */
     @Override
     public int getItemCount() {
-        return reservesList.size();
+        return reservesLlista.size();
     }
 
-    /**
-     * Classe interna que representa una vista de la llista.
-     * <p>
-     * Aquesta classe conté les vistes que es mostraran per a cada element de la llista.
-     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View btnMesDetalls;
         TextView nomActivitat, dataReserva, horaInici, estatClasse;
@@ -100,7 +92,7 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
         }
     }
 
-    private void dialegDetallsReserva(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDreserva) {
+    private void dialegDetallsReserva(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDreserva, String IDclasseDirigida, String IDusuari) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View dialogView = inflater.inflate(R.layout.dialeg_detalls_reserva, null);
 
@@ -121,6 +113,9 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
         tvOcupacioClasse.setText(ocupacioClasse);
         tvEstatClasse.setText(estatClasse);
 
+        // Crear una instancia de la clase Reserva
+        Reserva reserva = new Reserva(IDreserva, IDclasseDirigida, IDusuari);
+
         // Configurar los botones de "Cancelar reserva"
         Button btnCancelarReserva = dialogView.findViewById(R.id.btnCancelarReserva);
 
@@ -137,20 +132,15 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
                 public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                     return null;
                 }
-            }, mContext, IDreserva) {
+            }, mContext) {
                 @Override
                 public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                     return null;
                 }
-            }; // Utilizar el ID de la reserva
+            };
 
-
-            try {
-                eliminarReserva.eliminarReserva();
-            } catch (ConnectException e) {
-                throw new RuntimeException(e);
-            }
-
+            eliminarReserva.setReserva(reserva);
+            eliminarReserva.eliminarReserva();
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -161,7 +151,6 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
         botoTancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog.dismiss();
             }
         });

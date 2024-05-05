@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,8 +19,8 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
 
 /**
- * Clase para eliminar una instalación.
- * Esta clase se encarga de enviar la petición al servidor para eliminar una instalación.
+ * Classe per eliminar una instal·lació.
+ * Aquesta classe és la que s'encarrega de fer la petició al servidor per eliminar una instal·lació.
  *
  * @author Antonio Guerrero
  * @version 1.0
@@ -33,11 +34,11 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
     String sessioID;
 
     /**
-     * Constructor de la clase EliminarInstallacio.
+     * Constructor de la classe EliminarInstallacio.
      *
-     * @param listener         El objeto que escuchará las respuestas del servidor.
-     * @param context          Contexto de la aplicación.
-     * @param nomInstallacio   Nombre de la instalación a eliminar.
+     * @param listener         El objecte que escoltarà les respostes del servidor.
+     * @param context          Context de l'aplicació.
+     * @param nomInstallacio   Nom de la instal·lació a eliminar.
      */
     public EliminarInstallacio(ConnexioServidor.respostaServidorListener listener, Context context, String nomInstallacio) {
         super(listener);
@@ -48,7 +49,7 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
     }
 
     /**
-     * Método para eliminar una instalación.
+     * Métode per eliminar una instal·lació.
      */
     @SuppressLint("StaticFieldLeak")
     public void eliminarInstallacio() {
@@ -71,9 +72,9 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
     }
 
     /**
-     * Método para obtener el tipo del objeto.
+     * Métode per obtenir el tipus de l'objecte.
      *
-     * @return La clase del objeto.
+     * @return La classe de l'objecte.
      */
     @Override
     public Class<?> obtenirTipusObjecte() {
@@ -81,7 +82,7 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
     }
 
     /**
-     * Método para ejecutar la petición.
+     * Métode per executar la petició.
      */
     @Override
     public void execute() throws ConnectException {
@@ -89,9 +90,9 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
     }
 
     /**
-     * Método para gestionar la respuesta del servidor.
+     * Métode per gestionar la resposta del servidor.
      *
-     * @param resposta La respuesta del servidor.
+     * @param resposta La resposta del servidor.
      * @return
      */
     @Override
@@ -101,6 +102,7 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
         boolean exit = respostaArray[0].equals("true");
         if (exit) {
             Log.d(ETIQUETA, "Instal·lació eliminada correctament");
+            Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
             Utils.mostrarToast(context, "Instal·lació eliminada correctament");
             // Redirigeix a l'usuari a la pantalla de gestió d'instal·lacions
             Intent intent = new Intent(context, GestioInstallacionsActivity.class);

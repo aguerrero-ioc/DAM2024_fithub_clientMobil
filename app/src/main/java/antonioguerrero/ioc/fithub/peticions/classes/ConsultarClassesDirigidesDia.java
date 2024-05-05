@@ -22,6 +22,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
+    private static final String ETIQUETA = "ConsultarClassesDirigidesDia";
 
     private String dia;
     private Context context;
