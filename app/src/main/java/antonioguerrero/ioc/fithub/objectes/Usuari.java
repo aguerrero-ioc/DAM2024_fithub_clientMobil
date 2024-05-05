@@ -334,7 +334,7 @@ public class Usuari implements Serializable {
 
         // Guardar les propietats de l'objecte usuari a SharedPreferences
         editor.putString(Constants.NOM_USUARI, usuari.getNomUsuari());
-        editor.putString(Constants.ID_USUARI, String.valueOf(usuari.getIDusuari()));
+        editor.putInt(Constants.ID_USUARI, usuari.getIDusuari());
         editor.putString(Constants.TIPUS_USUARI, String.valueOf(usuari.getTipusUsuari()));
         editor.putString(Constants.CORREU_USUARI, usuari.getCorreuUsuari());
         editor.putString(Constants.PASS_USUARI, usuari.getPassUsuari());
@@ -365,8 +365,16 @@ public class Usuari implements Serializable {
         Usuari usuari = new Usuari();
 
         // Obtenir les dades de l'usuari des de SharedPreferences i assignar-les a l'objecte Usuari
-        usuari.setIDusuari(preferencies.getInt(Constants.ID_USUARI, 0));
-        usuari.setTipusUsuari(preferencies.getInt(Constants.TIPUS_USUARI, 0));
+        usuari.setIDusuari(preferencies.getInt(Constants.ID_USUARI, -1));
+        Object tipusUsuariObj = preferencies.getAll().get(Constants.TIPUS_USUARI);
+        String tipusUsuariString;
+        if (tipusUsuariObj instanceof Integer) {
+            // Convertir a String
+            tipusUsuariString = String.valueOf((Integer) tipusUsuariObj);
+        } else {
+            // Ja és String
+            tipusUsuariString = (String) tipusUsuariObj;
+        }
         usuari.setNomUsuari(preferencies.getString(Constants.NOM_USUARI, ""));
         usuari.setCognomsUsuari(preferencies.getString(Constants.COGNOMS_USUARI, ""));
         usuari.setCorreuUsuari(preferencies.getString(Constants.CORREU_USUARI, ""));

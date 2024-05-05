@@ -1,7 +1,9 @@
 package antonioguerrero.ioc.fithub.peticions.reserves;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -14,6 +16,8 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 
@@ -109,7 +113,11 @@ public abstract class EliminarReserva extends ConnexioServidor {
             if (exit) {
                 Log.d(ETIQUETA, "Reserva confirmada");
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
-                Utils.mostrarToast(context, "Reserva cancelada");
+                Utils.mostrarToast(context, "Reserva cancelada correctament");
+                // Redirigeix a l'usuari a la pantalla de gestió d'instal·lacions
+                Intent intent = new Intent(context, ReservesActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).finish();
             } else {
                 String missatgeError = respostaArray.length > 1 ? (String) respostaArray[1] : "Error desconegut";
                 Log.d(ETIQUETA, "Error en cancelar la reserva: " + missatgeError);

@@ -119,6 +119,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             }
         } else if (id == R.id.nav_perfil_usuari) {
             obrirActivity(PerfilActivity.class);
+        } else if (id == R.id.nav_usuaris) {
+            Utils.mostrarToast(BaseActivity.this, Constants.PENDENT_IMPLEMENTAR);
         } else if (id == R.id.nav_activitats) {
             if (tipusUsuari == 1) {
                 obrirActivity(GestioActivitatsActivity.class);
@@ -176,9 +178,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (tipusUsuariObject instanceof String) {
             // Convertir la cadena a enter
             String tipusUsuariString = (String) tipusUsuariObject;
-            if (tipusUsuariString.equals("Administrador")) {
+            if (tipusUsuariString.equals("Administrador") || tipusUsuariString.equals("1")) {
                 tipusUsuari = 1;
-            } else if (tipusUsuariString.equals("Client")) {
+            } else if (tipusUsuariString.equals("Client") || tipusUsuariString.equals("2")) {
                 tipusUsuari = 2;
             } else {
                 try {

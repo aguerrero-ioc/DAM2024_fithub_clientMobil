@@ -170,7 +170,7 @@
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
         app:headerLayout="@layout/nav_capcalera"
-        app:menu="@menu/menu_navigation_usuari">
+        app:menu="@menu/menu_navigation_client">
 
     </com.google.android.material.navigation.NavigationView>
 

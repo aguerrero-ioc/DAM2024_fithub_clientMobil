@@ -42,6 +42,9 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     private String sessioID;
     private Usuari usuari;
 
+    SharedPreferences preferencies;
+
+
     private ModificarUsuari modificarUsuari;
 
     public PerfilActivity() {
@@ -54,7 +57,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil);
+        inflarDissenySegonsTipusUsuari();
 
         // Configura el menú desplegable
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -71,9 +74,9 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         tvCorreuElectronic = headerView.findViewById(R.id.tvCorreuElectronic);
 
         // Obtenir les dades de l'usuari de SharedPreferences
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        preferencies = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String nomUsuari = preferencies.getString(Constants.NOM_USUARI, "Nom d'Usuari");
+        String correuElectronic = preferencies.getString(Constants.CORREU_USUARI, "correu@fithub.es");
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -126,9 +129,9 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
             }
         });
         // Obtenir sessioID de l'usuari
-        preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
-        String correuUsuari = preferences.getString("correuUsuari", Constants.VALOR_DEFAULT);
+        preferencies = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
+        String correuUsuari = preferencies.getString("correuUsuari", Constants.VALOR_DEFAULT);
 
         // Obtenir les dades de l'usuari
         ConsultarUsuari consultarUsuari = new ConsultarUsuari(this, this, correuUsuari, sessioID) {
@@ -179,6 +182,40 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         };
     }
 
+    /**
+     * Mètode per inflar el disseny XML de l'activitat segons el tipus d'usuari.
+     */
+    private void inflarDissenySegonsTipusUsuari() {
+        SharedPreferences preferencies = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+
+        // Obtenir el tipus d'usuari com a cadena o un enter, depenent de com s'hagi guardat prèviament
+        Object tipusUsuariObject = preferencies.getAll().get(Constants.TIPUS_USUARI);
+
+        // Verificar si el valor emmagatzemat és una cadena o un enter
+        if (tipusUsuariObject instanceof String) {
+            String tipusUsuariString = (String) tipusUsuariObject;
+            // Inflar el disseny XML corresponent segons el tipus d'usuari com a cadena
+            if (tipusUsuariString.equals("1")) { // Administrador
+                setContentView(R.layout.activity_perfil_admin);
+            } else if (tipusUsuariString.equals("2")) { // Client
+                setContentView(R.layout.activity_perfil_client);
+            } else {
+                // Manejar qualsevol altre tipus d'usuari o error aquí
+            }
+        } else if (tipusUsuariObject instanceof Integer) {
+            int tipusUsuariInt = (int) tipusUsuariObject;
+            // Inflar el disseny XML corresponent segons el tipus d'usuari com a enter
+            if (tipusUsuariInt == 1) { // Administrador
+                setContentView(R.layout.activity_perfil_admin);
+            } else if (tipusUsuariInt == 2) { // Client
+                setContentView(R.layout.activity_perfil_client);
+            } else {
+                // Manejar qualsevol altre tipus d'usuari o error aquí
+            }
+        } else {
+            // Manejar el cas en què el valor no sigui ni una cadena ni un enter
+        }
+    }
 
     /**
      * Mètode per actualitzar les dades de l'usuari a l'activitat.

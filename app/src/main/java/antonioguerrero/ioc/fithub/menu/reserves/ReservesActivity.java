@@ -33,6 +33,9 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserves);
 
+        Usuari.setContext(this);
+
+
         // Configura el menú desplegable
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
