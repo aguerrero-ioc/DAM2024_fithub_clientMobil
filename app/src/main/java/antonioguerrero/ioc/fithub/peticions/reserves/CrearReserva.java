@@ -18,27 +18,38 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
 
+/**
+ * Classe per crear una reserva.
+ * <p>
+ * Aquesta classe és la que s'encarrega de fer la petició al servidor per crear una reserva.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public abstract class CrearReserva extends ConnexioServidor {
     private Reserva reserva;
     private Context context;
     private static final String ETIQUETA = "CrearReserva";
 
-    private String IDclasseDirigida;
-    private String IDusuari;
     private SharedPreferences preferencies;
 
     private String sessioID;
 
-    public CrearReserva(respostaServidorListener listener, Context context, String IDusuari, String IDclasseDirigida, String sessioID) {
+    public CrearReserva(respostaServidorListener listener, Context context) {
         super((respostaServidorListener) listener);
         this.context = context;
-        this.IDusuari = IDusuari;
-        this.IDclasseDirigida = IDclasseDirigida;
         this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
-
+    /**
+     * Mètode per establir la reserva a eliminar.
+     *
+     * @param reserva La reserva a eliminar.
+     */
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
+    }
 
     @SuppressLint("StaticFieldLeak")
     public void crearReserva(Class<?> activityClass) {
@@ -47,21 +58,18 @@ public abstract class CrearReserva extends ConnexioServidor {
             @Override
             protected Object doInBackground(Void... voids) {
                 try {
-                    Reserva reserva = new Reserva(IDclasseDirigida, IDusuari);
                     HashMap<String, String> mapaReserva = reserva.reserva_a_hashmap(reserva);
-                    return enviarPeticioHashMap("insert", "reserva", mapaReserva,sessioID);
+                    return enviarPeticioHashMap("insert", "reserva", mapaReserva, sessioID);
                 } catch (ConnectException e) {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 processarResposta(resposta, activityClass);
             }
         }.execute();
     }
-
 
     public List<HashMap<String, String>> processarResposta(Object resposta, Class<?> activityClass) {
          Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
@@ -90,16 +98,4 @@ public abstract class CrearReserva extends ConnexioServidor {
         }
         return null;
     }
-
-    /**
-     * Mètode que permet obtenir el tipus d'objecte
-     * @return Tipus d'objecte
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-
-
 }

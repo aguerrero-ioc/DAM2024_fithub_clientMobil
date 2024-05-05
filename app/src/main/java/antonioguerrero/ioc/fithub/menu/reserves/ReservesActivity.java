@@ -12,8 +12,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.net.ConnectException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
@@ -90,12 +97,6 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
 
             @Override
             public void onReservesObtingudes(List<HashMap<String, String>> reserves) {
-                if (reserves != null && !reserves.isEmpty()) {
-                    adapter = new ReservesAdapter(ReservesActivity.this, reserves);
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    Utils.mostrarToast(ReservesActivity.this, "No hi ha reserves disponibles");
-                }
             }
 
             @Override
@@ -125,6 +126,38 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
     @Override
     public void onReservesObtingudes(List<HashMap<String, String>> reserves) {
         if (reserves != null && !reserves.isEmpty()) {
+
+            // Formata les dates i les hores de les classes dirigides
+            for (HashMap<String, String> classeDirigida : reserves) {
+                String hora = classeDirigida.get(Constants.CLASSE_HORA);
+                String data = classeDirigida.get(Constants.CLASSE_DATA);
+                String duracio = classeDirigida.get(Constants.CLASSE_DURACIO);
+                String ocupacio = classeDirigida.get(Constants.CLASSE_OCUPACIO);
+                classeDirigida.put(Constants.CLASSE_HORA, Utils.formatHora(hora) + " hores");
+                classeDirigida.put(Constants.CLASSE_DATA, Utils.formatData(data));
+                classeDirigida.put(Constants.CLASSE_DURACIO, duracio + " hora");
+                classeDirigida.put(Constants.CLASSE_OCUPACIO, ocupacio + " clients");
+            }
+
+            // Ordena les reserves per data
+            Collections.sort(reserves, new Comparator<HashMap<String, String>>() {
+                @Override
+                public int compare(HashMap<String, String> classe1, HashMap<String, String> classe2) {
+                    String data1 = classe1.get(Constants.CLASSE_DATA);
+                    String data2 = classe2.get(Constants.CLASSE_DATA);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    try {
+                        Date date1 = sdf.parse(data1);
+                        Date date2 = sdf.parse(data2);
+                        return date1.compareTo(date2);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return 0;
+                    }
+                }
+            });
+
+            // Configura l'adaptador del RecyclerView amb les classes dirigides filtrades
             adapter = new ReservesAdapter(this, reserves);
             recyclerView.setAdapter(adapter);
         } else {

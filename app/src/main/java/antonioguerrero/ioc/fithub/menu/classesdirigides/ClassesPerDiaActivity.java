@@ -37,18 +37,16 @@ import antonioguerrero.ioc.fithub.peticions.classes.ConsultarClassesDirigidesDia
  * L'usuari pot seleccionar una data i consultar les classes dirigides disponibles per a aquesta data.
  * Les classes dirigides es mostren en una llista, on per a cada classe dirigida es mostra el nom, l'hora d'inici i un botó per a més detalls.
  * Quan es fa clic al botó "Més detalls", es mostra un diàleg amb la informació de la classe dirigida.
- * Aquest diàleg mostra el nom de la classe, l'hora d'inici i la durada de la classe.
- * <p>
+ * Aquest diàleg mostra el nom de la classe, l'hora d'inici i la durada de la classe i permet fer la reserva.
+ * </p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarClassesDirigidesDia.ConsultarClassesDirigidesDiaListener {
-
     private RecyclerView recyclerView;
     private TextView tvTitol, tvSeleccionar, tvData;
     private ImageView ivEdit;
     private Calendar calendari;
-
 
     /**
      * Mètode que s'executa quan es crea l'activitat.
@@ -162,12 +160,6 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
 
             @Override
             public void onClassesDirigidesDiaObtingudes(List<HashMap<String, String>> classesDirigides) {
-                if (classesDirigides != null && !classesDirigides.isEmpty()) {
-                    ClassesPerDiaAdapter adapter = new ClassesPerDiaAdapter(ClassesPerDiaActivity.this, classesDirigides);
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    Utils.mostrarToast(ClassesPerDiaActivity.this, "No hi ha classes dirigides disponibles");
-                }
             }
 
             @Override
@@ -197,6 +189,18 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
     @Override
     public void onClassesDirigidesDiaObtingudes(List<HashMap<String, String>> classesDirigides) {
         if (classesDirigides != null && !classesDirigides.isEmpty()) {
+            // Formata les dates i les hores de les classes dirigides
+            for (HashMap<String, String> classeDirigida : classesDirigides) {
+                String hora = classeDirigida.get(Constants.CLASSE_HORA);
+                String data = classeDirigida.get(Constants.CLASSE_DATA);
+                String duracio = classeDirigida.get(Constants.CLASSE_DURACIO);
+                String ocupacio = classeDirigida.get(Constants.CLASSE_OCUPACIO);
+                classeDirigida.put(Constants.CLASSE_HORA, Utils.formatHora(hora));
+                classeDirigida.put(Constants.CLASSE_DATA, Utils.formatData(data) + " hores");
+                classeDirigida.put(Constants.CLASSE_DURACIO, duracio + " hora");
+                classeDirigida.put(Constants.CLASSE_OCUPACIO, ocupacio + " clients");
+
+            }
             ClassesPerDiaAdapter adapter = new ClassesPerDiaAdapter(this, classesDirigides);
             recyclerView.setAdapter(adapter);
         } else {

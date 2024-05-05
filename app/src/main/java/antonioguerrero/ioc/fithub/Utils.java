@@ -34,6 +34,44 @@ import java.util.Locale;
  */
 public class Utils {
 
+    /**
+     * Converteix la data al format "dd/MM/yyyy".
+     *
+     * @param data Data en format "ddMMyyyy".
+     * @return Data formatada com a "dd/MM/yyyy".
+     */
+    public static String formatData(String data) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+            Date date = sdf.parse(data);
+            sdf.applyPattern("dd/MM/yyyy");
+            String dataFormatejada = sdf.format(date);
+            return dataFormatejada;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * Converteix l'hora al format "hh:mm".
+     *
+     * @param hora Hora en format "hhmm".
+     * @return Hora formatada com a "hh:mm".
+     */
+    public static String formatHora(String hora) {
+        try {
+            Time time = Utils.convertirStringAHora(hora);
+            if (time != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                return sdf.format(time);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     /**
      * Mètode per obtenir la data actual en format "ddMMyyyy".
@@ -57,33 +95,6 @@ public class Utils {
         return String.format(Locale.getDefault(), "%02d%02d%04d", dia, mes, any);
     }
 
-    /**
-     * Mètode per convertir una cadena de text a una data.
-     *
-     * @param cadenaData Cadena de text amb la data en format "ddMMyyyy".
-     * @return Data convertida.
-     */
-    public static Date convertirStringAFecha(String cadenaData) {
-        // Comprova si la cadena de data no és nul·la i té el format correcte
-        if (cadenaData != null && cadenaData.matches("\\d{2}\\d{2}\\d{4}")) {
-            try {
-                // Crea un objecte SimpleDateFormat amb el format ddmmyyyy
-                SimpleDateFormat formatData = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
-
-                // Analitza la cadena de data a un objecte Date
-                Date data = formatData.parse(cadenaData);
-
-                // Retorna la data convertida
-                return data;
-            } catch (ParseException | java.text.ParseException e) {
-                e.printStackTrace();
-                return null;
-            }
-        } else {
-            System.out.println("El format de la data no és vàlid: " + cadenaData);
-            return null;
-        }
-    }
 
     /**
      * Mètode per comprovar si una data és anterior a la data actual.

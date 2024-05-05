@@ -49,7 +49,11 @@ public abstract class EliminarReserva extends ConnexioServidor {
         this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
-
+    /**
+     * Mètode per establir la reserva a eliminar.
+     *
+     * @param reserva La reserva a eliminar.
+     */
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
     }
@@ -78,24 +82,6 @@ public abstract class EliminarReserva extends ConnexioServidor {
         }.execute();
     }
 
-
-    /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
-     * Mètode per executar la petició.
-     */
-    @Override
-    public void execute() throws ConnectException {
-        eliminarReserva();
-    }
 
     /**
      * Mètode per gestionar la resposta del servidor.

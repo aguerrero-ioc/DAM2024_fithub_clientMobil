@@ -16,9 +16,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.net.ConnectException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
@@ -126,7 +132,6 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // No se seleccionó ninguna actividad
             }
         });
     }
@@ -152,15 +157,81 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
         }
     }
 
+    /**
+     * Mètode que s'executa quan es reben les classes dirigides per nom.
+     * Filtra les classes dirigides que són posteriors a la data actual,
+     * les formata i les mostra en el RecyclerView.
+     *
+     * @param classesDirigides Llista de classes dirigides per nom.
+     */
     @Override
     public void onClassesDirigidesNomObtingudes(List<HashMap<String, String>> classesDirigides) {
         if (classesDirigides != null && !classesDirigides.isEmpty()) {
-            ClassesPerNomAdapter adapter = new ClassesPerNomAdapter(this, classesDirigides);
-            recyclerView.setAdapter(adapter);
+            // Obtener la fecha actual en formato yyyyMMdd
+            String dataActual = Utils.obtenirDataActual();
+
+            // Filtrar las clases dirigidas que son posteriores a la fecha actual
+            List<HashMap<String, String>> classesFiltrades = new ArrayList<>();
+            for (HashMap<String, String> classeDirigida : classesDirigides) {
+                String dataClasse = classeDirigida.get(Constants.CLASSE_DATA);
+                if (!Utils.esDataAnterior(dataClasse)) {
+                    classesFiltrades.add(classeDirigida);
+                }
+            }
+
+            // Ordena les classes dirigides filtrades per data
+            Collections.sort(classesFiltrades, new Comparator<HashMap<String, String>>() {
+                @Override
+                public int compare(HashMap<String, String> classe1, HashMap<String, String> classe2) {
+                    String data1 = classe1.get(Constants.CLASSE_DATA);
+                    String data2 = classe2.get(Constants.CLASSE_DATA);
+
+                    // Convertir las fechas de String a Date con el formato adecuado
+                    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+                    try {
+                        Date date1 = sdf.parse(data1);
+                        Date date2 = sdf.parse(data2);
+
+                        // Convertir las fechas al formato yyyyMMdd para la comparación
+                        SimpleDateFormat sdfSortable = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+                        String sortableDate1 = sdfSortable.format(date1);
+                        String sortableDate2 = sdfSortable.format(date2);
+
+                        return sortableDate1.compareTo(sortableDate2);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return 0;
+                    }
+                }
+            });
+
+            // Formatear las fechas y las horas de las clases dirigidas
+            for (HashMap<String, String> classeDirigida : classesFiltrades) {
+                String hora = classeDirigida.get(Constants.CLASSE_HORA);
+                String data = classeDirigida.get(Constants.CLASSE_DATA);
+                String duracio = classeDirigida.get(Constants.CLASSE_DURACIO);
+                String ocupacio = classeDirigida.get(Constants.CLASSE_OCUPACIO);
+
+                // Formatear la fecha al formato original ddMMyyyy
+                String dataFormateada = Utils.formatData(data);
+
+                classeDirigida.put(Constants.CLASSE_HORA, Utils.formatHora(hora) + " hores");
+                classeDirigida.put(Constants.CLASSE_DATA, dataFormateada);
+                classeDirigida.put(Constants.CLASSE_DURACIO, duracio + " hora");
+                classeDirigida.put(Constants.CLASSE_OCUPACIO, ocupacio + " clients");
+            }
+
+            // Configurar el adaptador del RecyclerView con las clases dirigidas filtradas
+            ClassesPerNomAdapter adaptador = new ClassesPerNomAdapter(this, classesFiltrades);
+            recyclerView.setAdapter(adaptador);
         } else {
             Utils.mostrarToast(ClassesPerNomActivity.this, "No hi ha classes dirigides disponibles");
         }
     }
+
+
+
+
 
     private List<String> obtenirNomActivitats(List<HashMap<String, String>> activitats) {
         List<String> nomsActivitats = new ArrayList<>();

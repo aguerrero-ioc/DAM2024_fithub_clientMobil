@@ -134,8 +134,18 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
                 }
             }, mContext) {
                 @Override
+                public Class<?> obtenirTipusObjecte() {
+                    return null;
+                }
+
+                @Override
                 public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                     return null;
+                }
+
+                @Override
+                public void execute() throws ConnectException {
+
                 }
             };
 

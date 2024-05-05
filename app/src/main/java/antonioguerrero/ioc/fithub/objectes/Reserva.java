@@ -41,9 +41,21 @@ public class Reserva {
      * @param estatReserva     Estat de la reserva
      */
     public Reserva(int IDreserva, String IDclasseDirigida, String IDusuari, String estatReserva) {
+        this.IDreserva = String.valueOf(IDreserva);
+        this.IDclasseDirigida = IDclasseDirigida;
+        this.IDusuari = IDusuari;
+        this.estatReserva = estatReserva;
     }
 
-    public Reserva(String iDclasseDirigida, String iDusuari) {
+    /**
+     * Constructor de la classe Reserva amb paràmetres.
+     *
+     * @param IDclasseDirigida Identificador de la classe dirigida
+     * @param IDusuari         Identificador de l'usuari
+     */
+    public Reserva(String IDclasseDirigida, String IDusuari) {
+        this.IDclasseDirigida = IDclasseDirigida;
+        this.IDusuari = IDusuari;
     }
 
     // Getters y setters

@@ -20,6 +20,7 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.reserves.CrearReserva;
 
@@ -71,8 +72,9 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
         holder.horaInici.setText(classeDirigida.get(Constants.CLASSE_HORA));
         holder.estatClasse.setText(classeDirigida.get(Constants.CLASSE_ESTAT));
 
-        // Obtenir el ID de la classe
+        // Obtenir el ID de la classe dirigida i l'ID de l'usuari
         String IDclasseDirigida = classeDirigida.get(Constants.CLASSE_ID);
+        String IDusuari = String.valueOf(Usuari.obtenirUsuari().getIDusuari());
 
         // Afegir un listener de clics al botó "Més detalls"
         holder.btnMesDetalls.setOnClickListener(v -> {
@@ -86,7 +88,7 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
             String estatClasse = classeDirigida.get(Constants.CLASSE_ESTAT);
 
             // Crear i mostrar el diàleg amb la informació de la classe dirigida
-            dialegDetallsClasseDirigida(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDclasseDirigida);
+            dialegDetallsClasseDirigida(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDclasseDirigida, IDusuari);
         });
     }
 
@@ -125,15 +127,18 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
      * <p>
      * Aquest mètode mostra un diàleg amb els detalls de la classe dirigida seleccionada.
      *
-     * @param nomActivitat Nom de l'activitat.
+     * @param nomActivitat   Nom de l'activitat.
      * @param nomInstallacio Nom de la instal·lació on es realitza l'activitat.
-     * @param dataClasse Data de la classe dirigida.
-     * @param horaInici Hora d'inici de la classe dirigida.
-     * @param duracio Durada de la classe dirigida.
+     * @param dataClasse     Data de la classe dirigida.
+     * @param horaInici      Hora d'inici de la classe dirigida.
+     * @param duracio        Durada de la classe dirigida.
      * @param ocupacioClasse Ocupació de la classe dirigida.
-     * @param estatClasse Estat de la classe dirigida.
+     * @param estatClasse    Estat de la classe dirigida.
+     * @param IDclasseDirigida ID de la classe dirigida.
+     * @param IDusuari ID de l'usuari.
+     *
      */
-    private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDclasseDirigida) {
+    private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDclasseDirigida, String IDusuari) {
     // Inflar el diseño personalizado del diálogo
     LayoutInflater inflater = LayoutInflater.from(mContext);
     View dialogView = inflater.inflate(R.layout.dialeg_detalls_classe_dirigida, null);
@@ -157,19 +162,18 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
     tvOcupacioClasse.setText(ocupacioClasse);
     tvEstatClasse.setText(estatClasse);
 
+    // Crear una instancia de la clase Reserva
+    Reserva reserva = new Reserva(IDclasseDirigida, IDusuari);
+
     // Configurar los botones de "Reservar" y "Cancelar reserva"
     Button btnReservar = dialogView.findViewById(R.id.btnReservar);
-    Button btnCancelarReserva = dialogView.findViewById(R.id.btnCancelarReserva);
 
 
     btnReservar.setOnClickListener(v -> {
-        int IDusuari = Usuari.obtenirUsuari().getIDusuari();
-        String IDusuariString = String.valueOf(IDusuari);
-
-        Context context = v.getContext();
 
         // Crear una instancia de la clase CrearReserva y llamar al método para crear la reserva
         CrearReserva crearReserva = new CrearReserva(new ConnexioServidor.respostaServidorListener() {
+
             @Override
             public void respostaServidor(Object resposta) throws ConnectException {
 
@@ -179,10 +183,15 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
             }
-        }, context, IDusuariString, IDclasseDirigida, sessioID) {
+        }, mContext) {
 
             @Override
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            @Override
+            public Class<?> obtenirTipusObjecte() {
                 return null;
             }
 
@@ -197,14 +206,10 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
             }
         };
 
+        crearReserva.setReserva(reserva);
         crearReserva.crearReserva(ClassesPerNomActivity.class);
     });
 
-    btnCancelarReserva.setOnClickListener(v -> {
-        // Crear una instancia de la clase EliminarReserva y llamar al método para eliminar la reserva
-
-
-    });
 
     // Crear el diálogo con el diseño personalizado
     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

@@ -20,6 +20,7 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.reserves.CrearReserva;
 import antonioguerrero.ioc.fithub.peticions.reserves.EliminarReserva;
@@ -83,10 +84,12 @@ public class ClassesPerDiaAdapter extends RecyclerView.Adapter<ClassesPerDiaAdap
         holder.horaInici.setText(classeDirigida.get(Constants.CLASSE_HORA));
         holder.estatClasse.setText(classeDirigida.get(Constants.CLASSE_ESTAT));
 
+        // Obtenir el ID de la classe dirigida i l'ID de l'usuari
+        String IDclasseDirigida = classeDirigida.get(Constants.CLASSE_ID);
+        String IDusuari = String.valueOf(Usuari.obtenirUsuari().getIDusuari());
+
         // Afegir un listener de clics al botó "Més detalls"
         holder.btnMesDetalls.setOnClickListener(v -> {
-            // Obtener el ID de la clase dirigida
-            String IDclasseDirigida = classeDirigida.get(Constants.CLASSE_ID);
 
             // Obtenir les dades de la classe dirigida per mostrar en el diàleg
             String nomActivitat = classeDirigida.get(Constants.ACT_NOM);
@@ -99,7 +102,7 @@ public class ClassesPerDiaAdapter extends RecyclerView.Adapter<ClassesPerDiaAdap
 
 
             // Crear i mostrar el diàleg amb la informació de la classe dirigida
-            dialegDetallsClasseDirigida(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDclasseDirigida);
+            dialegDetallsClasseDirigida(nomActivitat, nomInstallacio, dataClasse, horaInici, duracio, ocupacioClasse, estatClasse, IDclasseDirigida, IDusuari);
         });
     }
 
@@ -138,122 +141,104 @@ public class ClassesPerDiaAdapter extends RecyclerView.Adapter<ClassesPerDiaAdap
      * <p>
      * Aquest mètode mostra un diàleg amb els detalls de la classe dirigida seleccionada.
      *
-     * @param nomActivitat Nom de l'activitat.
+     * @param nomActivitat   Nom de l'activitat.
      * @param nomInstallacio Nom de la instal·lació on es realitza l'activitat.
-     * @param dataClasse Data de la classe dirigida.
-     * @param horaInici Hora d'inici de la classe dirigida.
-     * @param duracio Durada de la classe dirigida.
+     * @param dataClasse     Data de la classe dirigida.
+     * @param horaInici      Hora d'inici de la classe dirigida.
+     * @param duracio        Durada de la classe dirigida.
      * @param ocupacioClasse Ocupació de la classe dirigida.
-     * @param estatClasse Estat de la classe dirigida.
+     * @param estatClasse    Estat de la classe dirigida.
+     * @param IDusuari
      */
-    private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDclasseDirigida) {
-    // Inflar el diseño personalizado del diálogo
-    LayoutInflater inflater = LayoutInflater.from(mContext);
-    View dialogView = inflater.inflate(R.layout.dialeg_detalls_classe_dirigida, null);
+    private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDclasseDirigida, String IDusuari) {
+        // Inflar el diseño personalizado del diálogo
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View dialogView = inflater.inflate(R.layout.dialeg_detalls_classe_dirigida, null);
 
-    // Configurar las vistas del diseño personalizado
-    TextView tvNomActivitat = dialogView.findViewById(R.id.tvNomActivitat);
-    TextView tvNomInstallacio = dialogView.findViewById(R.id.tvNomInstallacio);
-    TextView tvDataClasse = dialogView.findViewById(R.id.tvDataClasse);
-    TextView tvHoraInici = dialogView.findViewById(R.id.tvHoraInici);
-    TextView tvDuracio = dialogView.findViewById(R.id.tvDurada);
-    TextView tvOcupacioClasse = dialogView.findViewById(R.id.tvOcupacioClasse);
-    TextView tvEstatClasse = dialogView.findViewById(R.id.tvEstatClasse);
-    ImageButton botoTancar = dialogView.findViewById(R.id.botoTancar);
-
-
-    tvNomActivitat.setText(nomActivitat);
-    tvNomInstallacio.setText(nomInstallacio);
-    tvDataClasse.setText(dataClasse);
-    tvHoraInici.setText(horaInici);
-    tvDuracio.setText(duracio);
-    tvOcupacioClasse.setText(ocupacioClasse);
-    tvEstatClasse.setText(estatClasse);
-
-    // Configurar los botones de "Reservar" y "Cancelar reserva"
-    Button btnReservar = dialogView.findViewById(R.id.btnReservar);
-    Button btnCancelarReserva = dialogView.findViewById(R.id.btnCancelarReserva);
+        // Configurar las vistas del diseño personalizado
+        TextView tvNomActivitat = dialogView.findViewById(R.id.tvNomActivitat);
+        TextView tvNomInstallacio = dialogView.findViewById(R.id.tvNomInstallacio);
+        TextView tvDataClasse = dialogView.findViewById(R.id.tvDataClasse);
+        TextView tvHoraInici = dialogView.findViewById(R.id.tvHoraInici);
+        TextView tvDuracio = dialogView.findViewById(R.id.tvDurada);
+        TextView tvOcupacioClasse = dialogView.findViewById(R.id.tvOcupacioClasse);
+        TextView tvEstatClasse = dialogView.findViewById(R.id.tvEstatClasse);
+        ImageButton botoTancar = dialogView.findViewById(R.id.botoTancar);
 
 
+        tvNomActivitat.setText(nomActivitat);
+        tvNomInstallacio.setText(nomInstallacio);
+        tvDataClasse.setText(dataClasse);
+        tvHoraInici.setText(horaInici);
+        tvDuracio.setText(duracio);
+        tvOcupacioClasse.setText(ocupacioClasse);
+        tvEstatClasse.setText(estatClasse);
 
-    btnReservar.setOnClickListener(v -> {
+        // Crear una instancia de la clase Reserva
+        Reserva reserva = new Reserva(IDclasseDirigida, IDusuari);
 
-        int IDusuari = Usuari.obtenirUsuari().getIDusuari();
-        String IDusuariString = String.valueOf(IDusuari);
+        // Configurar los botones de "Reservar" y "Cancelar reserva"
+        Button btnReservar = dialogView.findViewById(R.id.btnReservar);
+        Button btnCancelarReserva = dialogView.findViewById(R.id.btnCancelarReserva);
 
-        Context context = v.getContext();
 
-        // Crear una instancia de la clase CrearReserva y llamar al método para crear la reserva
-        CrearReserva crearReserva = new CrearReserva(new ConnexioServidor.respostaServidorListener() {
+
+        btnReservar.setOnClickListener(v -> {
+
+            Context context = v.getContext();
+
+            // Crear una instancia de la clase CrearReserva y llamar al método para crear la reserva
+            CrearReserva crearReserva = new CrearReserva(new ConnexioServidor.respostaServidorListener() {
+                @Override
+                public void respostaServidor(Object resposta) throws ConnectException {
+
+                }
+
+                @Override
+                public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                    return null;
+                }
+            }, context) {
+
+                @Override
+                public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                    return null;
+                }
+
+                @Override
+                public Class<?> obtenirTipusObjecte() {
+                    return null;
+                }
+
+                @Override
+                public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                    return null;
+                }
+
+                @Override
+                public void execute() throws ConnectException {
+
+                }
+            };
+            crearReserva.setReserva(reserva);
+            crearReserva.crearReserva(ClassesPerDiaActivity.class);
+        });
+
+
+        // Crear el diálogo con el diseño personalizado
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        botoTancar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void respostaServidor(Object resposta) throws ConnectException {
-
+            public void onClick(View v) {
+                // Cierra el diálogo
+                dialog.dismiss();
             }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        }, context, IDusuariString, IDclasseDirigida, sessioID) {
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-
-            }
-        };
-
-        crearReserva.crearReserva(ClassesPerDiaActivity.class);
-    });
-
-    btnCancelarReserva.setOnClickListener(v -> {
-        // Crear una instancia de la clase EliminarReserva y llamar al método para eliminar la reserva
-        EliminarReserva eliminarReserva = new EliminarReserva(new ConnexioServidor.respostaServidorListener() {
-
-            @Override
-            public void respostaServidor(Object resposta) throws ConnectException {
-
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        }, mContext) {
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        }; // Utilizar el ID de la reserva
-
-            eliminarReserva.eliminarReserva();
+        });
 
 
-    });
-
-    // Crear el diálogo con el diseño personalizado
-    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-    builder.setView(dialogView);
-    AlertDialog dialog = builder.create();
-    dialog.show();
-
-    botoTancar.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // Cierra el diálogo
-            dialog.dismiss();
-        }
-    });
-
-
-}
+    }
 }
