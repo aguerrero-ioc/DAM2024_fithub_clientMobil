@@ -304,7 +304,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
         // Comprovar si tots els camps estan complets
         if (nomUsuari.isEmpty() || cognomsUsuari.isEmpty() || dataNaixement.isEmpty() || adreca.isEmpty() || telefon.isEmpty()) {
-            Utils.mostrarToast(getApplicationContext(), "Si us plau, completa tots els camps");
+            Utils.mostrarToast(getApplicationContext(), "Si us plau, omple tots els camps");
             return;
         }
 

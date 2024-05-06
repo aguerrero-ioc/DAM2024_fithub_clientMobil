@@ -21,7 +21,7 @@
             android:layout_marginBottom="4dp"/>
 
         <TextView
-            android:id="@+id/nomUsuari"
+            android:id="@+id/tvNomUsuari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -41,7 +41,7 @@
             android:layout_marginTop="16dp"/>
 
         <TextView
-            android:id="@+id/cognomsUsuari"
+            android:id="@+id/tvCognomsUsuari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -61,7 +61,7 @@
             android:layout_marginTop="16dp"/>
 
         <TextView
-            android:id="@+id/correuUsuari"
+            android:id="@+id/tvCorreuUsuari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -81,7 +81,7 @@
             android:layout_marginTop="16dp"/>
 
         <TextView
-            android:id="@+id/tipusUsuari"
+            android:id="@+id/tvTipusUsuari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -101,7 +101,7 @@
             android:layout_marginTop="16dp"/>
 
         <TextView
-            android:id="@+id/dataInscripcio"
+            android:id="@+id/tvDataInscripcio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -112,7 +112,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/dataInscripcio"
+            android:layout_below="@id/tvDataInscripcio"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:layout_marginTop="25dp">

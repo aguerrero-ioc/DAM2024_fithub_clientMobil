@@ -27,7 +27,7 @@
         android:id="@+id/tvIDusuariEtiqueta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID: "
+        android:text="ID d'usuari: "
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_below="@id/botoTancarContainer"/>
@@ -105,7 +105,7 @@
         android:id="@+id/tvNomUsuariEtiqueta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(*) Nom: "
+        android:text="Nom: "
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_below="@id/etDataInscripcio"/>
@@ -124,7 +124,7 @@
         android:id="@+id/tvCognomsUsuariEtiqueta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(*) Cognoms: "
+        android:text="Cognoms: "
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_below="@id/etNomUsuari"/>
@@ -181,7 +181,7 @@
         android:id="@+id/tvTelefonEtiqueta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(*) Telèfon: "
+        android:text="Telèfon: "
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_below="@id/etAdreca"/>
@@ -195,19 +195,10 @@
         android:layout_marginStart="16dp"
         android:enabled="false" />
 
-    <TextView
-        android:id="@+id/tvCampsObligatoris"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="(*) Camps obligatoris"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_below="@id/etTelefon"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvCampsObligatoris"
+        android:layout_below="@id/etTelefon"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:layout_marginTop="25dp">

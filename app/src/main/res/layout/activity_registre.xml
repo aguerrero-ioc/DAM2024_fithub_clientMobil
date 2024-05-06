@@ -17,7 +17,7 @@
             android:layout_width="150dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/fithub_logo"
             android:contentDescription="logo" />
 
@@ -30,7 +30,7 @@
             android:text="FORMULARI DE REGISTRE"
             android:textSize="18sp"
             android:textColor="@android:color/black"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"/>
 
@@ -184,7 +184,6 @@
                 android:text="Mostrar contrasenya"/>
 
         </LinearLayout>
-
         <!-- Botó de Registre -->
         <Button
             android:id="@+id/btn_registrar"
@@ -194,7 +193,7 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:background="@drawable/button_background"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 

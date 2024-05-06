@@ -53,7 +53,7 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         holder.nomUsuari.setText(usuari.get(Constants.NOM_USUARI));
         holder.cognomsUsuari.setText(usuari.get(Constants.COGNOMS_USUARI));
         holder.correuUsuari.setText(usuari.get(Constants.CORREU_USUARI));
-        holder.tipusUsuari.setText(usuari.get(Constants.TIPUS_USUARI));
+        holder.setTipusUsuari(Integer.parseInt(usuari.get(Constants.TIPUS_USUARI)));
         holder.dataInscripcio.setText(usuari.get(Constants.DATA_INSCRIPCIO));
         holder.btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,14 +101,30 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            nomUsuari = itemView.findViewById(R.id.nomUsuari);
-            correuUsuari = itemView.findViewById(R.id.correuUsuari);
-            cognomsUsuari = itemView.findViewById(R.id.cognomsUsuari);
-            tipusUsuari = itemView.findViewById(R.id.tipusUsuari);
-            dataInscripcio = itemView.findViewById(R.id.dataInscripcio);
+            nomUsuari = itemView.findViewById(R.id.tvNomUsuari);
+            correuUsuari = itemView.findViewById(R.id.tvCorreuUsuari);
+            cognomsUsuari = itemView.findViewById(R.id.tvCognomsUsuari);
+            tipusUsuari = itemView.findViewById(R.id.tvTipusUsuari);
+            dataInscripcio = itemView.findViewById(R.id.tvDataInscripcio);
             btnModificar = itemView.findViewById(R.id.btnModificar);
             btnDesar = itemView.findViewById(R.id.btnDesar);
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
+        }
+
+        public void setTipusUsuari(int tipus) {
+            String tipusText;
+            switch (tipus) {
+                case 1:
+                    tipusText = "Administrador";
+                    break;
+                case 2:
+                    tipusText = "Client";
+                    break;
+                default:
+                    tipusText = "Desconegut";
+                    break;
+            }
+            tipusUsuari.setText(tipusText);
         }
     }
 
@@ -171,53 +187,91 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
 
     private void configurarBotoDesar(Button btnModificarUsuari, Button btnDesarCanvisUsuari, EditText etIDusuari, EditText etCorreuUsuari, EditText etTipusUsuari, EditText etDataInscripcio, EditText etNomUsuari, EditText etCognomsUsuari, EditText etTelefon, EditText etDataNaixement, EditText etAdreca, Usuari usuari) {
         btnDesarCanvisUsuari.setOnClickListener(v -> {
-            String nomUsuariModificat = etNomUsuari.getText().toString();
-            String cognomsUsuariModificat = etCognomsUsuari.getText().toString();
-            String telefonModificat = etTelefon.getText().toString();
-            String dataNaixementModificada = etDataNaixement.getText().toString();
-            String adrecaModificada = etAdreca.getText().toString();
-            String tipusUsuariText = etTipusUsuari.getText().toString();
-            int tipusUsuari;
-            switch (tipusUsuariText) {
-                case "Administrador":
-                    tipusUsuari = 1;
-                    break;
-                case "Client":
-                    tipusUsuari = 2;
-                    break;
-                default:
-                    tipusUsuari = 0;
-                    break;
-            }
+            String nomUsuariModificat = etNomUsuari.getText().toString().trim();
+            String cognomsUsuariModificat = etCognomsUsuari.getText().toString().trim();
+            String telefonModificat = etTelefon.getText().toString().trim();
+            String dataNaixementModificada = etDataNaixement.getText().toString().trim();
+            String adrecaModificada = etAdreca.getText().toString().trim();
+            String tipusUsuariText = etTipusUsuari.getText().toString().trim();
+            int tipusUsuari = determinarTipusUsuari(tipusUsuariText);
             etTipusUsuari.setText(String.valueOf(tipusUsuari));
-            String correuUsuari = etCorreuUsuari.getText().toString();
-            String IDusuari = etIDusuari.getText().toString();
-            String dataInscripcio = etDataInscripcio.getText().toString();
+            String correuUsuari = etCorreuUsuari.getText().toString().trim();
+            String IDusuari = etIDusuari.getText().toString().trim();
+            String dataInscripcio = etDataInscripcio.getText().toString().trim();
             String passUsuari = usuari.getPassUsuari();
 
-
-            if (!nomUsuariModificat.isEmpty() && !cognomsUsuariModificat.isEmpty() && !telefonModificat.isEmpty()) {
-                usuari.setNomUsuari(nomUsuariModificat);
-                usuari.setCognomsUsuari(cognomsUsuariModificat);
-                usuari.setTelefon(telefonModificat);
-                usuari.setDataNaixement(dataNaixementModificada);
-                usuari.setAdreca(adrecaModificada);
-                usuari.setIDusuari(Integer.parseInt(IDusuari));
-                usuari.setPassUsuari(passUsuari);
-                usuari.setCorreuUsuari(correuUsuari);
-                usuari.setDataInscripcio(dataInscripcio);
-                usuari.setTipusUsuari(tipusUsuari);
-
-                modificarUsuari(usuari);
-            } else {
-                Utils.mostrarToast(context, "Si us plau, omple tots els camps obligatoris");
+            // Validar campos
+            if (!validarCamps(nomUsuariModificat, cognomsUsuariModificat, dataNaixementModificada, adrecaModificada, telefonModificat)) {
+                return;
             }
 
+            // Actualizar datos del usuario
+            usuari.setNomUsuari(nomUsuariModificat);
+            usuari.setCognomsUsuari(cognomsUsuariModificat);
+            usuari.setTelefon(telefonModificat);
+            usuari.setDataNaixement(dataNaixementModificada);
+            usuari.setAdreca(adrecaModificada);
+            usuari.setIDusuari(Integer.parseInt(IDusuari));
+            usuari.setPassUsuari(passUsuari);
+            usuari.setCorreuUsuari(correuUsuari);
+            usuari.setDataInscripcio(dataInscripcio);
+            usuari.setTipusUsuari(tipusUsuari);
+
+            // Modificar usuario en la base de datos
+            modificarUsuari(usuari);
+
+            // Deshabilitar edición y actualizar estado de botones
             habilitarEdicio(false);
             btnDesarCanvisUsuari.setEnabled(false);
             btnModificarUsuari.setEnabled(true);
         });
     }
+
+    private int determinarTipusUsuari(String tipusUsuariText) {
+        switch (tipusUsuariText.toLowerCase()) {
+            case "administrador":
+                return 1;
+            case "client":
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
+    private boolean validarCamps(String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
+        // Comprovar si tots els camps estan complets
+        if (nomUsuari.isEmpty() || cognomsUsuari.isEmpty() || dataNaixement.isEmpty() || adreca.isEmpty() || telefon.isEmpty()) {
+            Utils.mostrarToast(mContext, "Si us plau, omple tots els camps");
+            return false;
+        }
+
+        // Comprovar el format correcte del nom
+        if (!nomUsuari.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+            Utils.mostrarToast(mContext, "El nom només pot contenir lletres");
+            return false;
+        }
+
+        // Comprovar el format correcte dels cognoms
+        if (!cognomsUsuari.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+            Utils.mostrarToast(mContext, "Els cognoms només poden contenir lletres");
+            return false;
+        }
+
+        // Comprovar el format correcte de la data de naixement
+        if (!dataNaixement.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            Utils.mostrarToast(mContext, "El format de la data de naixement ha de ser dd/MM/yyyy");
+            return false;
+        }
+
+        // Comprovar el format correcte del telèfon
+        if (!telefon.matches("\\d{9}")) {
+            Utils.mostrarToast(mContext, "El telèfon ha de tenir 9 dígits");
+            return false;
+        }
+
+        return true;
+    }
+
 
     private void configurarBotoTancar(ImageButton botoTancar) {
         botoTancar.setOnClickListener(v -> {
