@@ -156,7 +156,7 @@ public abstract class ModificarServei extends ConnexioServidor {
         editor.putString(Constants.SERVEI_NOM, servei.getNomServei());
         editor.putString(Constants.SERVEI_DESC, servei.getDescripcioServei());
         editor.putString(Constants.SERVEI_PREU, servei.getPreuServei());
-        editor.putInt(Constants.SERVEI_ID, servei.getIDServei());
+        editor.putInt(Constants.SERVEI_ID, servei.getIDservei());
 
         // Aplicar els canvis a SharedPreferences
         editor.apply();

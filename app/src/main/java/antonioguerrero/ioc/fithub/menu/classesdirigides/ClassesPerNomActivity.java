@@ -49,11 +49,7 @@ import antonioguerrero.ioc.fithub.peticions.classes.ConsultarClassesDirigidesNom
 public class ClassesPerNomActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarClassesDirigidesNom.ConsultarClassesDirigidesNomListener, ConsultarTotesActivitats.ConsultarTotesActivitatsListener {
 
     private RecyclerView recyclerView;
-    private TextView tvTitol;
-    private TextView tvSeleccionar;
     private Spinner spinnerActivitats;
-
-
 
     /**
      * Mètode que s'executa quan es crea l'activitat.
@@ -90,8 +86,8 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
 
         recyclerView = findViewById(R.id.rvClassesDirigides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tvTitol = findViewById(R.id.tvTitol);
-        tvSeleccionar = findViewById(R.id.tvSeleccionar);
+        TextView tvTitol = findViewById(R.id.tvTitol);
+        TextView tvSeleccionar = findViewById(R.id.tvSeleccionar);
         spinnerActivitats = findViewById(R.id.spinnerActivitats);
 
         // Configura el botó flotant de missatges
@@ -101,7 +97,7 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
         tvTitol.setText("Classes disponibles per activitat:");
         tvSeleccionar.setText("Activitat seleccionada:");
 
-        // Consultar todas las actividades disponibles
+        // Consultar totes les activitats disponibles
         ConsultarTotesActivitats consultarTotesActivitats = new ConsultarTotesActivitats(this, this, obtenirSessioID()) {
             @Override
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
@@ -115,17 +111,17 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
         };
         consultarTotesActivitats.consultarTotesActivitats();
 
-        // Configurar listener para el spinner de actividades
+        // Configurar listener per al spinner d'activitats
         spinnerActivitats.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String nomActivitatSeleccionada = parent.getItemAtPosition(position).toString();
 
-                // Verificar si se ha seleccionado la opción por defecto
+                // Verificar si s'ha seleccionat l'opció per defecte
                 if (nomActivitatSeleccionada.equals("Seleccionar activitat")) {
-                    // No se seleccionó ninguna actividad
+                    // No s'ha seleccionat cap activitat, no es realitza cap acció
                 } else {
-                    // Se seleccionó una actividad, proceder con la consulta de clases dirigidas
+                    // S'ha seleccionat una activitat, procedir amb la consulta de classes dirigides
                     consultarClassesDirigides(nomActivitatSeleccionada);
                 }
             }
@@ -136,18 +132,28 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
         });
     }
 
+    /**
+     * Mètode per obtenir l'ID de sessió.
+     *
+     * @return L'ID de sessió de l'usuari.
+     */
     private String obtenirSessioID() {
         SharedPreferences preferencies = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         return preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
+    /**
+     * Mètode que s'executa quan s'obtenen les activitats disponibles.
+     *
+     * @param activitats La llista d'activitats disponibles.
+     */
     @Override
     public void onActivitatsObtingudes(List<HashMap<String, String>> activitats) {
         if (activitats != null && !activitats.isEmpty()) {
             List<String> nomsActivitats = obtenirNomActivitats(activitats);
             nomsActivitats.add(0, "Seleccionar activitat");
 
-            // Configurar el adaptador del Spinner con los nombres de actividades obtenidos del servidor
+            // Configurar l'adaptador del Spinner amb els noms d'activitats obtinguts del servidor
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nomsActivitats);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -162,37 +168,35 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
      * Filtra les classes dirigides que són posteriors a la data actual,
      * les formata i les mostra en el RecyclerView.
      *
-     * @param classesDirigides Llista de classes dirigides per nom.
+     * @param classesDirigides La llista de classes dirigides per nom.
      */
     @Override
     public void onClassesDirigidesNomObtingudes(List<HashMap<String, String>> classesDirigides) {
         if (classesDirigides != null && !classesDirigides.isEmpty()) {
-            // Obtener la fecha actual en formato yyyyMMdd
-            String dataActual = Utils.obtenirDataActual();
 
-            // Filtrar las clases dirigidas que son posteriores a la fecha actual
+            // Filtrar les classes dirigides que són posteriors a la data i hora actuals
             List<HashMap<String, String>> classesFiltrades = new ArrayList<>();
             for (HashMap<String, String> classeDirigida : classesDirigides) {
                 String dataClasse = classeDirigida.get(Constants.CLASSE_DATA);
-                if (!Utils.esDataAnterior(dataClasse)) {
+                if (!Utils.esDataAnterior(dataClasse) || !Utils.esHoraAnterior(classeDirigida.get(Constants.CLASSE_HORA))) {
                     classesFiltrades.add(classeDirigida);
                 }
             }
 
-            // Ordena les classes dirigides filtrades per data
+            // Ordenar les classes dirigides filtrades per data
             Collections.sort(classesFiltrades, new Comparator<HashMap<String, String>>() {
                 @Override
                 public int compare(HashMap<String, String> classe1, HashMap<String, String> classe2) {
                     String data1 = classe1.get(Constants.CLASSE_DATA);
                     String data2 = classe2.get(Constants.CLASSE_DATA);
 
-                    // Convertir las fechas de String a Date con el formato adecuado
+                    // Convertir les dates de String a Date amb el format adequat
                     SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
                     try {
                         Date date1 = sdf.parse(data1);
                         Date date2 = sdf.parse(data2);
 
-                        // Convertir las fechas al formato yyyyMMdd para la comparación
+                        // Convertir les dates al format yyyyMMdd per a la comparació
                         SimpleDateFormat sdfSortable = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
                         String sortableDate1 = sdfSortable.format(date1);
                         String sortableDate2 = sdfSortable.format(date2);
@@ -205,14 +209,14 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
                 }
             });
 
-            // Formatear las fechas y las horas de las clases dirigidas
+            // Formatejar les dates i les hores de les classes dirigides
             for (HashMap<String, String> classeDirigida : classesFiltrades) {
                 String hora = classeDirigida.get(Constants.CLASSE_HORA);
                 String data = classeDirigida.get(Constants.CLASSE_DATA);
                 String duracio = classeDirigida.get(Constants.CLASSE_DURACIO);
                 String ocupacio = classeDirigida.get(Constants.CLASSE_OCUPACIO);
 
-                // Formatear la fecha al formato original ddMMyyyy
+                // Formatejar la data al format original ddMMyyyy
                 String dataFormateada = Utils.formatData(data);
 
                 classeDirigida.put(Constants.CLASSE_HORA, Utils.formatHora(hora) + " hores");
@@ -221,7 +225,7 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
                 classeDirigida.put(Constants.CLASSE_OCUPACIO, ocupacio + " clients");
             }
 
-            // Configurar el adaptador del RecyclerView con las clases dirigidas filtradas
+            // Configurar l'adaptador del RecyclerView amb les classes dirigides filtrades
             ClassesPerNomAdapter adaptador = new ClassesPerNomAdapter(this, classesFiltrades);
             recyclerView.setAdapter(adaptador);
         } else {
@@ -229,10 +233,12 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
         }
     }
 
-
-
-
-
+    /**
+     * Mètode per obtenir els noms d'activitats a partir d'una llista de dades d'activitats.
+     *
+     * @param activitats La llista de dades d'activitats.
+     * @return La llista de noms d'activitats.
+     */
     private List<String> obtenirNomActivitats(List<HashMap<String, String>> activitats) {
         List<String> nomsActivitats = new ArrayList<>();
         for (HashMap<String, String> activitat : activitats) {
@@ -242,15 +248,17 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
         return nomsActivitats;
     }
 
-
-
-    // Método para consultar las clases dirigidas por el nombre de la actividad seleccionada
+    /**
+     * Mètode per consultar les classes dirigides per nom d'activitat.
+     *
+     * @param nomActivitat El nom de l'activitat seleccionada.
+     */
     private void consultarClassesDirigides(String nomActivitat) {
 
-        // Obtener sesión ID del usuario
+        // Obtindre l'ID de sessió de l'usuari
         String sessioID = obtenirSessioID();
 
-        // Realizar la consulta de clases dirigidas por el nombre de la actividad seleccionada
+        // Realitzar la consulta de classes dirigides pel nom de l'activitat seleccionada
         ConsultarClassesDirigidesNom consulta = new ConsultarClassesDirigidesNom(this, this, nomActivitat, sessioID) {
             @Override
             public List<HashMap<String, String>> respostaServidor(Object resposta) {
@@ -279,11 +287,23 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
         consulta.consultarClasseDirigidaNom();
     }
 
+    /**
+     * Mètode per gestionar la resposta del servidor.
+     *
+     * @param resposta Resposta del servidor.
+     */
+
     @Override
     public void respostaServidor(Object resposta) throws ConnectException {
 
     }
 
+    /**
+     * Mètode per gestionar la resposta del servidor en format HashMap.
+     *
+     * @param resposta Resposta del servidor.
+     * @return La llista de dades en format HashMap.
+     */
     @Override
     public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
         return null;

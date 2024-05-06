@@ -34,7 +34,7 @@ import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerDiaActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
-import antonioguerrero.ioc.fithub.menu.usuari.PerfilActivity;
+import antonioguerrero.ioc.fithub.menu.usuaris.PerfilActivity;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
 /**

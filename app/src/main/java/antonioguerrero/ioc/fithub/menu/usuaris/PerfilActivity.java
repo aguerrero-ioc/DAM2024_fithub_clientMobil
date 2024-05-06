@@ -1,4 +1,4 @@
-package antonioguerrero.ioc.fithub.menu.usuari;
+package antonioguerrero.ioc.fithub.menu.usuaris;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,7 +22,7 @@ import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.CanviarContrasenya;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ConsultarUsuari;
-import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
+import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuariActual;
 
 /**
  * Classe que representa l'activitat del perfil de l'usuari a l'aplicació FitHub.
@@ -32,7 +32,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
  * @author Antonio Guerrero
  * @version 1.0
  */
-public class PerfilActivity extends BaseActivity implements ConsultarUsuari.ConsultarUsuariListener, ModificarUsuari.ModificarUsuariListener, ConnexioServidor.respostaServidorListener {
+public class PerfilActivity extends BaseActivity implements ConsultarUsuari.ConsultarUsuariListener, ModificarUsuariActual.ModificarUsuariListener, ConnexioServidor.respostaServidorListener {
 
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefon,
             etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya,
@@ -45,7 +45,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     SharedPreferences preferencies;
 
 
-    private ModificarUsuari modificarUsuari;
+    private ModificarUsuariActual modificarUsuariActual;
 
     public PerfilActivity() {
     }
@@ -152,7 +152,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         };
         consultarUsuari.consultarUsuari();
 
-        modificarUsuari = new ModificarUsuari(this, this, sessioID) {
+        modificarUsuariActual = new ModificarUsuariActual(this, this, sessioID) {
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
@@ -341,7 +341,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         usuari.setCorreuUsuari(correuUsuari);
 
         //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
-        ModificarUsuari modificarUsuari = new ModificarUsuari((ModificarUsuari.ModificarUsuariListener) this, this, sessioID) {
+        ModificarUsuariActual modificarUsuariActual = new ModificarUsuariActual((ModificarUsuariActual.ModificarUsuariListener) this, this, sessioID) {
 
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
@@ -357,8 +357,8 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
                 return null;
             }
         };
-        modificarUsuari.setUsuari(usuari);
-        modificarUsuari.modificarUsuari();
+        modificarUsuariActual.setUsuari(usuari);
+        modificarUsuariActual.modificarUsuari();
 
         deshabilitarEdicioDades();
         btnEditarPerfil.setEnabled(true);
@@ -374,7 +374,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
         // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
         // per enviar la sol·licitud de canvi de contrasenya al servidor
-        CanviarContrasenya canviarContrasenya = new CanviarContrasenya((ModificarUsuari.ModificarUsuariListener) this, this, sessioID) {
+        CanviarContrasenya canviarContrasenya = new CanviarContrasenya((ModificarUsuariActual.ModificarUsuariListener) this, this, sessioID) {
             @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
@@ -457,7 +457,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     public void onUsuariObtingut(Usuari usuari) {
         this.usuari = usuari;
         actualitzarUsuari(usuari);
-        modificarUsuari.setUsuari(usuari);
+        modificarUsuariActual.setUsuari(usuari);
     }
 
     @Override

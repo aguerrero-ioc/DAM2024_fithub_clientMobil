@@ -75,6 +75,8 @@ public class Usuari implements Serializable {
         this.telefon = telefon;
     }
 
+    public Usuari(String iDusuari, String correuUsuari, String tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
+    }
 
 
     /** Metode per convertir un objecte Usuari a un HashMap

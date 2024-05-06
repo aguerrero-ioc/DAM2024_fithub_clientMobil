@@ -202,28 +202,6 @@ public class Utils {
     }
 
 
-
-    /**
-     * Obté el tipus d'usuari a partir de la resposta del servidor.
-     *
-     * @param resposta Resposta del servidor
-     * @return Tipus d'usuari actual
-     */
-    public static String obtenirTipusUsuari(String resposta) {
-        // Verifica si la resposta del servidor no és nul·la i té els paràmetres esperats
-        if (resposta != null) {
-            String[] parts = resposta.split(",");
-            // Comprova si la resposta conté els paràmetres esperats (només hi hauria 3 parts si ho fa)
-            if (parts.length == 3) {
-                // Retorna el tipus d'usuari que es troba a la segona posició
-                return parts[1];
-            }
-        }
-        // En cas contrari, retorna un valor predeterminat o buit
-        return ""; // Opcional: pots retornar un valor predeterminat o llançar una excepció segons la teva lògica
-    }
-
-
     /**
      * Mètode per mostrar un Toast amb el missatge especificat.
      *
@@ -234,32 +212,6 @@ public class Utils {
         Toast.makeText(context, missatge, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Mètode per convertir un objecte a un HashMap.
-     *
-     * @param object L'objecte a convertir.
-     * @return Un HashMap amb els valors de l'objecte.
-     */
-    public static HashMap<String, String> ObjecteAHashMap(Object object) {
-        HashMap<String, String> map = new HashMap<>();
-
-        if (object != null) {
-            Field[] fields = object.getClass().getDeclaredFields();
-
-            for (Field field : fields) {
-                field.setAccessible(true);
-                try {
-                    Object value = field.get(object);
-                    if (value != null) {
-                        map.put(field.getName(), value.toString());
-                    }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return map;
-    }
 
     /**
      * Mètode per convertir un HashMap a un objecte.
@@ -295,45 +247,6 @@ public class Utils {
         return object;
     }
 
-    /**
-     * Mètode per guardar les dades d'un objecte a SharedPreferences.
-     *
-     * @param context Context de l'aplicació.
-     * @param object  Objecte a guardar.
-     * @param clazz   Classe de l'objecte.
-     */
-    public static void guardarDadesObjecte(Context context, Object object, Class<?> clazz) {
-        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencies.edit();
-        SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT_DATA);
-
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(object);
-                if (value != null) {
-                    if (value instanceof Date) {
-                        editor.putString(field.getName(), format.format((Date) value));
-                    } else if (value instanceof Integer) {
-                        editor.putInt(field.getName(), (Integer) value);
-                    } else if (value instanceof Boolean) {
-                        editor.putBoolean(field.getName(), (Boolean) value);
-                    } else if (value instanceof Float) {
-                        editor.putFloat(field.getName(), (Float) value);
-                    } else if (value instanceof Long) {
-                        editor.putLong(field.getName(), (Long) value);
-                    } else if (value instanceof String) {
-                        editor.putString(field.getName(), (String) value);
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        editor.apply();
-    }
-
 
     /**
      * Mètode per obrir una nova activitat.
@@ -348,19 +261,6 @@ public class Utils {
         context.startActivity(intent);
     }
 
-    /**
-     * Mètode per iniciar una nova activitat amb llista.
-     *
-     * @param context      Context de l'aplicació.
-     * @param activityClass Classe de l'activitat a obrir.
-     */
-    public static void iniciarActivitatLlista(Context context, Class<?> activityClass, List<? extends Serializable> llista, String clauLlista) {
-        Intent intent = new Intent(context, activityClass);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(clauLlista, new ArrayList<>(llista));
-        intent.putExtras(bundle);
-        context.startActivity(intent);
-    }
 
     /**
      * Mètode per validar el format d'un correu electrònic utilitzant una expressió regular.
@@ -374,7 +274,5 @@ public class Utils {
         // Comprova si el correu electrònic coincideix amb el patró
         return correu.matches(patroCorreu);
     }
-
-
 
 }

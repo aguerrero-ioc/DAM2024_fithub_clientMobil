@@ -81,7 +81,7 @@ public class GestioServeisAdapter extends RecyclerView.Adapter<GestioServeisAdap
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View btnModificar, btnDesar, btnEliminar;
-        TextView nomServei, descripcioServei, preuServei;
+        TextView nomServei, preuServei;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -140,7 +140,7 @@ public class GestioServeisAdapter extends RecyclerView.Adapter<GestioServeisAdap
             String preuServeiModificat = etPreuServei.getText().toString();
 
             if (!nomServeiModificat.isEmpty() && !descripcioServeiModificada.isEmpty() && !preuServeiModificat.isEmpty()) {
-                servei.setIDServei(IDServeiModificat);
+                servei.setIDservei(IDServeiModificat);
                 servei.setNomServei(nomServeiModificat);
                 servei.setDescripcioServei(descripcioServeiModificada);
                 servei.setPreuServei(preuServeiModificat);

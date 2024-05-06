@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@color/light_gray">
 
-        <!-- Toolbar -->
+        <!-- Barra d'eines -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -24,8 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
-            <!-- Botó d'accés a panell esquerre-->
+            <!-- Botó d'accés al panell esquerre -->
             <ImageButton
                 android:id="@+id/boto_acces_panell"
                 android:layout_width="wrap_content"
@@ -55,7 +54,7 @@
             android:layout_below="@id/toolbar"
             android:padding="16dp">
 
-            <!-- Secció de Dades de la Instal·lació -->
+            <!-- Secció de Dades de l'Usuari -->
             <TextView
                 android:id="@+id/tvData"
                 android:layout_width="match_parent"
@@ -63,7 +62,7 @@
                 android:padding="20dp"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                tools:text="Creació d'una nova instal·lació:" />
+                tools:text="Creació d'un nou usuari:" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,75 +73,112 @@
                 android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/tv_seccio_dades_installacio"
+                    android:id="@+id/tv_seccio_dades_usuari"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Dades de la Instal·lació"
+                    android:text="Dades de l'Usuari"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
-                <!-- TextInputLayout per al nom de la instal·lació -->
+                <!-- TextInputLayout per al nom de l'usuari -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tl_nom_installacio"
+                    android:id="@+id/tl_nom_usuari"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_nom_installacio"
+                        android:id="@+id/et_nom_usuari"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Nom de la Instal·lació"
+                        android:hint="Nom de l'Usuari"
                         android:textColorHint="@android:color/darker_gray"
                         android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- TextInputLayout per a la descripció de la instal·lació -->
+                <!-- TextInputLayout per als cognoms de l'usuari -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tl_descripcio_installacio"
+                    android:id="@+id/tl_cognoms_usuari"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_descripcio_installacio"
+                        android:id="@+id/et_cognoms_usuari"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Descripció de la Instal·lació"
+                        android:hint="Cognoms de l'Usuari"
                         android:textColorHint="@android:color/darker_gray"
                         android:textSize="16sp" />
 
+
                 </com.google.android.material.textfield.TextInputLayout>
 
-               <!-- TextInputLayout per al tipus d'instal·lació -->
+                <!-- TextInputLayout per al telèfon de l'usuari -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tl_tipus_installacio"
+                    android:id="@+id/tl_telefon_usuari"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_tipus_installacio"
+                        android:id="@+id/et_telefon_usuari"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Tipus d'Instal·lació"
-                        android:inputType="text"
+                        android:hint="Telèfon de contacte"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textSize="16sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- TextInputLayout per al correu electrònic de l'usuari -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_correu_usuari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_correu_usuari"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Correu Electrònic de l'Usuari"
                         android:textColorHint="@android:color/darker_gray"
                         android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- TextInputLayout per a la contrasenya de l'usuari -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_contrasenya_usuari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_contrasenya_usuari"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Contrasenya de l'Usuari"
+                        android:inputType="textPassword"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
-            <!-- Botó de Crear Instal·lació -->
+            <!-- Botó de Crear Usuari -->
             <Button
-                android:id="@+id/btn_creacio_installacio"
+                android:id="@+id/btn_creacio_usuari"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button_background"
-                android:text="Crear Instal·lació"
+                android:text="Crear Usuari"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
         </LinearLayout>

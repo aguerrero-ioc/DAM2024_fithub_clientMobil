@@ -17,14 +17,14 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 /**
- * Classe que permet canviar la contrasenya d'un usuari
+ * Classe que s'encarrega de fer la petició al servidor per modificar un usuari
  * <p>
- * @author Antonio Guerrero
+ * @autor Antonio Guerrero
  * @version 1.0
  */
-public abstract class CanviarContrasenya extends ConnexioServidor {
+public abstract class ModificarUsuariActual extends ConnexioServidor {
 
-    private static final String ETIQUETA = "CanviarContrasenya";
+    private static final String ETIQUETA = "ModificarUsuari";
     private Usuari usuari;
     private Context context;
     private SharedPreferences preferencies;
@@ -32,11 +32,11 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
 
     /**
      * Constructor de la classe
-     * @param listener Listener de la classe
+     * @param listener Listener per a la resposta del servidor
      * @param context Context de l'aplicació
      * @param sessioID Sessió de l'usuari
      */
-    public CanviarContrasenya(ModificarUsuariActual.ModificarUsuariListener listener, Context context, String sessioID) {
+    public ModificarUsuariActual(ModificarUsuariListener listener, Context context, String sessioID) {
         super((respostaServidorListener) listener);
         this.context = context;
         this.sessioID = sessioID;
@@ -45,7 +45,14 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
     }
 
     /**
-     * Mètode que permet obtenir l'usuari
+     * Interfície que conté el mètode onUsuariModificat
+     */
+    public interface ModificarUsuariListener {
+        void onUsuariModificat(Usuari usuari);
+    }
+
+    /**
+     * Mètode que retorna l'usuari
      * @return Usuari
      */
     public void setUsuari(Usuari usuari) {
@@ -53,17 +60,16 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
     }
 
     /**
-     * Mètode que permet canviar la contrasenya de l'usuari
+     * Mètode que modifica un usuari
      */
     @SuppressLint("StaticFieldLeak")
-    public void canviarContrasenya() {
-
+    public void modificarUsuari() {
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
                 try {
                     HashMap<String, String> mapaUsuari = usuari.usuari_a_hashmap(usuari);
-                    return enviarPeticioHashMap("update", "pass", mapaUsuari, sessioID);
+                    return enviarPeticioHashMap("update", "usuari", mapaUsuari, sessioID);
                 } catch (ConnectException e) {
                     throw new RuntimeException(e);
                 }
@@ -75,20 +81,15 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
             }
         }.execute();
     }
-
-    /**
-     * Mètode que permet obtenir el tipus d'objecte
-     * @return Tipus d'objecte
-     */
     @Override
     public Class<?> obtenirTipusObjecte() {
         return Object[].class;
     }
 
     /**
-     * Mètode que permet obtenir la resposta del servidor
+     * Mètode que retorna la resposta del servidor
      * @param resposta Resposta del servidor
-     * @return Resposta del servidor
+     * @return Llista de HashMaps
      */
     @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
@@ -100,12 +101,11 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
                 Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
 
-                ((ModificarUsuariActual.ModificarUsuariListener) listener).onUsuariModificat(usuari);
+                ((ModificarUsuariListener) listener).onUsuariModificat(usuari);
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
-
-                Utils.mostrarToast(context, "Contrasenya modificada correctament");
+                Utils.mostrarToast(context, "S'han desat els canvis correctament");
             } else if (estat.equals("false")) {
-                Utils.mostrarToast(context, "Error en la modificació de la contrasenya");
+                Utils.mostrarToast(context, "Error en la modificació de l'usuari");
             }
         } else {
             String missatgeError = "Error: La resposta del servidor no és un array d'objectes. Resposta rebuda: " + resposta;
@@ -121,13 +121,23 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
      */
     @Override
     public void execute() throws ConnectException {
-        canviarContrasenya();
+        modificarUsuari();
     }
 
     /**
+     * Mètode que retorna la resposta del servidor
+     * @param resposta Resposta del servidor
+     */
+    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
+
+    /**
+     * Mètode que retorna la resposta del servidor
+     * @param resposta Resposta del servidor
+     */
+    public abstract void respostaServidor(Object[] resposta);
+
+    /**
      * Mètode que s'executa en segon pla
-     * @param voids Paràmetres de tipus void
-     * @return Objecte
      */
     protected abstract Object doInBackground(Void... voids);
 }

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="Data: "
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"/>
 
@@ -24,7 +24,7 @@
             android:id="@+id/tvDataClasse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textStyle="normal" />
 
          <TextView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="Hora d'Inici: "
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"/>
 
@@ -41,7 +41,7 @@
             android:id="@+id/tvHoraInici"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textStyle="normal" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:text="Estat de la classe: "
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"/>
 
@@ -58,7 +58,7 @@
             android:id="@+id/tvEstatClasse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textStyle="normal" />
 
         <Button

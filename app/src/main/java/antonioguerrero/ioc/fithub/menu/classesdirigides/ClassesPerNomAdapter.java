@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,31 +23,39 @@ import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.reserves.CrearReserva;
 
-
+/**
+ * Adaptador per a la llista de classes dirigides disponibles per nom d'activitat.
+ * <p>
+ * Aquest adaptador s'encarrega de mostrar les classes dirigides disponibles per nom d'activitat.
+ * Per a cada classe dirigida, es mostra la data, l'hora d'inici i un botó per a més detalls.
+ * Quan es fa clic al botó "Més detalls", es mostra un diàleg amb la informació de la classe dirigida.
+ * Aquest diàleg mostra el nom de l'activitat, el nom de la instal·lació, la data, l'hora d'inici, la durada, l'ocupació i l'estat de la classe dirigida.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdapter.ViewHolder> {
 
     private final List<HashMap<String, String>> classesDirigidesLlista;
     private final Context mContext;
-    private SharedPreferences preferencies;
-    private String sessioID;
 
     /**
      * Constructor de la classe.
-     * <p>
-     * @param context Context de l'aplicació.
+     *
+     * @param context              Context de l'aplicació.
      * @param classesDirigidesLlista Llista de classes dirigides.
      */
     public ClassesPerNomAdapter(Context context, List<HashMap<String, String>> classesDirigidesLlista) {
         this.mContext = context;
         this.classesDirigidesLlista = classesDirigidesLlista;
-        this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        String sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
      * Mètode que crea una nova instància de la classe ViewHolder.
-     * <p>
-     * @param parent Vista pare on es mostrarà la nova vista.
+     *
+     * @param parent   Vista pare on es mostrarà la nova vista.
      * @param viewType Tipus de la nova vista.
      * @return Instància de la classe ViewHolder.
      */
@@ -61,9 +68,9 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
 
     /**
      * Mètode que enllaça les dades de la llista amb les vistes de la llista.
-     * <p>
-     * @param holder Vista de la llista.
-     * @param posicio Posició de l'element de la llista.
+     *
+     * @param holder   Vista de la llista.
+     * @param posicio  Posició de l'element de la llista.
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicio) {
@@ -95,7 +102,7 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
 
     /**
      * Mètode que retorna el nombre d'elements de la llista.
-     * <p>
+     *
      * @return Nombre d'elements de la llista.
      */
     @Override
@@ -136,93 +143,87 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
      * @param estatClasse    Estat de la classe dirigida.
      * @param IDclasseDirigida ID de la classe dirigida.
      * @param IDusuari ID de l'usuari.
-     *
      */
     private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDclasseDirigida, String IDusuari) {
-    // Inflar el diseño personalizado del diálogo
-    LayoutInflater inflater = LayoutInflater.from(mContext);
-    View dialogView = inflater.inflate(R.layout.dialeg_detalls_classe_dirigida, null);
+        // Inflar el disseny personalitzat del diàleg
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View dialogView = inflater.inflate(R.layout.dialeg_detalls_classe_dirigida, null);
 
-    // Configurar las vistas del diseño personalizado
-    TextView tvNomActivitat = dialogView.findViewById(R.id.tvNomActivitat);
-    TextView tvNomInstallacio = dialogView.findViewById(R.id.tvNomInstallacio);
-    TextView tvDataClasse = dialogView.findViewById(R.id.tvDataClasse);
-    TextView tvHoraInici = dialogView.findViewById(R.id.tvHoraInici);
-    TextView tvDuracio = dialogView.findViewById(R.id.tvDurada);
-    TextView tvOcupacioClasse = dialogView.findViewById(R.id.tvOcupacioClasse);
-    TextView tvEstatClasse = dialogView.findViewById(R.id.tvEstatClasse);
-    ImageButton botoTancar = dialogView.findViewById(R.id.botoTancar);
-
-
-    tvNomActivitat.setText(nomActivitat);
-    tvNomInstallacio.setText(nomInstallacio);
-    tvDataClasse.setText(dataClasse);
-    tvHoraInici.setText(horaInici);
-    tvDuracio.setText(duracio);
-    tvOcupacioClasse.setText(ocupacioClasse);
-    tvEstatClasse.setText(estatClasse);
-
-    // Crear una instancia de la clase Reserva
-    Reserva reserva = new Reserva(IDclasseDirigida, IDusuari);
-
-    // Configurar los botones de "Reservar" y "Cancelar reserva"
-    Button btnReservar = dialogView.findViewById(R.id.btnReservar);
+        // Configurar les vistes del disseny personalitzat
+        TextView tvNomActivitat = dialogView.findViewById(R.id.tvNomActivitat);
+        TextView tvNomInstallacio = dialogView.findViewById(R.id.tvNomInstallacio);
+        TextView tvDataClasse = dialogView.findViewById(R.id.tvDataClasse);
+        TextView tvHoraInici = dialogView.findViewById(R.id.tvHoraInici);
+        TextView tvDuracio = dialogView.findViewById(R.id.tvDurada);
+        TextView tvOcupacioClasse = dialogView.findViewById(R.id.tvOcupacioClasse);
+        TextView tvEstatClasse = dialogView.findViewById(R.id.tvEstatClasse);
+        ImageButton botoTancar = dialogView.findViewById(R.id.botoTancar);
 
 
-    btnReservar.setOnClickListener(v -> {
+        tvNomActivitat.setText(nomActivitat);
+        tvNomInstallacio.setText(nomInstallacio);
+        tvDataClasse.setText(dataClasse);
+        tvHoraInici.setText(horaInici);
+        tvDuracio.setText(duracio);
+        tvOcupacioClasse.setText(ocupacioClasse);
+        tvEstatClasse.setText(estatClasse);
 
-        // Crear una instancia de la clase CrearReserva y llamar al método para crear la reserva
-        CrearReserva crearReserva = new CrearReserva(new ConnexioServidor.respostaServidorListener() {
+        // Crear una instancia de la classe Reserva
+        Reserva reserva = new Reserva(IDclasseDirigida, IDusuari);
 
-            @Override
-            public void respostaServidor(Object resposta) throws ConnectException {
-
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        }, mContext) {
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-
-            }
-        };
-
-        crearReserva.setReserva(reserva);
-        crearReserva.crearReserva(ClassesPerNomActivity.class);
-    });
+        // Configurar els botons de "Reservar" i "Cancelar reserva"
+        Button btnReservar = dialogView.findViewById(R.id.btnReservar);
 
 
-    // Crear el diálogo con el diseño personalizado
-    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-    builder.setView(dialogView);
-    AlertDialog dialog = builder.create();
-    dialog.show();
+        btnReservar.setOnClickListener(v -> {
 
-    botoTancar.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // Cierra el diálogo
+            // Crear una instancia de la clase CrearReserva i cridar al mètode per crear la reserva
+            CrearReserva crearReserva = new CrearReserva(new ConnexioServidor.respostaServidorListener() {
+
+                @Override
+                public void respostaServidor(Object resposta) {
+                }
+
+                @Override
+                public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                    return null;
+                }
+            }, mContext) {
+
+                @Override
+                public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                    return null;
+                }
+
+                @Override
+                public Class<?> obtenirTipusObjecte() {
+                    return null;
+                }
+
+                @Override
+                public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
+                    return null;
+                }
+
+                @Override
+                public void execute() {
+                }
+            };
+
+            crearReserva.setReserva(reserva);
+            crearReserva.crearReserva(ClassesPerNomActivity.class);
+        });
+
+
+        // Crear el diàleg amb el disseny personalitzat
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        botoTancar.setOnClickListener(v -> {
+            // Tanca el diàleg
             dialog.dismiss();
-        }
-    });
-}
+        });
+    }
 }

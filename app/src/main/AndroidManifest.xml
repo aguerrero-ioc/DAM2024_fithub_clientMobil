@@ -28,7 +28,7 @@
         <activity android:name=".menu.BaseActivity" />
         <activity android:name=".menu.main.AdminActivity" />
         <activity android:name=".menu.main.ClientActivity" />
-        <activity android:name=".menu.usuari.PerfilActivity" />
+        <activity android:name=".menu.usuaris.PerfilActivity" />
         <activity android:name=".menu.activitats.ActivitatsActivity" />
         <activity android:name=".menu.activitats.GestioActivitatsActivity" />
         <activity android:name=".menu.activitats.CrearActivitatActivity" />

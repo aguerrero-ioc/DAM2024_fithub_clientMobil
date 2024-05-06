@@ -1,0 +1,124 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- TextView para el nombre del usuario -->
+        <TextView
+            android:id="@+id/tvNomEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nom: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/nomUsuari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvNomEtiqueta"
+            android:layout_alignBaseline="@id/tvNomEtiqueta" />
+
+        <!-- TextView para los apellidos del usuario -->
+        <TextView
+            android:id="@+id/tvCognomsEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cognoms: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_below="@id/tvNomEtiqueta"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/cognomsUsuari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvCognomsEtiqueta"
+            android:layout_alignBaseline="@id/tvCognomsEtiqueta" />
+
+        <!-- TextView para el correo electrónico del usuario -->
+        <TextView
+            android:id="@+id/tvCorreuUsuariEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correu electrònic: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_below="@id/tvCognomsEtiqueta"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/correuUsuari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvCorreuUsuariEtiqueta"
+            android:layout_alignBaseline="@id/tvCorreuUsuariEtiqueta" />
+
+        <!-- TextView para el tipo de usuario -->
+        <TextView
+            android:id="@+id/tvTipusUsuariEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipus d'usuari: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_below="@id/tvCorreuUsuariEtiqueta"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/tipusUsuari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvTipusUsuariEtiqueta"
+            android:layout_alignBaseline="@id/tvTipusUsuariEtiqueta" />
+
+        <!-- TextView para la fecha de registro del usuario -->
+        <TextView
+            android:id="@+id/tvDataInscripcioEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data de registre: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_below="@id/tvTipusUsuariEtiqueta"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/dataInscripcio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvDataInscripcioEtiqueta"
+            android:layout_alignBaseline="@id/tvDataInscripcioEtiqueta" />
+
+        <!-- Botón para ver más detalles del usuario -->
+        <Button
+            android:id="@+id/btnMesDetalls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Més detalls"
+            android:layout_below="@id/tvDataInscripcioEtiqueta"
+            android:layout_marginTop="18dp"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

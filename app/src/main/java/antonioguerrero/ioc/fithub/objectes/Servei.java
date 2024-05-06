@@ -17,7 +17,7 @@ import antonioguerrero.ioc.fithub.Constants;
 public class Servei implements Serializable {
 
     // Atributs de la classe
-    private int IDServei;
+    private int IDservei;
     private String nomServei;
     private String descripcioServei;
     private String preuServei;
@@ -29,14 +29,14 @@ public class Servei implements Serializable {
     /**
      * Constructor de la classe Servei.
      *
-     * @param IDServei Identificador del servei
+     * @param IDservei Identificador del servei
      * @param nomServei Nom del servei
      * @param descripcioServei Descripció del servei
      * @param preuServei Preu del servei
      */
 
-    public Servei(int IDServei, String nomServei, String descripcioServei, String preuServei) {
-        this.IDServei = IDServei;
+    public Servei(int IDservei, String nomServei, String descripcioServei, String preuServei) {
+        this.IDservei = IDservei;
         this.nomServei = nomServei;
         this.descripcioServei = descripcioServei;
         this.preuServei = preuServei;
@@ -72,18 +72,18 @@ public class Servei implements Serializable {
      * @return Identificador del servei
      */
 
-    public int getIDServei() {
-        return IDServei;
+    public int getIDservei() {
+        return IDservei;
     }
 
     /**
      * Estableix l'identificador del servei
      *
-     * @param IDServei Identificador del servei
+     * @param IDservei Identificador del servei
      */
 
-    public void setIDServei(int IDServei) {
-        this.IDServei = IDServei;
+    public void setIDservei(int IDservei) {
+        this.IDservei = IDservei;
     }
 
 
@@ -158,7 +158,7 @@ public class Servei implements Serializable {
     public HashMap<String, String> servei_a_hashmap(Servei servei) {
         HashMap<String, String> mapaServei = new HashMap<>();
         mapaServei.put(Constants.OBJTYPE,Constants.OBJ_SERVEI);
-        mapaServei.put(Constants.SERVEI_ID,Integer.toString(servei.getIDServei()));
+        mapaServei.put(Constants.SERVEI_ID,Integer.toString(servei.getIDservei()));
         mapaServei.put(Constants.SERVEI_NOM,servei.getNomServei());
         mapaServei.put(Constants.SERVEI_DESC, servei.getDescripcioServei());
         mapaServei.put(Constants.SERVEI_PREU,servei.getPreuServei());
@@ -173,7 +173,7 @@ public class Servei implements Serializable {
      */
     public static Servei hashmap_a_servei(HashMap<String, String> mapaServei) {
         Servei servei = new Servei();
-        servei.setIDServei(Integer.parseInt(mapaServei.get(Constants.SERVEI_ID)));
+        servei.setIDservei(Integer.parseInt(mapaServei.get(Constants.SERVEI_ID)));
         servei.setNomServei(mapaServei.get(Constants.SERVEI_NOM));
         servei.setDescripcioServei(mapaServei.get(Constants.SERVEI_DESC));
         servei.setPreuServei(mapaServei.get(Constants.SERVEI_PREU));
