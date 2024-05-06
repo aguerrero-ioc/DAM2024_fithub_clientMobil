@@ -14,6 +14,7 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
+import antonioguerrero.ioc.fithub.menu.usuaris.CrearUsuariActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 /**
@@ -93,9 +94,9 @@ public abstract class CrearUsuari extends ConnexioServidor {
         if (exit) {
             Log.d(ETIQUETA, "Usuari creat amb èxit");
             // Mostra un missatge de confirmació a l'usuari
-            Utils.mostrarToast(context, "Usuari creat amb èxit. Si us plau, inicia sessió.");
+            Utils.mostrarToast(context, "Usuari creat amb èxit.");
             // Redirigeix a l'usuari a la pantalla d'inici de sessió
-            Intent intent = new Intent(context, LoginActivity.class);
+            Intent intent = new Intent(context, CrearUsuariActivity.class);
             context.startActivity(intent);
             ((Activity) context).finish();
         } else {

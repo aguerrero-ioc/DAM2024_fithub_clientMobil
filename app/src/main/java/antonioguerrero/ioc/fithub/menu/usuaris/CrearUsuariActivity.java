@@ -20,7 +20,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.R;
-import antonioguerrero.ioc.fithub.peticions.usuaris.CrearUsuari;
+import antonioguerrero.ioc.fithub.peticions.usuaris.RegistrarUsuari;
 
 /**
  * Activitat que permet a l'usuari crear un nou usuari.
@@ -101,7 +101,7 @@ public class CrearUsuariActivity extends BaseActivity {
 
 
                 // Crear i executar la petició al servidor per a crear l'usuari
-                CrearUsuari crearUsuari = new CrearUsuari(new ConnexioServidor.respostaServidorListener() {
+                RegistrarUsuari registrarUsuari = new RegistrarUsuari(new ConnexioServidor.respostaServidorListener() {
                     @Override
                     public void respostaServidor(Object resposta) {
                         // Aquí pots gestionar la resposta del servidor si és necessari
@@ -131,7 +131,7 @@ public class CrearUsuariActivity extends BaseActivity {
 
                 // Executar la petició en un fil en segon pla
                 try {
-                    crearUsuari.execute();
+                    registrarUsuari.execute();
                 } catch (ConnectException e) {
                     e.printStackTrace();
                 }

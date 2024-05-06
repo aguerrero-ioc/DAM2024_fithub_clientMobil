@@ -18,7 +18,7 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.usuaris.CrearUsuari;
+import antonioguerrero.ioc.fithub.peticions.usuaris.RegistrarUsuari;
 
 
 /**
@@ -144,7 +144,7 @@ public class RegistreActivity extends AppCompatActivity {
         Usuari usuari = new Usuari(correu, contrasenya, nom, cognoms,telefon);
 
         // Crear una instancia de CrearUsuari
-        CrearUsuari crearUsuari = new CrearUsuari(new ConnexioServidor.respostaServidorListener() {
+        RegistrarUsuari registrarUsuari = new RegistrarUsuari(new ConnexioServidor.respostaServidorListener() {
             @Override
             public void respostaServidor(Object resposta) {
             }
@@ -167,6 +167,6 @@ public class RegistreActivity extends AppCompatActivity {
         };
 
         // Enviar la petició al servidor
-        crearUsuari.execute();
+        registrarUsuari.execute();
     }
 }

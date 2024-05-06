@@ -51,7 +51,10 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
         HashMap<String, String> usuari = usuarisList.get(position);
         holder.nomUsuari.setText(usuari.get(Constants.NOM_USUARI));
+        holder.cognomsUsuari.setText(usuari.get(Constants.COGNOMS_USUARI));
         holder.correuUsuari.setText(usuari.get(Constants.CORREU_USUARI));
+        holder.tipusUsuari.setText(usuari.get(Constants.TIPUS_USUARI));
+        holder.dataInscripcio.setText(usuari.get(Constants.DATA_INSCRIPCIO));
         holder.btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,58 +133,89 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         EditText etDataNaixement = dialegView.findViewById(R.id.etDataNaixement);
         EditText etAdreca = dialegView.findViewById(R.id.etAdreca);
         EditText etTelefon = dialegView.findViewById(R.id.etTelefon);
-        Button btnModificar = dialegView.findViewById(R.id.btnModificar);
-        Button btnDesar = dialegView.findViewById(R.id.btnDesar);
+        Button btnModificarUsuari = dialegView.findViewById(R.id.btnModificarUsuari);
+        Button btnDesarCanvisUsuari = dialegView.findViewById(R.id.btnDesarCanvisUsuari);
         ImageButton botoTancar = dialegView.findViewById(R.id.botoTancar);
 
         etIDusuari.setText(String.valueOf(IDusuari));
         etCorreuUsuari.setText(correuUsuari);
         etTipusUsuari.setText(tipusUsuari);
+        if ("1".equals(tipusUsuari)) {
+            etTipusUsuari.setText("Administrador");
+        } else if ("2".equals(tipusUsuari)) {
+            etTipusUsuari.setText("Client");
+        } else {
+            etTipusUsuari.setText("Desconegut");
+        }
         etDataInscripcio.setText(dataInscripcio);
         etNomUsuari.setText(nomUsuari);
+        etCognomsUsuari.setText(cognomsUsuari);
         etCorreuUsuari.setText(correuUsuari);
         etTelefon.setText(telefon);
         etDataNaixement.setText(dataNaixement);
         etAdreca.setText(adreca);
 
-        configurarBotoModificar(btnModificar, btnDesar);
-        configurarBotoDesar(btnModificar, btnDesar, etNomUsuari, etCognomsUsuari, etTelefon, etDataNaixement, etAdreca, usuari);
+        configurarBotoModificar(btnModificarUsuari, btnDesarCanvisUsuari);
+        configurarBotoDesar(btnModificarUsuari, btnDesarCanvisUsuari,etIDusuari, etCorreuUsuari, etTipusUsuari, etDataInscripcio, etNomUsuari, etCognomsUsuari, etTelefon, etDataNaixement, etAdreca, usuari);
         configurarBotoTancar(botoTancar);
     }
 
-    private void configurarBotoModificar(Button btnModificar, Button btnDesar) {
-        btnModificar.setOnClickListener(v -> {
+    private void configurarBotoModificar(Button btnModificarUsuari, Button btnDesarCanvisUsuari) {
+        btnModificarUsuari.setOnClickListener(v -> {
             estaEditant = true;
             habilitarEdicio(true);
-            btnDesar.setEnabled(true);
-            btnModificar.setEnabled(false);
+            btnDesarCanvisUsuari.setEnabled(true);
+            btnModificarUsuari.setEnabled(false);
         });
     }
 
-    private void configurarBotoDesar(Button btnModificar, Button btnDesar, EditText etNomUsuari, EditText etCognomsUsuari, EditText etTelefon, EditText etDataNaixement, EditText etAdreca, Usuari usuari) {
-        btnDesar.setOnClickListener(v -> {
+    private void configurarBotoDesar(Button btnModificarUsuari, Button btnDesarCanvisUsuari, EditText etIDusuari, EditText etCorreuUsuari, EditText etTipusUsuari, EditText etDataInscripcio, EditText etNomUsuari, EditText etCognomsUsuari, EditText etTelefon, EditText etDataNaixement, EditText etAdreca, Usuari usuari) {
+        btnDesarCanvisUsuari.setOnClickListener(v -> {
             String nomUsuariModificat = etNomUsuari.getText().toString();
             String cognomsUsuariModificat = etCognomsUsuari.getText().toString();
             String telefonModificat = etTelefon.getText().toString();
             String dataNaixementModificada = etDataNaixement.getText().toString();
             String adrecaModificada = etAdreca.getText().toString();
+            String tipusUsuariText = etTipusUsuari.getText().toString();
+            int tipusUsuari;
+            switch (tipusUsuariText) {
+                case "Administrador":
+                    tipusUsuari = 1;
+                    break;
+                case "Client":
+                    tipusUsuari = 2;
+                    break;
+                default:
+                    tipusUsuari = 0;
+                    break;
+            }
+            etTipusUsuari.setText(String.valueOf(tipusUsuari));
+            String correuUsuari = etCorreuUsuari.getText().toString();
+            String IDusuari = etIDusuari.getText().toString();
+            String dataInscripcio = etDataInscripcio.getText().toString();
+            String passUsuari = usuari.getPassUsuari();
 
 
-            if (!nomUsuariModificat.isEmpty() && !cognomsUsuariModificat.isEmpty() && !telefonModificat.isEmpty() && !dataNaixementModificada.isEmpty() && !adrecaModificada.isEmpty()) {
+            if (!nomUsuariModificat.isEmpty() && !cognomsUsuariModificat.isEmpty() && !telefonModificat.isEmpty()) {
                 usuari.setNomUsuari(nomUsuariModificat);
                 usuari.setCognomsUsuari(cognomsUsuariModificat);
                 usuari.setTelefon(telefonModificat);
                 usuari.setDataNaixement(dataNaixementModificada);
                 usuari.setAdreca(adrecaModificada);
+                usuari.setIDusuari(Integer.parseInt(IDusuari));
+                usuari.setPassUsuari(passUsuari);
+                usuari.setCorreuUsuari(correuUsuari);
+                usuari.setDataInscripcio(dataInscripcio);
+                usuari.setTipusUsuari(tipusUsuari);
 
                 modificarUsuari(usuari);
             } else {
-                Utils.mostrarToast(context, "Si us plau, omple tots els camps.");
+                Utils.mostrarToast(context, "Si us plau, omple tots els camps obligatoris");
             }
 
             habilitarEdicio(false);
-            btnDesar.setEnabled(false);
-            btnModificar.setEnabled(true);
+            btnDesarCanvisUsuari.setEnabled(false);
+            btnModificarUsuari.setEnabled(true);
         });
     }
 
@@ -220,6 +254,7 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
 
     private void modificarUsuari(Usuari usuari) {
         ModificarUsuari modificarUsuari = new ModificarUsuari(new ConnexioServidor.respostaServidorListener() {
+
             @Override
             public void respostaServidor(Object resposta) {
             }
@@ -230,28 +265,48 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
             }
         }, mContext) {
             @Override
+            public List<HashMap<String, String>> respostaServidor(Object resposta) {
+                return null;
+            }
+
+            /**
+             * Mètode que retorna la resposta del servidor
+             *
+             * @param resposta Resposta del servidor
+             */
+            @Override
             public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
                 return null;
             }
 
+            /**
+             * Mètode que retorna la resposta del servidor
+             *
+             * @param resposta Resposta del servidor
+             */
             @Override
             public void respostaServidor(Object[] resposta) {
 
             }
 
+            /**
+             * Mètode que s'executa en segon pla
+             *
+             * @param voids
+             */
             @Override
             protected Object doInBackground(Void... voids) {
                 return null;
             }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
         };
+
+
+
+        // Configuración del usuario y llamada al método de modificación
         modificarUsuari.setUsuari(usuari);
         modificarUsuari.modificarUsuari();
     }
+
 
 
 
@@ -278,7 +333,7 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         TextView tvAdreca = dialegView.findViewById(R.id.tvAdreca);
         TextView tvTelefon = dialegView.findViewById(R.id.tvTelefon);
 
-        Button btnEliminar = dialegView.findViewById(R.id.btnEliminar);
+        Button btnEliminarUsuari = dialegView.findViewById(R.id.btnEliminarUsuari);
         ImageButton botoTancar = dialegView.findViewById(R.id.botoTancar);
 
         tvIDusuari.setText(String.valueOf(IDusuari));
@@ -291,7 +346,7 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         tvAdreca.setText(adreca);
         tvTelefon.setText(telefon);
 
-        btnEliminar.setOnClickListener(v -> eliminarUsuari(nomUsuari));
+        btnEliminarUsuari.setOnClickListener(v -> eliminarUsuari(correuUsuari));
 
         configurarBotoTancar(botoTancar);
     }

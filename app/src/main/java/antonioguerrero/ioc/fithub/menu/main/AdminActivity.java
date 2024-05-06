@@ -23,6 +23,7 @@ import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.menu.activitats.GestioActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
+import antonioguerrero.ioc.fithub.menu.usuaris.GestioUsuarisActivity;
 
 /**
  * Classe que representa l'activitat de l'administrador a l'aplicació FitHub.
@@ -75,7 +76,7 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
         Button botoGestio4 = findViewById(R.id.boto_gestio4);
 
         // Configura els listeners pels botons de reserva d'activitats
-        botoGestio1.setOnClickListener(v -> Utils.mostrarToast(AdminActivity.this, Constants.PENDENT_IMPLEMENTAR));
+        botoGestio1.setOnClickListener(v -> obrirActivity(GestioUsuarisActivity.class));
         botoGestio2.setOnClickListener(v -> obrirActivity(GestioActivitatsActivity.class));
         botoGestio3.setOnClickListener(v -> obrirActivity(GestioInstallacionsActivity.class));
         botoGestio4.setOnClickListener(v -> obrirActivity(GestioServeisActivity.class));

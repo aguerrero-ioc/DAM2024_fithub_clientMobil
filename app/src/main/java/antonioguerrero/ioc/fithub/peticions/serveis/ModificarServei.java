@@ -109,8 +109,8 @@ public abstract class ModificarServei extends ConnexioServidor {
         if (resposta != null && resposta instanceof Object[]) {
             Object[] arrayResposta = (Object[]) resposta;
             if (arrayResposta.length >= 2 && arrayResposta[0] instanceof String) {
-                String estat = (String) arrayResposta[0];
-                if ("servei".equals(estat)) {
+                String objecte = (String) arrayResposta[0];
+                if ("servei".equals(objecte)) {
                     HashMap<String, String> mapaServei = (HashMap<String, String>) arrayResposta[1];
                     Servei servei = Servei.hashmap_a_servei(mapaServei);
                     if (listener instanceof ModificarServeiListener) {

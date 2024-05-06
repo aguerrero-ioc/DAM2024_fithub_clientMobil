@@ -34,11 +34,12 @@ import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerDiaActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
+import antonioguerrero.ioc.fithub.menu.usuaris.GestioUsuarisActivity;
 import antonioguerrero.ioc.fithub.menu.usuaris.PerfilActivity;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
 
 /**
- * Activitat base de la que hereten la resta d'activitats de l'aplicació.
+ * Activitat base de la qual hereten la resta d'activitats de l'aplicació.
  * Conté mètodes comuns a totes les activitats.
  * <p>
  * @author Antonio Guerrero
@@ -73,7 +74,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             handleNavigationItemSelected(menuItem);
             return true;
         });
-        // Inflar el layout de la cabecera del NavigationView
+        // Inflar el layout de la capçalera del NavigationView
 
         View headerView = navigationView.getHeaderView(0);
 
@@ -90,8 +91,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         menu = navigationView.getMenu();
-
-
     }
 
     @Override
@@ -120,7 +119,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_perfil_usuari) {
             obrirActivity(PerfilActivity.class);
         } else if (id == R.id.nav_usuaris) {
-            Utils.mostrarToast(BaseActivity.this, Constants.PENDENT_IMPLEMENTAR);
+            obrirActivity(GestioUsuarisActivity.class);
         } else if (id == R.id.nav_activitats) {
             if (tipusUsuari == 1) {
                 obrirActivity(GestioActivitatsActivity.class);
@@ -230,14 +229,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             String IDUsuariStr;
 
             if (IDUsuariObject instanceof Integer) {
-                // Si el valor es un entero, conviértelo a cadena
+                // Si el valor es un enter, conviértelo a cadena
                 IDUsuariStr = String.valueOf((int) IDUsuariObject);
             } else if (IDUsuariObject instanceof String) {
                 // Si el valor es una cadena, úsalo directamente
                 IDUsuariStr = (String) IDUsuariObject;
             } else {
                 // Si el valor no es ni entero ni cadena, maneja el caso según tus necesidades
-                Log.e("ETIQUETA", "Tipo de dato no soportado para IDusuari");
+                Log.e("ETIQUETA", "Tipus de dades no suportat per a IDusuari");
                 return;
             }
 
