@@ -25,7 +25,7 @@ public abstract class ConnexioServidor {
     //LOCAL "192.168.0.252"
     //LOCAL2 "192.168.1.132"
     // ISARD "10.2.36.102"
-    protected static final String SERVIDOR_IP = "192.168.0.252";
+    protected static final String SERVIDOR_IP = "10.2.36.102";
     protected static final int SERVIDOR_PORT = 8080;
     public Socket clientSocket;
 

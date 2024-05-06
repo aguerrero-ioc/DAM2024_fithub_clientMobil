@@ -179,9 +179,6 @@ public class ClassesPerDiaAdapter extends RecyclerView.Adapter<ClassesPerDiaAdap
 
         // Configurar los botones de "Reservar" y "Cancelar reserva"
         Button btnReservar = dialogView.findViewById(R.id.btnReservar);
-        Button btnCancelarReserva = dialogView.findViewById(R.id.btnCancelarReserva);
-
-
 
         btnReservar.setOnClickListener(v -> {
 
