@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +24,7 @@ import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
 
 /**
- * Activitat que permet a l'usuari gestionar les activitats.
+ * Activitat que permet a l'usuari administrador gestionar les activitats.
  * <p>
  * Aquesta activitat mostra una llista de totes les activitats disponibles.
  * <p>
@@ -38,11 +36,10 @@ import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
 public class GestioActivitatsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesActivitats.ConsultarTotesActivitatsListener, GestioActivitatsAdapter.OnActivitatEliminadaListener {
 
     private RecyclerView recyclerView;
-    private GestioActivitatsAdapter adapter;
 
     /**
      * Mètode que s'executa en la creació de l'activitat.
-     *
+     * <p>
      * @param savedInstanceState Estat de l'activitat
      */
     @Override
@@ -66,8 +63,8 @@ public class GestioActivitatsActivity extends BaseActivity implements ConnexioSe
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -82,33 +79,20 @@ public class GestioActivitatsActivity extends BaseActivity implements ConnexioSe
 
         // Botó "Crear nova activitat"
         Button btnCrearNovaActivitat = findViewById(R.id.btnCrearNovaActivitat);
-        btnCrearNovaActivitat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Abrir la actividad CrearActivitatActivity
-                Intent intent = new Intent(GestioActivitatsActivity.this, CrearActivitatActivity.class);
-                startActivity(intent);
-            }
+        btnCrearNovaActivitat.setOnClickListener(v -> {
+            // Obrir l'activitat per a crear una nova activitat
+            Intent intent = new Intent(GestioActivitatsActivity.this, CrearActivitatActivity.class);
+            startActivity(intent);
         });
 
         // Obtenir sessioID de l'usuari
         preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotesActivitats consulta = new ConsultarTotesActivitats(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
 
         consulta.consultarTotesActivitats();
     }
-
 
     /**
      * Mètode que s'executa quan s'obté la llista d'activitats.
@@ -118,37 +102,10 @@ public class GestioActivitatsActivity extends BaseActivity implements ConnexioSe
     @Override
     public void onActivitatsObtingudes(List<HashMap<String, String>> activitats) {
         if (activitats != null && !activitats.isEmpty()) {
-            adapter = new GestioActivitatsAdapter(this, activitats);
+            GestioActivitatsAdapter adapter = new GestioActivitatsAdapter(this, activitats);
             recyclerView.setAdapter(adapter);
         } else {
             Utils.mostrarToast(GestioActivitatsActivity.this, "No hi ha activitats disponibles");
         }
-    }
-
-    /**
-     * Mètode que gestiona la resposta del servidor.
-     * @param resposta La resposta del servidor.
-     */
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-    }
-
-    /**
-     * Mètode que s'executa quan s'obté la llista d'activitats.
-     *
-     * @param resposta La llista d'activitats.
-     */
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
-
-    /**
-     * Mètode que s'executa quan s'elimina una activitat.
-     */
-    @Override
-    public void onActivitatEliminada() {
-
     }
 }

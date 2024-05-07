@@ -11,7 +11,6 @@ import android.util.Log;
 import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
@@ -22,32 +21,25 @@ import antonioguerrero.ioc.fithub.objectes.Servei;
 /**
  * Classe que representa una petició al servidor per a modificar un servei.
  * <p>
- * Aquesta classe realitza una petició al servidor per a modificar un servei.
- * La classe implementa la interfície ConnexioServidor per a realitzar la petició.
- * <p>
- * La classe també conté un listener per a les respostes del servidor.
- * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public abstract class ModificarServei extends ConnexioServidor {
-
     private static final String ETIQUETA = "ModificarServei";
     private Servei servei;
-    private Context context;
-    private SharedPreferences preferences;
-    private String sessioID;
+    private final Context context;
+    private final String sessioID;
 
     /**
      * Constructor de la classe ModificarServei.
-     *
+     * <p>
      * @param listener Listener per a les respostes del servidor.
      * @param context  Context de l'aplicació.
      */
     public ModificarServei(respostaServidorListener listener, Context context) {
         super((respostaServidorListener) listener);
         this.context = context;
-        this.preferences = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
@@ -60,7 +52,7 @@ public abstract class ModificarServei extends ConnexioServidor {
 
     /**
      * Obte el servei que es vol modificar.
-     *
+     * <p>
      * @return El servei que es vol modificar.
      */
     public void setServei(Servei servei) {
@@ -82,7 +74,6 @@ public abstract class ModificarServei extends ConnexioServidor {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 processarResposta(resposta);
@@ -91,25 +82,13 @@ public abstract class ModificarServei extends ConnexioServidor {
     }
 
     /**
-     * Obte el tipus de l'objecte que es passarà com a paràmetre a la petició.
-     *
-     * @return El tipus de l'objecte que es passarà com a paràmetre a la petició.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Processa la resposta del servidor.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
      */
     private void processarResposta(Object resposta) {
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] arrayResposta = (Object[]) resposta;
-            if (arrayResposta.length >= 2 && arrayResposta[0] instanceof String) {
-                String objecte = (String) arrayResposta[0];
+        if (resposta instanceof Object[] arrayResposta) {
+            if (arrayResposta.length >= 2 && arrayResposta[0] instanceof String objecte) {
                 if ("servei".equals(objecte)) {
                     HashMap<String, String> mapaServei = (HashMap<String, String>) arrayResposta[1];
                     Servei servei = Servei.hashmap_a_servei(mapaServei);
@@ -134,21 +113,19 @@ public abstract class ModificarServei extends ConnexioServidor {
 
     /**
      * Executa la petició al servidor.
-     *
+     * <p>
      * @throws ConnectException Si no es pot connectar amb el servidor.
      */
-    @Override
     public void execute() throws ConnectException {
         modificarServei();
     }
 
     /**
      * Guarda les propietats de l'objecte Servei en SharedPreferences.
-     *
+     * <p>
      * @param servei L'objecte Servei que es guardarà en SharedPreferences.
      */
     private void guardarDadesServei(Servei servei) {
-
         SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
@@ -161,27 +138,4 @@ public abstract class ModificarServei extends ConnexioServidor {
         // Aplicar els canvis a SharedPreferences
         editor.apply();
     }
-
-    /**
-     * Obte la resposta del servidor en forma de HashMap.
-     *
-     * @param resposta La resposta del servidor.
-     * @return La resposta del servidor en forma de HashMap.
-     */
-    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
-
-    /**
-     * Obte la resposta del servidor en forma de Object[].
-     *
-     * @param resposta La resposta del servidor.
-     * @return La resposta del servidor en forma de Object[].
-     */
-    public abstract void respostaServidor(Object[] resposta);
-
-    /**
-     * Executa la petició al servidor.
-     *
-     * @throws ConnectException Si no es pot connectar amb el servidor.
-     */
-    protected abstract Object doInBackground(Void... voids);
 }

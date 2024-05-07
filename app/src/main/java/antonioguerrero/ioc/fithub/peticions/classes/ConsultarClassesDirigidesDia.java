@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,11 +24,10 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
-    private static final String ETIQUETA = "ConsultarClassesDirigidesDia";
-
-    private String dia;
-    private Context context;
-    private String sessioID;
+    private static final String ETIQUETA = "ConsultarClassesDia";
+    private final String dia;
+    private final Context context;
+    private final String sessioID;
 
     /**
      * Constructor de la classe.
@@ -41,8 +42,6 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
         this.dia = dia;
         this.sessioID = sessioID;
     }
-
-    public abstract void onClassesDirigidesDiaObtingudes(List<HashMap<String, String>> classesDirigides);
 
     /**
      * Interfície per obtenir la resposta del servidor.
@@ -65,7 +64,6 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 processarResposta(resposta);
@@ -75,18 +73,14 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
 
     /**
      * Mètode per gestionar la resposta del servidor.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
-     * @return La llista de dades de les classes dirigides.
      */
-
     public void processarResposta(Object resposta) {
         // Verificar que la resposta no sigui nula i sigui un array d'objectes
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
+        if (resposta != null && resposta instanceof Object[] respostaArray) {
             // Verificar que el array tingui almenys dos elements i que el primer element sigui un String
-            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
-                String estat = (String) respostaArray[0];
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String estat) {
                 // Verificar si el primer element és "classeDirigidaLlista"
                 if ("classeDirigidaLlista".equals(estat)) {
                     // Verificar si el segon element és una llista
@@ -96,6 +90,7 @@ public abstract class ConsultarClassesDirigidesDia extends ConnexioServidor {
                         if (listener instanceof ConsultarClassesDirigidesDiaListener) {
                             ((ConsultarClassesDirigidesDiaListener) listener).onClassesDirigidesDiaObtingudes(classesDirigides);
                         }
+                        Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
                         guardarDadesClassesDirigides(classesDirigides);
                         return;
                     }

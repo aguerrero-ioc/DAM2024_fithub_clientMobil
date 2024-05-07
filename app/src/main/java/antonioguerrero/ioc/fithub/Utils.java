@@ -2,21 +2,16 @@ package antonioguerrero.ioc.fithub;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.core.net.ParseException;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -36,7 +31,7 @@ public class Utils {
 
     /**
      * Converteix la data al format "dd/MM/yyyy".
-     *
+     * <p>
      * @param data Data en format "ddMMyyyy".
      * @return Data formatada com a "dd/MM/yyyy".
      */
@@ -45,8 +40,7 @@ public class Utils {
             SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
             Date date = sdf.parse(data);
             sdf.applyPattern("dd/MM/yyyy");
-            String dataFormatejada = sdf.format(date);
-            return dataFormatejada;
+            return sdf.format(date);
         } catch (Exception e) {
             e.printStackTrace();
             return "";
@@ -55,7 +49,7 @@ public class Utils {
 
     /**
      * Converteix l'hora al format "hh:mm".
-     *
+     * <p>
      * @param hora Hora en format "hhmm".
      * @return Hora formatada com a "hh:mm".
      */
@@ -72,10 +66,9 @@ public class Utils {
         return "";
     }
 
-
     /**
      * Mètode per obtenir la data actual en format "ddMMyyyy".
-     *
+     * <p>
      * @return Data actual en format "ddMMyyyy".
      */
     public static String obtenirDataActual() {
@@ -95,10 +88,9 @@ public class Utils {
         return String.format(Locale.getDefault(), "%02d%02d%04d", dia, mes, any);
     }
 
-
     /**
      * Mètode per comprovar si una data és anterior a la data actual.
-     *
+     * <p>
      * @param stringData Data en format "ddMMyyyy".
      * @return Cert si la data és anterior a la data actual, fals altrament.
      */
@@ -126,7 +118,7 @@ public class Utils {
 
     /**
      * Mètode per obtenir l'hora actual en format "HHmm".
-     *
+     * <p>
      * @return Hora actual en format "HHmm".
      */
     public static String obtenirHoraActual() {
@@ -135,7 +127,7 @@ public class Utils {
 
     /**
      * Mètode per obtenir l'hora formatejada com a "HHmm".
-     *
+     * <p>
      * @param calendar Instància de Calendar.
      * @return Hora formatejada com a "HHmm".
      */
@@ -147,7 +139,7 @@ public class Utils {
 
     /**
      * Mètode per convertir una cadena de text a una hora.
-     *
+     * <p>
      * @param cadenaHora Cadena de text amb l'hora en format "HHmm".
      * @return Hora convertida.
      */
@@ -159,10 +151,9 @@ public class Utils {
                 SimpleDateFormat formatHora = new SimpleDateFormat("HHmm", Locale.getDefault());
 
                 // Analitza la cadena d'hora a un objecte Time
-                Time hora = new Time(formatHora.parse(cadenaHora).getTime());
 
                 // Retorna l'hora convertida
-                return hora;
+                return new Time(formatHora.parse(cadenaHora).getTime());
             } catch (ParseException | java.text.ParseException e) {
                 // En cas d'error en la conversió de la cadena de text a Time, imprimeix l'error i retorna null
                 e.printStackTrace();
@@ -175,10 +166,9 @@ public class Utils {
         }
     }
 
-
     /**
      * Mètode per comprovar si una hora donada és anterior a l'hora actual.
-     *
+     * <p>
      * @param stringHora Hora en format "HHmm".
      * @return Cert si l'hora és anterior a l'hora actual, fals en cas contrari.
      */
@@ -201,10 +191,9 @@ public class Utils {
         }
     }
 
-
     /**
      * Mètode per mostrar un Toast amb el missatge especificat.
-     *
+     * <p>
      * @param context  El context de l'aplicació.
      * @param missatge El missatge a mostrar en el Toast.
      */
@@ -212,10 +201,9 @@ public class Utils {
         Toast.makeText(context, missatge, Toast.LENGTH_SHORT).show();
     }
 
-
     /**
      * Mètode per convertir un HashMap a un objecte.
-     *
+     * <p>
      * @param map   El HashMap a convertir.
      * @param clazz La classe de l'objecte.
      * @return Un objecte amb els valors del HashMap.
@@ -247,10 +235,9 @@ public class Utils {
         return object;
     }
 
-
     /**
      * Mètode per obrir una nova activitat.
-     *
+     * <p>
      * @param context      Context de l'aplicació.
      * @param activityClass Classe de l'activitat a obrir.
      * @param flags        Flags per a l'activitat.
@@ -261,10 +248,9 @@ public class Utils {
         context.startActivity(intent);
     }
 
-
     /**
      * Mètode per validar el format d'un correu electrònic utilitzant una expressió regular.
-     *
+     * <p>
      * @param correu  El correu electrònic a validar.
      * @return Cert si el correu electrònic té el format vàlid, fals altrament.
      */
@@ -274,5 +260,4 @@ public class Utils {
         // Comprova si el correu electrònic coincideix amb el patró
         return correu.matches(patroCorreu);
     }
-
 }

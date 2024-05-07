@@ -19,7 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary">
 
-            <!-- Botón de acceso al panel izquierdo-->
+            <!-- Botó d'accés a panell esquerre-->
             <ImageButton
                 android:id="@+id/boto_acces_panell"
                 android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
                 android:onClick="accedirPanell"
                 android:src="@drawable/ic_menu" />
 
-            <!-- Logo de la aplicación -->
+            <!-- Logo de l'aplicació -->
             <ImageView
                 android:id="@+id/image_logo"
                 android:layout_width="95dp"
@@ -41,7 +41,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <!-- TextView para mostrar la fecha -->
+        <!-- TextView per mostrar les reserves disponibles -->
         <TextView
             android:id="@+id/tvData"
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:textStyle="bold"
             android:text="Reserves disponibles:" />
 
-        <!-- RecyclerView para mostrar las reservas -->
+        <!-- RecyclerView per mostrar les reserves -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvReserves"
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
             android:layout_weight="1"
             android:padding="10dp" />
 
-        <!-- FloatingActionButton para mostrar los mensajes -->
+        <!-- FloatingActionButton per mostrar els missatges -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/boto_mostrar_missatges"
             android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
 
     </LinearLayout>
 
-    <!-- NavigationView para el panel desplegable -->
+    <!-- NavigationView per mostrar el menú lateral -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="200dp"

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,11 +21,23 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.peticions.serveis.ConsultarTotsServeis;
 
+/**
+ * Activitat per mostrar els serveis disponibles al centre esportiu.
+ * <p>
+ * Aquesta activitat mostra una llista de tots els serveis disponibles al centre esportiu.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class ServeisActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotsServeis.ConsultarTotsServeisListener {
 
     private RecyclerView recyclerView;
-    private ServeisAdapter adapter;
 
+    /**
+     * Mètode que s'executa quan s'ha creat l'activitat.
+     * <p>
+     * @param savedInstanceState Estat de l'activitat
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +59,8 @@ public class ServeisActivity extends BaseActivity implements ConnexioServidor.re
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -66,36 +77,24 @@ public class ServeisActivity extends BaseActivity implements ConnexioServidor.re
         preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotsServeis consulta = new ConsultarTotsServeis(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
 
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
 
         consulta.consultarTotsServeis();
     }
 
+    /**
+     * Mètode que s'executa quan s'han obtingut els serveis.
+     * <p>
+     * @param serveis Llista dels serveis obtinguts.
+     */
     @Override
     public void onServeisObtinguts(List<HashMap<String, String>> serveis) {
         if (serveis != null && !serveis.isEmpty()) {
-            adapter = new ServeisAdapter(this, serveis);
+            ServeisAdapter adapter = new ServeisAdapter(this, serveis);
             recyclerView.setAdapter(adapter);
         } else {
             Utils.mostrarToast(ServeisActivity.this, "No hi ha serveis disponibles");
         }
-    }
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-    }
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
     }
 }

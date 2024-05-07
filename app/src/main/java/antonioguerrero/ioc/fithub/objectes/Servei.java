@@ -22,19 +22,17 @@ public class Servei implements Serializable {
     private String descripcioServei;
     private String preuServei;
 
-
     // Altres atributs que podrien ser necessaris
     private String personalServei;
 
     /**
      * Constructor de la classe Servei.
-     *
+     * <p>
      * @param IDservei Identificador del servei
      * @param nomServei Nom del servei
      * @param descripcioServei Descripció del servei
      * @param preuServei Preu del servei
      */
-
     public Servei(int IDservei, String nomServei, String descripcioServei, String preuServei) {
         this.IDservei = IDservei;
         this.nomServei = nomServei;
@@ -46,13 +44,11 @@ public class Servei implements Serializable {
      * Constructor de la classe Servei buit.
      */
     public Servei() {
-
     }
-
 
     /**
      * Constructor de la classe Servei amb paràmetres.
-     *
+     * <p>
      * @param nomServei Nom del servei
      * @param descripcioServei Descripció del servei
      * @param preuServei Preu del servei
@@ -63,95 +59,83 @@ public class Servei implements Serializable {
         this.preuServei = preuServei;
     }
 
-
     // Getters i setters
 
     /**
      * Obté l'identificador del servei.
-     *
+     * <p>
      * @return Identificador del servei
      */
-
     public int getIDservei() {
         return IDservei;
     }
 
     /**
      * Estableix l'identificador del servei
-     *
+     * <p>
      * @param IDservei Identificador del servei
      */
-
     public void setIDservei(int IDservei) {
         this.IDservei = IDservei;
     }
 
-
     /**
      * Obté el nom del servei.
-     *
+     * <p>
      * @return El nom del servei
      */
-
     public String getNomServei() {
         return nomServei;
     }
 
     /**
      * Estableix el nom del servei
-     *
+     * <p>
      * @param nomServei El nom del servei
      */
-
     public void setNomServei(String nomServei) {
         this.nomServei = nomServei;
     }
 
     /**
      * Obté la descripció del servei.
-     *
+     * <p>
      * @return La descripció del servei
      */
-
     public String getDescripcioServei() {
         return descripcioServei;
     }
 
     /**
      * Estableix la descripció del servei
-     *
+     * <p>
      * @param descripcioServei La descripció del servei
      */
-
     public void setDescripcioServei(String descripcioServei) {
         this.descripcioServei = descripcioServei;
     }
 
-
-
     /**
      * Obté el preu del servei.
-     *
+     * <p>
      * @return El preu del servei
      */
-
     public String getPreuServei() {
         return preuServei;
     }
 
     /**
      * Estableix el preu del servei
-     *
+     * <p>
      * @param preuServei El preu del servei
      */
-
     public void setPreuServei(String preuServei) {
         this.preuServei = preuServei;
     }
 
     /**
      * Converteix un servei a un HashMap.
-     *
+     * <p>
      * @param servei El servei a convertir
      * @return El HashMap resultant
      */
@@ -167,7 +151,7 @@ public class Servei implements Serializable {
 
     /**
      * Converteix un HashMap a un servei.
-     *
+     * <p>
      * @param mapaServei El HashMap a convertir
      * @return El servei resultant
      */
@@ -179,5 +163,4 @@ public class Servei implements Serializable {
         servei.setPreuServei(mapaServei.get(Constants.SERVEI_PREU));
         return servei;
     }
-
 }

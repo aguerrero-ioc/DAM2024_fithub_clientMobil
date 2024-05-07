@@ -23,7 +23,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <!-- Botó d'accés a panell esquerre-->
             <ImageButton
                 android:id="@+id/boto_acces_panell"
@@ -135,7 +134,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-
             <!-- Botó de Crear Activitat -->
             <Button
                 android:id="@+id/btn_creacio"
@@ -147,7 +145,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
         </LinearLayout>
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/boto_mostrar_missatges"

@@ -16,10 +16,8 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 /**
  * Classe per eliminar una reserva.
@@ -30,16 +28,15 @@ import antonioguerrero.ioc.fithub.objectes.Usuari;
  * @version 1.0
  */
 public abstract class EliminarReserva extends ConnexioServidor {
-
     private Reserva reserva;
-    private Context context;
+    private final Context context;
     private static final String ETIQUETA = "EliminarReserva";
     SharedPreferences preferencies;
     String sessioID;
 
     /**
      * Constructor de la classe EliminarReserva.
-     *
+     * <p>
      * @param listener L'objecte que escoltarà les respostes del servidor.
      * @param context  Context de l'aplicació.
      */
@@ -51,7 +48,7 @@ public abstract class EliminarReserva extends ConnexioServidor {
     }
     /**
      * Mètode per establir la reserva a eliminar.
-     *
+     * <p>
      * @param reserva La reserva a eliminar.
      */
     public void setReserva(Reserva reserva) {
@@ -82,19 +79,14 @@ public abstract class EliminarReserva extends ConnexioServidor {
         }.execute();
     }
 
-
     /**
      * Mètode per gestionar la resposta del servidor.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
-     * @return
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta);
-
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
+        if (resposta != null && resposta instanceof Object[] respostaArray) {
             boolean exit = respostaArray.length > 0 && "True".equalsIgnoreCase((String) respostaArray[0]);
             if (exit) {
                 Log.d(ETIQUETA, "Reserva confirmada");
@@ -113,7 +105,6 @@ public abstract class EliminarReserva extends ConnexioServidor {
             Log.d(ETIQUETA, "Resposta del servidor inesperada o nula");
             Utils.mostrarToast(context.getApplicationContext(), "Resposta del servidor inesperada o nula");
         }
-
         return null;
     }
 }

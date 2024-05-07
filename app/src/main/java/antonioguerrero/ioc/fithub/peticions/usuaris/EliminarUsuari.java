@@ -20,22 +20,22 @@ import antonioguerrero.ioc.fithub.menu.usuaris.GestioUsuarisActivity;
 
 /**
  * Classe per eliminar un usuari.
+ * <p>
  * Aquesta classe és la que s'encarrega de fer la petició al servidor per eliminar un usuari.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public abstract class EliminarUsuari extends ConnexioServidor {
-
-    private String correuUsuari;
-    private Context context;
+    private final String correuUsuari;
+    private final Context context;
     private static final String ETIQUETA = "EliminarUsuari";
     SharedPreferences preferences;
     String sessioID;
 
     /**
      * Constructor de la classe EliminarUsuari.
-     *
+     * <p>
      * @param listener     El objecte que escoltarà les respostes del servidor.
      * @param context      Context de l'aplicació.
      * @param correuUsuari Correu electrònic de l'usuari a eliminar.
@@ -63,7 +63,6 @@ public abstract class EliminarUsuari extends ConnexioServidor {
                     return null;
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -72,30 +71,17 @@ public abstract class EliminarUsuari extends ConnexioServidor {
     }
 
     /**
-     * Métode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Métode per executar la petició.
      */
-    @Override
     public void execute() throws ConnectException {
         eliminarUsuari();
     }
 
     /**
      * Métode per gestionar la resposta del servidor.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
-     * @return
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;

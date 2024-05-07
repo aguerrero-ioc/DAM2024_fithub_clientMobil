@@ -28,15 +28,11 @@ import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
  * Classe que representa l'activitat del client a l'aplicació FitHub.
  * <p>
  * Aquesta classe permet als clients realitzar diverses operacions com gestionar les seves reserves.
- * També poden veure les seves dades personals i editar-les.
- * <p>
- * Aquesta classe hereta de BaseActivity.
  * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public class ClientActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener {
-
     private TextView tvNomUsuari;
     private TextView tvCorreuElectronic;
 
@@ -61,8 +57,8 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -81,15 +77,5 @@ public class ClientActivity extends BaseActivity implements ConnexioServidor.res
         // Configura el botó flotant de perfil
         FloatingActionButton botoPerfil = findViewById(R.id.boto_perfil);
         botoPerfil.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-    }
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-
-    }
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
     }
 }

@@ -3,7 +3,6 @@
     android:layout_height="wrap_content"
     android:padding="24dp">
 
-    <!-- Contenedor del botón de cerrar -->
     <LinearLayout
         android:id="@+id/botoTancarContainer"
         android:layout_width="wrap_content"
@@ -41,7 +40,7 @@
         android:layout_marginStart="16dp"
         android:enabled="false" />
 
-    <!-- Correo electrónico del usuario -->
+    <!-- Correu del usuari -->
     <TextView
         android:id="@+id/tvCorreuUsuariEtiqueta"
         android:layout_width="wrap_content"
@@ -61,7 +60,7 @@
         android:enabled="false" />
 
 
-    <!-- Tipo de usuario -->
+    <!-- Tipus d'usuari -->
     <TextView
         android:id="@+id/tvTipusUsuariEtiqueta"
         android:layout_width="wrap_content"
@@ -100,7 +99,7 @@
         android:enabled="false" />
 
 
-    <!-- Nombre del usuario -->
+    <!-- Nom de l'usuari -->
     <TextView
         android:id="@+id/tvNomUsuariEtiqueta"
         android:layout_width="wrap_content"
@@ -119,7 +118,7 @@
         android:layout_marginStart="16dp"
         android:enabled="false" />
 
-    <!-- Apellidos del usuario -->
+    <!-- Cognoms de l'usuari -->
     <TextView
         android:id="@+id/tvCognomsUsuariEtiqueta"
         android:layout_width="wrap_content"
@@ -138,7 +137,7 @@
         android:layout_marginStart="16dp"
         android:enabled="false" />
 
-    <!-- Fecha de nacimiento del usuario -->
+    <!-- Data de naixement de l'usuari -->
     <TextView
         android:id="@+id/tvDataNaixementEtiqueta"
         android:layout_width="wrap_content"
@@ -157,7 +156,7 @@
         android:layout_marginStart="16dp"
         android:enabled="false" />
 
-    <!-- Dirección del usuario -->
+    <!-- Direcció de l'usuari -->
     <TextView
         android:id="@+id/tvAdrecaEtiqueta"
         android:layout_width="wrap_content"
@@ -176,7 +175,7 @@
         android:layout_marginStart="16dp"
         android:enabled="false" />
 
-    <!-- Teléfono del usuario -->
+    <!-- Telèfon de l'usuari -->
     <TextView
         android:id="@+id/tvTelefonEtiqueta"
         android:layout_width="wrap_content"

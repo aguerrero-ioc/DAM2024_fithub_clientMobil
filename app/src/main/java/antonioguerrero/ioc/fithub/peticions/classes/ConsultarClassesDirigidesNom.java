@@ -14,7 +14,6 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.objectes.ClasseDirigida;
 
 /**
  * Classe per obtenir les classes dirigides disponibles per un nom d'activitat.
@@ -26,10 +25,17 @@ import antonioguerrero.ioc.fithub.objectes.ClasseDirigida;
  */
 public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
     private static final String ETIQUETA = "ConsultarClasseDirigida";
-    private String nomClasseDirigida;
-    private Context context;
-    private String sessioID;
+    private final String nomClasseDirigida;
+    private final Context context;
+    private final String sessioID;
 
+    /**
+     * Constructor de la classe.
+     * <p>
+     * @param listener Listener de la classe.
+     * @param context  Context de l'aplicació.
+     * @param nomClasseDirigida Nom de l'activitat de les classes dirigides a obtenir.
+     */
     public ConsultarClassesDirigidesNom(respostaServidorListener listener, Context context, String nomClasseDirigida, String sessioID) {
         super(listener);
         this.context = context;
@@ -37,16 +43,16 @@ public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
         this.sessioID = sessioID;
     }
 
-    public abstract void onClassesDirigidesNomObtingudes(List<HashMap<String, String>> classesDirigides);
-
-
+    /**
+     * Interfície per a les respostes del servidor.
+     */
     public interface ConsultarClassesDirigidesNomListener {
-        void onActivitatsObtingudes(List<HashMap<String, String>> activitats);
-
         void onClassesDirigidesNomObtingudes(List<HashMap<String, String>> classesDirigides);
     }
 
-
+    /**
+     * Mètode per obtenir les classes dirigides per un nom d'activitat.
+     */
     @SuppressLint("StaticFieldLeak")
     public void consultarClasseDirigidaNom() {
         new AsyncTask<Void, Void, Object>() {
@@ -65,14 +71,16 @@ public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
         }.execute();
     }
 
-
+    /**
+     * Mètode per processar la resposta del servidor.
+     * <p>
+     * @param resposta Resposta del servidor.
+     */
     public void processarResposta(Object resposta) {
         // Verificar que la resposta no sigui nula i sigui un array d'objectes
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
+        if (resposta != null && resposta instanceof Object[] respostaArray) {
             // Verificar que el array tingui almenys dos elements i que el primer element sigui un String
-            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
-                String estat = (String) respostaArray[0];
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String estat) {
                 // Verificar si el primer element és "classeDirigidaLlista"
                 if ("classeDirigidaLlista".equals(estat)) {
                     // Verificar si el segon element és una llista
@@ -82,6 +90,7 @@ public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
                         if (listener instanceof ConsultarClassesDirigidesNomListener) {
                             ((ConsultarClassesDirigidesNomListener) listener).onClassesDirigidesNomObtingudes(classesDirigides);
                         }
+                        Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
                         guardarDadesClassesDirigides(classesDirigides);
                         return;
                     }
@@ -93,7 +102,11 @@ public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
         Utils.mostrarToast(context, "Error en la resposta del servidor");
     }
 
-
+    /**
+     * Mètode per guardar les dades de les classes dirigides a SharedPreferences.
+     * <p>
+     * @param dadesClassesDirigides Llista de dades de les classes dirigides.
+     */
     private void guardarDadesClassesDirigides(List<HashMap<String, String>> dadesClassesDirigides) {
         SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
@@ -115,6 +128,4 @@ public abstract class ConsultarClassesDirigidesNom extends ConnexioServidor {
         // Aplicar els canvis a SharedPreferences
         editor.apply();
     }
-
-
 }

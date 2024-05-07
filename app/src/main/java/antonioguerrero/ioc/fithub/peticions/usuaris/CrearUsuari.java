@@ -13,7 +13,6 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 import antonioguerrero.ioc.fithub.menu.usuaris.CrearUsuariActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
 
@@ -25,15 +24,16 @@ import antonioguerrero.ioc.fithub.objectes.Usuari;
  */
 public abstract class CrearUsuari extends ConnexioServidor {
     private static final String ETIQUETA = "CrearUsuari";
-    private String nomUsuari;
-    private String cognomsUsuari;
-    private String telefon;
-    private String correuUsuari;
-    private String passUsuari;
+    private final String nomUsuari;
+    private final String cognomsUsuari;
+    private final String telefon;
+    private final String correuUsuari;
+    private final String passUsuari;
     private final Context context;
 
     /**
      * Constructor de la classe
+     * <p>
      * @param listener Listener per a la resposta del servidor
      * @param usuari Usuari a crear
      * @param context Context de l'aplicació
@@ -73,20 +73,11 @@ public abstract class CrearUsuari extends ConnexioServidor {
     }
 
     /**
-     * Mètode que retorna el tipus d'objecte
-     * @return Object[].class
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Mètode que retorna la resposta del servidor
+     * <p>
      * @param resposta Resposta del servidor
      * @return null
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;
@@ -110,17 +101,8 @@ public abstract class CrearUsuari extends ConnexioServidor {
 
     /**
      * Mètode que executa la petició
-     * @throws ConnectException
      */
-    @Override
     public void execute() throws ConnectException {
         crearUsuari();
     }
-
-    /**
-     * Mètode que s'executa en segon pla
-     * @param voids
-     * @return null
-     */
-    protected abstract Object doInBackground(Void... voids);
 }

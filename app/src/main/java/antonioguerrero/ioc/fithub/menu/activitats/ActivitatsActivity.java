@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,10 +21,18 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
 
+/**
+ * Activitat que permet a l'usuari veure les activitats disponibles.
+ * <p>
+ * Aquesta activitat mostra una llista de totes les activitats disponibles.
+ * <p>
+ * Aquesta activitat permet a l'usuari inscriure's a les activitats.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class ActivitatsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesActivitats.ConsultarTotesActivitatsListener {
-
     private RecyclerView recyclerView;
-    private ActivitatsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +58,8 @@ public class ActivitatsActivity extends BaseActivity implements ConnexioServidor
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -62,61 +69,27 @@ public class ActivitatsActivity extends BaseActivity implements ConnexioServidor
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
 
-
         // Obtenir sessioID de l'usuari
         preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotesActivitats consulta = new ConsultarTotesActivitats(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
 
         consulta.consultarTotesActivitats();
     }
 
-    public void consultarTotesActivitats(View view) {
-        // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
-
-        ConsultarTotesActivitats consulta = new ConsultarTotesActivitats(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        };
-
-        consulta.consultarTotesActivitats();
-    }
-
+    /**
+     * Mètode que s'executa quan s'han obtingut les activitats.
+     * <p>
+     * @param activitats Llista de les activitats obtingudes.
+     */
     @Override
     public void onActivitatsObtingudes(List<HashMap<String, String>> activitats) {
         if (activitats != null && !activitats.isEmpty()) {
-            adapter = new ActivitatsAdapter(this, activitats);
+            ActivitatsAdapter adapter = new ActivitatsAdapter(this, activitats);
             recyclerView.setAdapter(adapter);
         } else {
             Utils.mostrarToast(ActivitatsActivity.this, "No hi ha activitats disponibles");
         }
-    }
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-    }
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
     }
 }

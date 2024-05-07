@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,14 +24,13 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class ConsultarTotsUsuaris extends ConnexioServidor {
-
-    private Context context;
+    private final Context context;
     private static final String ETIQUETA = "ConsultarUsuaris";
     String sessioID;
 
     /**
      * Constructor de la classe.
-     *
+     * <p>
      * @param listener Listener de la classe.
      * @param context  Context de l'aplicació.
      * @param sessioID Identificador de la sessió.
@@ -73,16 +74,14 @@ public abstract class ConsultarTotsUsuaris extends ConnexioServidor {
 
     /**
      * Mètode per processar la resposta del servidor.
-     *
+     * <p>
      * @param resposta Resposta del servidor.
      */
     private void processarResposta(Object resposta) {
         // Verificar que la resposta no sigui nula i sigui un array d'objectes
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
+        if (resposta instanceof Object[] respostaArray) {
             // Verificar que el array tingui almenys dos elements i que el primer element sigui un String
-            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
-                String estat = (String) respostaArray[0];
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String estat) {
                 // Verificar si el primer element és "usuariLlista"
                 if ("usuariLlista".equals(estat)) {
                     // Verificar si el segon element és una llista
@@ -92,6 +91,7 @@ public abstract class ConsultarTotsUsuaris extends ConnexioServidor {
                         if (listener instanceof ConsultarTotsUsuarisListener) {
                             ((ConsultarTotsUsuarisListener) listener).onUsuarisObtinguts(usuaris);
                         }
+                        Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
                         guardarDadesUsuaris(usuaris);
                         return;
                     }
@@ -104,26 +104,15 @@ public abstract class ConsultarTotsUsuaris extends ConnexioServidor {
     }
 
     /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Mètode per executar la petició.
      */
-    @Override
     public void execute() throws ConnectException {
         consultarTotsUsuaris();
     }
 
     /**
      * Guarda les propietats de l'objecte Usuari a SharedPreferences.
-     *
+     * <p>
      * @param usuaris La llista d'objectes Usuari que es guardarà a SharedPreferences.
      */
     private void guardarDadesUsuaris(List<HashMap<String, String>> usuaris) {

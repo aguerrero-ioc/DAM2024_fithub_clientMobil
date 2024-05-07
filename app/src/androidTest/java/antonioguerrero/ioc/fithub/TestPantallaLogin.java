@@ -140,5 +140,4 @@ public class TestPantallaLogin {
         // Netejar Intents després de la prova
         Intents.release();
     }
-
 }

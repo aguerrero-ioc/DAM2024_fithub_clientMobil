@@ -8,7 +8,8 @@ import antonioguerrero.ioc.fithub.Constants;
 /**
  * Classe que representa una reserva d'una classe.
  * <p>
- * Cada reserva té un identificador únic, un identificador d'usuari, un identificador d'instal·lació, un identificador de classe, una data, una hora, una durada i un estat.
+ * Cada reserva té un identificador únic, un identificador d'usuari, un identificador d'instal·lació,
+ * un identificador de classe, una data, una hora, una durada i un estat.
  * Aquesta classe també conté mètodes per convertir una reserva a un HashMap i viceversa.
  * <p>
  * @author Antonio Guerrero
@@ -34,7 +35,7 @@ public class Reserva {
 
     /**
      * Constructor de la classe Reserva amb paràmetres.
-     *
+     * <p>
      * @param IDreserva        Identificador de la reserva
      * @param IDclasseDirigida Identificador de la classe dirigida
      * @param IDusuari         Identificador de l'usuari
@@ -49,7 +50,7 @@ public class Reserva {
 
     /**
      * Constructor de la classe Reserva amb paràmetres.
-     *
+     * <p>
      * @param IDclasseDirigida Identificador de la classe dirigida
      * @param IDusuari         Identificador de l'usuari
      */
@@ -62,7 +63,7 @@ public class Reserva {
 
     /**
      * Mètode per obtenir l'identificador de la reserva.
-     *
+     * <p>
      * @return L'identificador de la reserva.
      */
     public String getIDreserva() {
@@ -71,7 +72,7 @@ public class Reserva {
 
     /**
      * Mètode per establir l'identificador de la reserva.
-     *
+     * <p>
      * @param IDreserva L'identificador de la reserva.
      */
 
@@ -82,7 +83,7 @@ public class Reserva {
 
     /**
      * Mètode per obtenir l'identificador de la classe dirigida.
-     *
+     * <p>
      * @return L'identificador de la classe dirigida.
      */
     public String getIDclasseDirigida() {
@@ -91,7 +92,7 @@ public class Reserva {
 
     /**
      * Mètode per establir l'identificador de la classe dirigida.
-     *
+     * <p>
      * @param IDclasseDirigida L'identificador de la classe dirigida.
      */
     public void setIDclasseDirigida(String IDclasseDirigida) {
@@ -100,7 +101,7 @@ public class Reserva {
 
     /**
      * Mètode per obtenir l'identificador de l'usuari.
-     *
+     * <p>
      * @return L'identificador de l'usuari.
      */
     public String getIDusuari() {
@@ -109,7 +110,7 @@ public class Reserva {
 
     /**
      * Mètode per establir l'identificador de l'usuari.
-     *
+     * <p>
      * @param IDusuari L'identificador de l'usuari.
      */
     public void setIDusuari(String IDusuari) {
@@ -118,7 +119,7 @@ public class Reserva {
 
     /**
      * Mètode per obtenir l'estat de la reserva.
-     *
+     * <p>
      * @return L'estat de la reserva.
      */
     public String getEstatReserva() {
@@ -127,17 +128,16 @@ public class Reserva {
 
     /**
      * Mètode per establir l'estat de la reserva.
-     *
+     * <p>
      * @param estatReserva L'estat de la reserva.
      */
     public void setEstatReserva(String estatReserva) {
         this.estatReserva = estatReserva;
     }
 
-
     /**
      * Mètode per convertir una reserva a un HashMap.
-     *
+     * <p>
      * @param reserva La reserva que es vol convertir.
      * @return HashMap amb les dades de la reserva.
      */
@@ -153,7 +153,7 @@ public class Reserva {
 
     /**
      * Mètode per convertir un HashMap a una reserva.
-     *
+     * <p>
      * @param mapaReserva El HashMap que es vol convertir.
      * @return La reserva amb les dades del HashMap.
      */
@@ -164,5 +164,4 @@ public class Reserva {
         String estatReserva = mapaReserva.get(Constants.RESERVA_ESTAT);
         return new Reserva(IDreserva, IDclasseDirigida, IDusuari, estatReserva);
     }
-
 }

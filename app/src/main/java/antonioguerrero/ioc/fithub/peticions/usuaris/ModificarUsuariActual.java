@@ -19,19 +19,18 @@ import antonioguerrero.ioc.fithub.objectes.Usuari;
 /**
  * Classe que s'encarrega de fer la petició al servidor per modificar un usuari
  * <p>
- * @autor Antonio Guerrero
+ * @author Antonio Guerrero
  * @version 1.0
  */
 public abstract class ModificarUsuariActual extends ConnexioServidor {
-
     private static final String ETIQUETA = "ModificarUsuari";
     private Usuari usuari;
-    private Context context;
-    private SharedPreferences preferencies;
+    private final Context context;
     private String sessioID;
 
     /**
      * Constructor de la classe
+     * <p>
      * @param listener Listener per a la resposta del servidor
      * @param context Context de l'aplicació
      * @param sessioID Sessió de l'usuari
@@ -40,7 +39,7 @@ public abstract class ModificarUsuariActual extends ConnexioServidor {
         super((respostaServidorListener) listener);
         this.context = context;
         this.sessioID = sessioID;
-        this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
@@ -53,7 +52,6 @@ public abstract class ModificarUsuariActual extends ConnexioServidor {
 
     /**
      * Mètode que retorna l'usuari
-     * @return Usuari
      */
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
@@ -81,21 +79,16 @@ public abstract class ModificarUsuariActual extends ConnexioServidor {
             }
         }.execute();
     }
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
 
     /**
      * Mètode que retorna la resposta del servidor
+     * <p>
      * @param resposta Resposta del servidor
      * @return Llista de HashMaps
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
-        if (resposta instanceof Object[]) {
-            Object[] arrayResposta = (Object[]) resposta;
+        if (resposta instanceof Object[] arrayResposta) {
             String estat = (String) arrayResposta[0];
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
@@ -117,27 +110,8 @@ public abstract class ModificarUsuariActual extends ConnexioServidor {
 
     /**
      * Mètode que executa la petició
-     * @throws ConnectException Excepció de connexió
      */
-    @Override
     public void execute() throws ConnectException {
         modificarUsuari();
     }
-
-    /**
-     * Mètode que retorna la resposta del servidor
-     * @param resposta Resposta del servidor
-     */
-    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
-
-    /**
-     * Mètode que retorna la resposta del servidor
-     * @param resposta Resposta del servidor
-     */
-    public abstract void respostaServidor(Object[] resposta);
-
-    /**
-     * Mètode que s'executa en segon pla
-     */
-    protected abstract Object doInBackground(Void... voids);
 }

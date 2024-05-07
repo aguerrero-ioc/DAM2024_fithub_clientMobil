@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import antonioguerrero.ioc.fithub.Constants;
 
-/**
+ /**
  * Classe que representa una instal·lació on es realitzen activitats, classes o serveis.
  * <p>
  * Conté informació com el seu identificador, nom, capacitat, descripció, imatge, disponibilitat i tipus.
@@ -27,7 +27,7 @@ public class Installacio {
 
     /**
      * Constructor de la classe Installacio.
-     *
+     * <p>
      * @param IDinstallacio Identificador de la instal·lació
      * @param nomInstallacio Nom de la instal·lació
      * @param descripcioInstallacio Descripció de la instal·lació
@@ -40,6 +40,13 @@ public class Installacio {
         this.tipusInstallacio = tipusInstallacio;
     }
 
+    /**
+     * Constructor de la classe Installacio.
+     * <p>
+     * @param nomInstallacio Nom de la instal·lació
+     * @param descripcioInstallacio Descripció de la instal·lació
+     * @param tipusInstallacio Tipus de la instal·lació
+     */
     public Installacio(String nomInstallacio, String descripcioInstallacio, int tipusInstallacio) {
         this.nomInstallacio = nomInstallacio;
         this.descripcioInstallacio = descripcioInstallacio;
@@ -57,7 +64,7 @@ public class Installacio {
 
     /**
      * Obté l'identificador de la instal·lació.
-     *
+     * <p>
      * @return L'identificador de la instal·lació
      */
     public int getIDinstallacio() {
@@ -66,7 +73,7 @@ public class Installacio {
 
     /**
      * Estableix l'identificador de la instal·lació.
-     *
+     * <p>
      * @param IDinstallacio L'identificador de la instal·lació a establir
      */
     public void setIDinstallacio(int IDinstallacio) {
@@ -75,7 +82,7 @@ public class Installacio {
 
     /**
      * Obté el nom de la instal·lació.
-     *
+     * <p>
      * @return El nom de la instal·lació
      */
     public String getNomInstallacio() {
@@ -84,7 +91,7 @@ public class Installacio {
 
     /**
      * Estableix el nom de la instal·lació.
-     *
+     * <p>
      * @param nomInstallacio El nom de la instal·lació
      */
     public void setNomInstallacio(String nomInstallacio) {
@@ -94,7 +101,7 @@ public class Installacio {
 
     /**
      * Obté la descripció de la instal·lació.
-     *
+     * <p>
      * @return La descripció de la instal·lació
      */
     public String getDescripcioInstallacio() {
@@ -103,7 +110,7 @@ public class Installacio {
 
     /**
      * Estableix la descripció de la instal·lació.
-     *
+     * <p>
      * @param descripcioInstallacio La descripció de la instal·lació
      */
     public void setDescripcioInstallacio(String descripcioInstallacio) {
@@ -113,7 +120,7 @@ public class Installacio {
 
     /**
      * Obté el tipus de la instal·lació.
-     *
+     * <p>
      * @return El tipus de la instal·lació
      */
     public int getTipusInstallacio() {
@@ -122,7 +129,7 @@ public class Installacio {
 
     /**
      * Estableix el tipus de la instal·lació.
-     *
+     * <p>
      * @param tipusInstallacio El tipus de la instal·lació
      */
     public void setTipus(int tipusInstallacio) {
@@ -134,7 +141,7 @@ public class Installacio {
 
     /**
      * Obté la URL de la imatge de la instal·lació.
-     *
+     * <p>
      * @return La URL de la imatge de la instal·lació
      */
     public String getImatge() {
@@ -143,7 +150,7 @@ public class Installacio {
 
     /**
      * Estableix la URL de la imatge de la instal·lació.
-     *
+     * <p>
      * @param imatge La URL de la imatge de la instal·lació
      */
     public void setImatge(String imatge) {
@@ -152,7 +159,7 @@ public class Installacio {
 
     /**
      * Comprova si la instal·lació està disponible.
-     *
+     * <p>
      * @return Cert si la instal·lació està disponible, fals altrament
      */
     public boolean isDisponible() {
@@ -161,7 +168,7 @@ public class Installacio {
 
     /**
      * Estableix la disponibilitat de la instal·lació.
-     *
+     * <p>
      * @param disponible La disponibilitat de la instal·lació
      */
     public void setDisponible(boolean disponible) {
@@ -170,7 +177,7 @@ public class Installacio {
 
     /**
      * Obté la capacitat de la instal·lació.
-     *
+     * <p>
      * @return La capacitat de la instal·lació
      */
     public int getCapacitat() {
@@ -179,7 +186,7 @@ public class Installacio {
 
     /**
      * Estableix la capacitat de la instal·lació.
-     *
+     * <p>
      * @param capacitat La capacitat de la instal·lació
      */
     public void setCapacitat(int capacitat) {
@@ -188,8 +195,8 @@ public class Installacio {
 
 
     /**
-     * Converteix una instal·lació a un HashMap.
-     *
+     * Mètode per convertir una instal·lació a un HashMap.
+     * <p>
      * @param installacio La instal·lació a convertir
      * @return El HashMap amb les dades de la instal·lació
      */
@@ -204,7 +211,7 @@ public class Installacio {
     }
 
     /**
-     * Converteix un HashMap a una instal·lació.
+     * Mètode per convertir un HashMap a una instal·lació.
      *
      * @param mapaInstallacio El HashMap amb les dades de la instal·lació
      * @return La instal·lació amb les dades del HashMap

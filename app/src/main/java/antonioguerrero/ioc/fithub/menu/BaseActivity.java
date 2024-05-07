@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,12 +22,12 @@ import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.activitats.ActivitatsActivity;
 import antonioguerrero.ioc.fithub.menu.activitats.GestioActivitatsActivity;
+import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerDiaActivity;
+import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerNomActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
-import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerNomActivity;
-import antonioguerrero.ioc.fithub.menu.classesdirigides.ClassesPerDiaActivity;
 import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 import antonioguerrero.ioc.fithub.menu.serveis.ServeisActivity;
@@ -47,14 +44,8 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogout;
  */
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public LinearLayout layoutMenuPerfil;
-
     public Context context;
-
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private Menu menu;
-    private SubMenu reservesSubMenu;
 
     public TextView tvNomUsuari;
     public TextView tvCorreuElectronic;
@@ -84,13 +75,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
+
+        // Actualitzar el text de les vistes amb les dades de l'usuari
+        tvNomUsuari.setText(nomUsuari);
+        tvCorreuElectronic.setText(correuElectronic);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        menu = navigationView.getMenu();
     }
 
     @Override
@@ -174,9 +168,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         int tipusUsuari;
 
         // Verificar si el tipus d'usuari és una cadena o un enter
-        if (tipusUsuariObject instanceof String) {
+        if (tipusUsuariObject instanceof String tipusUsuariString) {
             // Convertir la cadena a enter
-            String tipusUsuariString = (String) tipusUsuariObject;
             if (tipusUsuariString.equals("Administrador") || tipusUsuariString.equals("1")) {
                 tipusUsuari = 1;
             } else if (tipusUsuariString.equals("Client") || tipusUsuariString.equals("2")) {

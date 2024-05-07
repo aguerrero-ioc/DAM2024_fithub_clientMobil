@@ -18,26 +18,23 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 
 /**
- * Clase para eliminar un servicio.
- * Esta clase se encarga de enviar la petición al servidor para eliminar un servicio.
- *
- * @author Antonio Guerrero
+ * Classe que s'encarrega de fer la petició al servidor per eliminar un servei
+ * <p>
  * @version 1.0
  */
 public abstract class EliminarServei extends ConnexioServidor {
-
-    private String nomServei;
-    private Context context;
+    private final String nomServei;
+    private final Context context;
     private static final String ETIQUETA = "EliminarServei";
     SharedPreferences preferencies;
     String sessioID;
 
     /**
-     * Constructor de la clase EliminarServei.
-     *
-     * @param listener      El objeto que escuchará las respuestas del servidor.
-     * @param context       Contexto de la aplicación.
-     * @param nomServei     Nombre del servicio a eliminar.
+     * Constructor de la classe.
+     * <p>
+     * @param listener Listener de la classe.
+     * @param context  Context de l'aplicació.
+     * @param nomServei Nom del servei a eliminar.
      */
     public EliminarServei(ConnexioServidor.respostaServidorListener listener, Context context, String nomServei) {
         super(listener);
@@ -48,7 +45,7 @@ public abstract class EliminarServei extends ConnexioServidor {
     }
 
     /**
-     * Método para eliminar un servicio.
+     * Mètode per eliminar un servei.
      */
     @SuppressLint("StaticFieldLeak")
     public void eliminarServei() {
@@ -62,7 +59,6 @@ public abstract class EliminarServei extends ConnexioServidor {
                     return null;
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -71,30 +67,17 @@ public abstract class EliminarServei extends ConnexioServidor {
     }
 
     /**
-     * Método para obtener el tipo del objeto.
-     *
-     * @return La clase del objeto.
+     * Mètode per executar la petició al servidor.
      */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
-     * Método para ejecutar la petición.
-     */
-    @Override
     public void execute() throws ConnectException {
         eliminarServei();
     }
 
     /**
-     * Método para gestionar la respuesta del servidor.
-     *
+     * Mètode per processar la resposta del servidor.
+     * <p>
      * @param resposta La respuesta del servidor.
-     * @return
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;

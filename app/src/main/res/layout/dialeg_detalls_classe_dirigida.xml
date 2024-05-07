@@ -21,7 +21,6 @@
             android:src="@drawable/ic_tancar" />
     </LinearLayout>
 
-
     <!-- Nom de l'activitat -->
     <TextView
         android:id="@+id/tvNomActivitatEtiqueta"
@@ -31,7 +30,6 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_below="@id/botoTancarContainer"/>
-
 
     <TextView
         android:id="@+id/tvNomActivitat"

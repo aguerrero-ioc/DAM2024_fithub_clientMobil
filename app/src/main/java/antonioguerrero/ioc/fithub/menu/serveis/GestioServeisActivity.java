@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +24,7 @@ import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.peticions.serveis.ConsultarTotsServeis;
 
 /**
- * Activitat que permet a l'usuari gestionar els serveis.
+ * Activitat que permet a l'usuari administrador gestionar els serveis.
  * <p>
  * Aquesta activitat mostra una llista de tots els serveis disponibles.
  * <p>
@@ -36,13 +34,11 @@ import antonioguerrero.ioc.fithub.peticions.serveis.ConsultarTotsServeis;
  * @version 1.0
  */
 public class GestioServeisActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotsServeis.ConsultarTotsServeisListener, GestioServeisAdapter.OnServeiEliminatListener {
-
     private RecyclerView recyclerView;
-    private GestioServeisAdapter adapter;
 
     /**
      * Mètode que s'executa en la creació de l'activitat.
-     *
+     * <p>
      * @param savedInstanceState Estat de l'activitat
      */
     @Override
@@ -66,8 +62,8 @@ public class GestioServeisActivity extends BaseActivity implements ConnexioServi
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -80,77 +76,35 @@ public class GestioServeisActivity extends BaseActivity implements ConnexioServi
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
 
-
-
         // Botó "Crear nou servei"
         Button btnCrearNouServei = findViewById(R.id.btnCrearNouServei);
-        btnCrearNouServei.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Obrir l'activitat CrearServeiActivity
-                Intent intent = new Intent(GestioServeisActivity.this, CrearServeiActivity.class);
-                startActivity(intent);
-            }
+        btnCrearNouServei.setOnClickListener(v -> {
+            // Obrir l'activitat CrearServeiActivity
+            Intent intent = new Intent(GestioServeisActivity.this, CrearServeiActivity.class);
+            startActivity(intent);
         });
 
         // Obtenir sessioID de l'usuari
         preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotsServeis consulta = new ConsultarTotsServeis(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
 
         consulta.consultarTotsServeis();
     }
 
-
     /**
      * Mètode que s'executa quan s'obté la llista de serveis.
-     *
+     * <p>
      * @param serveis La llista de serveis.
      */
     @Override
     public void onServeisObtinguts(List<HashMap<String, String>> serveis) {
         if (serveis != null && !serveis.isEmpty()) {
-            adapter = new GestioServeisAdapter(this, serveis);
+            GestioServeisAdapter adapter = new GestioServeisAdapter(this, serveis);
             recyclerView.setAdapter(adapter);
         } else {
             Utils.mostrarToast(GestioServeisActivity.this, "No hi ha serveis disponibles");
         }
-    }
-
-    /**
-     * Mètode que gestiona la resposta del servidor.
-     * @param resposta La resposta del servidor.
-     */
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-    }
-
-    /**
-     * Mètode que s'executa quan s'obté la llista de serveis.
-     *
-     * @param resposta La llista de serveis.
-     */
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
-
-    /**
-     * Mètode que s'executa quan s'elimina un servei.
-     */
-    @Override
-    public void onServeiEliminat() {
-
     }
 }

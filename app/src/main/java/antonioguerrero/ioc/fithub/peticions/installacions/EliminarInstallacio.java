@@ -26,9 +26,8 @@ import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity
  * @version 1.0
  */
 public abstract class EliminarInstallacio extends ConnexioServidor {
-
-    private String nomInstallacio;
-    private Context context;
+    private final String nomInstallacio;
+    private final Context context;
     private static final String ETIQUETA = "EliminarInstallacio";
     SharedPreferences preferencies;
     String sessioID;
@@ -63,7 +62,6 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
                     return null;
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -72,19 +70,8 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
     }
 
     /**
-     * Métode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Métode per executar la petició.
      */
-    @Override
     public void execute() throws ConnectException {
         eliminarInstallacio();
     }
@@ -95,7 +82,6 @@ public abstract class EliminarInstallacio extends ConnexioServidor {
      * @param resposta La resposta del servidor.
      * @return
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;

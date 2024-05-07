@@ -21,7 +21,6 @@ android:layout_height="match_parent">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <!-- Botó d'accés a panell esquerre-->
         <ImageButton
             android:id="@+id/boto_acces_panell"
@@ -66,9 +65,7 @@ android:layout_height="match_parent">
             android:text="@string/gestionar"
             android:textSize="24sp"
             android:textStyle="bold" />
-
     </LinearLayout>
-
 
     <!-- Botons de gestions -->
     <LinearLayout
@@ -128,12 +125,10 @@ android:layout_height="match_parent">
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:paddingBottom="10dp"/>
-
     </LinearLayout>
 
 
     <!-- Botó de missatges -->
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/boto_mostrar_missatges"
         android:layout_width="wrap_content"

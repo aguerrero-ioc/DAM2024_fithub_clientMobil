@@ -1,5 +1,6 @@
 package antonioguerrero.ioc.fithub.menu.usuaris;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,8 +12,6 @@ import android.widget.ImageView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.net.ConnectException;
-import java.util.HashMap;
-import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
@@ -26,6 +25,7 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuariActual;
 
 /**
  * Classe que representa l'activitat del perfil de l'usuari a l'aplicació FitHub.
+ * <p>
  * Aquesta activitat permet a l'usuari veure i modificar les seves dades personals.
  * A més, també permet canviar la contrasenya de l'usuari.
  * <p>
@@ -33,22 +33,14 @@ import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuariActual;
  * @version 1.0
  */
 public class PerfilActivity extends BaseActivity implements ConsultarUsuari.ConsultarUsuariListener, ModificarUsuariActual.ModificarUsuariListener, ConnexioServidor.respostaServidorListener {
-
     private EditText etNomUsuari, etCognoms, etDataNaixement, etAdreca, etCorreuUsuari, etTelefon,
             etDataInscripcio, etContrasenyaActual, etNovaContrasenya, etConfirmarContrasenya,
             etTipusUsuari, etIDusuari;
     private Button btnGuardarCanvis, btnEditarPerfil, btnCanviContrasenya, btnGuardarCanviContrasenya;
-    private Context context;
     private String sessioID;
     private Usuari usuari;
-
     SharedPreferences preferencies;
-
-
     private ModificarUsuariActual modificarUsuariActual;
-
-    public PerfilActivity() {
-    }
 
     /**
      * Mètode que s'executa quan es crea l'activitat.
@@ -75,13 +67,12 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
         // Obtenir les dades de l'usuari de SharedPreferences
         preferencies = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferencies.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferencies.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferencies.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferencies.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
         tvCorreuElectronic.setText(correuElectronic);
-
 
         // Inicialització de les vistes
         etNomUsuari = findViewById(R.id.et_nom_usuari);
@@ -128,57 +119,18 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
                 throw new RuntimeException(e);
             }
         });
+
         // Obtenir sessioID de l'usuari
         preferencies = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
-        String correuUsuari = preferencies.getString("correuUsuari", Constants.VALOR_DEFAULT);
+        String correuUsuari = preferencies.getString(Constants.CORREU_USUARI, Constants.VALOR_DEFAULT);
 
         // Obtenir les dades de l'usuari
         ConsultarUsuari consultarUsuari = new ConsultarUsuari(this, this, correuUsuari, sessioID) {
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void respostaServidor(Object[] resposta) {
-            }
-
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
         };
         consultarUsuari.consultarUsuari();
 
         modificarUsuariActual = new ModificarUsuariActual(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void respostaServidor(Object[] resposta) {
-            }
-
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
-        };
-
-        CanviarContrasenya canviarContrasenya = new CanviarContrasenya(this, this, sessioID) {
-
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
     }
 
@@ -192,15 +144,12 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         Object tipusUsuariObject = preferencies.getAll().get(Constants.TIPUS_USUARI);
 
         // Verificar si el valor emmagatzemat és una cadena o un enter
-        if (tipusUsuariObject instanceof String) {
-            String tipusUsuariString = (String) tipusUsuariObject;
+        if (tipusUsuariObject instanceof String tipusUsuariString) {
             // Inflar el disseny XML corresponent segons el tipus d'usuari com a cadena
             if (tipusUsuariString.equals("1")) { // Administrador
                 setContentView(R.layout.activity_perfil_admin);
             } else if (tipusUsuariString.equals("2")) { // Client
                 setContentView(R.layout.activity_perfil_client);
-            } else {
-                // Manejar qualsevol altre tipus d'usuari o error aquí
             }
         } else if (tipusUsuariObject instanceof Integer) {
             int tipusUsuariInt = (int) tipusUsuariObject;
@@ -209,19 +158,16 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
                 setContentView(R.layout.activity_perfil_admin);
             } else if (tipusUsuariInt == 2) { // Client
                 setContentView(R.layout.activity_perfil_client);
-            } else {
-                // Manejar qualsevol altre tipus d'usuari o error aquí
             }
-        } else {
-            // Manejar el cas en què el valor no sigui ni una cadena ni un enter
         }
     }
 
     /**
      * Mètode per actualitzar les dades de l'usuari a l'activitat.
-     *
+     * <p>
      * @param usuari L'objecte Usuari amb les dades a actualitzar.
      */
+    @SuppressLint("SetTextI18n")
     private void actualitzarUsuari(Usuari usuari) {
         etNomUsuari.setText(usuari.getNomUsuari());
         etCognoms.setText(usuari.getCognomsUsuari());
@@ -332,30 +278,13 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         }
 
         // Actualitzar les dades de l'objecte Usuari amb els valors dels EditText
-
         usuari.setNomUsuari(nomUsuari);
         usuari.setCognomsUsuari(cognomsUsuari);
         usuari.setDataNaixement(dataNaixement);
         usuari.setAdreca(adreca);
         usuari.setTelefon(telefon);
         usuari.setCorreuUsuari(correuUsuari);
-
-        //Cridar al mètode modificarUsuari de la clase ModificarUsuari para enviar la petición al servidor
         ModificarUsuariActual modificarUsuariActual = new ModificarUsuariActual((ModificarUsuariActual.ModificarUsuariListener) this, this, sessioID) {
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void respostaServidor(Object[] resposta) {
-            }
-
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
         };
         modificarUsuariActual.setUsuari(usuari);
         modificarUsuariActual.modificarUsuari();
@@ -366,19 +295,12 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
     }
 
     /**
-     * Mètode per canviar la contrasenya
+     * Mètode per canviar la contrasenya de l'usuari.
      */
-    private void canviContrasenya(String novaContrasenya) throws ConnectException {
+    private void canviContrasenya(String novaContrasenya) {
         // Actualitzar la contrasenya de l'objecte Usuari existent
         usuari.setPassUsuari(novaContrasenya);
-
-        // Cridar al mètode canviarContrasenya de la classe CanviarContrasenya
-        // per enviar la sol·licitud de canvi de contrasenya al servidor
         CanviarContrasenya canviarContrasenya = new CanviarContrasenya((ModificarUsuariActual.ModificarUsuariListener) this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
 
             @Override
             protected Object doInBackground(Void... voids) {
@@ -396,7 +318,7 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
 
 
     /**
-     * Mètode que gestiona el clic del botó per canviar la contrasenya
+     * Mètode que gestiona el clic del botó per canviar la contrasenya de l'usuari.
      */
     private void onCanviContrasenyaButtonClick() throws ConnectException {
         String contrasenyaActual = etContrasenyaActual.getText().toString();
@@ -443,16 +365,11 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         deshabilitarEdicioContrasenya(); // Després de guardar, deshabilitar l'edició de nou
     }
 
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-
-    }
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
-
+    /**
+     * Mètode que s'executa quan s'obté l'usuari.
+     * <p>
+     * @param usuari L'objecte Usuari amb les dades de l'usuari.
+     */
     @Override
     public void onUsuariObtingut(Usuari usuari) {
         this.usuari = usuari;
@@ -460,10 +377,14 @@ public class PerfilActivity extends BaseActivity implements ConsultarUsuari.Cons
         modificarUsuariActual.setUsuari(usuari);
     }
 
+    /**
+     * Mètode que s'executa quan s'ha modificat l'usuari.
+     * <p>
+     * @param usuari L'objecte Usuari amb les dades de l'usuari modificat.
+     */
     @Override
     public void onUsuariModificat(Usuari usuari) {
         this.usuari = usuari;
         actualitzarUsuari(usuari);
     }
-
 }

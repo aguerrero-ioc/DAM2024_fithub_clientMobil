@@ -1,25 +1,13 @@
 package antonioguerrero.ioc.fithub;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.widget.Toast;
-
-import androidx.core.net.ParseException;
-
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-
+/**
+ * Classe Constants.
+ * <p>
+ * Aquesta classe conté les constants utilitzades en l'aplicació.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class Constants {
 
     //USUARI
@@ -37,7 +25,6 @@ public class Constants {
 
 
     //ACTIVITAT
-
     public static final String OBJ_ACT = "activitat";
     public static final String ACT_ID = "IDactivitat";
     public static final String ACT_NOM = "nomActivitat";
@@ -53,7 +40,6 @@ public class Constants {
     public static final String INS_TIPUS = "tipusInstallacio";
 
     // SERVEI
-
     public static final String OBJ_SERVEI = "servei";
     public static final String SERVEI_ID = "IDservei";
     public static final String SERVEI_NOM = "nomServei";
@@ -65,8 +51,6 @@ public class Constants {
     public static final String RESERVA_ID = "IDreserva";
     public static final String RESERVA_ESTAT = "estatReserva";
 
-
-
    // CLASSE DIRIGIDA
    public static final String OBJ_CLASSE = "classeDirigida";
     public static final String CLASSE_ID = "IDclasse";
@@ -76,8 +60,10 @@ public class Constants {
     public static final String CLASSE_OCUPACIO = "ocupacio";
     public static final String CLASSE_ESTAT = "estatClasse";
 
-
     // RESTA
+    public static final String NOM_DEFAULT ="Nom d'Usuari";
+    public static final String CORREU_DEFAULT = "correu@fithub.es";
+
     public static final String OBJTYPE = "objectType";
 
     public static final String PREFERENCIES = "Preferències";
@@ -86,6 +72,5 @@ public class Constants {
     public static final String ERROR_CONNEXIO = "Error de connexió";
     public static final String PENDENT_IMPLEMENTAR = "Pendent d'implementar. Aviat disponible!";
     public static final String NO_ADMIN = "No disponible per a administradors";
-    public static final String FORMAT_DATA = "dd-MM-yyyy";
 
 }

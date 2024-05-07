@@ -2,7 +2,6 @@ package antonioguerrero.ioc.fithub.menu.classesdirigides;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,29 +34,26 @@ import antonioguerrero.ioc.fithub.peticions.reserves.CrearReserva;
  * @version 1.0
  */
 public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdapter.ViewHolder> {
-
     private final List<HashMap<String, String>> classesDirigidesLlista;
     private final Context mContext;
 
     /**
      * Constructor de la classe.
      *
-     * @param context              Context de l'aplicació.
-     * @param classesDirigidesLlista Llista de classes dirigides.
+     * @param context               Context de l'aplicació.
+     * @param classesDirigidesLlista    Llista de classes dirigides.
      */
     public ClassesPerNomAdapter(Context context, List<HashMap<String, String>> classesDirigidesLlista) {
         this.mContext = context;
         this.classesDirigidesLlista = classesDirigidesLlista;
-        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
      * Mètode que crea una nova instància de la classe ViewHolder.
-     *
-     * @param parent   Vista pare on es mostrarà la nova vista.
-     * @param viewType Tipus de la nova vista.
-     * @return Instància de la classe ViewHolder.
+     * <p>
+     * @param parent    Vista pare on es mostrarà la nova vista.
+     * @param viewType  Tipus de la nova vista.
+     * @return          Instància de la classe ViewHolder.
      */
     @NonNull
     @Override
@@ -68,9 +64,9 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
 
     /**
      * Mètode que enllaça les dades de la llista amb les vistes de la llista.
-     *
-     * @param holder   Vista de la llista.
-     * @param posicio  Posició de l'element de la llista.
+     * <p>
+     * @param holder    Vista de la llista.
+     * @param posicio   Posició de l'element de la llista.
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicio) {
@@ -99,11 +95,10 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
         });
     }
 
-
     /**
      * Mètode que retorna el nombre d'elements de la llista.
-     *
-     * @return Nombre d'elements de la llista.
+     * <p>
+     * @return  Nombre d'elements de la llista.
      */
     @Override
     public int getItemCount() {
@@ -128,21 +123,20 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
         }
     }
 
-
     /**
      * Mètode per mostrar el diàleg amb els detalls de la classe dirigida.
      * <p>
      * Aquest mètode mostra un diàleg amb els detalls de la classe dirigida seleccionada.
-     *
-     * @param nomActivitat   Nom de l'activitat.
-     * @param nomInstallacio Nom de la instal·lació on es realitza l'activitat.
-     * @param dataClasse     Data de la classe dirigida.
-     * @param horaInici      Hora d'inici de la classe dirigida.
-     * @param duracio        Durada de la classe dirigida.
-     * @param ocupacioClasse Ocupació de la classe dirigida.
-     * @param estatClasse    Estat de la classe dirigida.
-     * @param IDclasseDirigida ID de la classe dirigida.
-     * @param IDusuari ID de l'usuari.
+     * <p>
+     * @param nomActivitat      Nom de l'activitat.
+     * @param nomInstallacio    Nom de la instal·lació on es realitza l'activitat.
+     * @param dataClasse        Data de la classe dirigida.
+     * @param horaInici         Hora d'inici de la classe dirigida.
+     * @param duracio           Durada de la classe dirigida.
+     * @param ocupacioClasse    Ocupació de la classe dirigida.
+     * @param estatClasse       Estat de la classe dirigida.
+     * @param IDclasseDirigida  ID de la classe dirigida.
+     * @param IDusuari          ID de l'usuari.
      */
     private void dialegDetallsClasseDirigida(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDclasseDirigida, String IDusuari) {
         // Inflar el disseny personalitzat del diàleg
@@ -159,7 +153,6 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
         TextView tvEstatClasse = dialogView.findViewById(R.id.tvEstatClasse);
         ImageButton botoTancar = dialogView.findViewById(R.id.botoTancar);
 
-
         tvNomActivitat.setText(nomActivitat);
         tvNomInstallacio.setText(nomInstallacio);
         tvDataClasse.setText(dataClasse);
@@ -174,56 +167,25 @@ public class ClassesPerNomAdapter extends RecyclerView.Adapter<ClassesPerNomAdap
         // Configurar els botons de "Reservar" i "Cancelar reserva"
         Button btnReservar = dialogView.findViewById(R.id.btnReservar);
 
-
         btnReservar.setOnClickListener(v -> {
-
             // Crear una instancia de la clase CrearReserva i cridar al mètode per crear la reserva
             CrearReserva crearReserva = new CrearReserva(new ConnexioServidor.respostaServidorListener() {
-
-                @Override
-                public void respostaServidor(Object resposta) {
-                }
-
-                @Override
-                public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                    return null;
-                }
             }, mContext) {
-
-                @Override
-                public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                    return null;
-                }
-
-                @Override
-                public Class<?> obtenirTipusObjecte() {
-                    return null;
-                }
-
-                @Override
-                public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                    return null;
-                }
-
-                @Override
-                public void execute() {
-                }
             };
 
             crearReserva.setReserva(reserva);
             crearReserva.crearReserva(ClassesPerNomActivity.class);
         });
 
-
         // Crear el diàleg amb el disseny personalitzat
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setView(dialogView);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        AlertDialog dialeg = builder.create();
+        dialeg.show();
 
         botoTancar.setOnClickListener(v -> {
             // Tanca el diàleg
-            dialog.dismiss();
+            dialeg.dismiss();
         });
     }
 }

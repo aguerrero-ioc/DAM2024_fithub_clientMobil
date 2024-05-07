@@ -3,7 +3,6 @@
     android:layout_height="wrap_content"
     android:padding="24dp">
 
-    <!-- Contenedor del botón de cerrar -->
     <LinearLayout
         android:id="@+id/botoTancarContainer"
         android:layout_width="wrap_content"
@@ -21,7 +20,7 @@
             android:src="@drawable/ic_tancar" />
     </LinearLayout>
 
-    <!-- ID del usuario -->
+    <!-- ID de l'usuari -->
     <TextView
         android:id="@+id/tvIDusuariEtiqueta"
         android:layout_width="wrap_content"
@@ -39,7 +38,7 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Correo electrónico del usuario -->
+    <!-- Correu del usuari -->
     <TextView
         android:id="@+id/tvCorreuUsuariEtiqueta"
         android:layout_width="wrap_content"
@@ -59,7 +58,7 @@
         android:layout_marginStart="16dp"/>
 
 
-    <!-- Tipo de usuario -->
+    <!-- Tipus d'usuari -->
     <TextView
         android:id="@+id/tvTipusUsuariEtiqueta"
         android:layout_width="wrap_content"
@@ -98,7 +97,7 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Nombre del usuario -->
+    <!-- Nom de l'usuari -->
     <TextView
         android:id="@+id/tvNomUsuariEtiqueta"
         android:layout_width="wrap_content"
@@ -117,7 +116,7 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Apellidos del usuario -->
+    <!-- Cognoms de l'  usuari -->
     <TextView
         android:id="@+id/tvCognomsUsuariEtiqueta"
         android:layout_width="wrap_content"
@@ -136,7 +135,7 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Fecha de nacimiento del usuario -->
+    <!-- Data de naixement de l'usuari -->
     <TextView
         android:id="@+id/tvDataNaixementEtiqueta"
         android:layout_width="wrap_content"
@@ -155,7 +154,7 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Dirección del usuario -->
+    <!-- Direcció de l'usuari -->
     <TextView
         android:id="@+id/tvAdrecaEtiqueta"
         android:layout_width="wrap_content"
@@ -174,7 +173,7 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-    <!-- Teléfono del usuario -->
+    <!-- Telèfon de l'usuari -->
     <TextView
         android:id="@+id/tvTelefonEtiqueta"
         android:layout_width="wrap_content"
@@ -193,9 +192,7 @@
         android:textSize="16sp"
         android:layout_marginStart="16dp"/>
 
-
-
-    <!-- Botón de eliminar usuario -->
+    <!-- Botó per eliminar l'usuari -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

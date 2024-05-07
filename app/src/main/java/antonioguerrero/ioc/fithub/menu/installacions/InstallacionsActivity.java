@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,14 +24,19 @@ import antonioguerrero.ioc.fithub.peticions.installacions.ConsultarTotesInstalla
 /**
  * Activitat per mostrar les instal·lacions disponibles al centre esportiu.
  * <p>
+ * Aquesta activitat mostra una llista de totes les instal·lacions disponibles.
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
-  */
+ */
 public class InstallacionsActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotesInstallacions.ConsultarTotesInstallacionsListener {
-
     private RecyclerView recyclerView;
-    private InstallacionsAdapter adapter;
 
+    /**
+     * Mètode que s'executa quan s'ha creat l'activitat.
+     * <p>
+     * @param savedInstanceState Estat de l'activitat
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +61,8 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
-
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
         tvCorreuElectronic.setText(correuElectronic);
@@ -72,59 +75,23 @@ public class InstallacionsActivity extends BaseActivity implements ConnexioServi
         preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        };
-
-        consulta.consultarTotesInstallacions();
-    }
-
-    public void consultarTotesInstallacions(View view) {
-        // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
-
-        ConsultarTotesInstallacions consulta = new ConsultarTotesInstallacions(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
 
         consulta.consultarTotesInstallacions();
     }
 
     /**
-     * Mètode qye s'executa quan s'han obtingut les instal·lacions.
+     * Mètode que s'executa quan s'han obtingut les instal·lacions.
+     * <p>
+     * @param installacions Llista de les instal·lacions
      */
     @Override
     public void onInstallacionsObtingudes(List<HashMap<String, String>> installacions) {
         if (installacions != null && !installacions.isEmpty()) {
-            adapter = new InstallacionsAdapter(this, installacions);
+            InstallacionsAdapter adapter = new InstallacionsAdapter(this, installacions);
             recyclerView.setAdapter(adapter);
         } else {
             Utils.mostrarToast(InstallacionsActivity.this, "No hi ha instal·lacions disponibles");
         }
-    }
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-    }
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
     }
 }

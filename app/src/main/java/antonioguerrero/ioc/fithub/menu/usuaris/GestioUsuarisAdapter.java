@@ -11,9 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,76 +25,105 @@ import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.EliminarUsuari;
 import antonioguerrero.ioc.fithub.peticions.usuaris.ModificarUsuari;
 
+/**
+ * Classe que representa un adaptador per a la llista d'usuaris.
+ * <p>
+ * Aquest adaptador s'encarrega de gestionar les dades dels usuaris i de mostrar-les en una llista.
+ * <p>
+ * Aquest adaptador permet a l'usuari administrador modificar i eliminar els usuaris de la llista.
+ * <p>
+ * Aquest adaptador també mostra un diàleg per a la modificació i eliminació dels usuaris.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdapter.ViewHolder> {
-
-    private final List<HashMap<String, String>> usuarisList;
+    private final List<HashMap<String, String>> usuaris;
     private final Context mContext;
     private View dialegView;
-
     private boolean estaEditant = false;
-    private Context context;
 
-
-    public GestioUsuarisAdapter(Context context, List<HashMap<String, String>> usuarisList) {
+    /**
+     * Constructor de la classe
+     * @param context Context de l'aplicació
+     * @param usuaris Llista d'usuaris
+     */
+    public GestioUsuarisAdapter(Context context, List<HashMap<String, String>> usuaris) {
         this.mContext = context;
-        this.usuarisList = usuarisList;
+        this.usuaris = usuaris;
     }
 
+    /**
+     * Mètode que crea una nova instància de ViewHolder
+     * @param parent Vista pare
+     * @param viewType Tipus de vista
+     * @return ViewHolder
+     */
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gestio_usuari, parent, false);
         return new ViewHolder(view);
     }
 
+    /**
+     * Mètode que enllaça les dades de l'usuari amb les vistes del ViewHolder
+     * @param holder ViewHolder
+     * @param position Posició de l'usuari
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        HashMap<String, String> usuari = usuarisList.get(position);
+        HashMap<String, String> usuari = usuaris.get(position);
         holder.nomUsuari.setText(usuari.get(Constants.NOM_USUARI));
         holder.cognomsUsuari.setText(usuari.get(Constants.COGNOMS_USUARI));
         holder.correuUsuari.setText(usuari.get(Constants.CORREU_USUARI));
         holder.setTipusUsuari(Integer.parseInt(usuari.get(Constants.TIPUS_USUARI)));
         holder.dataInscripcio.setText(usuari.get(Constants.DATA_INSCRIPCIO));
-        holder.btnModificar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String IDusuari = usuari.get(Constants.ID_USUARI);
-                String correuUsuari = usuari.get(Constants.CORREU_USUARI);
-                String tipusUsuari = usuari.get(Constants.TIPUS_USUARI);
-                String dataInscripcio = usuari.get(Constants.DATA_INSCRIPCIO);
-                String nomUsuari = usuari.get(Constants.NOM_USUARI);
-                String cognomsUsuari = usuari.get(Constants.COGNOMS_USUARI);
-                String dataNaixement = usuari.get(Constants.DATA_NAIXEMENT);
-                String adreca = usuari.get(Constants.ADRECA);
-                String telefon = usuari.get(Constants.TELEFON);
+        holder.btnModificar.setOnClickListener(v -> {
+            String IDusuari = usuari.get(Constants.ID_USUARI);
+            String correuUsuari = usuari.get(Constants.CORREU_USUARI);
+            String tipusUsuari = usuari.get(Constants.TIPUS_USUARI);
+            String dataInscripcio = usuari.get(Constants.DATA_INSCRIPCIO);
+            String nomUsuari = usuari.get(Constants.NOM_USUARI);
+            String cognomsUsuari = usuari.get(Constants.COGNOMS_USUARI);
+            String dataNaixement = usuari.get(Constants.DATA_NAIXEMENT);
+            String adreca = usuari.get(Constants.ADRECA);
+            String telefon = usuari.get(Constants.TELEFON);
 
-                dialegModificarUsuari(IDusuari, correuUsuari, tipusUsuari, dataInscripcio, nomUsuari, cognomsUsuari, dataNaixement, adreca, telefon);
-            }
+            dialegModificarUsuari(IDusuari, correuUsuari, tipusUsuari, dataInscripcio, nomUsuari, cognomsUsuari, dataNaixement, adreca, telefon);
         });
 
-        holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String IDusuari = usuari.get(Constants.ID_USUARI);
-                String correuUsuari = usuari.get(Constants.CORREU_USUARI);
-                String tipusUsuari = usuari.get(Constants.TIPUS_USUARI);
-                String dataInscripcio = usuari.get(Constants.DATA_INSCRIPCIO);
-                String nomUsuari = usuari.get(Constants.NOM_USUARI);
-                String cognomsUsuari = usuari.get(Constants.COGNOMS_USUARI);
-                String dataNaixement = usuari.get(Constants.DATA_NAIXEMENT);
-                String adreca = usuari.get(Constants.ADRECA);
-                String telefon = usuari.get(Constants.TELEFON);
+        holder.btnEliminar.setOnClickListener(v -> {
+            String IDusuari = usuari.get(Constants.ID_USUARI);
+            String correuUsuari = usuari.get(Constants.CORREU_USUARI);
+            String tipusUsuari = usuari.get(Constants.TIPUS_USUARI);
+            String dataInscripcio = usuari.get(Constants.DATA_INSCRIPCIO);
+            String nomUsuari = usuari.get(Constants.NOM_USUARI);
+            String cognomsUsuari = usuari.get(Constants.COGNOMS_USUARI);
+            String dataNaixement = usuari.get(Constants.DATA_NAIXEMENT);
+            String adreca = usuari.get(Constants.ADRECA);
+            String telefon = usuari.get(Constants.TELEFON);
 
-                dialegEliminarUsuari(IDusuari, correuUsuari, tipusUsuari, dataInscripcio, nomUsuari, cognomsUsuari, dataNaixement, adreca, telefon);
-            }
+            dialegEliminarUsuari(IDusuari, correuUsuari, tipusUsuari, dataInscripcio, nomUsuari, cognomsUsuari, dataNaixement, adreca, telefon);
         });
     }
 
+    /**
+     * Mètode que retorna el nombre d'elements de la llista d'usuaris.
+     * <p>
+     * @return Retorna el nombre d'elements de la llista d'usuaris.
+     */
     @Override
     public int getItemCount() {
-        return usuarisList.size();
+        return usuaris.size();
     }
 
+    /**
+     * Classe interna ViewHolder.
+     * <p>
+     * Aquesta classe s'encarrega de gestionar les vistes dels elements de la llista d'usuaris.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View btnModificar, btnDesar, btnEliminar;
         TextView nomUsuari, correuUsuari, cognomsUsuari, tipusUsuari, dataInscripcio;
@@ -111,23 +140,32 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
         }
 
+        /**
+         * Mètode que assigna el tipus d'usuari a la vista.
+         * @param tipus Tipus d'usuari
+         */
         public void setTipusUsuari(int tipus) {
-            String tipusText;
-            switch (tipus) {
-                case 1:
-                    tipusText = "Administrador";
-                    break;
-                case 2:
-                    tipusText = "Client";
-                    break;
-                default:
-                    tipusText = "Desconegut";
-                    break;
-            }
+            String tipusText = switch (tipus) {
+                case 1 -> "Administrador";
+                case 2 -> "Client";
+                default -> "Desconegut";
+            };
             tipusUsuari.setText(tipusText);
         }
     }
 
+    /**
+     * Mètode que mostra un diàleg per a la modificació d'un usuari.
+     * @param IDusuari ID de l'usuari
+     * @param correuUsuari Correu de l'usuari
+     * @param tipusUsuari Tipus de l'usuari
+     * @param dataInscripcio Data d'inscripció de l'usuari
+     * @param nomUsuari Nom de l'usuari
+     * @param cognomsUsuari Cognoms de l'usuari
+     * @param dataNaixement Data de naixement de l'usuari
+     * @param adreca Adreça de l'usuari
+     * @param telefon Telèfon de l'usuari
+     */
     private void dialegModificarUsuari(String IDusuari, String correuUsuari, String tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
         Usuari usuari = new Usuari(IDusuari, correuUsuari, tipusUsuari, dataInscripcio, nomUsuari, cognomsUsuari, dataNaixement, adreca, telefon);
 
@@ -139,6 +177,21 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         mostrarDialeg(dialegView);
     }
 
+    /**
+     * Mètode que configura les vistes del diàleg de modificació d'un usuari.
+     * @param dialegView Vista del diàleg
+     * @param IDusuari ID de l'usuari
+     * @param correuUsuari Correu de l'usuari
+     * @param tipusUsuari Tipus de l'usuari
+     * @param dataInscripcio Data d'inscripció de l'usuari
+     * @param nomUsuari Nom de l'usuari
+     * @param cognomsUsuari Cognoms de l'usuari
+     * @param dataNaixement Data de naixement de l'usuari
+     * @param adreca Adreça de l'usuari
+     * @param telefon Telèfon de l'usuari
+     * @param usuari Usuari
+     */
+    @SuppressLint("SetTextI18n")
     private void configurarVistesDialegModificar(View dialegView, String IDusuari, String correuUsuari, String tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon, Usuari usuari) {
         EditText etIDusuari = dialegView.findViewById(R.id.etIDusuari);
         EditText etCorreuUsuari = dialegView.findViewById(R.id.etCorreuUsuari);
@@ -176,6 +229,11 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         configurarBotoTancar(botoTancar);
     }
 
+    /**
+     * Mètode que configura el botó de modificar un usuari.
+     * @param btnModificarUsuari Botó de modificar usuari
+     * @param btnDesarCanvisUsuari Botó de desar canvis usuari
+     */
     private void configurarBotoModificar(Button btnModificarUsuari, Button btnDesarCanvisUsuari) {
         btnModificarUsuari.setOnClickListener(v -> {
             estaEditant = true;
@@ -185,6 +243,21 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         });
     }
 
+    /**
+     * Mètode que configura el botó de desar canvis d'un usuari.
+     * @param btnModificarUsuari Botó de modificar usuari
+     * @param btnDesarCanvisUsuari Botó de desar canvis usuari
+     * @param etIDusuari ID de l'usuari
+     * @param etCorreuUsuari Correu de l'usuari
+     * @param etTipusUsuari Tipus de l'usuari
+     * @param etDataInscripcio Data d'inscripció de l'usuari
+     * @param etNomUsuari Nom de l'usuari
+     * @param etCognomsUsuari Cognoms de l'usuari
+     * @param etTelefon Telèfon de l'usuari
+     * @param etDataNaixement Data de naixement de l'usuari
+     * @param etAdreca Adreça de l'usuari
+     * @param usuari Usuari
+     */
     private void configurarBotoDesar(Button btnModificarUsuari, Button btnDesarCanvisUsuari, EditText etIDusuari, EditText etCorreuUsuari, EditText etTipusUsuari, EditText etDataInscripcio, EditText etNomUsuari, EditText etCognomsUsuari, EditText etTelefon, EditText etDataNaixement, EditText etAdreca, Usuari usuari) {
         btnDesarCanvisUsuari.setOnClickListener(v -> {
             String nomUsuariModificat = etNomUsuari.getText().toString().trim();
@@ -227,17 +300,28 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         });
     }
 
+    /**
+     * Mètode que determina el tipus d'usuari.
+     * @param tipusUsuariText Tipus d'usuari
+     * @return Retorna el tipus d'usuari
+     */
     private int determinarTipusUsuari(String tipusUsuariText) {
-        switch (tipusUsuariText.toLowerCase()) {
-            case "administrador":
-                return 1;
-            case "client":
-                return 2;
-            default:
-                return 0;
-        }
+        return switch (tipusUsuariText.toLowerCase()) {
+            case "administrador" -> 1;
+            case "client" -> 2;
+            default -> 0;
+        };
     }
 
+    /**
+     * Mètode que valida els camps del formulari de modificació d'usuari.
+     * @param nomUsuari Nom de l'usuari
+     * @param cognomsUsuari Cognoms de l'usuari
+     * @param dataNaixement Data de naixement de l'usuari
+     * @param adreca Adreça de l'usuari
+     * @param telefon Telèfon de l'usuari
+     * @return Retorna true si els camps són correctes, false altrament
+     */
     private boolean validarCamps(String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
         // Comprovar si tots els camps estan complets
         if (nomUsuari.isEmpty() || cognomsUsuari.isEmpty() || dataNaixement.isEmpty() || adreca.isEmpty() || telefon.isEmpty()) {
@@ -268,17 +352,21 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
             Utils.mostrarToast(mContext, "El telèfon ha de tenir 9 dígits");
             return false;
         }
-
         return true;
     }
 
-
+    /**
+     * Mètode que configura el botó de tancar el diàleg.
+     * @param botoTancar Botó de tancar
+     */
     private void configurarBotoTancar(ImageButton botoTancar) {
-        botoTancar.setOnClickListener(v -> {
-            ((AlertDialog) dialegView.getTag()).dismiss();
-        });
+        botoTancar.setOnClickListener(v -> ((AlertDialog) dialegView.getTag()).dismiss());
     }
 
+    /**
+     * Mètode que mostra un diàleg.
+     * @param dialegView Vista del diàleg
+     */
     private void mostrarDialeg(View dialegView) {
         // Crear el diàleg amb el disseny personalitzat
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -291,8 +379,11 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         dialegView.setTag(dialeg); // Permetre tancar el diàleg des del botó de tancament
     }
 
+    /**
+     * Mètode que habilita o deshabilita l'edició dels camps del formulari de modificació d'usuari.
+     * @param habilitar Booleà que indica si s'ha d'habilitar o deshabilitar l'edició
+     */
     private void habilitarEdicio(boolean habilitar) {
-        int visibility = habilitar ? View.VISIBLE : View.GONE;
         EditText etNomUsuari = dialegView.findViewById(R.id.etNomUsuari);
         EditText etCognomsUsuari = dialegView.findViewById(R.id.etCognomsUsuari);
         EditText etTelefon = dialegView.findViewById(R.id.etTelefon);
@@ -306,69 +397,49 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         etAdreca.setEnabled(habilitar);
     }
 
+    /**
+     * Mètode que modifica un usuari.
+     * @param usuari Usuari a modificar
+     */
     private void modificarUsuari(Usuari usuari) {
         ModificarUsuari modificarUsuari = new ModificarUsuari(new ConnexioServidor.respostaServidorListener() {
-
-            @Override
-            public void respostaServidor(Object resposta) {
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         }, mContext) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            /**
-             * Mètode que retorna la resposta del servidor
-             *
-             * @param resposta Resposta del servidor
-             */
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            /**
-             * Mètode que retorna la resposta del servidor
-             *
-             * @param resposta Resposta del servidor
-             */
-            @Override
-            public void respostaServidor(Object[] resposta) {
-
-            }
-
-            /**
-             * Mètode que s'executa en segon pla
-             *
-             * @param voids
-             */
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
         };
-
-
-
         // Configuración del usuario y llamada al método de modificación
         modificarUsuari.setUsuari(usuari);
         modificarUsuari.modificarUsuari();
     }
 
-
-
-
+    /**
+     * Mètode que mostra un diàleg per a l'eliminació d'un usuari.
+     * @param IDusuari ID de l'usuari
+     * @param correuUsuari Correu de l'usuari
+     * @param tipusUsuari Tipus de l'usuari
+     * @param dataInscripcio Data d'inscripció de l'usuari
+     * @param nomUsuari Nom de l'usuari
+     * @param cognomsUsuari Cognoms de l'usuari
+     * @param dataNaixement Data de naixement de l'usuari
+     * @param adreca Adreça de l'usuari
+     * @param telefon Telèfon de l'usuari
+     */
     private void dialegEliminarUsuari(String IDusuari, String correuUsuari, String tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
         View dialegView = crearDialegEliminarUsuari(IDusuari, correuUsuari, tipusUsuari, dataInscripcio, nomUsuari,cognomsUsuari,dataNaixement,adreca,telefon);
         mostrarDialeg(dialegView);
     }
 
+    /**
+     * Mètode que crea un diàleg per a l'eliminació d'un usuari.
+     * @param IDusuari ID de l'usuari
+     * @param correuUsuari Correu de l'usuari
+     * @param tipusUsuari Tipus de l'usuari
+     * @param dataInscripcio Data d'inscripció de l'usuari
+     * @param nomUsuari Nom de l'usuari
+     * @param cognomsUsuari Cognoms de l'usuari
+     * @param dataNaixement Data de naixement de l'usuari
+     * @param adreca Adreça de l'usuari
+     * @param telefon Telèfon de l'usuari
+     * @return Retorna la vista del diàleg
+     */
     private View crearDialegEliminarUsuari(String IDusuari, String correuUsuari, String tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View dialegView = inflater.inflate(R.layout.dialeg_eliminar_usuari, null);
@@ -376,9 +447,22 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         return dialegView;
     }
 
+    /**
+     * Mètode que configura les vistes del diàleg d'eliminació d'un usuari.
+     * @param dialegView Vista del diàleg
+     * @param IDusuari ID de l'usuari
+     * @param correuUsuari Correu de l'usuari
+     * @param tipusUsuari Tipus de l'usuari
+     * @param dataInscripcio Data d'inscripció de l'usuari
+     * @param nomUsuari Nom de l'usuari
+     * @param cognomsUsuari Cognoms de l'usuari
+     * @param dataNaixement Data de naixement de l'usuari
+     * @param adreca Adreça de l'usuari
+     * @param telefon Telèfon de l'usuari
+     */
     private void configurarVistesDialegEliminar(View dialegView, String IDusuari,String correuUsuari, String tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
         TextView tvIDusuari = dialegView.findViewById(R.id.tvIDusuari);
-;       TextView tvCorreuUsuari = dialegView.findViewById(R.id.tvCorreuUsuari);
+       TextView tvCorreuUsuari = dialegView.findViewById(R.id.tvCorreuUsuari);
         TextView tvTipusUsuari = dialegView.findViewById(R.id.tvTipusUsuari);
         TextView tvDataInscripcio = dialegView.findViewById(R.id.tvDataInscripcio);
         TextView tvNomUsuari = dialegView.findViewById(R.id.tvNomUsuari);
@@ -405,28 +489,20 @@ public class GestioUsuarisAdapter extends RecyclerView.Adapter<GestioUsuarisAdap
         configurarBotoTancar(botoTancar);
     }
 
+    /**
+     * Interfície per a l'escolta de l'eliminació d'un usuari.
+     */
     public interface OnUsuariEliminatListener {
-        void onUsuariEliminat();
     }
 
+    /**
+     * Mètode que elimina un usuari.
+     * @param nomUsuari Nom de l'usuari
+     */
     private void eliminarUsuari(String nomUsuari) {
         EliminarUsuari eliminarUsuari = new EliminarUsuari(new ConnexioServidor.respostaServidorListener() {
-            @Override
-            public void respostaServidor(Object resposta) throws ConnectException {
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         }, mContext, nomUsuari) {
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
-
         eliminarUsuari.eliminarUsuari();
     }
-
 }

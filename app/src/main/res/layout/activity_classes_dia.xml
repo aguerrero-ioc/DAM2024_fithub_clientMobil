@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Contenidor principal -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +22,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
 
             <!-- Botó d'accés a panell esquerre-->
             <ImageButton
@@ -90,7 +88,7 @@
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackgroundBorderless"/>
 
-                <!-- Icono de editar fecha -->
+                <!-- Icona de edició de data -->
                 <ImageView
                     android:id="@+id/ivEdit"
                     android:layout_width="wrap_content"
@@ -103,9 +101,7 @@
 
             </LinearLayout>
 
-         </RelativeLayout>
-
-
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvClassesDirigides"

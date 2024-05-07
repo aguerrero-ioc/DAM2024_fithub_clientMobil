@@ -24,17 +24,16 @@ import antonioguerrero.ioc.fithub.objectes.Activitat;
  */
 public abstract class CrearActivitat extends ConnexioServidor {
     private static final String ETIQUETA = "CrearActivitat";
-    private String nomActivitat;
-    private String descripcioActivitat;
-    private int aforamentActivitat;
-    private int tipusInstallacio;
+    private final String nomActivitat;
+    private final String descripcioActivitat;
+    private final int aforamentActivitat;
+    private final int tipusInstallacio;
     private final Context context;
-    private String sessioID;
-
-
+    private final String sessioID;
 
     /**
      * Constructor de la classe
+     * <p>
      * @param listener Listener per a la resposta del servidor
      * @param activitat Activitat a crear
      * @param context Context de l'aplicació
@@ -50,7 +49,6 @@ public abstract class CrearActivitat extends ConnexioServidor {
         this.sessioID = sessioID;
 
     }
-
 
     /**
      * Mètode que crea una activitat
@@ -71,18 +69,9 @@ public abstract class CrearActivitat extends ConnexioServidor {
             }
             @Override
             protected void onPostExecute(Object resposta) {
-                respostaServidor(resposta);
+                processarResposta(resposta);
             }
         }.execute();
-    }
-
-    /**
-     * Mètode que retorna el tipus d'objecte
-     * @return Object[].class
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
     }
 
     /**
@@ -90,8 +79,7 @@ public abstract class CrearActivitat extends ConnexioServidor {
      * @param resposta Resposta del servidor
      * @return null
      */
-    @Override
-    public List<HashMap<String, String>> respostaServidor(Object resposta) {
+     public List<HashMap<String, String>> processarResposta(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;
         boolean exit = respostaArray[0].equals("true");
@@ -114,17 +102,8 @@ public abstract class CrearActivitat extends ConnexioServidor {
 
     /**
      * Mètode que executa la petició
-     * @throws ConnectException
      */
-    @Override
     public void execute() throws ConnectException {
         crearActivitat();
     }
-
-    /**
-     * Mètode que s'executa en segon pla
-     * @param voids
-     * @return null
-     */
-    protected abstract Object doInBackground(Void... voids);
 }

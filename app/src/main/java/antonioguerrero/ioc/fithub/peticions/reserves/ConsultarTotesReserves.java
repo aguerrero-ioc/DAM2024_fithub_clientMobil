@@ -7,14 +7,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
 
 /**
  * Classe que realitza la petició al servidor per obtenir totes les reserves d'un usuari
@@ -23,21 +22,17 @@ import antonioguerrero.ioc.fithub.peticions.activitats.ConsultarTotesActivitats;
  * @version 1.0
  */
 public abstract class ConsultarTotesReserves extends ConnexioServidor {
-
-    private Context context;
-
+    private final Context context;
     private static final String ETIQUETA = "ConsultarTotesReserves";
-
-    private String correuUsuari;
-    private String sessioID;
+    private final String correuUsuari;
+    private final String sessioID;
 
     /**
      * Constructor de la classe
-     *
+     * <p>
      * @param listener Listener per a la resposta del servidor
      * @param context Context de l'aplicació
      * @param correuUsuari Correu de l'usuari
-     * @param sessioID
      */
     public ConsultarTotesReserves(respostaServidorListener listener, Context context, String correuUsuari, String sessioID) {
         super(listener);
@@ -52,7 +47,6 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
     public interface ConsultarTotesReservesListener {
         void onReservesObtingudes(List<HashMap<String, String>> reserves);
     }
-
 
     /**
      * Mètode que realitza la petició al servidor per obtenir totes les reserves d'un usuari
@@ -75,12 +69,14 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
         }.execute();
     }
 
-
+    /**
+     * Mètode per processar la resposta del servidor.
+     * <p>
+     * @param resposta Resposta del servidor
+     */
     private void processarResposta(Object resposta) {
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
-            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
-                String estat = (String) respostaArray[0];
+        if (resposta != null && resposta instanceof Object[] respostaArray) {
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String estat) {
                 if ("reservaLlista".equals(estat)) {
                     if (respostaArray[1] instanceof List) {
                         List<HashMap<String, String>> reserves = (List<HashMap<String, String>>) respostaArray[1];
@@ -94,6 +90,7 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
                         if (listener instanceof ConsultarTotesReservesListener) {
                             ((ConsultarTotesReservesListener) listener).onReservesObtingudes(reserves);
                         }
+                        Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
                         guardarDadesReserves(reserves);
                         return;
                     }
@@ -105,10 +102,14 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
         Utils.mostrarToast(context, "Error en la resposta del servidor");
     }
 
+    /**
+     * Mètode per guardar les dades de les reserves a les preferències de l'aplicació.
+     * <p>
+     * @param llistaReserves Llista de reserves
+     */
     private void guardarDadesReserves(List<HashMap<String, String>> llistaReserves) {
         SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
-
 
         for (int i = 0; i < llistaReserves.size(); i++) {
             HashMap<String, String> mapaReserva = llistaReserves.get(i);
@@ -124,30 +125,14 @@ public abstract class ConsultarTotesReserves extends ConnexioServidor {
             editor.putString(Constants.INS_NOM + i, mapaReserva.get(Constants.INS_NOM));
 
         }
-
         editor.putInt("numReserves", llistaReserves.size());
         editor.apply();
     }
 
-    public abstract void onReservesObtingudes(List<HashMap<String, String>> reserves);
-
     /**
-     * Mètode que rep la resposta del servidor
-     * @return Objecte amb la resposta del servidor
-     * @throws Exception
+     * Mètode per executar la petició.
      */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
-     * Mètode que processa la resposta del servidor
-     * @throws Exception
-     */
-    @Override
     public void execute() throws ConnectException {
         consultarTotesReserves();
     }
-
 }

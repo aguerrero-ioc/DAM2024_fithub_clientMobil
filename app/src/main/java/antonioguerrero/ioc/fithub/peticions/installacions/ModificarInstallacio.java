@@ -11,7 +11,6 @@ import android.util.Log;
 import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
@@ -34,9 +33,8 @@ public abstract class ModificarInstallacio extends ConnexioServidor {
 
     private static final String ETIQUETA = "ModificarInstallacio";
     private Installacio installacio;
-    private Context context;
-    private SharedPreferences preferences;
-    private String sessioID;
+    private final Context context;
+    private final String sessioID;
 
     /**
      * Constructor de la classe ModificarInstallacio.
@@ -47,7 +45,7 @@ public abstract class ModificarInstallacio extends ConnexioServidor {
     public ModificarInstallacio(respostaServidorListener listener, Context context) {
         super((respostaServidorListener) listener);
         this.context = context;
-        this.preferences = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
@@ -61,7 +59,6 @@ public abstract class ModificarInstallacio extends ConnexioServidor {
     /**
      * Obte la instal·lació que es vol modificar.
      *
-     * @return La instal·lació que es vol modificar.
      */
     public void setInstallacio(Installacio installacio) {
         this.installacio = installacio;
@@ -91,25 +88,13 @@ public abstract class ModificarInstallacio extends ConnexioServidor {
     }
 
     /**
-     * Obte el tipus de l'objecte que es passarà com a paràmetre a la petició.
-     *
-     * @return El tipus de l'objecte que es passarà com a paràmetre a la petició.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Processa la resposta del servidor.
      *
      * @param resposta La resposta del servidor.
      */
     private void processarResposta(Object resposta) {
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] arrayResposta = (Object[]) resposta;
-            if (arrayResposta.length >= 2 && arrayResposta[0] instanceof String) {
-                String estat = (String) arrayResposta[0];
+        if (resposta instanceof Object[] arrayResposta) {
+            if (arrayResposta.length >= 2 && arrayResposta[0] instanceof String estat) {
                 if ("installacio".equals(estat)) {
                     HashMap<String, String> mapaInstallacio = (HashMap<String, String>) arrayResposta[1];
                     Installacio installacio = Installacio.hashmap_a_installacio(mapaInstallacio);
@@ -137,7 +122,6 @@ public abstract class ModificarInstallacio extends ConnexioServidor {
      *
      * @throws ConnectException Si no es pot connectar amb el servidor.
      */
-    @Override
     public void execute() throws ConnectException {
         modificarInstallacio();
     }
@@ -161,27 +145,4 @@ public abstract class ModificarInstallacio extends ConnexioServidor {
         // Aplicar els canvis a SharedPreferences
         editor.apply();
     }
-
-    /**
-     * Obte la resposta del servidor en forma de HashMap.
-     *
-     * @param resposta La resposta del servidor.
-     * @return La resposta del servidor en forma de HashMap.
-     */
-    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
-
-    /**
-     * Obte la resposta del servidor en forma de Object[].
-     *
-     * @param resposta La resposta del servidor.
-     * @return La resposta del servidor en forma de Object[].
-     */
-    public abstract void respostaServidor(Object[] resposta);
-
-    /**
-     * Executa la petició al servidor.
-     *
-     * @throws ConnectException Si no es pot connectar amb el servidor.
-     */
-    protected abstract Object doInBackground(Void... voids);
 }

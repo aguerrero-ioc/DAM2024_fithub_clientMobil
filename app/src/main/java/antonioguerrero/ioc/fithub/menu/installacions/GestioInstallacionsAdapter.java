@@ -11,9 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,25 +25,57 @@ import antonioguerrero.ioc.fithub.objectes.Installacio;
 import antonioguerrero.ioc.fithub.peticions.installacions.EliminarInstallacio;
 import antonioguerrero.ioc.fithub.peticions.installacions.ModificarInstallacio;
 
+/**
+ * Classe que representa un adaptador per a la llista d'instal·lacions.
+ * <p>
+ * Aquest adaptador s'encarrega de gestionar les dades de les instal·lacions i mostrar-les a la llista.
+ * <p>
+ * Aquest adaptador permet a l'usuari administrador modificar i eliminar les instal·lacions de la llista.
+ * <p>
+ * Aquest adaptador també mostra un diàleg per a la modificació i eliminació de les instal·lacions.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInstallacionsAdapter.ViewHolder> {
-
     private final List<HashMap<String, String>> installacionsList;
     private final Context mContext;
     private View dialegView;
     private boolean estaEditant = false;
-    private Context context;
 
+    /**
+     * Constructor de la classe GestioInstallacionsAdapter.
+     * <p>
+     * @param context Context de l'aplicació.
+     * @param installacionsList Llista de les instal·lacions.
+     */
     public GestioInstallacionsAdapter(Context context, List<HashMap<String, String>> installacionsList) {
         this.mContext = context;
         this.installacionsList = installacionsList;
     }
 
+    /**
+     * Mètode que crea un nou ViewHolder per a cada element de la llista.
+     * <p>
+     * @param parent Vista pare a la qual s'adjuntarà la nova vista.
+     * @param viewType Tipus de la vista.
+     * @return Nou ViewHolder que conté la vista de l'element de la llista.
+     */
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gestio_installacio, parent, false);
         return new ViewHolder(view);
     }
 
+    /**
+     * Mètode que s'executa per a cada element de la llista.
+     * <p>
+     * Aquest mètode s'encarrega de mostrar les dades de cada element de la llista a la vista corresponent.
+     * <p>
+     * @param holder ViewHolder que conté les vistes de l'element de la llista.
+     * @param position Posició de l'element de la llista.
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -66,33 +98,27 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
             holder.tipusInstallacio.setText("No definit");
         }
 
-        holder.btnModificar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String IDinstallacio = installacio.get(Constants.INS_ID);
-                String nomInstallacio = installacio.get(Constants.INS_NOM);
-                String descripcioInstallacio = installacio.get(Constants.INS_DESC);
-                String tipusInstallacio = holder.tipusInstallacio.getText().toString();
-                dialegModificarInstallacio(Integer.parseInt(IDinstallacio), nomInstallacio, descripcioInstallacio, tipusInstallacio);
-            }
+        holder.btnModificar.setOnClickListener(v -> {
+            String IDinstallacio = installacio.get(Constants.INS_ID);
+            String nomInstallacio = installacio.get(Constants.INS_NOM);
+            String descripcioInstallacio = installacio.get(Constants.INS_DESC);
+            String tipusInstallacio12 = holder.tipusInstallacio.getText().toString();
+            dialegModificarInstallacio(Integer.parseInt(IDinstallacio), nomInstallacio, descripcioInstallacio, tipusInstallacio12);
         });
 
-        holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String IDinstallacio = installacio.get(Constants.INS_ID);
-                String nomInstallacio = installacio.get(Constants.INS_NOM);
-                String descripcioInstallacio = installacio.get(Constants.INS_DESC);
-                String tipusInstallacio = holder.tipusInstallacio.getText().toString();
-                dialegEliminarInstallacio(Integer.parseInt(IDinstallacio), nomInstallacio, descripcioInstallacio, tipusInstallacio);
-            }
+        holder.btnEliminar.setOnClickListener(v -> {
+            String IDinstallacio = installacio.get(Constants.INS_ID);
+            String nomInstallacio = installacio.get(Constants.INS_NOM);
+            String descripcioInstallacio = installacio.get(Constants.INS_DESC);
+            String tipusInstallacio1 = holder.tipusInstallacio.getText().toString();
+            dialegEliminarInstallacio(Integer.parseInt(IDinstallacio), nomInstallacio, descripcioInstallacio, tipusInstallacio1);
         });
     }
 
     /**
-     * Mètode que retorna el nombre d'elements de la llista.
+     * Mètode que retorna el nombre d'elements de la llista de les instal·lacions.
      * <p>
-     * @return Nombre d'elements de la llista.
+     * @return Retorna el nombre d'elements de la llista de les instal·lacions.
      */
     @Override
     public int getItemCount() {
@@ -102,7 +128,7 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
     /**
      * Classe interna ViewHolder.
      * <p>
-     * Aquesta classe s'encarrega de gestionar les vistes dels elements de la llista.
+     * Aquesta classe s'encarrega de gestionar les vistes dels elements de la llista d'instal·lacions.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View btnModificar, btnDesar, btnEliminar;
@@ -159,12 +185,16 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
         etTipusInstallacio.setText(tipusInstallacio);
 
         configurarBotoModificar(btnModificar, btnDesar);
-
         configurarBotoDesar(btnModificar, btnDesar, etIDinstallacio, etNomInstallacio, etDescripcioInstallacio, etTipusInstallacio, installacio);
-
         configurarBotoTancar(botoTancar);
     }
 
+    /**
+     * Mètode per configurar el comportament del botó de modificar l'instal·lació.
+     * <p>
+     * @param btnModificar Botó de modificar.
+     * @param btnDesar Botó de desar.
+     */
     private void configurarBotoModificar(Button btnModificar, Button btnDesar) {
         btnModificar.setOnClickListener(v -> {
             estaEditant = true;
@@ -174,6 +204,17 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
         });
     }
 
+    /**
+     * Mètode per configurar el comportament del botó de desar els canvis de l'instal·lació.
+     * <p>
+     * @param btnModificar Botó de modificar.
+     * @param btnDesar Botó de desar.
+     * @param etIDinstallacio Camp de text de l'identificador de la instal·lació.
+     * @param etNomInstallacio Camp de text del nom de la instal·lació.
+     * @param etDescripcioInstallacio Camp de text de la descripció de la instal·lació.
+     * @param etTipusInstallacio Camp de text del tipus de la instal·lació.
+     * @param installacio Instància de la classe Installacio.
+     */
     private void configurarBotoDesar(Button btnModificar, Button btnDesar, EditText etIDinstallacio, EditText etNomInstallacio, EditText etDescripcioInstallacio, EditText etTipusInstallacio, Installacio installacio) {
         btnDesar.setOnClickListener(v -> {
             int IDinstallacioModificat = Integer.parseInt(etIDinstallacio.getText().toString());
@@ -183,6 +224,7 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
             // Validar que cap camp estigui buit
             if (!nomInstallacioModificat.isEmpty() && !descripcioInstallacioModificada.isEmpty()
                     && !tipusInstallacioModificat.isEmpty()) {
+
                 // Assignar els valors modificats a la instància de l'installacio
                 installacio.setIDinstallacio(IDinstallacioModificat);
                 installacio.setNomInstallacio(nomInstallacioModificat);
@@ -193,18 +235,17 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
                 modificarInstallacio(installacio);
             } else {
                 // Mostrar un missatge d'error si algun dels camps està buit
-                Utils.mostrarToast(context, "Si us plau, omple tots els camps abans de desar els canvis.");
+                Utils.mostrarToast(mContext, "Si us plau, omple tots els camps abans de desar els canvis.");
             }
             habilitarEdicio(false);
             btnDesar.setEnabled(false);
             btnModificar.setEnabled(true);
         });
     }
+
     /**
-     * Mètode per configurar el comportament del botó de tancament.
+     * Mètode per configurar el comportament del botó de tancament del diàleg.
      * <p>
-     * Aquest mètode configura el comportament del botó de tancament del diàleg.
-     *
      * @param botoTancar Botó de tancament.
      */
     private void configurarBotoTancar(ImageButton botoTancar) {
@@ -215,10 +256,8 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
     }
 
     /**
-     * Mètode per mostrar el diàleg amb el disseny personalitzat.
+     * Mètode per mostrar el diàleg amb el disseny personalitzat passat com a paràmetre.
      * <p>
-     * Aquest mètode mostra el diàleg amb el disseny personalitzat passat com a paràmetre.
-     *
      * @param dialegView Vista del diàleg amb el disseny personalitzat.
      */
     private void mostrarDialeg(View dialegView) {
@@ -234,28 +273,21 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
     }
 
     /**
-     * Mètode per convertir el tipus d'instal·lació a un valor numèric.
+     * Mètode per convertir el tipus d'instal·lació a un valor numèric per a l'enviament al servidor.
      * <p>
-     * Aquest mètode converteix el tipus d'instal·lació a un valor numèric per a l'enviament al servidor.
-     *
      * @param tipusInstallacio Tipus de l'instal·lació.
      * @return Valor numèric del tipus d'instal·lació.
      */
     private String convertTipusInstallacio(String tipusInstallacio) {
-        switch (tipusInstallacio) {
-            case "Sala":
-                return "1";
-            case "Piscina":
-                return "2";
-            default:
-                return "0";
-        }
+        return switch (tipusInstallacio) {
+            case "Sala" -> "1";
+            case "Piscina" -> "2";
+            default -> "0";
+        };
     }
 
     /**
-     * Mètode per habilitar o deshabilitar l'edició dels camps de text.
-     * <p>
-     * Aquest mètode habilita o deshabilita l'edició dels camps de text segons l'estat de l'edició.
+     * Mètode per habilitar o deshabilitar l'edició dels camps de text segons l'estat de l'edició.
      * <p>
      * @param habilitat Estat de l'edició.
      */
@@ -272,40 +304,13 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
      * Mètode per modificar una instal·lació.
      * <p>
      * Aquest mètode crida a la classe ModificarInstallacio per modificar una instal·lació.
-     *
+     * <p>
      * @param installacio Activitat a modificar.
      */
     private void modificarInstallacio(Installacio installacio) {
         ModificarInstallacio modificarInstallacio = new ModificarInstallacio(new ConnexioServidor.respostaServidorListener() {
-            @Override
-            public void respostaServidor(Object resposta) {
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        }, mContext) {
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void respostaServidor(Object[] resposta) {
-
-            }
-
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-        };
+                    }, mContext) {
+         };
         modificarInstallacio.setInstallacio(installacio);
         modificarInstallacio.modificarInstallacio();
     }
@@ -320,7 +325,6 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
      * @param descripcioInstallacio Descripció de la instal·lació.
      * @param tipusInstallacio Tipus de la instal·lació.
      */
-
     private void dialegEliminarInstallacio(int IDinstallacio, String nomInstallacio, String descripcioInstallacio, String tipusInstallacio) {
         // Inflar la vista del diàleg
         View dialegView = crearDialegEliminarInstallacio(IDinstallacio, nomInstallacio, descripcioInstallacio, tipusInstallacio);
@@ -330,10 +334,8 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
     }
 
     /**
-     * Mètode per crear la vista del diàleg d'eliminació de la instal·lació.
+     * Mètode per crear la vista del diàleg d'eliminació de la instal·lació amb les dades de la instal·lació seleccionada.
      * <p>
-     * Aquest mètode crea la vista del diàleg d'eliminació de la instal·lació amb les dades de la instal·lació seleccionada.
-     *
      * @param IDinstallacio Identificador de la instal·lació.
      * @param nomInstallacio Nom de la instal·lació.
      * @param descripcioInstallacio Descripció de la instal·lació.
@@ -351,9 +353,17 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
         return dialegView;
     }
 
-    // Mètode per configurar les vistes del disseny personalitzat del dialeg d'eliminació de la instal·lació
+    /**
+     * Mètode per configurar les vistes del diàleg d'eliminació de la instal·lació amb les dades de la instal·lació seleccionada.
+     * <p>
+     * @param dialegView Vista del diàleg d'eliminació de la instal·lació.
+     * @param IDinstallacio Identificador de la instal·lació.
+     * @param nomInstallacio Nom de la instal·lació.
+     * @param descripcioInstallacio Descripció de la instal·lació.
+     * @param tipusInstallacio Tipus de la instal·lació.
+     */
     private void configurarVistesDialegEliminar(View dialegView, int IDinstallacio, String nomInstallacio, String descripcioInstallacio, String tipusInstallacio) {
-        // Obtindre referències als elements de la vista del dialeg
+        // Obtenir referències als elements de la vista del dialeg
         TextView tvIDinstallacio = dialegView.findViewById(R.id.tvIDinstallacio);
         TextView tvNomInstallacio = dialegView.findViewById(R.id.tvNomInstallacio);
         TextView tvDescripcioInstallacio = dialegView.findViewById(R.id.tvDescripcioInstallacio);
@@ -368,38 +378,29 @@ public class GestioInstallacionsAdapter extends RecyclerView.Adapter<GestioInsta
         tvTipusInstallacio.setText(tipusInstallacio);
 
         // Configurar el botó "Eliminar"
-        btnEliminar.setOnClickListener(v -> {
-            eliminarInstallacio(nomInstallacio);
-        });
+        btnEliminar.setOnClickListener(v -> eliminarInstallacio(nomInstallacio));
 
         // Configurar el botó de tancament
         configurarBotoTancar(botoTancar);
     }
 
+    /**
+     * Interfície per a l'escolta de l'eliminació d'una instal·lació.
+     */
     public interface OnInstallacioEliminadaListener {
-        void onInstallacioEliminada();
     }
 
+    /**
+     * Mètode per eliminar una instal·lació.
+     * <p>
+     * Aquest mètode crida a la classe EliminarInstallacio per eliminar una instal·lació.
+     * <p>
+     * @param nomInstallacio Nom de la instal·lació a eliminar.
+     */
     private void eliminarInstallacio(String nomInstallacio) {
         EliminarInstallacio eliminarInstallacio = new EliminarInstallacio(new ConnexioServidor.respostaServidorListener() {
-
-            @Override
-            public void respostaServidor(Object resposta) throws ConnectException {
-
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         }, mContext, nomInstallacio) {
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
-
         eliminarInstallacio.eliminarInstallacio();
     }
-
 }

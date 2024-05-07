@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,15 +21,27 @@ import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
-import antonioguerrero.ioc.fithub.menu.usuaris.GestioUsuarisAdapter;
-
 import antonioguerrero.ioc.fithub.peticions.usuaris.ConsultarTotsUsuaris;
 
+/**
+ * Activitat que permet a l'usuari administrador gestionar els usuaris.
+ * <p>
+ * Aquesta activitat mostra una llista de tots els usuaris disponibles.
+ * <p>
+ * Aquesta activitat permet a l'usuari crear, modificar i eliminar usuaris.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class GestioUsuarisActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarTotsUsuaris.ConsultarTotsUsuarisListener, GestioUsuarisAdapter.OnUsuariEliminatListener {
 
     private RecyclerView recyclerView;
-    private GestioUsuarisAdapter adapter;
 
+    /**
+     * Mètode que s'executa en la creació de l'activitat.
+     * <p>
+     * @param savedInstanceState Estat de l'activitat
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +66,8 @@ public class GestioUsuarisActivity extends BaseActivity implements ConnexioServi
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -69,79 +79,33 @@ public class GestioUsuarisActivity extends BaseActivity implements ConnexioServi
 
         // Botó "Crear nou usuari"
         Button btnCrearNouUsuari = findViewById(R.id.btnCrearNouUsuari);
-        btnCrearNouUsuari.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Obrir l'activitat CrearUsuariActivity
-                Intent intent = new Intent(GestioUsuarisActivity.this, CrearUsuariActivity.class);
-                startActivity(intent);
-            }
+        btnCrearNouUsuari.setOnClickListener(v -> {
+            // Obrir l'activitat CrearUsuariActivity
+            Intent intent = new Intent(GestioUsuarisActivity.this, CrearUsuariActivity.class);
+            startActivity(intent);
         });
 
         // Obtenir sessioID de l'usuari
         preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
         ConsultarTotsUsuaris consulta = new ConsultarTotsUsuaris(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
 
         consulta.consultarTotsUsuaris();
     }
 
-    public void consultarTotsUsuaris(View view) {
-        // Obtenir sessioID de l'usuari
-        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
-
-        ConsultarTotsUsuaris consulta = new ConsultarTotsUsuaris(this, this, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-        };
-
-        consulta.consultarTotsUsuaris();
-    }
-
+    /**
+     * Mètode que s'executa quan s'obté la llista d'usuaris.
+     * <p>
+     * @param usuaris Llista d'usuaris
+     */
     @Override
     public void onUsuarisObtinguts(List<HashMap<String, String>> usuaris) {
         if (usuaris != null && !usuaris.isEmpty()) {
-            adapter = new GestioUsuarisAdapter(this, usuaris);
+            GestioUsuarisAdapter adapter = new GestioUsuarisAdapter(this, usuaris);
             recyclerView.setAdapter(adapter);
         } else {
             Utils.mostrarToast(GestioUsuarisActivity.this, "No hi ha usuaris disponibles");
         }
-    }
-    /**
-     * Mètode que gestiona la resposta del servidor.
-     * @param resposta La resposta del servidor.
-     */
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-    }
-
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
-
-
-    @Override
-    public void onUsuariEliminat() {
-
     }
 }

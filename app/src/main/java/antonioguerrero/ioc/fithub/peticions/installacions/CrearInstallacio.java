@@ -14,7 +14,6 @@ import java.util.List;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.installacions.GestioInstallacionsActivity;
-import antonioguerrero.ioc.fithub.menu.installacions.InstallacionsActivity;
 import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 /**
@@ -25,12 +24,11 @@ import antonioguerrero.ioc.fithub.objectes.Installacio;
  */
 public abstract class CrearInstallacio extends ConnexioServidor {
     private static final String ETIQUETA = "CrearInstallacio";
-    private String nomInstallacio;
-    private String descripcioInstallacio;
-    private int tipusInstallacio;
+    private final String nomInstallacio;
+    private final String descripcioInstallacio;
+    private final int tipusInstallacio;
     private final Context context;
-    private String sessioID;
-
+    private final String sessioID;
 
     /**
      * Constructor de la classe
@@ -38,7 +36,7 @@ public abstract class CrearInstallacio extends ConnexioServidor {
      * @param listener    Listener per a la resposta del servidor
      * @param installacio Installacio a crear
      * @param context     Context de l'aplicació
-     * @param sessioID
+     * @param sessioID  ID de la sessió
      */
     public CrearInstallacio(respostaServidorListener listener, Installacio installacio, Context context, String sessioID) {
         super(listener);
@@ -47,7 +45,6 @@ public abstract class CrearInstallacio extends ConnexioServidor {
         this.descripcioInstallacio = installacio.getDescripcioInstallacio();
         this.tipusInstallacio = installacio.getTipusInstallacio();
         this.sessioID = sessioID;
-
     }
 
     /**
@@ -75,20 +72,10 @@ public abstract class CrearInstallacio extends ConnexioServidor {
     }
 
     /**
-     * Mètode que retorna el tipus d'objecte
-     * @return Object[].class
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Mètode que retorna la resposta del servidor
      * @param resposta Resposta del servidor
      * @return null
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;
@@ -112,17 +99,8 @@ public abstract class CrearInstallacio extends ConnexioServidor {
 
     /**
      * Mètode que executa la petició
-     * @throws ConnectException
      */
-    @Override
     public void execute() throws ConnectException {
         crearInstallacio();
     }
-
-    /**
-     * Mètode que s'executa en segon pla
-     * @param voids
-     * @return null
-     */
-    protected abstract Object doInBackground(Void... voids);
 }

@@ -11,40 +11,35 @@ import android.util.Log;
 import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 import antonioguerrero.ioc.fithub.menu.usuaris.GestioUsuarisActivity;
-import antonioguerrero.ioc.fithub.objectes.Servei;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.peticions.serveis.ModificarServei;
 
 /**
  * Classe que s'encarrega de fer la petició al servidor per modificar un usuari
  * <p>
- * @autor Antonio Guerrero
+ * @author Antonio Guerrero
  * @version 1.0
  */
 public abstract class ModificarUsuari extends ConnexioServidor {
-
     private static final String ETIQUETA = "ModificarUsuari";
     private Usuari usuari;
-    private Context context;
-    private SharedPreferences preferencies;
-    private String sessioID;
+    private final Context context;
+    private final String sessioID;
 
     /**
      * Constructor de la classe
+     * <p>
      * @param listener Listener per a la resposta del servidor
      * @param context Context de l'aplicació
      */
     public ModificarUsuari(respostaServidorListener listener, Context context) {
         super((respostaServidorListener) listener);
         this.context = context;
-        this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
@@ -57,7 +52,6 @@ public abstract class ModificarUsuari extends ConnexioServidor {
 
     /**
      * Mètode que retorna l'usuari
-     * @return Usuari a modificar
      */
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
@@ -85,21 +79,15 @@ public abstract class ModificarUsuari extends ConnexioServidor {
             }
         }.execute();
     }
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
 
     /**
      * Mètode que retorna la resposta del servidor
+     * <p>
      * @param resposta Resposta del servidor
-     * @return Llista de HashMaps
      */
     private void processarResposta(Object resposta) {
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] arrayResposta = (Object[]) resposta;
-            if (arrayResposta.length >= 2 && arrayResposta[0] instanceof String) {
-                String objecte = (String) arrayResposta[0];
+        if (resposta instanceof Object[] arrayResposta) {
+            if (arrayResposta.length >= 2 && arrayResposta[0] instanceof String objecte) {
                 if ("usuari".equals(objecte)) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
                 Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
@@ -121,6 +109,11 @@ public abstract class ModificarUsuari extends ConnexioServidor {
         }
     }
 
+    /**
+     * Mètode per guardar les dades de l'usuari
+     * <p>
+     * @param usuari Usuari a guardar
+     */
     private void guardarDadesUsuari(Usuari usuari) {
         SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
@@ -140,27 +133,8 @@ public abstract class ModificarUsuari extends ConnexioServidor {
 
     /**
      * Mètode que executa la petició
-     * @throws ConnectException Excepció de connexió
      */
-    @Override
     public void execute() throws ConnectException {
         modificarUsuari();
     }
-
-    /**
-     * Mètode que retorna la resposta del servidor
-     * @param resposta Resposta del servidor
-     */
-    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
-
-    /**
-     * Mètode que retorna la resposta del servidor
-     * @param resposta Resposta del servidor
-     */
-    public abstract void respostaServidor(Object[] resposta);
-
-    /**
-     * Mètode que s'executa en segon pla
-     */
-    protected abstract Object doInBackground(Void... voids);
 }

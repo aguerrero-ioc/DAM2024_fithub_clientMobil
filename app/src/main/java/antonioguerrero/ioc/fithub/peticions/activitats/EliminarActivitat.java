@@ -19,22 +19,22 @@ import antonioguerrero.ioc.fithub.menu.activitats.GestioActivitatsActivity;
 
 /**
  * Classe per eliminar una activitat.
+ * <p>
  * Aquesta classe s'encarrega d'enviar la petició al servidor per eliminar una activitat.
- *
+ * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public abstract class EliminarActivitat extends ConnexioServidor {
-
-    private String nomActivitat;
-    private Context context;
+    private final String nomActivitat;
+    private final Context context;
     private static final String ETIQUETA = "EliminarActivitat";
     SharedPreferences preferencies;
     String sessioID;
 
     /**
      * Constructor de la classe EliminarActivitat.
-     *
+     * <p>
      * @param listener      L'objecte que escoltarà les respostes del servidor.
      * @param context       Contexte de l'aplicació.
      * @param nomActivitat  Nom de l'activitat a eliminar.
@@ -62,7 +62,6 @@ public abstract class EliminarActivitat extends ConnexioServidor {
                     return null;
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -71,30 +70,18 @@ public abstract class EliminarActivitat extends ConnexioServidor {
     }
 
     /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Mètode per executar la petició.
      */
-    @Override
     public void execute() throws ConnectException {
         eliminarActivitat();
     }
 
     /**
      * Mètode per gestionar la resposta del servidor.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
      * @return
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;

@@ -7,7 +7,6 @@
     tools:context=".menu.login.LoginActivity"
     android:background="@color/light_gray">
 
-
     <ImageView
         android:id="@+id/image_logo"
         android:layout_width="220dp"
@@ -103,6 +102,5 @@
         android:textStyle="bold"
         android:layout_below="@id/tv_oblidat_contrasenya"
         android:layout_centerHorizontal="true"/>
-
 
 </RelativeLayout>

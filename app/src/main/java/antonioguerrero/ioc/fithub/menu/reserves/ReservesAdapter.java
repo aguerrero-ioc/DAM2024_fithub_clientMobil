@@ -1,8 +1,8 @@
 package antonioguerrero.ioc.fithub.menu.reserves;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,29 +22,49 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.objectes.Reserva;
 import antonioguerrero.ioc.fithub.peticions.reserves.EliminarReserva;
 
-
+/**
+ * Adaptador per a la llista de les reserves d'un usuari.
+ * <p>
+ * Aquest adaptador s'encarrega de mostrar les dades de les reserves en una llista.
+ * <p>
+ * @author Antonio Guerrero
+ * @version 1.0
+ */
 public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHolder> {
+    private final List<HashMap<String, String>> reservesLlista;
+    private final Context mContext;
 
-    private List<HashMap<String, String>> reservesLlista;
-    private Context mContext;
-
-    private SharedPreferences preferencies;
-    private String sessioID;
-
-
+    /**
+     * Constructor de la classe.
+     * <p>
+     * @param reservesLlista Llista de les reserves d'un usuari.
+     */
     public ReservesAdapter(Context context, List<HashMap<String, String>> reservesLlista) {
         this.mContext = context;
         this.reservesLlista = reservesLlista;
-        this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
+    /**
+     * Mètode que crea una nova instància de la classe ViewHolder.
+     * <p>
+     * @param parent Vista pare.
+     * @param viewType Tipus de vista.
+     * @return Instància de la classe ViewHolder.
+     */
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reserva, parent, false);
         return new ViewHolder(view);
     }
 
+    /**
+     * Mètode que s'executa per a cada element de la llista.
+     * S'encarrega de mostrar les dades de les reserves.
+     * <p>
+     * @param holder Instància de la classe ViewHolder.
+     * @param posicio Posició de l'element a la llista.
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicio) {
         HashMap<String, String> reserva = reservesLlista.get(posicio);
@@ -73,12 +93,20 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
         });
     }
 
+    /**
+     * Mètode per obtenir el nombre d'elements de la llista.
+     * <p>
+     * @return Nombre d'elements de la llista.
+     */
     @Override
     public int getItemCount() {
         return reservesLlista.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Classe interna ViewHolder per mantenir les referències de les vistes.
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public View btnMesDetalls;
         TextView nomActivitat, dataReserva, horaInici, estatClasse;
 
@@ -92,6 +120,21 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
         }
     }
 
+    /**
+     * Mètode per mostrar un diàleg amb els detalls de la reserva.
+     * <p>
+     * @param nomActivitat    Nom de l'activitat.
+     * @param nomInstallacio   Nom de la instal·lació.
+     * @param dataClasse       Data de la classe.
+     * @param horaInici        Hora d'inici de la classe.
+     * @param duracio          Duració de la classe.
+     * @param ocupacioClasse   Ocupació de la classe.
+     * @param estatClasse      Estat de la classe.
+     * @param IDreserva        ID de la reserva.
+     * @param IDclasseDirigida ID de la classe dirigida.
+     * @param IDusuari         ID de l'usuari.
+     */
+    @SuppressLint("SetTextI18n")
     private void dialegDetallsReserva(String nomActivitat, String nomInstallacio, String dataClasse, String horaInici, String duracio, String ocupacioClasse, String estatClasse, String IDreserva, String IDclasseDirigida, String IDusuari) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View dialogView = inflater.inflate(R.layout.dialeg_detalls_reserva, null);
@@ -108,9 +151,9 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
         tvNomActivitat.setText(nomActivitat);
         tvNomInstallacio.setText(nomInstallacio);
         tvDataClasse.setText(dataClasse);
-        tvHoraInici.setText(horaInici);
-        tvDuracio.setText(duracio);
-        tvOcupacioClasse.setText(ocupacioClasse);
+        tvHoraInici.setText(horaInici + " hores");
+        tvDuracio.setText(duracio + " hora");
+        tvOcupacioClasse.setText(ocupacioClasse + " usuaris");
         tvEstatClasse.setText(estatClasse);
 
         // Crear una instancia de la clase Reserva
@@ -122,33 +165,8 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
         btnCancelarReserva.setOnClickListener(v -> {
             // Crear una instancia de la clase EliminarReserva y llamar al método para eliminar la reserva
             EliminarReserva eliminarReserva = new EliminarReserva(new ConnexioServidor.respostaServidorListener() {
-
-                @Override
-                public void respostaServidor(Object resposta) throws ConnectException {
-
-                }
-
-                @Override
-                public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                    return null;
-                }
             }, mContext) {
-                @Override
-                public Class<?> obtenirTipusObjecte() {
-                    return null;
-                }
-
-                @Override
-                public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                    return null;
-                }
-
-                @Override
-                public void execute() throws ConnectException {
-
-                }
             };
-
             eliminarReserva.setReserva(reserva);
             eliminarReserva.eliminarReserva();
         });
@@ -158,11 +176,6 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        botoTancar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        botoTancar.setOnClickListener(v -> dialog.dismiss());
     }
 }

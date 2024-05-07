@@ -17,24 +17,17 @@ import antonioguerrero.ioc.fithub.Constants;
 public class Activitat implements Serializable {
 
     // Atributs de la classe
-
     private int IDactivitat;
     private String nomActivitat;
     private String descripcioActivitat;
     private int aforamentActivitat;
     private int tipusInstallacio;
 
-    // Altres atributs que podrien ser necessaris
-    private int dia;
-    private int horaInici;
-
     /**
      * Constructor de la classe Activitat buit.
      */
-
     public Activitat() {
     }
-
 
     /**
      * Constructor de la classe Activitat amb paràmetres.
@@ -50,13 +43,11 @@ public class Activitat implements Serializable {
         this.tipusInstallacio = tipusInstallacio;
     }
 
-
-
     // Getters i setters
 
     /**
      * Obté l'identificador de l'activitat.
-     *
+     * <p>
      * @return Identificador de l'activitat
      */
     public int getIDactivitat() {
@@ -65,7 +56,7 @@ public class Activitat implements Serializable {
 
     /**
      * Estableix l'identificador de l'activitat.
-     *
+     * <p>
      * @param IDactivitat Identificador de l'activitat
      */
     public void setIDactivitat(int IDactivitat) {
@@ -74,7 +65,7 @@ public class Activitat implements Serializable {
 
     /**
      * Obté el nom de l'activitat.
-     *
+     * <p>
      * @return El nom de l'activitat
      */
     public String getNomActivitat() {
@@ -83,7 +74,7 @@ public class Activitat implements Serializable {
 
     /**
      * Estableix el nom de l'activitat.
-     *
+     * <p>
      * @param nomActivitat El nou nom de l'activitat
      */
     public void setNomActivitat(String nomActivitat) {
@@ -92,7 +83,7 @@ public class Activitat implements Serializable {
 
     /**
      * Obté la descripció de l'activitat.
-     *
+     * <p>
      * @return La descripció de l'activitat
      */
     public String getDescripcioActivitat() {
@@ -101,7 +92,7 @@ public class Activitat implements Serializable {
 
     /**
      * Estableix la descripció de l'activitat.
-     *
+     * <p>
      * @param descripcioActivitat La nova descripció de l'activitat
      */
     public void setDescripcioActivitat(String descripcioActivitat) {
@@ -110,7 +101,7 @@ public class Activitat implements Serializable {
 
     /**
      * Obté l'aforament de l'activitat.
-     *
+     * <p>
      * @return L'aforament de l'activitat
      */
     public int getAforamentActivitat() {
@@ -119,7 +110,7 @@ public class Activitat implements Serializable {
 
     /**
      * Estableix l'aforament de l'activitat.
-     *
+     * <p>
      * @param aforamentActivitat El nou aforament de l'activitat
      */
     public void setAforamentActivitat(int aforamentActivitat) {
@@ -128,7 +119,7 @@ public class Activitat implements Serializable {
 
     /**
      * Obté el tipus d'instal·lació on es realitza l'activitat.
-     *
+     * <p>
      * @return El tipus d'instal·lació on es realitza l'activitat
      */
     public int getTipusInstallacio() {
@@ -137,17 +128,15 @@ public class Activitat implements Serializable {
 
     /**
      * Estableix el tipus d'instal·lació on es realitza l'activitat.
-     *
+     * <p>
      * @param tipusInstallacio El nou tipus d'instal·lació on es realitza l'activitat
      */
     public void setTipusInstallacio(int tipusInstallacio) {
         this.tipusInstallacio = tipusInstallacio;}
 
-
-
     /**
-     * Converteix una activitat en un HashMap.
-     *
+     * Mètode per convertir una activitat en un HashMap.
+     * <p>
      * @param activitat L'activitat a convertir
      * @return Un HashMap amb les dades de l'activitat
      */
@@ -163,8 +152,8 @@ public class Activitat implements Serializable {
     }
 
     /**
-     * Converteix un HashMap en una activitat.
-     *
+     * Mètode per convertir un HashMap en una activitat.
+     * <p>
      * @param mapaActivitat El HashMap a convertir
      * @return L'activitat amb les dades del HashMap
      */
@@ -172,7 +161,7 @@ public class Activitat implements Serializable {
         Activitat activitat = new Activitat();
         activitat.setIDactivitat(Integer.parseInt(mapaActivitat.get(Constants.ACT_ID)));
         activitat.setNomActivitat(mapaActivitat.get(Constants.ACT_NOM));
-        activitat.setDescripcioActivitat(mapaActivitat.get(Constants.ACT_DESC));;
+        activitat.setDescripcioActivitat(mapaActivitat.get(Constants.ACT_DESC));
         activitat.setTipusInstallacio(Integer.parseInt(mapaActivitat.get(Constants.ACT_TIPUS)));
         activitat.setAforamentActivitat(Integer.parseInt(mapaActivitat.get(Constants.ACT_AFORAMENT)));
         return activitat;

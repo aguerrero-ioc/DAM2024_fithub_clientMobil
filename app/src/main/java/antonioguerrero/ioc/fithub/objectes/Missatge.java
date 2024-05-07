@@ -17,7 +17,7 @@ public class Missatge {
 
     /**
      * Constructor de la classe Missatge.
-     *
+     * <p>
      * @param data La data del missatge.
      * @param hora L'hora del missatge.
      * @param remitent El remitent del missatge.
@@ -32,7 +32,7 @@ public class Missatge {
 
     /**
      * Obté la data del missatge.
-     *
+     * <p>
      * @return La data del missatge.
      */
     public String getData() {
@@ -41,7 +41,7 @@ public class Missatge {
 
     /**
      * Estableix la data del missatge.
-     *
+     * <p>
      * @param data La data del missatge.
      */
     public void setData(String data) {
@@ -50,7 +50,7 @@ public class Missatge {
 
     /**
      * Obté l'hora del missatge.
-     *
+     * <p>
      * @return L'hora del missatge.
      */
     public String getHora() {
@@ -59,7 +59,7 @@ public class Missatge {
 
     /**
      * Estableix l'hora del missatge.
-     *
+     * <p>
      * @param hora L'hora del missatge.
      */
     public void setHora(String hora) {
@@ -68,7 +68,7 @@ public class Missatge {
 
     /**
      * Obté el remitent del missatge.
-     *
+     * <p>
      * @return El remitent del missatge.
      */
     public String getRemitent() {
@@ -77,7 +77,7 @@ public class Missatge {
 
     /**
      * Estableix el remitent del missatge.
-     *
+     * <p>
      * @param remitent El remitent del missatge.
      */
     public void setRemitent(String remitent) {
@@ -86,7 +86,7 @@ public class Missatge {
 
     /**
      * Obté el contingut del missatge.
-     *
+     * <p>
      * @return El contingut del missatge.
      */
     public String getContingut() {
@@ -95,7 +95,7 @@ public class Missatge {
 
     /**
      * Estableix el contingut del missatge.
-     *
+     * <p>
      * @param contingut El contingut del missatge.
      */
     public void setContingut(String contingut) {

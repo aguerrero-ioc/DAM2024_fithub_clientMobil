@@ -97,7 +97,6 @@ public class TestNavegacioClientActivity {
         Intents.release();
     }
 
-
     @Test
     public void testNavegacioInstallacions() {
         // Iniciar l'activitat LoginActivity
@@ -123,7 +122,6 @@ public class TestNavegacioClientActivity {
         Intents.release();
     }
 
-
     @Test
     public void testNavegacioLogout() {
         // Iniciar l'activitat LoginActivity
@@ -148,5 +146,4 @@ public class TestNavegacioClientActivity {
         // Alliberar Intents després de la prova
         Intents.release();
     }
-
 }

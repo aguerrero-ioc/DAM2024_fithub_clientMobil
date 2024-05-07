@@ -1,9 +1,11 @@
 package antonioguerrero.ioc.fithub.menu.classesdirigides;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,13 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.net.ConnectException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
@@ -44,8 +46,7 @@ import antonioguerrero.ioc.fithub.peticions.classes.ConsultarClassesDirigidesDia
  */
 public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarClassesDirigidesDia.ConsultarClassesDirigidesDiaListener {
     private RecyclerView recyclerView;
-    private TextView tvTitol, tvSeleccionar, tvData;
-    private ImageView ivEdit;
+    private TextView tvData;
     private Calendar calendari;
 
     /**
@@ -53,6 +54,7 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
      *
      * @param savedInstanceState L'estat guardat de l'activitat.
      */
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +76,8 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -83,11 +85,10 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
 
         recyclerView = findViewById(R.id.rvClassesDirigides);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tvTitol = findViewById(R.id.tvTitol);
-        tvSeleccionar = findViewById(R.id.tvSeleccionar);
+        TextView tvTitol = findViewById(R.id.tvTitol);
+        TextView tvSeleccionar = findViewById(R.id.tvSeleccionar);
         tvData = findViewById(R.id.tvData);
-        ivEdit = findViewById(R.id.ivEdit);
-
+        ImageView ivEdit = findViewById(R.id.ivEdit);
 
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
@@ -100,25 +101,23 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
 
         tvData.setText(convertirData(currentDate));
 
-        // Establece la acción al hacer clic en el TextView de la fecha
+        // Estableix la acció al fer clic en la data
         tvData.setOnClickListener(v -> mostrarDialegSeleccioData());
 
-        // Establece la acción al hacer clic en el icono de edición de la fecha
+        // Estableix la acció al fer clic a l'ícona d'editar
         ivEdit.setOnClickListener(v -> mostrarDialegSeleccioData());
 
         consultarClassesDirigides(currentDate);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         calendari = Calendar.getInstance();
-
-
     }
 
     /**
-     * Mostra un diàleg de selecció de data.
+     * Mètode per mostrar el diàleg de selecció de data.
      */
     private void mostrarDialegSeleccioData() {
         DatePickerDialog.OnDateSetListener listenerDataSeleccionada = (view, any, mes, dia) -> {
@@ -140,11 +139,9 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
         ).show();
     }
 
-
-
     /**
      * Mètode per consultar les classes dirigides disponibles per a una data concreta.
-     *
+     * <p>
      * @param dataSeleccionada Data seleccionada.
      */
     private void consultarClassesDirigides(String dataSeleccionada) {
@@ -153,31 +150,7 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
         String sessioID = preferences.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
 
         ConsultarClassesDirigidesDia consulta = new ConsultarClassesDirigidesDia(this, this, dataSeleccionada, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void onClassesDirigidesDiaObtingudes(List<HashMap<String, String>> classesDirigides) {
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() {
-
-            }
-        };
-
+         };
         consulta.consultarClassesDirigidesDia();
     }
 
@@ -199,7 +172,6 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
                 classeDirigida.put(Constants.CLASSE_DATA, Utils.formatData(data));
                 classeDirigida.put(Constants.CLASSE_DURACIO, duracio + " hora");
                 classeDirigida.put(Constants.CLASSE_OCUPACIO, ocupacio + " clients");
-
             }
             ClassesPerDiaAdapter adapter = new ClassesPerDiaAdapter(this, classesDirigides);
             recyclerView.setAdapter(adapter);
@@ -209,42 +181,25 @@ public class ClassesPerDiaActivity extends BaseActivity implements ConnexioServi
     }
 
     /**
-     * Mètode per gestionar la resposta del servidor.
-     *
-     * @param resposta Resposta del servidor.
-     */
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-    }
-
-    /**
-     * Mètode per obtenir una llista de hashmaps.
-     *
-     * @param resposta Resposta del servidor.
-     * @return Llista de hashmaps.
-     */
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
-
-    /**
      * Converteix la data al format "Dia de la setmana, dd de mes de any".
-     *
+     * <p>
      * @param data Data en format "ddMMyyyy".
      * @return Data formatada com a "Dia de la setmana, dd de mes de any".
      */
     private String convertirData(String data) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
-            Date date = sdf.parse(data);
-            sdf.applyPattern("EEEE, dd MMMM 'de' yyyy");
-            String dataFormatejada = sdf.format(date);
-            return dataFormatejada.substring(0, 1).toUpperCase() + dataFormatejada.substring(1);
-        } catch (Exception e) {
-            e.printStackTrace();
+            Date dataConvertida = sdf.parse(data);
+            if (dataConvertida != null) {
+                sdf.applyPattern("EEEE, dd MMMM 'de' yyyy");
+                String dataFormatejada = sdf.format(dataConvertida);
+                return dataFormatejada.substring(0, 1).toUpperCase() + dataFormatejada.substring(1);
+            } else {
+                return "";
+            }
+        } catch (Exception excepcio) {
+            Log.e("Convertir Data", "Error al convertir la data: " + excepcio.getMessage());
             return "";
         }
     }
-
 }

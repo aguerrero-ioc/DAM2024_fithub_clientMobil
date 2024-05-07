@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,8 +24,7 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
-    protected static respostaServidorListener ConsultarTotesInstallacionsListener;
-    private Context context;
+    private final Context context;
     private static final String ETIQUETA = "ConsultarInstallacions";
     String sessioID;
 
@@ -49,7 +50,6 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
     public interface ConsultarTotesInstallacionsListener {
         void onInstallacionsObtingudes(List<HashMap<String, String>> installacions);
     }
-
 
     /**
      * Mètode per obtenir totes les instal·lacions del servidor.
@@ -79,11 +79,9 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
      */
     private void processarResposta(Object resposta) {
         // Verificar que la resposta no sigui nula i sigui un array d'objectes
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
+        if (resposta != null && resposta instanceof Object[] respostaArray) {
             // Verificar que el array tingui almenys dos elements i que el primer element sigui un String
-            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
-                String estat = (String) respostaArray[0];
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String estat) {
                 // Verificar si el primer element és "installacioLlista"
                 if ("installacioLlista".equals(estat)) {
                     // Verificar si el segon element és una llista
@@ -93,6 +91,7 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
                         if (listener instanceof ConsultarTotesInstallacionsListener) {
                             ((ConsultarTotesInstallacionsListener) listener).onInstallacionsObtingudes(installacions);
                         }
+                        Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
                         guardarDadesInstallacions(installacions);
                         return;
                     }
@@ -105,20 +104,8 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
     }
 
     /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-
-    /**
      * Mètode per executar la petició.
      */
-    @Override
     public void execute() throws ConnectException {
         consultarTotesInstallacions();
     }
@@ -147,5 +134,4 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         // Aplicar els canvis a SharedPreferences
         editor.apply();
     }
-
 }

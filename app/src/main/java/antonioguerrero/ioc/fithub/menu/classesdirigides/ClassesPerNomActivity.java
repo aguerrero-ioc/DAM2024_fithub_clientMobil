@@ -1,5 +1,6 @@
 package antonioguerrero.ioc.fithub.menu.classesdirigides;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,12 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.net.ConnectException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,20 +41,20 @@ import antonioguerrero.ioc.fithub.peticions.classes.ConsultarClassesDirigidesNom
  * Les classes dirigides es mostren en una llista, on per a cada classe dirigida es mostra el nom, l'hora d'inici i un botó per a més detalls.
  * Quan es fa clic al botó "Més detalls", es mostra un diàleg amb la informació de la classe dirigida.
  * Aquest diàleg mostra el nom de la classe, l'hora d'inici i la durada de la classe.
- * <p>
+ * </p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public class ClassesPerNomActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener, ConsultarClassesDirigidesNom.ConsultarClassesDirigidesNomListener, ConsultarTotesActivitats.ConsultarTotesActivitatsListener {
-
     private RecyclerView recyclerView;
     private Spinner spinnerActivitats;
 
     /**
      * Mètode que s'executa quan es crea l'activitat.
-     *
+     * </p>
      * @param savedInstanceState L'estat guardat de l'activitat.
      */
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +76,8 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -99,15 +98,6 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
 
         // Consultar totes les activitats disponibles
         ConsultarTotesActivitats consultarTotesActivitats = new ConsultarTotesActivitats(this, this, obtenirSessioID()) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
         };
         consultarTotesActivitats.consultarTotesActivitats();
 
@@ -125,7 +115,6 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
                     consultarClassesDirigides(nomActivitatSeleccionada);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -134,7 +123,7 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
 
     /**
      * Mètode per obtenir l'ID de sessió.
-     *
+     * </p>
      * @return L'ID de sessió de l'usuari.
      */
     private String obtenirSessioID() {
@@ -167,7 +156,7 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
      * Mètode que s'executa quan es reben les classes dirigides per nom.
      * Filtra les classes dirigides que són posteriors a la data actual,
      * les formata i les mostra en el RecyclerView.
-     *
+     * </p>
      * @param classesDirigides La llista de classes dirigides per nom.
      */
     @Override
@@ -184,39 +173,36 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
             }
 
             // Ordenar les classes dirigides filtrades per data
-            Collections.sort(classesFiltrades, new Comparator<HashMap<String, String>>() {
-                @Override
-                public int compare(HashMap<String, String> classe1, HashMap<String, String> classe2) {
-                    String data1 = classe1.get(Constants.CLASSE_DATA);
-                    String data2 = classe2.get(Constants.CLASSE_DATA);
+            Collections.sort(classesFiltrades, (classe1, classe2) -> {
+                String data1 = classe1.get(Constants.CLASSE_DATA);
+                String data2 = classe2.get(Constants.CLASSE_DATA);
 
-                    // Convertir les dates de String a Date amb el format adequat
-                    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
-                    try {
-                        Date date1 = sdf.parse(data1);
-                        Date date2 = sdf.parse(data2);
+                // Convertir les dates de String a Date amb el format adequat
+                SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+                try {
+                    Date date1 = sdf.parse(data1);
+                    Date date2 = sdf.parse(data2);
 
-                        // Convertir les dates al format yyyyMMdd per a la comparació
-                        SimpleDateFormat sdfSortable = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-                        String sortableDate1 = sdfSortable.format(date1);
-                        String sortableDate2 = sdfSortable.format(date2);
+                    // Convertir les dates al format yyyyMMdd per a la comparació
+                    SimpleDateFormat sdfSortable = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+                    String sortableDate1 = sdfSortable.format(date1);
+                    String sortableDate2 = sdfSortable.format(date2);
 
-                        return sortableDate1.compareTo(sortableDate2);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                        return 0;
-                    }
+                    return sortableDate1.compareTo(sortableDate2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return 0;
                 }
             });
 
-            // Formatejar les dates i les hores de les classes dirigides
+            // Donar format a les dates i les hores de les classes dirigides
             for (HashMap<String, String> classeDirigida : classesFiltrades) {
                 String hora = classeDirigida.get(Constants.CLASSE_HORA);
                 String data = classeDirigida.get(Constants.CLASSE_DATA);
                 String duracio = classeDirigida.get(Constants.CLASSE_DURACIO);
                 String ocupacio = classeDirigida.get(Constants.CLASSE_OCUPACIO);
 
-                // Formatejar la data al format original ddMMyyyy
+                // Donar format a la data al format original ddMMyyyy
                 String dataFormateada = Utils.formatData(data);
 
                 classeDirigida.put(Constants.CLASSE_HORA, Utils.formatHora(hora) + " hores");
@@ -235,7 +221,7 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
 
     /**
      * Mètode per obtenir els noms d'activitats a partir d'una llista de dades d'activitats.
-     *
+     * </p>
      * @param activitats La llista de dades d'activitats.
      * @return La llista de noms d'activitats.
      */
@@ -250,62 +236,16 @@ public class ClassesPerNomActivity extends BaseActivity implements ConnexioServi
 
     /**
      * Mètode per consultar les classes dirigides per nom d'activitat.
-     *
+     * </p>
      * @param nomActivitat El nom de l'activitat seleccionada.
      */
     private void consultarClassesDirigides(String nomActivitat) {
-
-        // Obtindre l'ID de sessió de l'usuari
+        // Obtenir l'ID de sessió de l'usuari
         String sessioID = obtenirSessioID();
 
         // Realitzar la consulta de classes dirigides pel nom de l'activitat seleccionada
         ConsultarClassesDirigidesNom consulta = new ConsultarClassesDirigidesNom(this, this, nomActivitat, sessioID) {
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-
-            }
-
-            @Override
-            public void onClassesDirigidesNomObtingudes(List<HashMap<String, String>> classesDirigides) {
-            }
         };
         consulta.consultarClasseDirigidaNom();
-    }
-
-    /**
-     * Mètode per gestionar la resposta del servidor.
-     *
-     * @param resposta Resposta del servidor.
-     */
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-
-    }
-
-    /**
-     * Mètode per gestionar la resposta del servidor en format HashMap.
-     *
-     * @param resposta Resposta del servidor.
-     * @return La llista de dades en format HashMap.
-     */
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
     }
 }

@@ -28,32 +28,37 @@ import antonioguerrero.ioc.fithub.objectes.Reserva;
  */
 public abstract class CrearReserva extends ConnexioServidor {
     private Reserva reserva;
-    private Context context;
+    private final Context context;
     private static final String ETIQUETA = "CrearReserva";
+    private final String sessioID;
 
-    private SharedPreferences preferencies;
-
-    private String sessioID;
-
+    /**
+     * Constructor de la classe.
+     * <p>
+     * @param listener Listener de la classe.
+     * @param context  Context de l'aplicació.
+     */
     public CrearReserva(respostaServidorListener listener, Context context) {
         super((respostaServidorListener) listener);
         this.context = context;
-        this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
      * Mètode per establir la reserva a eliminar.
-     *
+     * <p>
      * @param reserva La reserva a eliminar.
      */
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
     }
 
+    /**
+     * Mètode per crear una reserva.
+     */
     @SuppressLint("StaticFieldLeak")
     public void crearReserva(Class<?> activityClass) {
-
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
@@ -71,6 +76,11 @@ public abstract class CrearReserva extends ConnexioServidor {
         }.execute();
     }
 
+    /**
+     * Mètode per processar la resposta del servidor.
+     * <p>
+     * @param resposta Resposta del servidor.
+     */
     public List<HashMap<String, String>> processarResposta(Object resposta, Class<?> activityClass) {
          Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
         Object[] respostaArray = (Object[]) resposta;
@@ -80,7 +90,6 @@ public abstract class CrearReserva extends ConnexioServidor {
             Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
             // Mostra un missatge de confirmació a l'usuari
             Utils.mostrarToast(context, "Reserva confirmada");
-
             // Redirigeix a l'usuari a la pantalla anterior
             Intent intent = new Intent(context, activityClass);
             if (context instanceof Activity) {

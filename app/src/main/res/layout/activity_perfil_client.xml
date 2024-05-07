@@ -5,13 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Contenido principal -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_gray"
-
-    android:orientation="vertical">
+        android:orientation="vertical">
 
         <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
@@ -23,7 +21,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
 
             <!-- Botó d'accés a panell esquerre-->
             <ImageButton
@@ -50,7 +47,6 @@
 
 
         <!-- Scrollview del contingut -->
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -92,7 +88,6 @@
                 </FrameLayout>
 
                 <!-- Secció de Dades Personals -->
-
                 <!-- Secció Dades d'Usuari -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,7 +108,6 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
 
                     <!-- Nom de l'usuari -->
                     <TextView

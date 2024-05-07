@@ -26,18 +26,14 @@ import antonioguerrero.ioc.fithub.menu.serveis.GestioServeisActivity;
 import antonioguerrero.ioc.fithub.menu.usuaris.GestioUsuarisActivity;
 
 /**
- * Classe que representa l'activitat de l'administrador a l'aplicació FitHub.
+ * Classe que representa l'activitat de l'administrador a l'aplicació.
  * <p>
- * Aquesta classe permet als administradors realitzar diverses operacions com gestionar usuaris, activitats i instal·lacions.
- * També poden veure els missatges rebuts.
- * <p>
- * Aquesta classe hereta de BaseActivity.
+ * Aquesta classe permet als administradors realitzar diverses operacions com gestionar usuaris, activitats, instal·lacions i serveis.
  * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public class AdminActivity extends BaseActivity implements ConnexioServidor.respostaServidorListener {
-
     private TextView tvNomUsuari;
     private TextView tvCorreuElectronic;
 
@@ -62,8 +58,8 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
 
         // Obtenir les dades de l'usuari de SharedPreferences
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
-        String nomUsuari = preferences.getString(Constants.NOM_USUARI, "Nom d'Usuari");
-        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, "correu@fithub.es");
+        String nomUsuari = preferences.getString(Constants.NOM_USUARI, Constants.NOM_DEFAULT);
+        String correuElectronic = preferences.getString(Constants.CORREU_USUARI, Constants.CORREU_DEFAULT);
 
         // Actualitzar el text de les vistes amb les dades de l'usuari
         tvNomUsuari.setText(nomUsuari);
@@ -84,16 +80,5 @@ public class AdminActivity extends BaseActivity implements ConnexioServidor.resp
         // Configura el botó flotant de missatges
         FloatingActionButton botoMostrarMissatges = findViewById(R.id.boto_mostrar_missatges);
         botoMostrarMissatges.setOnClickListener(v -> Utils.mostrarToast(this, Constants.PENDENT_IMPLEMENTAR));
-    }
-
-
-    @Override
-    public void respostaServidor(Object resposta) throws ConnectException {
-
-    }
-
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
     }
 }

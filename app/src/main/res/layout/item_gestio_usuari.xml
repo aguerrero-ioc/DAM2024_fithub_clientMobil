@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- TextView para el nombre del usuario -->
+        <!-- TextView per al nom de l'usuari -->
         <TextView
             android:id="@+id/tvNomEtiqueta"
             android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
             android:layout_toRightOf="@id/tvNomEtiqueta"
             android:layout_alignBaseline="@id/tvNomEtiqueta" />
 
-        <!-- TextView para los apellidos del usuario -->
+        <!-- TextView per als cognoms de l'usuari -->
         <TextView
             android:id="@+id/tvCognomsEtiqueta"
             android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
             android:layout_toRightOf="@id/tvCognomsEtiqueta"
             android:layout_alignBaseline="@id/tvCognomsEtiqueta" />
 
-        <!-- TextView para el correo electrónico del usuario -->
+        <!-- TextView per al correu electrònic de l'usuari -->
         <TextView
             android:id="@+id/tvCorreuUsuariEtiqueta"
             android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
             android:layout_toRightOf="@id/tvCorreuUsuariEtiqueta"
             android:layout_alignBaseline="@id/tvCorreuUsuariEtiqueta" />
 
-        <!-- TextView para el tipo de usuario -->
+        <!-- TextView per al tipus d'usuari -->
         <TextView
             android:id="@+id/tvTipusUsuariEtiqueta"
             android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
             android:layout_toRightOf="@id/tvTipusUsuariEtiqueta"
             android:layout_alignBaseline="@id/tvTipusUsuariEtiqueta" />
 
-        <!-- TextView para la fecha de registro del usuario -->
+        <!-- TextView per a la data d'inscripció de l'usuari -->
         <TextView
             android:id="@+id/tvDataInscripcioEtiqueta"
             android:layout_width="wrap_content"
@@ -116,6 +116,7 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:layout_marginTop="25dp">
+
             <Button
                 android:id="@+id/btnModificar"
                 android:layout_width="wrap_content"
