@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import antonioguerrero.ioc.fithub.Constants;
+import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.BaseActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
@@ -88,11 +89,39 @@ public class CrearUsuariActivity extends BaseActivity {
                 String correuUsuari = etCorreuUsuari.getText().toString().trim();
                 String contrasenyaUsuari = etContrasenyaUsuari.getText().toString().trim();
 
-                // Validació dels camps
-                if (TextUtils.isEmpty(nomUsuari) || TextUtils.isEmpty(cognomsUsuari) ||
-                        TextUtils.isEmpty(telefonUsuari) || TextUtils.isEmpty(correuUsuari) ||
-                        TextUtils.isEmpty(contrasenyaUsuari)) {
-                    Toast.makeText(CrearUsuariActivity.this, "Si us plau, ompliu tots els camps", Toast.LENGTH_SHORT).show();
+                // Verificar si algun camp està buit
+                if (nomUsuari.isEmpty() || cognomsUsuari.isEmpty() || telefonUsuari.isEmpty() || correuUsuari.isEmpty() || contrasenyaUsuari.isEmpty()) {
+                    Utils.mostrarToast(getApplicationContext(), "Si us plau, completa tots els camps");
+                    return;
+                }
+
+                // Comprovar el format correcte del nom
+                if (!nomUsuari.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                    Utils.mostrarToast(getApplicationContext(), "El nom només pot contenir lletres");
+                    return;
+                }
+
+                // Comprovar el format correcte dels cognoms
+                if (!cognomsUsuari.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                    Utils.mostrarToast(getApplicationContext(), "Els cognoms només poden contenir lletres");
+                    return;
+                }
+
+                // Comprovar el format correcte del telèfon
+                if (!telefonUsuari.matches("\\d{9}")) {
+                    Utils.mostrarToast(getApplicationContext(), "El telèfon ha de tenir 9 dígits");
+                    return;
+                }
+
+                // Verificar si el correu electrònic està en el format correcte
+                if (!Utils.esEmailValid(correuUsuari)) {
+                    Utils.mostrarToast(getApplicationContext(), "Format de correu electrònic invàlid");
+                    return;
+                }
+
+                // Comprovar la longitud i la complexitat de la contrasenya
+                if (contrasenyaUsuari.length() < 8 || !contrasenyaUsuari.matches(".*\\d.*") || !contrasenyaUsuari.matches(".*[a-zA-Z].*")) {
+                    Utils.mostrarToast(getApplicationContext(), "La contrasenya ha de tenir almenys 8 caràcters alfanumèrics");
                     return;
                 }
 
