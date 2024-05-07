@@ -30,7 +30,7 @@ public class TestNavegacioAdmin {
 
     // Credencials de l'usuari administrador
     private static final String ADMIN_EMAIL = "admin@fithub.es";
-    private static final String ADMIN_CONTRASENYA = "adminpass";
+    private static final String ADMIN_CONTRASENYA = "Adminpass40";
 
     /**
      * Configuració inicial de les proves.
@@ -69,11 +69,35 @@ public class TestNavegacioAdmin {
         Intents.release();
     }
 
+    @Test
+    public void testNavegacioGestioUsuaris() {
+        // Iniciar l'activitat LoginActivity
+        ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
+
+        // Escriure credencials als camps de text
+        Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText(ADMIN_EMAIL));
+        Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText(ADMIN_CONTRASENYA));
+
+        // Fer clic al botó d'inici de sessió
+        Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());
+
+        // Obrir el panell lateral deslitzant-lo cap a fora
+        onView(withId(R.id.boto_acces_panell)).perform(click());
+
+        // Fer clic a l'opció d'activitats en el panell lateral
+        onView(withId(R.id.nav_usuaris)).perform(click());
+
+        // Verificar la presència d'algun element a l'activitat GestioUsuarisActivity
+        onView(withId(R.id.rvUsuaris)).check(matches(isDisplayed()));
+
+        // Alliberar Intents després de la prova
+        Intents.release();
+    }
     /**
      * Prova de navegació a les activitats des del panell lateral.
      */
     @Test
-    public void testNavegacioActivitats() {
+    public void testNavegacioGestioActivitats() {
         // Iniciar l'activitat LoginActivity
         ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
 
@@ -90,8 +114,8 @@ public class TestNavegacioAdmin {
         // Fer clic a l'opció d'activitats en el panell lateral
         onView(withId(R.id.nav_activitats)).perform(click());
 
-        // Verificar la presència d'algun element a l'activitat ActivitatsActivity
-        onView(withId(R.id.tvData)).check(matches(isDisplayed()));
+        // Verificar la presència d'algun element a l'activitat GestioActivitatsActivity
+        onView(withId(R.id.rvActivitats)).check(matches(isDisplayed()));
 
         // Alliberar Intents després de la prova
         Intents.release();
@@ -101,7 +125,7 @@ public class TestNavegacioAdmin {
      * Prova de navegació a les instal·lacions des del panell lateral.
      */
     @Test
-    public void testNavegacioInstallacions() {
+    public void testNavegacioGestioInstallacions() {
         // Iniciar l'activitat LoginActivity
         ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
 
@@ -118,8 +142,33 @@ public class TestNavegacioAdmin {
         // Fer clic a l'opció d'instal·lacions en el panell lateral
         onView(withId(R.id.nav_installacions)).perform(click());
 
-        // Verificar la presència d'algun element a l'activitat InstallacionsActivity
-        onView(withId(R.id.tvData)).check(matches(isDisplayed()));
+        // Verificar la presència d'algun element a l'activitat GestioInstallacionsActivity
+        onView(withId(R.id.rvInstallacions)).check(matches(isDisplayed()));
+
+        // Alliberar Intents després de la prova
+        Intents.release();
+    }
+
+    @Test
+    public void testNavegacioGestioServeis() {
+        // Iniciar l'activitat LoginActivity
+        ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
+
+        // Escriure credencials als camps de text
+        Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText(ADMIN_EMAIL));
+        Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText(ADMIN_CONTRASENYA));
+
+        // Fer clic al botó d'inici de sessió
+        Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());
+
+        // Obrir el panell lateral deslitzant-lo cap a fora
+        onView(withId(R.id.boto_acces_panell)).perform(click());
+
+        // Fer clic a l'opció d'instal·lacions en el panell lateral
+        onView(withId(R.id.nav_installacions)).perform(click());
+
+        // Verificar la presència d'algun element a l'activitat GestioInstallacionsActivity
+        onView(withId(R.id.rvServeis)).check(matches(isDisplayed()));
 
         // Alliberar Intents després de la prova
         Intents.release();

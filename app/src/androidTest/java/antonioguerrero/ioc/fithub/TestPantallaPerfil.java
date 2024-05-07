@@ -32,7 +32,7 @@ public class TestPantallaPerfil {
 
     // Credencials de l'usuari client
     private static final String CLIENT_EMAIL = "client@fithub.es";
-    private static final String CLIENT_CONTRASENYA = "clientpass1";
+    private static final String CLIENT_CONTRASENYA = "clientpass";
 
     /**
      * Configuració inicial de les proves.
