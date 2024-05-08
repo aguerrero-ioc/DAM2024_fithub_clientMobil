@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Contenidor principal -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_gray"
+        android:orientation="vertical">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Botó d'accés a panell esquerre-->
+            <ImageButton
+                android:id="@+id/boto_acces_panell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="accedirPanell"
+                android:src="@drawable/ic_menu" />
+
+            <!-- Logo de l'aplicació -->
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="95dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/fithub_logo"
+                android:contentDescription="logo" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTitol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:padding="20dp"
+                android:layout_alignParentTop="true"  />
+
+            <TextView
+                android:id="@+id/tvSeleccionar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingLeft="20dp"
+                android:layout_below="@+id/tvTitol"  />
+
+        </RelativeLayout>
+
+        <Spinner
+            android:id="@+id/spinnerActivitats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvClassesDirigides"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="10dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/boto_mostrar_missatges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="16dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:onClick="mostrarFragmentMissatges"
+            android:src="@drawable/ic_missatge" />
+
+    </LinearLayout>
+
+    <!-- NavigationView per el panell desplegable -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:backgroundTint="@color/light_gray"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:headerLayout="@layout/nav_capcalera"
+        app:menu="@menu/menu_navigation_client">
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

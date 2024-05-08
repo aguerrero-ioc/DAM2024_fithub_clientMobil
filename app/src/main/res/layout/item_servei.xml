@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_margin="8dp"
+android:elevation="4dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvNomServeiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom del Servei:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvNomServei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/tvPreuServeiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preu del Servei: "
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvPreuServei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/btnMesDetalls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Més detalls"
+        android:layout_marginTop="18dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
+
+</androidx.cardview.widget.CardView>

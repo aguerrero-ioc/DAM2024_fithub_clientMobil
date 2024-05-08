@@ -1,104 +1,199 @@
 package antonioguerrero.ioc.fithub;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import java.io.Serializable;
+import androidx.core.net.ParseException;
+
 import java.lang.reflect.Field;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
 
 /**
  * Classe d'utilitats amb mètodes útils per a diverses funcionalitats.
  * <p>
- * Aquesta classe conté mètodes per a la gestió de dades, la validació de correus electrònics,
- * la conversió d'objectes a HashMap i viceversa, la gestió de SharedPreferences, la creació de
- * Toasts, la conversió de dates a cadenes de text i altres funcionalitats útils per a l'aplicació.
+ * Aquesta classe conté mètodes per obtenir la data i l'hora actuals, convertir una cadena de text
+ * a una data o hora, comprovar si una data o hora és anterior a la data o hora actual, obtenir el
+ * tipus d'usuari a partir de la resposta del servidor, mostrar un Toast, convertir un objecte a
+ * un HashMap i viceversa, guardar les dades d'un objecte a SharedPreferences, obrir una nova
+ * activitat, iniciar una nova activitat amb llista, validar el format d'un correu electrònic,
+ * entre d'altres.
  * <p>
- * @autor Antonio Guerrero
+ * @author Antonio Guerrero
  * @version 1.0
  */
 public class Utils {
 
-    //USUARI
-    public static final String ID_USUARI = "IDusuari";
-    public static final String NOM_USUARI = "nomUsuari";
-    public static final String PASS_USUARI = "passUsuari";
-    public static final String TIPUS_USUARI = "tipusUsuari";
-    public static final String CORREU_USUARI = "correuUsuari";
-    public static final String COGNOMS_USUARI = "cognomsUsuari";
-    public static final String TELEFON = "telefon";
-    public static final String ADRECA = "adreca";
-    public static final String DATA_NAIXEMENT = "dataNaixement";
-    public static final String DATA_INSCRIPCIO = "dataInscripcio";
-
-    // RESTA
-    public static final String PREFERENCIES = "Preferències";
-    public static final String SESSIO_ID = "sessioID";
-    public static final String VALOR_DEFAULT = "";
-    public static final String ERROR_CONNEXIO = "Error de connexió";
-    public static final String PENDENT_IMPLEMENTAR = "Pendent d'implementar. Aviat disponible!";
-    public static final String FORMAT_DATA = "dd-MM-yyyy";
+    /**
+     * Converteix la data al format "dd/MM/yyyy".
+     * <p>
+     * @param data Data en format "ddMMyyyy".
+     * @return Data formatada com a "dd/MM/yyyy".
+     */
+    public static String formatData(String data) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+            Date date = sdf.parse(data);
+            sdf.applyPattern("dd/MM/yyyy");
+            return sdf.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
     /**
-     * Obté la data actual en format de cadena.
-     *
-     * @return Data actual en format "dd-MM-yyyy"
+     * Converteix l'hora al format "hh:mm".
+     * <p>
+     * @param hora Hora en format "hhmm".
+     * @return Hora formatada com a "hh:mm".
+     */
+    public static String formatHora(String hora) {
+        try {
+            Time time = Utils.convertirStringAHora(hora);
+            if (time != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                return sdf.format(time);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * Mètode per obtenir la data actual en format "ddMMyyyy".
+     * <p>
+     * @return Data actual en format "ddMMyyyy".
      */
     public static String obtenirDataActual() {
-        // Obté la data actual
-        Date dataActual = Calendar.getInstance().getTime();
-        // Formateja la data en el format desitjat
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatData = new SimpleDateFormat("ddMMyyyy");
-        return formatData.format(dataActual);
+        return obtenirDataFormatejada(Calendar.getInstance());
     }
 
     /**
-     * Obté l'hora actual en format de cadena.
+     * Mètode per obtenir la data formatejada com a "ddMMyyyy".
      *
-     * @return Hora actual en format "HH:mm:ss"
+     * @param calendar Instància de Calendar.
+     * @return Data formatejada com a "ddMMyyyy".
+     */
+    public static String obtenirDataFormatejada(Calendar calendar) {
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes = calendar.get(Calendar.MONTH) + 1; // S'afegeix 1 ja que gener es considera com a 0
+        int any = calendar.get(Calendar.YEAR);
+        return String.format(Locale.getDefault(), "%02d%02d%04d", dia, mes, any);
+    }
+
+    /**
+     * Mètode per comprovar si una data és anterior a la data actual.
+     * <p>
+     * @param stringData Data en format "ddMMyyyy".
+     * @return Cert si la data és anterior a la data actual, fals altrament.
+     */
+    public static boolean esDataAnterior(String stringData) {
+        // Creem un objecte SimpleDateFormat amb el format "ddMMyyyy"
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+        try {
+            // Convertim la cadena de text a un objecte Date
+            Date data = format.parse(stringData);
+
+            // Obtenim la data actual
+            Date dataActual = new Date();
+
+            // Comprovem si la data donada és anterior a la data actual
+            if (data != null) {
+                return data.before(dataActual);
+            }
+        } catch (ParseException | java.text.ParseException e) {
+            // En cas d'error en la conversió de la cadena de text a Date, imprimeix l'error i retornem fals
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+    /**
+     * Mètode per obtenir l'hora actual en format "HHmm".
+     * <p>
+     * @return Hora actual en format "HHmm".
      */
     public static String obtenirHoraActual() {
-        // Obté l'hora actual
-        Date horaActual = Calendar.getInstance().getTime();
-        // Formateja l'hora en el format desitjat
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
-        return formatHora.format(horaActual);
+        return obtenirHoraFormatejada(Calendar.getInstance());
     }
 
     /**
-     * Obté el tipus d'usuari a partir de la resposta del servidor.
-     *
-     * @param resposta Resposta del servidor
-     * @return Tipus d'usuari actual
+     * Mètode per obtenir l'hora formatejada com a "HHmm".
+     * <p>
+     * @param calendar Instància de Calendar.
+     * @return Hora formatejada com a "HHmm".
      */
-    public static String obtenirTipusUsuari(String resposta) {
-        // Verifica si la resposta del servidor no és nul·la i té els paràmetres esperats
-        if (resposta != null) {
-            String[] parts = resposta.split(",");
-            // Comprova si la resposta conté els paràmetres esperats (només hi hauria 3 parts si ho fa)
-            if (parts.length == 3) {
-                // Retorna el tipus d'usuari que es troba a la segona posició
-                return parts[1];
-            }
-        }
-        // En cas contrari, retorna un valor predeterminat o buit
-        return ""; // Opcional: pots retornar un valor predeterminat o llançar una excepció segons la teva lògica
+    public static String obtenirHoraFormatejada(Calendar calendar) {
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minut = calendar.get(Calendar.MINUTE);
+        return String.format(Locale.getDefault(), "%02d%02d", hora, minut);
     }
 
+    /**
+     * Mètode per convertir una cadena de text a una hora.
+     * <p>
+     * @param cadenaHora Cadena de text amb l'hora en format "HHmm".
+     * @return Hora convertida.
+     */
+    public static Time convertirStringAHora(String cadenaHora) {
+        // Comprova si la cadena d'hora no és nul·la i té el format correcte
+        if (cadenaHora != null && cadenaHora.matches("\\d{2}\\d{2}")) {
+            try {
+                // Crea un objecte SimpleDateFormat amb el format "HHmm"
+                SimpleDateFormat formatHora = new SimpleDateFormat("HHmm", Locale.getDefault());
+
+                // Analitza la cadena d'hora a un objecte Time
+
+                // Retorna l'hora convertida
+                return new Time(formatHora.parse(cadenaHora).getTime());
+            } catch (ParseException | java.text.ParseException e) {
+                // En cas d'error en la conversió de la cadena de text a Time, imprimeix l'error i retorna null
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            // Si el format de l'hora no és vàlid, imprimeix un missatge d'error i retorna null
+            System.out.println("El format de l'hora no és vàlid: " + cadenaHora);
+            return null;
+        }
+    }
+
+    /**
+     * Mètode per comprovar si una hora donada és anterior a l'hora actual.
+     * <p>
+     * @param stringHora Hora en format "HHmm".
+     * @return Cert si l'hora és anterior a l'hora actual, fals en cas contrari.
+     */
+    public static boolean esHoraAnterior(String stringHora) {
+        // Creem un objecte SimpleDateFormat amb el format "HHmm"
+        SimpleDateFormat format = new SimpleDateFormat("HHmm");
+        try {
+            // Convertim la cadena de text a un objecte Time
+            Time hora = new Time(format.parse(stringHora).getTime());
+
+            // Obtenim l'hora actual
+            Time horaActual = new Time(System.currentTimeMillis());
+
+            // Comprovem si l'hora donada és anterior a l'hora actual
+            return hora.before(horaActual);
+        } catch (ParseException | java.text.ParseException e) {
+            // En cas d'error en la conversió de la cadena de text a Time, imprimim l'error i retornem fals
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * Mètode per mostrar un Toast amb el missatge especificat.
-     *
+     * <p>
      * @param context  El context de l'aplicació.
      * @param missatge El missatge a mostrar en el Toast.
      */
@@ -107,35 +202,8 @@ public class Utils {
     }
 
     /**
-     * Mètode per convertir un objecte a un HashMap.
-     *
-     * @param object L'objecte a convertir.
-     * @return Un HashMap amb els valors de l'objecte.
-     */
-    public static HashMap<String, String> ObjecteAHashMap(Object object) {
-        HashMap<String, String> map = new HashMap<>();
-
-        if (object != null) {
-            Field[] fields = object.getClass().getDeclaredFields();
-
-            for (Field field : fields) {
-                field.setAccessible(true);
-                try {
-                    Object value = field.get(object);
-                    if (value != null) {
-                        map.put(field.getName(), value.toString());
-                    }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return map;
-    }
-
-    /**
      * Mètode per convertir un HashMap a un objecte.
-     *
+     * <p>
      * @param map   El HashMap a convertir.
      * @param clazz La classe de l'objecte.
      * @return Un objecte amb els valors del HashMap.
@@ -168,48 +236,8 @@ public class Utils {
     }
 
     /**
-     * Mètode per guardar les dades d'un objecte a SharedPreferences.
-     *
-     * @param context Context de l'aplicació.
-     * @param object  Objecte a guardar.
-     * @param clazz   Classe de l'objecte.
-     */
-    public static void guardarDadesObjecte(Context context, Object object, Class<?> clazz) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencies.edit();
-        SimpleDateFormat format = new SimpleDateFormat(Utils.FORMAT_DATA);
-
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(object);
-                if (value != null) {
-                    if (value instanceof Date) {
-                        editor.putString(field.getName(), format.format((Date) value));
-                    } else if (value instanceof Integer) {
-                        editor.putInt(field.getName(), (Integer) value);
-                    } else if (value instanceof Boolean) {
-                        editor.putBoolean(field.getName(), (Boolean) value);
-                    } else if (value instanceof Float) {
-                        editor.putFloat(field.getName(), (Float) value);
-                    } else if (value instanceof Long) {
-                        editor.putLong(field.getName(), (Long) value);
-                    } else if (value instanceof String) {
-                        editor.putString(field.getName(), (String) value);
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        editor.apply();
-    }
-
-
-    /**
      * Mètode per obrir una nova activitat.
-     *
+     * <p>
      * @param context      Context de l'aplicació.
      * @param activityClass Classe de l'activitat a obrir.
      * @param flags        Flags per a l'activitat.
@@ -221,22 +249,8 @@ public class Utils {
     }
 
     /**
-     * Mètode per iniciar una nova activitat amb llista.
-     *
-     * @param context      Context de l'aplicació.
-     * @param activityClass Classe de l'activitat a obrir.
-     */
-    public static void iniciarActivitatLlista(Context context, Class<?> activityClass, List<? extends Serializable> llista, String clauLlista) {
-        Intent intent = new Intent(context, activityClass);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(clauLlista, new ArrayList<>(llista));
-        intent.putExtras(bundle);
-        context.startActivity(intent);
-    }
-
-    /**
      * Mètode per validar el format d'un correu electrònic utilitzant una expressió regular.
-     *
+     * <p>
      * @param correu  El correu electrònic a validar.
      * @return Cert si el correu electrònic té el format vàlid, fals altrament.
      */

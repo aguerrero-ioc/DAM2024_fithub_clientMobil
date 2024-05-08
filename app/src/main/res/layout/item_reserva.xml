@@ -1,15 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_marginBottom="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginLeft="8dp"
+    android:elevation="4dp">
 
-    <TextView
-        android:id="@+id/textViewNom"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:padding="16dp">
 
+        <!-- TextView para el nombre de la actividad -->
+        <TextView
+            android:id="@+id/tvNomActivitatEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nom de l'activitat: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvNomActivitat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvNomActivitatEtiqueta"
+            android:layout_alignBaseline="@id/tvNomActivitatEtiqueta" />
+
+        <!-- TextView para la fecha -->
+        <TextView
+            android:id="@+id/tvDataEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_below="@id/tvNomActivitatEtiqueta"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/tvData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvDataEtiqueta"
+            android:layout_alignBaseline="@id/tvDataEtiqueta" />
+
+        <!-- TextView para la hora de inicio -->
+        <TextView
+            android:id="@+id/tvHoraIniciEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora d'Inici: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_below="@id/tvDataEtiqueta"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/tvHoraInici"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvHoraIniciEtiqueta"
+            android:layout_alignBaseline="@id/tvHoraIniciEtiqueta" />
+
+        <!-- TextView para el estado de la clase -->
+        <TextView
+            android:id="@+id/tvEstatClasseEtiqueta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estat de la classe: "
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_below="@id/tvHoraIniciEtiqueta"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/tvEstatClasse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:layout_toRightOf="@id/tvEstatClasseEtiqueta"
+            android:layout_alignBaseline="@id/tvEstatClasseEtiqueta" />
+
+        <!-- Botón para ver más detalles -->
+        <Button
+            android:id="@+id/btnMesDetalls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Més detalls"
+            android:layout_below="@id/tvEstatClasseEtiqueta"
+            android:layout_marginTop="18dp"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

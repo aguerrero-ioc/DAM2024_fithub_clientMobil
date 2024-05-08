@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <!-- Nom del Servei -->
+    <TextView
+        android:id="@+id/tvNomServeiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvNomServei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomServeiEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Descripció del Servei -->
+    <TextView
+        android:id="@+id/tvDescripcioServeiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomServei"
+        android:layout_marginTop="16dp"
+        android:text="Descripció: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvDescripcioServei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescripcioServeiEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Tarifa del Servei -->
+    <TextView
+        android:id="@+id/tvTarifaServeiEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDescripcioServei"
+        android:layout_marginTop="16dp"
+        android:text="Tarifa: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvTarifaServei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTarifaServeiEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"/>
+
+</RelativeLayout>

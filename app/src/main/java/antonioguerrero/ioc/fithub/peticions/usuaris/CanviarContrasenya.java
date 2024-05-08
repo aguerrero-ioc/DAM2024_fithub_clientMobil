@@ -11,9 +11,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 /**
  * Classe que permet canviar la contrasenya d'un usuari
@@ -22,30 +23,28 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class CanviarContrasenya extends ConnexioServidor {
-
     private static final String ETIQUETA = "CanviarContrasenya";
     private Usuari usuari;
-    private Context context;
-    private SharedPreferences preferencies;
+    private final Context context;
     private String sessioID;
 
     /**
      * Constructor de la classe
+     * <p>
      * @param listener Listener de la classe
      * @param context Context de l'aplicació
      * @param sessioID Sessió de l'usuari
      */
-    public CanviarContrasenya(ModificarUsuari.ModificarUsuariListener listener, Context context, String sessioID) {
+    public CanviarContrasenya(ModificarUsuariActual.ModificarUsuariListener listener, Context context, String sessioID) {
         super((respostaServidorListener) listener);
         this.context = context;
         this.sessioID = sessioID;
-        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
      * Mètode que permet obtenir l'usuari
-     * @return Usuari
      */
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
@@ -56,7 +55,6 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
      */
     @SuppressLint("StaticFieldLeak")
     public void canviarContrasenya() {
-
         new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... voids) {
@@ -67,7 +65,6 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
                     throw new RuntimeException(e);
                 }
             }
-
             @Override
             protected void onPostExecute(Object resposta) {
                 respostaServidor(resposta);
@@ -76,32 +73,19 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
     }
 
     /**
-     * Mètode que permet obtenir el tipus d'objecte
-     * @return Tipus d'objecte
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Mètode que permet obtenir la resposta del servidor
      * @param resposta Resposta del servidor
      * @return Resposta del servidor
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
-        if (resposta instanceof Object[]) {
-            Object[] arrayResposta = (Object[]) resposta;
+        if (resposta instanceof Object[] arrayResposta) {
             String estat = (String) arrayResposta[0];
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
                 Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
-
-                ((ModificarUsuari.ModificarUsuariListener) listener).onUsuariModificat(usuari);
+                ((ModificarUsuariActual.ModificarUsuariListener) listener).onUsuariModificat(usuari);
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
-
                 Utils.mostrarToast(context, "Contrasenya modificada correctament");
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la modificació de la contrasenya");
@@ -118,7 +102,6 @@ public abstract class CanviarContrasenya extends ConnexioServidor {
      * Mètode que executa la petició
      * @throws ConnectException Excepció de connexió
      */
-    @Override
     public void execute() throws ConnectException {
         canviarContrasenya();
     }

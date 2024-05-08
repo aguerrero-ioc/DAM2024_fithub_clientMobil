@@ -1,14 +1,23 @@
 package antonioguerrero.ioc.fithub.peticions.reserves;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.reserves.ReservesActivity;
+import antonioguerrero.ioc.fithub.objectes.Reserva;
 
 /**
  * Classe per eliminar una reserva.
@@ -19,70 +28,82 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class EliminarReserva extends ConnexioServidor {
-
-    private int IDReserva;
-    private Context context;
+    private Reserva reserva;
+    private final Context context;
     private static final String ETIQUETA = "EliminarReserva";
-
-    SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-    String sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+    SharedPreferences preferencies;
+    String sessioID;
 
     /**
      * Constructor de la classe EliminarReserva.
-     *
+     * <p>
      * @param listener L'objecte que escoltarà les respostes del servidor.
+     * @param context  Context de l'aplicació.
      */
-    public EliminarReserva(ConnexioServidor.respostaServidorListener listener, Context context, int IDReserva) {
+    public EliminarReserva(respostaServidorListener listener, Context context) {
         super(listener);
         this.context = context;
-        this.IDReserva = IDReserva;
+        this.preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
+    }
+    /**
+     * Mètode per establir la reserva a eliminar.
+     * <p>
+     * @param reserva La reserva a eliminar.
+     */
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
     /**
      * Mètode per eliminar una reserva.
      */
-    public void eliminarReserva() throws ConnectException {
-        String IDReservaString = Integer.toString(IDReserva);
+    @SuppressLint("StaticFieldLeak")
+    public void eliminarReserva() {
+        new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... voids) {
+                try {
+                    HashMap<String, String> mapaReserva = reserva.reserva_a_hashmap(reserva);
+                    return enviarPeticioHashMap("delete", "reserva", mapaReserva, sessioID);
+                } catch (ConnectException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
 
-        enviarPeticioString("delete", "reserva", IDReservaString, this.sessioID);
-    }
-
-    /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
-     * Mètode per executar la petició.
-     */
-    @Override
-    public void execute() throws ConnectException {
-        eliminarReserva();
+            @Override
+            protected void onPostExecute(Object resposta) {
+                respostaServidor(resposta);
+            }
+        }.execute();
     }
 
     /**
      * Mètode per gestionar la resposta del servidor.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
-     * @return
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
-        if (resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
-            String estat = (String) respostaArray[0];
-            if (estat != null && estat.equals("true")) {
-                Utils.mostrarToast(context, "Reserva eliminada correctament");
+        Log.d(ETIQUETA, "Resposta rebuda: " + resposta);
+        if (resposta != null && resposta instanceof Object[] respostaArray) {
+            boolean exit = respostaArray.length > 0 && "True".equalsIgnoreCase((String) respostaArray[0]);
+            if (exit) {
+                Log.d(ETIQUETA, "Reserva confirmada");
+                Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
+                Utils.mostrarToast(context, "Reserva cancelada correctament");
+                // Redirigeix a l'usuari a la pantalla de gestió d'instal·lacions
+                Intent intent = new Intent(context, ReservesActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).finish();
             } else {
-                Utils.mostrarToast(context, "Error en eliminar la reserva");
+                String missatgeError = respostaArray.length > 1 ? (String) respostaArray[1] : "Error desconegut";
+                Log.d(ETIQUETA, "Error en cancelar la reserva: " + missatgeError);
+                Utils.mostrarToast(context.getApplicationContext(), "No s'ha pogut cancelar la reserva: " + missatgeError);
             }
         } else {
-            Utils.mostrarToast(context, "Error de connexió");
+            Log.d(ETIQUETA, "Resposta del servidor inesperada o nula");
+            Utils.mostrarToast(context.getApplicationContext(), "Resposta del servidor inesperada o nula");
         }
         return null;
     }

@@ -8,9 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
-
 
 /**
  * Classe abstracta per connectar-se al servidor.
@@ -23,36 +21,46 @@ import java.util.Scanner;
 public abstract class ConnexioServidor {
 
     //LOCAL "192.168.0.252"
+    //LOCAL2 "192.168.1.132"
+    // ISARD "10.2.36.102"
+    //10.2.114.177
     protected static final String SERVIDOR_IP = "192.168.0.252";
     protected static final int SERVIDOR_PORT = 8080;
-    public Socket clientSocket;
 
     protected respostaServidorListener listener;
 
+    /**
+     * Constructor de la classe.
+     *
+     * @param listener Listener per a la resposta del servidor.
+     */
     public ConnexioServidor(respostaServidorListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * Constructor de la classe buit.
+     */
     public ConnexioServidor() {
     }
 
     /**
-     * Mètode per enviar una petició al servidor amb un Object[] de Strings.
+     * Mètode per enviar una petició al servidor amb un Object[] amb Strings.
      *
      * @param operacio Tipus de petició que es vol fer.
-     * @param dada1    Dada 1 de la petició.
-     * @param dada2    Dada 2 de la petició.
+     * @param dada1 Dada 1 de la petició.
+     * @param dada2 Dada 2 de la petició.
      * @param idSessio Identificador de la sessió.
      * @return Object[] Resposta del servidor.
-     * @throws ConnectException
+     * @throws ConnectException Excepció de connexió.
      */
     public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
         String respostaHandshake;
         Object[] resposta = null;
         Socket clientSocket = null;
-        //Handshake
+        // Handshake
         Scanner handshake = null;
-        //Missatge
+        // Missatge
         ObjectInputStream entrada = null;
         ObjectOutputStream sortida = null;
 
@@ -108,9 +116,8 @@ public abstract class ConnexioServidor {
      * @param objecteMapa Objecte que es vol enviar en format HashMap.
      * @param idSessio Identificador de la sessió.
      * @return Object[] Resposta del servidor.
-     * @throws ConnectException
+     * @throws ConnectException Excepció de connexió.
      */
-
     public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
         String respostaHandshake;
         Object[] resposta = null;
@@ -165,16 +172,10 @@ public abstract class ConnexioServidor {
         return resposta;
     }
 
+    /**
+     * Interfície per a escoltar la resposta del servidor.
+     */
     public interface respostaServidorListener {
-        void respostaServidor(Object resposta) throws ConnectException;
-        List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
+
     }
-
-    public abstract List<HashMap<String, String>> respostaServidor(Object resposta);
-
-    public abstract Class<?> obtenirTipusObjecte();
-
-    public abstract List<HashMap<String, String>> respostaServidorHashmap(Object resposta);
-
-    public abstract void execute() throws ConnectException;
 }

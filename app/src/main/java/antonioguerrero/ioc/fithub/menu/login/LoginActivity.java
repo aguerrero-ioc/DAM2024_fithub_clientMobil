@@ -14,13 +14,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.HashMap;
-import java.util.List;
-
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
-import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.peticions.usuaris.PeticioLogin;
 
 /**
@@ -52,10 +47,10 @@ public class LoginActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Inicializar el contexto
+        // Inicialitzar el context
         context = this;
 
-        // Referenciar los elementos de la interfaz de usuario
+        // Referenciar els elements de la interfície d'usuari
         etCorreuUsuari = findViewById(R.id.et_correu_usuari);
         etContrasenya = findViewById(R.id.et_contrasenya);
         Button btnLogin = findViewById(R.id.btn_login);
@@ -63,11 +58,11 @@ public class LoginActivity extends AppCompatActivity  {
         TextView tvRecuperarContrasenya = findViewById(R.id.tv_oblidat_contrasenya);
         TextView tvRegistrar = findViewById(R.id.tv_registre);
 
-        // Configurar el clic del botón de inicio de sesión
+        // Configurar el clic del botó d'inici de sessió
         btnLogin.setOnClickListener(v -> {
             String correuUsuari = etCorreuUsuari.getText().toString();
             String contrasenya = etContrasenya.getText().toString();
-            // Verificar si se han introducido ambos campos
+            // Verificar si s'han introduït tots dos camps
             if (correuUsuari.isEmpty() && contrasenya.isEmpty()) {
                 Utils.mostrarToast(getApplicationContext(), "Introdueix el nom d'usuari i la contrasenya");
             } else if (correuUsuari.isEmpty()) {
@@ -90,10 +85,10 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
 
-        // Configurar el clic del TextView para la recuperación de contraseña
+        // Configurar el clic del TextView per a la recuperació de contrasenya
         tvRecuperarContrasenya.setOnClickListener(v -> mostrarDialegRecuperacioContrasenya());
 
-        // Configurar el clic del TextView para el registro de usuarios
+        // Configurar el clic del TextView per al registre d'usuaris
         tvRegistrar.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegistreActivity.class);
             startActivity(intent);
@@ -105,32 +100,24 @@ public class LoginActivity extends AppCompatActivity  {
      * <p>
      * Aquest mètode envia les dades d'inici de sessió al servidor per comprovar si l'usuari existeix i les dades són correctes.
      * Si les dades són correctes, l'usuari serà redirigit a l'activitat corresponent al seu tipus d'usuari.
-     *
+     * Si les dades són incorrectes, es mostrarà un missatge d'error.
+     * <p>
      * @param correuUsuari Correu electrònic de l'usuari.
      * @param passUsuari Contrasenya de l'usuari.
      */
     private void enviarLogin(String correuUsuari, String passUsuari) {
-
         PeticioLogin peticioLogin = new PeticioLogin(context, correuUsuari, passUsuari) {
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void respostaServidor(Object[] resposta) {
-            }
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
         };
         peticioLogin.execute();
     }
 
     /**
      * Mètode per mostrar el diàleg de recuperació de contrasenya.
+     * <p>
+     * Aquest mètode mostra un diàleg perquè l'usuari pugui recuperar la contrasenya si l'ha oblidat.
+     * L'usuari haurà d'introduir el seu correu electrònic per rebre un correu amb les instruccions per recuperar la contrasenya.
+     * Si l'usuari no introdueix cap correu electrònic o el format del correu electrònic és incorrecte, es mostrarà un missatge d'error.
+     * Si el correu electrònic és correcte, es mostrarà un missatge d'èxit.
      */
     public void mostrarDialegRecuperacioContrasenya() {
         View vistaDialeg = LayoutInflater.from(context).inflate(R.layout.dialeg_recuperar_contrasenya, null);

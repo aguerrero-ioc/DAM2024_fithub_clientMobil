@@ -11,9 +11,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.objectes.Usuari;
 
 /**
  * Classe per obtenir un usuari.
@@ -24,14 +25,14 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class ConsultarUsuari extends ConnexioServidor {
-    private Context context;
+    private final Context context;
     private static final String ETIQUETA = "ConsultarUsuari";
-    private String correuUsuari;
+    private final String correuUsuari;
     private String sessioID;
 
     /**
      * Constructor de la classe.
-     *
+     * <p>
      * @param listener     Listener per obtenir la resposta del servidor.
      * @param context      Context de l'aplicació.
      * @param correuUsuari Correu de l'usuari.
@@ -42,9 +43,8 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
         this.context = context;
         this.correuUsuari = correuUsuari;
         this.sessioID = sessioID;
-
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
@@ -78,36 +78,19 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
     }
 
     /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Mètode per gestionar la resposta del servidor.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
-     * @return
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta rebuda: " + resposta.toString());
-        if (resposta instanceof Object[]) {
-            Object[] arrayResposta = (Object[]) resposta;
+        if (resposta instanceof Object[] arrayResposta) {
             String estat = (String) arrayResposta[0];
             if (estat.equals("usuari")) {
                 HashMap<String, String> mapaUsuari = (HashMap<String, String>) arrayResposta[1];
-
                 Usuari usuari = Usuari.hashmap_a_usuari(mapaUsuari);
-
                 ((ConsultarUsuariListener) listener).onUsuariObtingut(usuari);
-
                 Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
-
                 guardarDadesUsuari(usuari);
             } else if (estat.equals("false")) {
                 Utils.mostrarToast(context, "Error en la consulta de l'usuari");
@@ -122,50 +105,31 @@ public abstract class ConsultarUsuari extends ConnexioServidor {
 
     /**
      * Mètode per guardar les dades de l'usuari.
-     *
+     * <p>
      * @param usuari Usuari a guardar.
      */
     private void guardarDadesUsuari(Usuari usuari) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
-        editor.putInt(Utils.ID_USUARI, usuari.getIDusuari());
-        editor.putString(Utils.NOM_USUARI, usuari.getNomUsuari());
-        editor.putString(Utils.PASS_USUARI, usuari.getPassUsuari());
-        editor.putInt(Utils.TIPUS_USUARI, usuari.getTipusUsuari());
-        editor.putString(Utils.CORREU_USUARI, usuari.getCorreuUsuari());
-        editor.putString(Utils.COGNOMS_USUARI, usuari.getCognomsUsuari());
-        editor.putString(Utils.TELEFON, usuari.getTelefon());
-        editor.putString(Utils.ADRECA, usuari.getAdreca());
-        editor.putString(Utils.DATA_NAIXEMENT, usuari.getDataNaixement());
-        editor.putString(Utils.DATA_INSCRIPCIO, usuari.getDataInscripcio());
+        editor.putInt(Constants.ID_USUARI, usuari.getIDusuari());
+        editor.putString(Constants.NOM_USUARI, usuari.getNomUsuari());
+        editor.putString(Constants.PASS_USUARI, usuari.getPassUsuari());
+        editor.putInt(Constants.TIPUS_USUARI, usuari.getTipusUsuari());
+        editor.putString(Constants.CORREU_USUARI, usuari.getCorreuUsuari());
+        editor.putString(Constants.COGNOMS_USUARI, usuari.getCognomsUsuari());
+        editor.putString(Constants.TELEFON, usuari.getTelefon());
+        editor.putString(Constants.ADRECA, usuari.getAdreca());
+        editor.putString(Constants.DATA_NAIXEMENT, usuari.getDataNaixement());
+        editor.putString(Constants.DATA_INSCRIPCIO, usuari.getDataInscripcio());
 
         editor.apply();
     }
 
-
     /**
      * Mètode per executar la petició.
      */
-    @Override
     public void execute() throws ConnectException {
         consultarUsuari();
-    }
-
-    /**
-     * Mètode per obtenir la resposta del servidor.
-     *
-     * @param resposta Resposta del servidor.
-     */
-    public abstract void respostaServidor(Object[] resposta);
-
-    /**
-     * Mètode que s'executa en segon pla.
-     *
-     * @param voids Paràmetres de tipus void.
-     * @return
-     */
-    protected Object doInBackground(Void... voids) {
-        return null;
     }
 }

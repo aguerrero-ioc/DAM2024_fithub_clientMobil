@@ -28,10 +28,22 @@
         <activity android:name=".menu.BaseActivity" />
         <activity android:name=".menu.main.AdminActivity" />
         <activity android:name=".menu.main.ClientActivity" />
-        <activity android:name=".menu.usuari.PerfilActivity" />
+        <activity android:name=".menu.usuaris.PerfilActivity" />
+        <activity android:name=".menu.usuaris.GestioUsuarisActivity" />
+        <activity android:name=".menu.usuaris.CrearUsuariActivity" />
         <activity android:name=".menu.activitats.ActivitatsActivity" />
+        <activity android:name=".menu.activitats.GestioActivitatsActivity" />
+        <activity android:name=".menu.activitats.CrearActivitatActivity" />
         <activity android:name=".menu.serveis.ServeisActivity" />
+        <activity android:name=".menu.serveis.GestioServeisActivity" />
+        <activity android:name=".menu.serveis.CrearServeiActivity" />
         <activity android:name=".menu.installacions.InstallacionsActivity" />
+        <activity android:name=".menu.installacions.GestioInstallacionsActivity" />
+        <activity android:name=".menu.installacions.CrearInstallacioActivity" />
+        <activity android:name=".menu.classesdirigides.ClassesPerDiaActivity" />
+        <activity android:name=".menu.classesdirigides.ClassesPerNomActivity" />
+        <activity android:name=".menu.reserves.ReservesActivity" />
+
     </application>
 
 </manifest>

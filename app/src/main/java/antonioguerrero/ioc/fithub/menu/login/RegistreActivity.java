@@ -16,28 +16,25 @@ import java.util.List;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.objectes.Usuari;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.peticions.usuaris.CrearUsuari;
-
+import antonioguerrero.ioc.fithub.objectes.Usuari;
+import antonioguerrero.ioc.fithub.peticions.usuaris.RegistrarUsuari;
 
 /**
  * Activitat per gestionar el registre d'un nou usuari.
- * Hereta de la classe AppCompatActivity.
+ * <p>
+ * Aquesta activitat permet als usuaris registrar-se a l'aplicació mitjançant un formulari.
  * <p>
  * @author Antonio Guerrero
  * @version 1.0
  */
 public class RegistreActivity extends AppCompatActivity {
-
-    // Elements de la interfície d'usuari
     private EditText etNom, etCognoms, etTelefon, etCorreuElectronic, etContrasenya, etRepetirContrasenya;
-
 
     /**
      * Mètode que s'executa en crear l'activitat.
      * S'encarrega d'inicialitzar els elements de la interfície d'usuari i configurar els esdeveniments.
-     *
+     * <p>
      * @param savedInstanceState Estat de l'activitat
      */
     @Override
@@ -53,11 +50,9 @@ public class RegistreActivity extends AppCompatActivity {
         etContrasenya = findViewById(R.id.et_contrasenya);
         etRepetirContrasenya = findViewById(R.id.et_repetir_contrasenya);
 
-
         Button btnRegistrar = findViewById(R.id.btn_registrar);
 
         CheckBox checkMostrarContrasenya = findViewById(R.id.check_mostrar_contrasenya);
-
         checkMostrarContrasenya.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -87,16 +82,16 @@ public class RegistreActivity extends AppCompatActivity {
     /**
      * Mètode per gestionar el registre d'un nou usuari.
      * S'obtenen les dades dels camps del formulari i es processen.
+     * Es comprova si els camps estan complets i si tenen el format correcte.
      */
     private void registrarUsuari() throws ConnectException {
-        // Obtindre els valors dels EditText
+        // Obtenir els valors dels EditText
         String nom = etNom.getText().toString().trim();
         String cognoms = etCognoms.getText().toString().trim();
         String telefon = etTelefon.getText().toString().trim();
         String correu = etCorreuElectronic.getText().toString().trim();
         String contrasenya = etContrasenya.getText().toString().trim();
         String repetirContrasenya = etRepetirContrasenya.getText().toString().trim();
-
 
         // Verificar si algun camp està buit
         if (nom.isEmpty() || cognoms.isEmpty() || telefon.isEmpty() || correu.isEmpty() || contrasenya.isEmpty() || repetirContrasenya.isEmpty()) {
@@ -144,29 +139,11 @@ public class RegistreActivity extends AppCompatActivity {
         Usuari usuari = new Usuari(correu, contrasenya, nom, cognoms,telefon);
 
         // Crear una instancia de CrearUsuari
-        CrearUsuari crearUsuari = new CrearUsuari(new ConnexioServidor.respostaServidorListener() {
-            @Override
-            public void respostaServidor(Object resposta) {
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
+        RegistrarUsuari registrarUsuari = new RegistrarUsuari(new ConnexioServidor.respostaServidorListener() {
         }, usuari, RegistreActivity.this) {
 
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            protected Object doInBackground(Void... voids) {
-                return null;
-            }
         };
-
         // Enviar la petició al servidor
-        crearUsuari.execute();
+        registrarUsuari.execute();
     }
 }

@@ -1,0 +1,219 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:id="@+id/botoTancarContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp">
+
+        <ImageButton
+            android:id="@+id/botoTancar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_tancar" />
+
+    </LinearLayout>
+
+    <!-- ID de l'usuari -->
+    <TextView
+        android:id="@+id/tvIDusuariEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID d'usuari: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/botoTancarContainer"/>
+
+    <EditText
+        android:id="@+id/etIDusuari"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvIDusuariEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Correu del usuari -->
+    <TextView
+        android:id="@+id/tvCorreuUsuariEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correu electrònic: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etIDusuari"/>
+
+    <EditText
+        android:id="@+id/etCorreuUsuari"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCorreuUsuariEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+
+    <!-- Tipus d'usuari -->
+    <TextView
+        android:id="@+id/tvTipusUsuariEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipus d'usuari: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etCorreuUsuari"/>
+
+    <EditText
+        android:id="@+id/etTipusUsuari"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTipusUsuariEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Data d'inscripció -->
+    <TextView
+        android:id="@+id/tvDataInscripcioEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data d'inscripció: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etTipusUsuari"/>
+
+    <EditText
+        android:id="@+id/etDataInscripcio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDataInscripcioEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+
+    <!-- Nom de l'usuari -->
+    <TextView
+        android:id="@+id/tvNomUsuariEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etDataInscripcio"/>
+
+    <EditText
+        android:id="@+id/etNomUsuari"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomUsuariEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Cognoms de l'usuari -->
+    <TextView
+        android:id="@+id/tvCognomsUsuariEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cognoms: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etNomUsuari"/>
+
+    <EditText
+        android:id="@+id/etCognomsUsuari"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCognomsUsuariEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Data de naixement de l'usuari -->
+    <TextView
+        android:id="@+id/tvDataNaixementEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data de naixement: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etCognomsUsuari"/>
+
+    <EditText
+        android:id="@+id/etDataNaixement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDataNaixementEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Direcció de l'usuari -->
+    <TextView
+        android:id="@+id/tvAdrecaEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adreça: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etDataNaixement"/>
+
+    <EditText
+        android:id="@+id/etAdreca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAdrecaEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <!-- Telèfon de l'usuari -->
+    <TextView
+        android:id="@+id/tvTelefonEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Telèfon: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/etAdreca"/>
+
+    <EditText
+        android:id="@+id/etTelefon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTelefonEtiqueta"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:enabled="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etTelefon"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp">
+
+        <Button
+            android:id="@+id/btnModificarUsuari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modificar Usuari"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnDesarCanvisUsuari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desar Canvis"/>
+    </LinearLayout>
+
+</RelativeLayout>

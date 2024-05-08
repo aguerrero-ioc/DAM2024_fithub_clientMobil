@@ -14,13 +14,17 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Proves per verificar el funcionament de la petició de logout.
- *
  * <p>
- * Autor: Antonio Guerrero
- * Versió: 1.0
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class PeticioLogoutTest {
 
+    /**
+     * Prova de petició de tancament de sessió.
+     * <p>
+     * @throws ConnectException si hi ha un error de connexió
+     */
     @Test
     public void testExitLogout() throws ConnectException {
         // Arrange
@@ -33,28 +37,7 @@ public class PeticioLogoutTest {
                 resposta[1] = null; // No hi ha missatge d'error en cas d'èxit
                 return resposta;
             }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-                // Aquest mètode no s'utilitza en aquesta prova, però s'ha d'implementar a causa de la herència de ConnexioServidor
-            }
         };
-
         // Act
         Object[] resposta = connexio.enviarPeticioString("logout", "ID_usuario_ejemplo", "null", "sesion_ID_ejemplo");
 
@@ -64,5 +47,4 @@ public class PeticioLogoutTest {
         assertEquals("true", resposta[0]); // Verificar que el primer element sigui "true" per indicar una resposta exitosa
         assertNull(resposta[1]); // Verificar que el segon element sigui nul, ja que no hi ha missatge d'error en cas d'èxit
     }
-
 }

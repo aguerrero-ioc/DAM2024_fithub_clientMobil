@@ -11,11 +11,12 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
 import antonioguerrero.ioc.fithub.menu.main.ClientActivity;
 import antonioguerrero.ioc.fithub.objectes.Usuari;
-import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
 
 /**
  * Classe que representa una petició de login al servidor.
@@ -27,14 +28,14 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * @version 1.0
  */
 public abstract class PeticioLogin extends ConnexioServidor {
-    private static String ETIQUETA = "PeticioLogin";
-    private String correuUsuari;
-    private String passUsuari;
-    private Context context;
+    private static final String ETIQUETA = "PeticioLogin";
+    private final String correuUsuari;
+    private final String passUsuari;
+    private final Context context;
 
     /**
      * Constructor de la classe PeticioLogin.
-     *
+     * <p>
      * @param context      El context de l'aplicació.
      * @param correuUsuari El correu de l'usuari.
      * @param passUsuari   La contrasenya de l'usuari.
@@ -68,34 +69,19 @@ public abstract class PeticioLogin extends ConnexioServidor {
     }
 
     /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-    /**
      * Mètode per obtenir la resposta del servidor.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
      * @return La resposta del servidor.
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Usuari.setContext(context);
 
         if (context != null) {
-            SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-
             Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
-            if (resposta instanceof Object[]) {
-                Object[] respostaArray = (Object[]) resposta;
-                if (respostaArray.length == 2 && respostaArray[0] instanceof String && respostaArray[1] instanceof HashMap) {
+            if (resposta instanceof Object[] respostaArray) {
+                if (respostaArray.length == 2 && respostaArray[0] instanceof String sessioID && respostaArray[1] instanceof HashMap) {
                     // Inicio de sesión exitoso con el identificador de sesión y los datos del usuario
-                    String sessioID = (String) respostaArray[0];
                     HashMap<String, String> usuariMap = (HashMap<String, String>) respostaArray[1];
                     Usuari usuari = (Usuari) Utils.HashMapAObjecte(usuariMap, Usuari.class);
                     if (usuari != null) {
@@ -112,10 +98,10 @@ public abstract class PeticioLogin extends ConnexioServidor {
                     Log.d(ETIQUETA, "Tipus d'objecte no vàlid en la resposta");
                 }
             } else {
-                Utils.mostrarToast(context, Utils.ERROR_CONNEXIO);
+                Utils.mostrarToast(context, Constants.ERROR_CONNEXIO);
             }
         } else {
-            Log.e("PeticioLogin", "El context es nul");
+            Log.e(ETIQUETA, "El context es nul");
         }
         return null;
     }
@@ -123,29 +109,26 @@ public abstract class PeticioLogin extends ConnexioServidor {
     /**
      * Executa la petició de login.
      */
-    @Override
     public void execute() {
         peticioLogin();
     }
 
-
     /**
      * Guarda l'identificador de sessió a SharedPreferences.
-     *
+     * <p>
      * @param sessioID L'identificador de sessió que es guardarà a SharedPreferences.
      */
     public void guardarSessioID(String sessioID) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
-        editor.putString(Utils.SESSIO_ID, sessioID);
+        editor.putString(Constants.SESSIO_ID, sessioID);
         editor.apply();
-        Log.d("PeticioLogin", "sessioID guardat: " + sessioID);
+        Log.d(ETIQUETA, "sessioID guardat: " + sessioID);
     }
-
 
     /**
      * Mètode per obrir l'activitat corresponent segons el tipus d'usuari.
-     *
+     * <p>
      * @param tipusUsuari El tipus d'usuari.
      */
     private void obrirActivitat(int tipusUsuari) {
@@ -165,22 +148,8 @@ public abstract class PeticioLogin extends ConnexioServidor {
     }
 
     /**
-     * Mètode per obtenir la resposta del servidor.
-     *
-     * @param resposta La resposta del servidor.
-     */
-    public void respostaServidor(Object[] resposta) {
-    }
-
-    /**
-     * Mètode que s'executa en segon pla.
-     * @param voids Paràmetres de tipus Void.
-     * @return Object
-     */
-    protected abstract Object doInBackground(Void... voids);
-
-    /**
      * Mètode per obtenir l'etiqueta de la classe.
+     * <p>
      * @return L'etiqueta de la classe.
      */
     public String getEtiqueta() {

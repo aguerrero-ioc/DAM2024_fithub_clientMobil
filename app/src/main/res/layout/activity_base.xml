@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!-- Contenido principal -->
+    <!-- Contingut principal -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -22,22 +22,14 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Títol de la aplicació -->
-            <TextView
-                android:id="@+id/text_titol"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/nom_app"
-                android:textSize="30sp"
-                android:textStyle="bold" />
 
-            <!-- Botó de acces al panell-->
+            <!-- Botó d'accés a panell esquerre-->
             <ImageButton
                 android:id="@+id/boto_acces_panell"
                 android:layout_width="wrap_content"
@@ -48,6 +40,16 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="accedirPanell"
                 android:src="@drawable/ic_menu" />
+
+            <!-- Logo de l'aplicació -->
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="95dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/fithub_logo"
+                android:contentDescription="logo" />
+
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -68,10 +70,14 @@
         <!-- NavigationView per el panell desplegable -->
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            app:menu="@menu/menu_navigation_usuari">
+            android:backgroundTint="@color/light_gray"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+            app:headerLayout="@layout/nav_capcalera"
+            app:menu="@menu/menu_navigation_client">
 
         </com.google.android.material.navigation.NavigationView>
 

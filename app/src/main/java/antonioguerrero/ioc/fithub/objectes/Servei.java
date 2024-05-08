@@ -3,6 +3,8 @@ package antonioguerrero.ioc.fithub.objectes;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Constants;
+
 /**
  * Classe que representa un servei reservat en una instal·lació.
  * <p>
@@ -15,219 +17,150 @@ import java.util.HashMap;
 public class Servei implements Serializable {
 
     // Atributs de la classe
-    private int IDServei;
+    private int IDservei;
     private String nomServei;
     private String descripcioServei;
-    private int aforamentServei;
-
-    private String tipusInstallacio;
+    private String preuServei;
 
     // Altres atributs que podrien ser necessaris
     private String personalServei;
-    private int preuServei;
-
 
     /**
      * Constructor de la classe Servei.
-     *
-     * @param IDServei Identificador del servei
+     * <p>
+     * @param IDservei Identificador del servei
      * @param nomServei Nom del servei
      * @param descripcioServei Descripció del servei
-     * @param aforamentServei Aforament del servei
-     * @param tipusInstallacio Tipus de la instal·lació on es realitza el servei
+     * @param preuServei Preu del servei
      */
-
-    public Servei(int IDServei, String nomServei, String descripcioServei, int aforamentServei, String tipusInstallacio) {
-        this.IDServei = IDServei;
+    public Servei(int IDservei, String nomServei, String descripcioServei, String preuServei) {
+        this.IDservei = IDservei;
         this.nomServei = nomServei;
         this.descripcioServei = descripcioServei;
-        this.aforamentServei = aforamentServei;
-        this.tipusInstallacio = tipusInstallacio;
+        this.preuServei = preuServei;
     }
 
+    /**
+     * Constructor de la classe Servei buit.
+     */
     public Servei() {
-
     }
 
+    /**
+     * Constructor de la classe Servei amb paràmetres.
+     * <p>
+     * @param nomServei Nom del servei
+     * @param descripcioServei Descripció del servei
+     * @param preuServei Preu del servei
+     */
+    public Servei(String nomServei, String descripcioServei, String preuServei) {
+        this.nomServei = nomServei;
+        this.descripcioServei = descripcioServei;
+        this.preuServei = preuServei;
+    }
 
     // Getters i setters
 
     /**
      * Obté l'identificador del servei.
-     *
+     * <p>
      * @return Identificador del servei
      */
-
-    public int getIDServei() {
-        return IDServei;
+    public int getIDservei() {
+        return IDservei;
     }
 
     /**
      * Estableix l'identificador del servei
-     *
-     * @param IDServei Identificador del servei
+     * <p>
+     * @param IDservei Identificador del servei
      */
-
-    public void setIDServei(int IDServei) {
-        this.IDServei = IDServei;
+    public void setIDservei(int IDservei) {
+        this.IDservei = IDservei;
     }
-
 
     /**
      * Obté el nom del servei.
-     *
+     * <p>
      * @return El nom del servei
      */
-
     public String getNomServei() {
         return nomServei;
     }
 
     /**
      * Estableix el nom del servei
-     *
+     * <p>
      * @param nomServei El nom del servei
      */
-
     public void setNomServei(String nomServei) {
         this.nomServei = nomServei;
     }
 
     /**
      * Obté la descripció del servei.
-     *
+     * <p>
      * @return La descripció del servei
      */
-
     public String getDescripcioServei() {
         return descripcioServei;
     }
 
     /**
      * Estableix la descripció del servei
-     *
+     * <p>
      * @param descripcioServei La descripció del servei
      */
-
     public void setDescripcioServei(String descripcioServei) {
         this.descripcioServei = descripcioServei;
     }
 
-/**
-     * Obté l'aforament del servei.
-     *
-     * @return L'aforament del servei
-     */
-
-    public int getAforamentServei() {
-        return aforamentServei;
-    }
-
-    /**
-     * Estableix l'aforament del servei
-     *
-     * @param aforamentServei L'aforament del servei
-     */
-
-    public void setAforamentServei(int aforamentServei) {
-        this.aforamentServei = aforamentServei;
-    }
-
-    /**
-     * Obté el tipus de la instal·lació on es realitza el servei.
-     *
-     * @return El tipus de la instal·lació
-     */
-
-    public String getTipusInstallacio() {
-        return tipusInstallacio;
-    }
-
-    /**
-     * Estableix el tipus de la instal·lació on es realitza el servei
-     *
-     * @param tipusInstallacio El tipus de la instal·lació
-     */
-
-    public void setTipusInstallacio(String tipusInstallacio) {
-        this.tipusInstallacio = tipusInstallacio;
-    }
-
-    /**
-     * Obté el personal assignat al servei.
-     *
-     * @return El personal assignat al servei
-     */
-
-    public String getPersonalServei() {
-        return personalServei;
-    }
-
-    /**
-     * Estableix el personal assignat al servei
-     *
-     * @param personalServei El personal assignat al servei
-     */
-
-    public void setPersonalServei(String personalServei) {
-        this.personalServei = personalServei;
-    }
-
     /**
      * Obté el preu del servei.
-     *
+     * <p>
      * @return El preu del servei
      */
-
-    public int getPreuServei() {
+    public String getPreuServei() {
         return preuServei;
     }
 
     /**
      * Estableix el preu del servei
-     *
+     * <p>
      * @param preuServei El preu del servei
      */
-
-    public void setPreuServei(int preuServei) {
+    public void setPreuServei(String preuServei) {
         this.preuServei = preuServei;
     }
 
     /**
      * Converteix un servei a un HashMap.
-     *
+     * <p>
      * @param servei El servei a convertir
      * @return El HashMap resultant
      */
     public HashMap<String, String> servei_a_hashmap(Servei servei) {
         HashMap<String, String> mapaServei = new HashMap<>();
-        mapaServei.put("objectType","servei");
-        mapaServei.put("id",Integer.toString(servei.getIDServei()));
-        mapaServei.put("nomServei",servei.getNomServei());
-        mapaServei.put("descripcioServei", servei.getDescripcioServei());
-        mapaServei.put("aforamentServei",Integer.toString(servei.getAforamentServei()));
-        mapaServei.put("tipusInstallacio",servei.getTipusInstallacio());
-        mapaServei.put("personalServei",servei.getPersonalServei());
-        mapaServei.put("preuServei",Integer.toString(servei.getPreuServei()));
+        mapaServei.put(Constants.OBJTYPE,Constants.OBJ_SERVEI);
+        mapaServei.put(Constants.SERVEI_ID,Integer.toString(servei.getIDservei()));
+        mapaServei.put(Constants.SERVEI_NOM,servei.getNomServei());
+        mapaServei.put(Constants.SERVEI_DESC, servei.getDescripcioServei());
+        mapaServei.put(Constants.SERVEI_PREU,servei.getPreuServei());
         return mapaServei;
     }
 
     /**
      * Converteix un HashMap a un servei.
-     *
+     * <p>
      * @param mapaServei El HashMap a convertir
      * @return El servei resultant
      */
-    public Servei hashmap_a_servei(HashMap<String, String> mapaServei) {
+    public static Servei hashmap_a_servei(HashMap<String, String> mapaServei) {
         Servei servei = new Servei();
-        servei.setIDServei(Integer.parseInt(mapaServei.get("id")));
-        servei.setNomServei(mapaServei.get("nomServei"));
-        servei.setDescripcioServei(mapaServei.get("descripcioServei"));
-        servei.setAforamentServei(Integer.parseInt(mapaServei.get("aforamentServei")));
-        servei.setTipusInstallacio(mapaServei.get("tipusInstallacio"));
-        servei.setPersonalServei(mapaServei.get("personalServei"));
-        servei.setPreuServei(Integer.parseInt(mapaServei.get("preuServei")));
+        servei.setIDservei(Integer.parseInt(mapaServei.get(Constants.SERVEI_ID)));
+        servei.setNomServei(mapaServei.get(Constants.SERVEI_NOM));
+        servei.setDescripcioServei(mapaServei.get(Constants.SERVEI_DESC));
+        servei.setPreuServei(mapaServei.get(Constants.SERVEI_PREU));
         return servei;
     }
-
 }

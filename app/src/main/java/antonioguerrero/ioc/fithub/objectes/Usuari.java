@@ -7,7 +7,7 @@ import android.util.Log;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import antonioguerrero.ioc.fithub.Utils;
+import antonioguerrero.ioc.fithub.Constants;
 
 /**
  * Classe Usuari que representa un usuari en l'aplicació FitHub.
@@ -38,8 +38,8 @@ public class Usuari implements Serializable {
 
     /**
      * Constructor de la classe Usuari reduit.
-     *
-     * @param correuUsuari         El correu electrònic de l'usuari.
+     * <p>
+     * @param correuUsuari  El correu electrònic de l'usuari.
      * @param passUsuari    La contrasenya de l'usuari.
      */
     public Usuari(String correuUsuari, String passUsuari) {
@@ -47,18 +47,18 @@ public class Usuari implements Serializable {
         this.passUsuari = passUsuari;
         this.IDusuari = -1;
 
-        this.tipusUsuari = Integer.parseInt(Utils.VALOR_DEFAULT);
-        this.nomUsuari = Utils.VALOR_DEFAULT;
-        this.cognomsUsuari = Utils.VALOR_DEFAULT;
-        this.dataNaixement = Utils.VALOR_DEFAULT;
-        this.adreca = Utils.VALOR_DEFAULT;
-        this.telefon = Utils.VALOR_DEFAULT;
-        this.dataInscripcio = Utils.VALOR_DEFAULT;
+        this.tipusUsuari = Integer.parseInt(Constants.VALOR_DEFAULT);
+        this.nomUsuari = Constants.VALOR_DEFAULT;
+        this.cognomsUsuari = Constants.VALOR_DEFAULT;
+        this.dataNaixement = Constants.VALOR_DEFAULT;
+        this.adreca = Constants.VALOR_DEFAULT;
+        this.telefon = Constants.VALOR_DEFAULT;
+        this.dataInscripcio = Constants.VALOR_DEFAULT;
     }
 
     /**
      * Constructor de la classe Usuari per el registre.
-     *
+     * <p>
      * @param correuUsuari         El correu electrònic de l'usuari.
      * @param passUsuari    La contrasenya de l'usuari.
      * @param nomUsuari            El nom de l'usuari.
@@ -74,60 +74,33 @@ public class Usuari implements Serializable {
         this.telefon = telefon;
     }
 
-
-
-    /** Metode per convertir un objecte Usuari a un HashMap
-     * @param usuari Objecte Usuari a convertir
-     * @return HashMap amb les dades de l'usuari
+    /**
+     * Constructor de la classe Usuari.
+     * <p>
+     * @param iDusuari          L'ID de l'usuari.
+     * @param correuUsuari      El correu electrònic de l'usuari.
+     * @param tipusUsuari       El tipus d'usuari.
+     * @param dataInscripcio    La data d'inscripció de l'usuari.
+     * @param nomUsuari         El nom de l'usuari.
+     * @param cognomsUsuari     Els cognoms de l'usuari.
+     * @param dataNaixement     La data de naixement de l'usuari.
+     * @param adreca            L'adreça de l'usuari.
+     * @param telefon           El número de telèfon de l'usuari.
      */
-    public HashMap<String, String> usuari_a_hashmap(Usuari usuari) {
-        HashMap<String, String> mapaUsuari = new HashMap<>();
-        mapaUsuari.put("objectType", "usuari");
-        mapaUsuari.put("IDusuari", String.valueOf(usuari.getIDusuari()));
-        mapaUsuari.put("correuUsuari", usuari.getCorreuUsuari());
-        mapaUsuari.put("passUsuari", usuari.getPassUsuari());
-        mapaUsuari.put("nomUsuari", usuari.getNomUsuari());
-        mapaUsuari.put("cognomsUsuari", usuari.getCognomsUsuari());
-        mapaUsuari.put("dataNaixement", usuari.getDataNaixement());
-        mapaUsuari.put("dataInscripcio", usuari.getDataNaixement());
-        mapaUsuari.put("adreca", usuari.getAdreca());
-        mapaUsuari.put("telefon", usuari.getTelefon());
-        mapaUsuari.put("tipusUsuari", String.valueOf(usuari.getTipusUsuari()));
-        return mapaUsuari;
+    public Usuari(String iDusuari, String correuUsuari, String tipusUsuari, String dataInscripcio, String nomUsuari, String cognomsUsuari, String dataNaixement, String adreca, String telefon) {
     }
 
-    /** Metode per convertir un HashMap a un objecte Usuari
-     * @param map HashMap amb les dades de l'usuari
-     * @return Objecte Usuari amb les dades del HashMap
+    /**
+     * Constructor buit de la classe Usuari.
      */
-    public static Usuari hashmap_a_usuari(HashMap<String, String> map) {
-        Usuari usuari = new Usuari();
-        usuari.setIDusuari(Integer.parseInt(map.get("IDusuari")));
-        usuari.setCorreuUsuari(map.get("correuUsuari"));
-        usuari.setPassUsuari(map.get("passUsuari"));
-        usuari.setNomUsuari(map.get("nomUsuari"));
-        usuari.setCognomsUsuari(map.get("cognomsUsuari"));
-        usuari.setDataNaixement(map.get("dataNaixement"));
-        usuari.setAdreca(map.get("adreca"));
-        usuari.setTelefon(map.get("telefon"));
-        usuari.setTipusUsuari(Integer.parseInt(map.get("tipusUsuari")));
-        usuari.setDataInscripcio(map.get("dataInscripcio"));
-        return usuari;
-    }
-
-
-        /**
-         * Constructor buit de la classe Usuari.
-         */
     public Usuari() {
-
     }
 
     // Getters i setters
 
     /**
      * Obté l'ID de l'usuari.
-     *
+     * <p>
      * @return L'ID de l'usuari.
      */
     public int getIDusuari() {
@@ -136,7 +109,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix l'ID de l'usuari.
-     *
+     * <p>
      * @param IDusuari L'ID de l'usuari.
      */
     public void setIDusuari(int IDusuari) {
@@ -145,7 +118,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté el tipus d'usuari.
-     *
+     * <p>
      * @return El tipus d'usuari.
      */
     public int getTipusUsuari() {
@@ -154,7 +127,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix el tipus d'usuari.
-     *
+     * <p>
      * @param tipusUsuari El tipus d'usuari.
      */
     public void setTipusUsuari(int tipusUsuari) {
@@ -173,7 +146,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté el nom de l'usuari.
-     *
+     * <p>
      * @return El nom de l'usuari.
      */
     public String getNomUsuari() {
@@ -182,7 +155,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix el nom de l'usuari.
-     *
+     * <p>
      * @param nomUsuari El nom de l'usuari.
      */
     public void setNomUsuari(String nomUsuari) {
@@ -191,7 +164,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté els cognoms de l'usuari.
-     *
+     * <p>
      * @return Els cognoms de l'usuari.
      */
     public String getCognomsUsuari() {
@@ -200,7 +173,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix els cognoms de l'usuari.
-     *
+     * <p>
      * @param cognomsUsuari Els cognoms de l'usuari.
      */
     public void setCognomsUsuari(String cognomsUsuari) {
@@ -209,7 +182,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté la data de naixement de l'usuari.
-     *
+     * <p>
      * @return La data de naixement de l'usuari.
      */
     public String getDataNaixement() {
@@ -218,7 +191,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix la data de naixement de l'usuari.
-     *
+     * <p>
      * @param DataNaixement La data de naixement de l'usuari.
      */
     public void setDataNaixement(String DataNaixement) {
@@ -227,7 +200,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté l'adreça de l'usuari.
-     *
+     * <p>
      * @return L'adreça de l'usuari.
      */
     public String getAdreca() {
@@ -236,7 +209,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix l'adreça de l'usuari.
-     *
+     * <p>
      * @param adreca L'adreça de l'usuari.
      */
     public void setAdreca(String adreca) {
@@ -245,7 +218,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté el número de telèfon de l'usuari.
-     *
+     * <p>
      * @return El número de telèfon de l'usuari.
      */
     public String getTelefon() {
@@ -254,7 +227,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix el número de telèfon de l'usuari.
-     *
+     * <p>
      * @param telefon El número de telèfon de l'usuari.
      */
     public void setTelefon(String telefon) {
@@ -263,7 +236,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté el correu electrònic de l'usuari.
-     *
+     * <p>
      * @return El correu electrònic de l'usuari.
      */
     public String getCorreuUsuari() {
@@ -272,7 +245,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix el correu electrònic de l'usuari.
-     *
+     * <p>
      * @param correuUsuari El correu electrònic de l'usuari.
      */
     public void setCorreuUsuari(String correuUsuari) {
@@ -281,7 +254,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté la contrasenya de l'usuari.
-     *
+     * <p>
      * @return La contrasenya de l'usuari.
      */
     public String getPassUsuari() {
@@ -290,7 +263,7 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix la contrasenya de l'usuari.
-     *
+     * <p>
      * @param passUsuari La contrasenya de l'usuari.
      */
     public void setPassUsuari(String passUsuari) {
@@ -299,7 +272,7 @@ public class Usuari implements Serializable {
 
     /**
      * Obté la data d'inscripció de l'usuari.
-     *
+     * <p>
      * @return La data d'inscripció de l'usuari.
      */
     public String getDataInscripcio() {
@@ -308,40 +281,42 @@ public class Usuari implements Serializable {
 
     /**
      * Estableix la data d'inscripció de l'usuari.
-     *
+     * <p>
      * @param dataInscripcio La data d'inscripció de l'usuari.
      */
     public void setDataInscripcio(String dataInscripcio) {
         this.dataInscripcio = dataInscripcio;
     }
 
+    /**
+     * Estableix el context de l'aplicació.
+     * <p>
+     * @param context El context de l'aplicació.
+     */
     public static void setContext(Context context) {
         Usuari.context = context;
     }
 
-
-
     /**
      * Guarda les propietats de l'objecte Usuari a SharedPreferences.
-     *
+     * <p>
      * @param usuari L'objecte Usuari que es guardarà a SharedPreferences.
      */
     public static void guardarDadesUsuari(Usuari usuari) {
-
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de l'objecte usuari a SharedPreferences
-        editor.putString("nomUsuari", usuari.getNomUsuari());
-        editor.putString("IDusuari", String.valueOf(usuari.getIDusuari()));
-        editor.putString("tipusUsuari", String.valueOf(usuari.getTipusUsuari()));
-        editor.putString("correuUsuari", usuari.getCorreuUsuari());
-        editor.putString("passUsuari", usuari.getPassUsuari());
-        editor.putString("dataInscripcio", usuari.getDataInscripcio());
-        editor.putString("cognomsUsuari", usuari.getCognomsUsuari());
-        editor.putString("dataNaixement", usuari.getDataNaixement());
-        editor.putString("adreca", usuari.getAdreca());
-        editor.putString("telefon", usuari.getTelefon());
+        editor.putString(Constants.NOM_USUARI, usuari.getNomUsuari());
+        editor.putInt(Constants.ID_USUARI, usuari.getIDusuari());
+        editor.putString(Constants.TIPUS_USUARI, String.valueOf(usuari.getTipusUsuari()));
+        editor.putString(Constants.CORREU_USUARI, usuari.getCorreuUsuari());
+        editor.putString(Constants.PASS_USUARI, usuari.getPassUsuari());
+        editor.putString(Constants.DATA_INSCRIPCIO, usuari.getDataInscripcio());
+        editor.putString(Constants.COGNOMS_USUARI, usuari.getCognomsUsuari());
+        editor.putString(Constants.DATA_NAIXEMENT, usuari.getDataNaixement());
+        editor.putString(Constants.ADRECA, usuari.getAdreca());
+        editor.putString(Constants.TELEFON, usuari.getTelefon());
 
         // Aplicar els canvis a SharedPreferences
         editor.apply();
@@ -357,5 +332,77 @@ public class Usuari implements Serializable {
                 ", DataNaixement: " + usuari.getDataNaixement() +
                 ", adreca: " + usuari.getAdreca() +
                 ", telefon: " + usuari.getTelefon());
+    }
+
+    /**
+     * Obtenir les dades de l'usuari des de SharedPreferences.
+     * <p>
+     * @return L'objecte Usuari amb les dades obtingudes de SharedPreferences.
+     */
+    public static Usuari obtenirUsuari() {
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        Usuari usuari = new Usuari();
+
+        // Obtenir les dades de l'usuari des de SharedPreferences i assignar-les a l'objecte Usuari
+        usuari.setIDusuari(preferencies.getInt(Constants.ID_USUARI, -1));
+        Object tipusUsuariObj = preferencies.getAll().get(Constants.TIPUS_USUARI);
+        String tipusUsuariString;
+        if (tipusUsuariObj instanceof Integer) {
+            // Convertir a String
+            tipusUsuariString = String.valueOf((Integer) tipusUsuariObj);
+        } else {
+            // Ja és String
+            tipusUsuariString = (String) tipusUsuariObj;
+        }
+        usuari.setNomUsuari(preferencies.getString(Constants.NOM_USUARI, ""));
+        usuari.setCognomsUsuari(preferencies.getString(Constants.COGNOMS_USUARI, ""));
+        usuari.setCorreuUsuari(preferencies.getString(Constants.CORREU_USUARI, ""));
+        usuari.setPassUsuari(preferencies.getString(Constants.PASS_USUARI, ""));
+        usuari.setDataInscripcio(preferencies.getString(Constants.DATA_INSCRIPCIO, ""));
+        usuari.setDataNaixement(preferencies.getString(Constants.DATA_NAIXEMENT, ""));
+        usuari.setAdreca(preferencies.getString(Constants.ADRECA, ""));
+        usuari.setTelefon(preferencies.getString(Constants.TELEFON, ""));
+
+        // Retornar l'objecte Usuari amb les dades obtingudes
+        return usuari;
+    }
+
+    /** Metode per convertir un objecte Usuari a un HashMap
+     *  @param usuari Objecte Usuari a convertir
+     *  @return HashMap amb les dades de l'usuari
+     */
+    public HashMap<String, String> usuari_a_hashmap(Usuari usuari) {
+        HashMap<String, String> mapaUsuari = new HashMap<>();
+        mapaUsuari.put(Constants.OBJTYPE, Constants.OBJ_USUARI);
+        mapaUsuari.put(Constants.ID_USUARI, String.valueOf(usuari.getIDusuari()));
+        mapaUsuari.put(Constants.CORREU_USUARI, usuari.getCorreuUsuari());
+        mapaUsuari.put(Constants.PASS_USUARI, usuari.getPassUsuari());
+        mapaUsuari.put(Constants.NOM_USUARI, usuari.getNomUsuari());
+        mapaUsuari.put(Constants.COGNOMS_USUARI, usuari.getCognomsUsuari());
+        mapaUsuari.put(Constants.DATA_NAIXEMENT, usuari.getDataNaixement());
+        mapaUsuari.put(Constants.DATA_INSCRIPCIO, usuari.getDataNaixement());
+        mapaUsuari.put(Constants.ADRECA, usuari.getAdreca());
+        mapaUsuari.put(Constants.TELEFON, usuari.getTelefon());
+        mapaUsuari.put(Constants.TIPUS_USUARI, String.valueOf(usuari.getTipusUsuari()));
+        return mapaUsuari;
+    }
+
+    /** Metode per convertir un HashMap a un objecte Usuari
+     *  @param map HashMap amb les dades de l'usuari
+     *  @return Objecte Usuari amb les dades del HashMap
+     */
+    public static Usuari hashmap_a_usuari(HashMap<String, String> map) {
+        Usuari usuari = new Usuari();
+        usuari.setIDusuari(Integer.parseInt(map.get(Constants.ID_USUARI)));
+        usuari.setCorreuUsuari(map.get(Constants.CORREU_USUARI));
+        usuari.setPassUsuari(map.get(Constants.PASS_USUARI));
+        usuari.setNomUsuari(map.get(Constants.NOM_USUARI));
+        usuari.setCognomsUsuari(map.get(Constants.COGNOMS_USUARI));
+        usuari.setDataNaixement(map.get(Constants.DATA_NAIXEMENT));
+        usuari.setAdreca(map.get(Constants.ADRECA));
+        usuari.setTelefon(map.get(Constants.TELEFON));
+        usuari.setTipusUsuari(Integer.parseInt(map.get(Constants.TIPUS_USUARI)));
+        usuari.setDataInscripcio(map.get(Constants.DATA_INSCRIPCIO));
+        return usuari;
     }
 }

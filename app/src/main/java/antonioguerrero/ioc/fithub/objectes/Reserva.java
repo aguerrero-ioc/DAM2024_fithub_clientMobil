@@ -3,10 +3,13 @@ package antonioguerrero.ioc.fithub.objectes;
 
 import java.util.HashMap;
 
+import antonioguerrero.ioc.fithub.Constants;
+
 /**
  * Classe que representa una reserva d'una classe.
  * <p>
- * Cada reserva té un identificador únic, un identificador d'usuari, un identificador d'instal·lació, un identificador de classe, una data, una hora, una durada i un estat.
+ * Cada reserva té un identificador únic, un identificador d'usuari, un identificador d'instal·lació,
+ * un identificador de classe, una data, una hora, una durada i un estat.
  * Aquesta classe també conté mètodes per convertir una reserva a un HashMap i viceversa.
  * <p>
  * @author Antonio Guerrero
@@ -15,84 +18,150 @@ import java.util.HashMap;
 public class Reserva {
 
     // Dades obligatòries de la reserva
-    private int IDReserva;
-    private int IDusuari;
+    private String IDreserva;
+    private String IDclasseDirigida;
+    private String IDusuari;
+    private String estatReserva;
 
 
     /**
      * Constructor de la classe Reserva reduït.
      */
-    public Reserva() {
-        this.IDReserva = IDReserva;
+    public Reserva(String IDreserva, String IDclasseDirigida, String IDusuari) {
+        this.IDreserva = IDreserva;
+        this.IDclasseDirigida = IDclasseDirigida;
         this.IDusuari = IDusuari;
     }
 
+    /**
+     * Constructor de la classe Reserva amb paràmetres.
+     * <p>
+     * @param IDreserva        Identificador de la reserva
+     * @param IDclasseDirigida Identificador de la classe dirigida
+     * @param IDusuari         Identificador de l'usuari
+     * @param estatReserva     Estat de la reserva
+     */
+    public Reserva(int IDreserva, String IDclasseDirigida, String IDusuari, String estatReserva) {
+        this.IDreserva = String.valueOf(IDreserva);
+        this.IDclasseDirigida = IDclasseDirigida;
+        this.IDusuari = IDusuari;
+        this.estatReserva = estatReserva;
+    }
+
+    /**
+     * Constructor de la classe Reserva amb paràmetres.
+     * <p>
+     * @param IDclasseDirigida Identificador de la classe dirigida
+     * @param IDusuari         Identificador de l'usuari
+     */
+    public Reserva(String IDclasseDirigida, String IDusuari) {
+        this.IDclasseDirigida = IDclasseDirigida;
+        this.IDusuari = IDusuari;
+    }
 
     // Getters y setters
 
     /**
-     * Obté l'identificador de la reserva.
-     *
+     * Mètode per obtenir l'identificador de la reserva.
+     * <p>
      * @return L'identificador de la reserva.
      */
-
-    public int getIDReserva() {
-        return IDReserva;
+    public String getIDreserva() {
+        return IDreserva;
     }
 
     /**
-     * Estableix l'identificador de la reserva.
-     *
-     * @param IDReserva L'identificador de la reserva.
+     * Mètode per establir l'identificador de la reserva.
+     * <p>
+     * @param IDreserva L'identificador de la reserva.
      */
 
-    public void setIDReserva(int IDReserva) {
-        this.IDReserva = IDReserva;
+    public void setIDreserva(String IDreserva) {
+        this.IDreserva = IDreserva;
+    }
+
+
+    /**
+     * Mètode per obtenir l'identificador de la classe dirigida.
+     * <p>
+     * @return L'identificador de la classe dirigida.
+     */
+    public String getIDclasseDirigida() {
+        return IDclasseDirigida;
     }
 
     /**
-     * Obté l'identificador de l'usuari.
-     *
+     * Mètode per establir l'identificador de la classe dirigida.
+     * <p>
+     * @param IDclasseDirigida L'identificador de la classe dirigida.
+     */
+    public void setIDclasseDirigida(String IDclasseDirigida) {
+        this.IDclasseDirigida = IDclasseDirigida;
+    }
+
+    /**
+     * Mètode per obtenir l'identificador de l'usuari.
+     * <p>
      * @return L'identificador de l'usuari.
      */
-    public int getIDusuari() {
+    public String getIDusuari() {
         return IDusuari;
     }
 
     /**
-     * Estableix l'identificador de l'usuari.
-     *
+     * Mètode per establir l'identificador de l'usuari.
+     * <p>
      * @param IDusuari L'identificador de l'usuari.
      */
-    public void setIDusuari(int IDusuari) {
+    public void setIDusuari(String IDusuari) {
         this.IDusuari = IDusuari;
     }
 
     /**
-     * Converteix una reserva a un HashMap.
-     *
-     * @param reserva La reserva a convertir.
-     * @return El HashMap resultant.
+     * Mètode per obtenir l'estat de la reserva.
+     * <p>
+     * @return L'estat de la reserva.
+     */
+    public String getEstatReserva() {
+        return estatReserva;
+    }
+
+    /**
+     * Mètode per establir l'estat de la reserva.
+     * <p>
+     * @param estatReserva L'estat de la reserva.
+     */
+    public void setEstatReserva(String estatReserva) {
+        this.estatReserva = estatReserva;
+    }
+
+    /**
+     * Mètode per convertir una reserva a un HashMap.
+     * <p>
+     * @param reserva La reserva que es vol convertir.
+     * @return HashMap amb les dades de la reserva.
      */
     public HashMap<String, String> reserva_a_hashmap(Reserva reserva) {
         HashMap<String, String> mapaReserva = new HashMap<>();
-        mapaReserva.put("objectType","reserva");
-        mapaReserva.put("id",Integer.toString(reserva.getIDReserva()));
-        mapaReserva.put("idUsuari",Integer.toString(reserva.getIDusuari()));
+        mapaReserva.put(Constants.OBJTYPE,Constants.OBJ_RESERVA);
+        mapaReserva.put(Constants.RESERVA_ID, String.valueOf(reserva.getIDreserva()));
+        mapaReserva.put(Constants.CLASSE_ID, reserva.getIDclasseDirigida());
+        mapaReserva.put(Constants.ID_USUARI, reserva.getIDusuari());
+        mapaReserva.put(Constants.RESERVA_ESTAT, reserva.getEstatReserva());
         return mapaReserva;
     }
 
     /**
-     * Converteix un HashMap a una reserva.
-     *
-     * @param mapaReserva El HashMap a convertir.
-     * @return La reserva resultant.
+     * Mètode per convertir un HashMap a una reserva.
+     * <p>
+     * @param mapaReserva El HashMap que es vol convertir.
+     * @return La reserva amb les dades del HashMap.
      */
     public Reserva hashmap_a_reserva(HashMap<String, String> mapaReserva) {
-        Reserva reserva = new Reserva();
-        reserva.setIDReserva(Integer.parseInt(mapaReserva.get("id")));
-        reserva.setIDusuari(Integer.parseInt(mapaReserva.get("idUsuari")));
-        return reserva;
+        int IDreserva = Integer.parseInt(mapaReserva.get(Constants.RESERVA_ID));
+        String IDclasseDirigida = mapaReserva.get(Constants.CLASSE_ID);
+        String IDusuari = mapaReserva.get(Constants.ID_USUARI);
+        String estatReserva = mapaReserva.get(Constants.RESERVA_ESTAT);
+        return new Reserva(IDreserva, IDclasseDirigida, IDusuari, estatReserva);
     }
-
 }

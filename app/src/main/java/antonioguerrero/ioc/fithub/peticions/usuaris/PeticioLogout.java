@@ -13,26 +13,25 @@ import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
-import antonioguerrero.ioc.fithub.Utils;
-import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
+import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
 
 /**
  * Classe per gestionar la petició de tancament de sessió.
  * <p>
- * @autor Antonio Guerrero
+ * @author Antonio Guerrero
  * @version 1.0
  */
 public class PeticioLogout extends ConnexioServidor {
     private static final String ETIQUETA = "PeticioLogout";
-    private String IDusuari;
-    private Context context;
-    private SharedPreferences preferencies;
+    private final String IDusuari;
+    private final Context context;
     private String sessioID;
 
     /**
      * Constructor de la classe PeticioLogout.
-     *
+     * <p>
      * @param listener  L'objecte que es notificarà quan la petició estigui completa.
      * @param context   El context de l'aplicació.
      * @param IDusuari  L'ID de l'usuari que vol tancar la sessió.
@@ -43,8 +42,8 @@ public class PeticioLogout extends ConnexioServidor {
         this.context = context;
         this.IDusuari = IDusuari;
         this.sessioID = sessioID;
-        this.preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
 
     /**
@@ -69,71 +68,43 @@ public class PeticioLogout extends ConnexioServidor {
         }.execute();
     }
 
-    /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
 
     /**
      * Mètode per gestionar la resposta del servidor a la petició de tancament de sessió.
-     *
+     * <p>
      * @param resposta La resposta del servidor.
-     * @return
      */
-    @Override
     public List<HashMap<String, String>> respostaServidor(Object resposta) {
         Log.d(ETIQUETA, "Resposta del servidor: " + resposta);
         if (resposta instanceof Object[]) {
             Object[] arrayResposta = (Object[]) resposta;
             String estat = (String) arrayResposta[0];
             if (estat.equals("true")) {
-                if (estat.equals("true")) {
-                    Log.d(ETIQUETA, "Tancament de sessió exitós");
-                    Toast.makeText(context, "Tancament de sessió exitós", Toast.LENGTH_SHORT).show();
 
-                    // Torna a LoginActivity
-                    Intent intent = new Intent(context, LoginActivity.class);
-                    context.startActivity(intent);
-                    ((Activity) context).finish(); // Tanca l'activitat actual
-                } else {
-                    Log.e(ETIQUETA, "Error en el tancament de sessió");
-                }
+                Log.d(ETIQUETA, "Tancament de sessió exitós");
+                Toast.makeText(context, "Tancament de sessió exitós", Toast.LENGTH_SHORT).show();
+
+                // Torna a LoginActivity
+                Intent intent = new Intent(context, LoginActivity.class);
+                context.startActivity(intent);
+                ((Activity) context).finish(); // Tanca l'activitat actual
             } else {
-                String missatgeError = "Error: " + resposta.toString();
-                Log.e(ETIQUETA, missatgeError);
-                Toast.makeText(context, missatgeError, Toast.LENGTH_SHORT).show();
+                Log.e(ETIQUETA, "Error en el tancament de sessió");
             }
         }
         return null;
     }
 
     /**
-     * Mètode per obtenir la resposta del servidor.
-     *
-     * @param resposta La resposta del servidor.
-     * @return La resposta del servidor.
-     */
-    @Override
-    public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-        return null;
-    }
-    /**
      * Mètode per executar la petició de tancament de sessió.
      */
-    @Override
     public void execute() {
         peticioLogout();
     }
 
     /**
      * Mètode per obtenir l'etiqueta de la classe.
-     *
+     * <p>
      * @return L'etiqueta de la classe.
      */
     public String getEtiqueta() {

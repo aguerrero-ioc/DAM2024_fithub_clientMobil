@@ -7,14 +7,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.ConnectException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.Utils;
 import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
-import antonioguerrero.ioc.fithub.objectes.Installacio;
 
 /**
  * Classe per obtenir totes les instal·lacions.
@@ -25,8 +24,7 @@ import antonioguerrero.ioc.fithub.objectes.Installacio;
  * @version 1.0
  */
 public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
-    protected static respostaServidorListener ConsultarTotesInstallacionsListener;
-    private Context context;
+    private final Context context;
     private static final String ETIQUETA = "ConsultarInstallacions";
     String sessioID;
 
@@ -42,13 +40,16 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         this.context = context;
         this.sessioID = sessioID;
 
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
-        this.sessioID = preferencies.getString(Utils.SESSIO_ID, Utils.VALOR_DEFAULT);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
+        this.sessioID = preferencies.getString(Constants.SESSIO_ID, Constants.VALOR_DEFAULT);
     }
+
+    /**
+     * Interfície per obtenir la resposta del servidor.
+     */
     public interface ConsultarTotesInstallacionsListener {
         void onInstallacionsObtingudes(List<HashMap<String, String>> installacions);
     }
-
 
     /**
      * Mètode per obtenir totes les instal·lacions del servidor.
@@ -78,11 +79,9 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
      */
     private void processarResposta(Object resposta) {
         // Verificar que la resposta no sigui nula i sigui un array d'objectes
-        if (resposta != null && resposta instanceof Object[]) {
-            Object[] respostaArray = (Object[]) resposta;
+        if (resposta != null && resposta instanceof Object[] respostaArray) {
             // Verificar que el array tingui almenys dos elements i que el primer element sigui un String
-            if (respostaArray.length >= 2 && respostaArray[0] instanceof String) {
-                String estat = (String) respostaArray[0];
+            if (respostaArray.length >= 2 && respostaArray[0] instanceof String estat) {
                 // Verificar si el primer element és "installacioLlista"
                 if ("installacioLlista".equals(estat)) {
                     // Verificar si el segon element és una llista
@@ -92,6 +91,7 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
                         if (listener instanceof ConsultarTotesInstallacionsListener) {
                             ((ConsultarTotesInstallacionsListener) listener).onInstallacionsObtingudes(installacions);
                         }
+                        Log.d(ETIQUETA, "Dades rebudes: " + Arrays.toString((Object[]) resposta));
                         guardarDadesInstallacions(installacions);
                         return;
                     }
@@ -104,20 +104,8 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
     }
 
     /**
-     * Mètode per obtenir el tipus de l'objecte.
-     *
-     * @return La classe de l'objecte.
-     */
-    @Override
-    public Class<?> obtenirTipusObjecte() {
-        return Object[].class;
-    }
-
-
-    /**
      * Mètode per executar la petició.
      */
-    @Override
     public void execute() throws ConnectException {
         consultarTotesInstallacions();
     }
@@ -128,7 +116,7 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
      * @param llistaInstallacions La llista d'objectes Installacio que es guardarà a SharedPreferences.
      */
     private void guardarDadesInstallacions(List<HashMap<String, String>> llistaInstallacions) {
-        SharedPreferences preferencies = context.getSharedPreferences(Utils.PREFERENCIES, Context.MODE_PRIVATE);
+        SharedPreferences preferencies = context.getSharedPreferences(Constants.PREFERENCIES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencies.edit();
 
         // Guardar les propietats de cada objecte installacio a SharedPreferences
@@ -146,5 +134,4 @@ public abstract class ConsultarTotesInstallacions extends ConnexioServidor {
         // Aplicar els canvis a SharedPreferences
         editor.apply();
     }
-
 }

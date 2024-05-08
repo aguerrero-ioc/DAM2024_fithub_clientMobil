@@ -1,0 +1,194 @@
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Contingut principal -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_gray">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Botó d'accés a panell esquerre-->
+            <ImageButton
+                android:id="@+id/boto_acces_panell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="accedirPanell"
+                android:src="@drawable/ic_menu" />
+
+            <!-- Logo de l'aplicació -->
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="95dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/fithub_logo"
+                android:contentDescription="logo" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="855dp"
+            android:orientation="vertical"
+            android:layout_below="@id/toolbar"
+            android:padding="16dp">
+
+            <!-- Secció de Dades de l'Activitat -->
+            <TextView
+                android:id="@+id/tvData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="Creació d'una nova activitat:" />
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/edit_text_background"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tv_seccio_dades_activitat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Dades de l'Activitat"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <!-- TextInputLayout per al nom de l'activitat -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_nom_activitat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nom_activitat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nom de l'Activitat"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per a la descripció de l'activitat -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_descripcio_activitat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_descripcio_activitat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Descripció de l'Activitat"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per a l'aforament de l'activitat -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_aforament_activitat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_aforament_activitat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Aforament de l'Activitat"
+                    android:inputType="number"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInputLayout per al tipus d'instal·lació -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_tipus_installacio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_tipus_installacio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tipus d'Instal·lació"
+                    android:inputType="text"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Botó de Crear Activitat -->
+        <Button
+            android:id="@+id/btn_creacio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_background"
+            android:text="Crear Activitat"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/boto_mostrar_missatges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_missatge"
+            android:backgroundTint="?attr/colorPrimary"
+            android:onClick="mostrarFragmentMissatges"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp" />
+
+    </RelativeLayout>
+
+    <!-- NavigationView per al panell desplegable -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:backgroundTint="@color/light_gray"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:headerLayout="@layout/nav_capcalera"
+        app:menu="@menu/menu_navigation_admin">
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

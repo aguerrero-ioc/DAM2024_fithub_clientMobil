@@ -14,8 +14,8 @@ import antonioguerrero.ioc.fithub.connexio.ConnexioServidor;
  * Proves unitàries per verificar el funcionament de la classe ConnexioServidor.
  * Simula totes les peticions al servidor necessàries per al funcionament de l'aplicació.
  * <p>
- * Autor: Antonio Guerrero
- * Versió: 1.0
+ * @author Antonio Guerrero
+ * @version 1.0
  */
 public class ConnexioServidorTest {
 
@@ -28,31 +28,12 @@ public class ConnexioServidorTest {
         // Arrange
         ConnexioServidor connexio = new ConnexioServidor() {
             @Override
-            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
+            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) {
                 // Simulació de resposta del servidor
                 Object[] resposta = new Object[2];
                 resposta[0] = true; // Simular "true" com a primer element de la resposta
                 resposta[1] = null; // Simular null com a segon element de la resposta
                 return resposta;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
             }
         };
 
@@ -75,32 +56,12 @@ public class ConnexioServidorTest {
         // Arrange
         ConnexioServidor connexio = new ConnexioServidor() {
             @Override
-            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
+            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) {
                 // Simulació de resposta del servidor
                 Object[] resposta = new Object[2];
                 resposta[0] = "nomObjecte"; // Simular "nomObjecte" com a primer element de la resposta
                 resposta[1] = new HashMap<String, String>(); // Simular un HashMap com a segon element de la resposta
                 return resposta;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-                // Aquest mètode no s'utilitza en aquesta prova, però s'ha d'implementar a causa de la herència de ConnexioServidor
             }
         };
 
@@ -124,35 +85,14 @@ public class ConnexioServidorTest {
         // Arrange
         ConnexioServidor connexio = new ConnexioServidor() {
             @Override
-            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) throws ConnectException {
+            public Object[] enviarPeticioString(String operacio, String dada1, String dada2, String idSessio) {
                 // Simulació de resposta del servidor
                 Object[] resposta = new Object[2];
                 resposta[0] = "nomLlista"; // Simular "nomLlista" com a primer element de la resposta
                 resposta[1] = new ArrayList<HashMap<String, String>>(); // Simular una llista de HashMaps com a segon element de la resposta
                 return resposta;
             }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-                // Aquest mètode no s'utilitza en aquesta prova, però s'ha d'implementar a causa de la herència de ConnexioServidor
-            }
         };
-
         // Act
         Object[] resposta = connexio.enviarPeticioString("operacio", "dada1", null, "idSessio");
 
@@ -173,7 +113,7 @@ public class ConnexioServidorTest {
         // Arrange
         ConnexioServidor connexio = new ConnexioServidor() {
             @Override
-            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) {
                 // Simulació de resposta del servidor
                 Object[] resposta = new Object[2];
                 // Simular resposta exitosa
@@ -181,27 +121,7 @@ public class ConnexioServidorTest {
                 resposta[1] = null;  // Sense missatge d'error
                 return resposta;
             }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-            }
         };
-
         // Act
         Object[] resposta = connexio.enviarPeticioHashMap("operacio", "nomObjecte", new HashMap<>(), null);
 
@@ -221,7 +141,7 @@ public class ConnexioServidorTest {
         // Arrange
         ConnexioServidor connexio = new ConnexioServidor() {
             @Override
-            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) {
                 // Simulació de resposta del servidor
                 Object[] resposta = new Object[2];
                 // Simular resposta exitosa
@@ -229,27 +149,7 @@ public class ConnexioServidorTest {
                 resposta[1] = null;  // Sense missatge d'error
                 return resposta;
             }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-            }
         };
-
         // Act
         Object[] resposta = connexio.enviarPeticioHashMap("operacio", "nomObjecte", new HashMap<>(), "idSessio");
 
@@ -269,7 +169,7 @@ public class ConnexioServidorTest {
         // Arrange
         ConnexioServidor connexio = new ConnexioServidor() {
             @Override
-            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) {
                 // Simulació de resposta fallida del servidor
                 Object[] resposta = new Object[2];
                 resposta[0] = "false"; // Indica fallada
@@ -277,26 +177,7 @@ public class ConnexioServidorTest {
                 return resposta;
             }
 
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-            }
         };
-
         // Act
         Object[] resposta = connexio.enviarPeticioHashMap("operacio", "nomObjecte", new HashMap<>(), "idSessio");
 
@@ -316,7 +197,7 @@ public class ConnexioServidorTest {
         // Arrange
         ConnexioServidor connexio = new ConnexioServidor() {
             @Override
-            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) throws ConnectException {
+            public Object[] enviarPeticioHashMap(String operacio, String nomObjecte, HashMap<String, String> objecteMapa, String idSessio) {
                 // Simulació de resposta del servidor
                 Object[] resposta = new Object[2];
                 // Simular resposta exitosa
@@ -324,27 +205,7 @@ public class ConnexioServidorTest {
                 resposta[1] = new HashMap<String, String>();  // Simulació de l'objecte HashMap
                 return resposta;
             }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidor(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public Class<?> obtenirTipusObjecte() {
-                return null;
-            }
-
-            @Override
-            public List<HashMap<String, String>> respostaServidorHashmap(Object resposta) {
-                return null;
-            }
-
-            @Override
-            public void execute() throws ConnectException {
-            }
         };
-
         // Act
         Object[] resposta = connexio.enviarPeticioHashMap("operacio", "nomObjecte", new HashMap<>(), "idSessio");
 

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,9 +12,6 @@
         android:background="@color/light_gray">
 
         <!-- Toolbar -->
-
-        <!-- Barra de títol -->
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,17 +21,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <!-- Títol de l'aplicació -->
-            <TextView
-                android:id="@+id/text_titol_aplicacio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/nom_app"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
 
             <!-- Botó d'accés a panell esquerre-->
             <ImageButton
@@ -46,6 +33,15 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="accedirPanell"
                 android:src="@drawable/ic_menu" />
+
+            <!-- Logo de l'aplicació -->
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="95dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/fithub_logo"
+                android:contentDescription="logo" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -61,68 +57,89 @@
 
             <!-- Títol de l'activitat -->
             <TextView
-                android:id="@+id/text_titol_reserves"
+                android:id="@+id/text_titol_gestions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/reserves_client"
+                android:text="@string/reservar"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+        <!-- Botons de reserva -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_titol" />
+            android:layout_below="@id/layout_titol"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_titol">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/tab_layout"
-            app:layout_constraintBottom_toTopOf="@+id/boto_mostrar_missatges"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" >
-
-            <FrameLayout
-                android:id="@+id/fragment_container"
+            <Button
+                android:id="@+id/boto_reserva1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </androidx.viewpager.widget.ViewPager>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:text="Reservar activitat per dia"
+                android:background="@drawable/boto_personalitzat"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"/>
 
-        <!-- Botó de missatges -->
+            <Button
+                android:id="@+id/boto_reserva2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:text="Reservar activitat per nom"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"/>
+
+            <Button
+                android:id="@+id/boto_reserva3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:text="Les meves reserves"
+                android:background="@drawable/boto_personalitzat"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"/>
+
+        </LinearLayout>
+
+        <!-- Botó de perfil -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/boto_mostrar_missatges"
+            android:id="@+id/boto_perfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_missatge"
             android:backgroundTint="?attr/colorPrimary"
-
-            android:onClick="mostrarFragmentMissatges"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- NavigationView per el panell desplegable -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        app:menu="@menu/menu_navigation_usuari">
+        android:backgroundTint="@color/light_gray"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:headerLayout="@layout/nav_capcalera"
+        app:menu="@menu/menu_navigation_client">
 
     </com.google.android.material.navigation.NavigationView>
 

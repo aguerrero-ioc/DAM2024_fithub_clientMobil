@@ -4,20 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".menu.login.LoginActivity">
+    tools:context=".menu.login.LoginActivity"
+    android:background="@color/light_gray">
 
-    <TextView
-        android:id="@+id/tv_app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nom_app"
-        android:textSize="38sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="220dp"
+        android:layout_height="160dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginTop="60dp"
+        android:contentDescription="logo"
+        android:padding="8dp"
+        android:src="@drawable/fithub_logo" />
 
-    <!-- Secció de Dades Personals -->
     <TextView
         android:id="@+id/tv_login_title"
         android:layout_width="wrap_content"
@@ -25,8 +24,9 @@
         android:text="@string/inicia_sessio"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_below="@id/tv_app_name"
+        android:layout_below="@id/image_logo"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="24dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -41,7 +41,9 @@
             android:id="@+id/et_correu_usuari"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/correu_usuari" />
+            android:hint="@string/correu_usuari"
+            android:maxLines="1"
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/contrasenya"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,6 +102,5 @@
         android:textStyle="bold"
         android:layout_below="@id/tv_oblidat_contrasenya"
         android:layout_centerHorizontal="true"/>
-
 
 </RelativeLayout>

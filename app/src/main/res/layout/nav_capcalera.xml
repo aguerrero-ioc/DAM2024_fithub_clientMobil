@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/tvNomUsuari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom d'usuari"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tvCorreuElectronic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correu electrònic"
+        android:textSize="14sp"/>
+
+</LinearLayout>

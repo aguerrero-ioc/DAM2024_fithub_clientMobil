@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_menu"
+        android:title="Menú d'usuari"/>
+    <item
+        android:id="@+id/nav_perfil_usuari"
+        android:title="Perfil d'usuari" />
+    <item
+        android:id="@+id/nav_usuaris"
+        android:title="Gestió d'Usuaris" />
+    <item
+        android:id="@+id/nav_activitats"
+        android:title="Gestió d'Activitats" />
+    <item
+        android:id="@+id/nav_serveis"
+        android:title="Gestió de Serveis" />
+    <item
+        android:id="@+id/nav_installacions"
+        android:title="Gestió d'instal·lacions" />
+    <item
+        android:id="@+id/nav_tancar_sessio"
+        android:title="Tancar sessió" />
+</menu>

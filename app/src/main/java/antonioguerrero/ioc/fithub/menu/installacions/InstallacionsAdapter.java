@@ -1,5 +1,6 @@
 package antonioguerrero.ioc.fithub.menu.installacions;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.HashMap;
 import java.util.List;
 
+import antonioguerrero.ioc.fithub.Constants;
 import antonioguerrero.ioc.fithub.R;
 
 /**
@@ -23,9 +26,8 @@ import antonioguerrero.ioc.fithub.R;
  * @version 1.0
  */
 public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdapter.ViewHolder> {
-
-    private List<HashMap<String, String>> installacionsList;
-    private Context mContext;
+    private final List<HashMap<String, String>> installacionsList;
+    private final Context mContext;
 
     /**
      * Constructor de la classe.
@@ -37,8 +39,6 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
         this.installacionsList = installacionsList;
     }
 
-
-
     /**
      * Mètode que crea una nova instància de la classe ViewHolder.
      * <p>
@@ -46,6 +46,7 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
      * @param viewType Tipus de vista.
      * @return Instància de la classe ViewHolder.
      */
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_installacio, parent, false);
@@ -59,13 +60,14 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
      * @param holder Instància de la classe ViewHolder.
      * @param position Posició de l'element a la llista.
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HashMap<String, String> installacio = installacionsList.get(position);
-        holder.nomInstallacio.setText(installacio.get("nomInstallacio"));
+        holder.nomInstallacio.setText(installacio.get(Constants.INS_NOM));
 
-        // Obtener el tipo de instalación y asignar el texto adecuado
-        String tipusInstallacio = installacio.get("tipusInstallacio");
+        // Obtenir el tipus de la instal·lació i mostrar-lo en la vista
+        String tipusInstallacio = installacio.get(Constants.INS_TIPUS);
         if (tipusInstallacio != null) {
             switch (tipusInstallacio) {
                 case "1":
@@ -83,24 +85,21 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
         }
 
         // Agregar un listener de clics al botón "Més detalls"
-        holder.btnMesDetalls.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Obtener los datos de la instalación para mostrar en el diálogo
-                String nom = installacio.get("nomInstallacio");
-                String descripcio = installacio.get("descripcioInstallacio");
-                String tipus = holder.tipusInstallacio.getText().toString(); // Obtener el tipo de la vista
+        holder.btnMesDetalls.setOnClickListener(v -> {
+            // Obtenir les dades de la instal·lació per a mostrar-les en el diàleg
+            String nom = installacio.get("nomInstallacio");
+            String descripcio = installacio.get("descripcioInstallacio");
+            String tipus = holder.tipusInstallacio.getText().toString(); // Obtener el tipo de la vista
 
-                // Crear y mostrar el diálogo con la información de la instalación
-                dialegDetallsInstallacio(nom, descripcio, tipus);
-            }
+            // Crear i mostrar el diàleg amb els detalls de la instal·lació
+            dialegDetallsInstallacio(nom, descripcio, tipus);
         });
     }
 
     /**
-     * Mètode que retorna el nombre d'elements de la llista.
+     * Mètode que retorna el nombre d'elements de la llista de les instal·lacions.
      * <p>
-     * @return Nombre d'elements de la llista.
+     * @return Nombre d'elements de la llista de les instal·lacions.
      */
     @Override
     public int getItemCount() {
@@ -108,12 +107,11 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
     }
 
     /**
-     * Classe interna que representa una vista de la llista.
+     * Classe interna que representa una vista de la llista de les instal·lacions.
      */
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public View btnMesDetalls;
         TextView nomInstallacio, tipusInstallacio;
-
         public ViewHolder(View itemView) {
             super(itemView);
             nomInstallacio = itemView.findViewById(R.id.nomInstallacio);
@@ -121,7 +119,6 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
             btnMesDetalls = itemView.findViewById(R.id.btnMesDetalls);
         }
     }
-
 
     /**
      * Mètode que mostra un diàleg amb els detalls de la instal·lació.
@@ -131,11 +128,11 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
      * @param tipusInstallacio Tipus de la instal·lació.
      */
     private void dialegDetallsInstallacio(String nomInstallacio, String descripcioInstallacio, String tipusInstallacio) {
-        // Inflar el diseño personalizado del diálogo
+        // Inflar el disseny personalitzat
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View dialogView = inflater.inflate(R.layout.dialeg_detalls_installacio, null);
 
-        // Configurar las vistas del diseño personalizado
+        // Configurar les vistes del diàleg amb les dades de la instal·lació
         TextView tvNomInstallacio = dialogView.findViewById(R.id.tvNomInstallacio);
         TextView tvDescripcioInstallacio = dialogView.findViewById(R.id.tvDescripcioInstallacio);
         TextView tvTipusInstallacio = dialogView.findViewById(R.id.tvTipusInstallacio);
@@ -144,12 +141,11 @@ public class InstallacionsAdapter extends RecyclerView.Adapter<InstallacionsAdap
         tvDescripcioInstallacio.setText(descripcioInstallacio);
         tvTipusInstallacio.setText(tipusInstallacio);
 
-        // Crear el diálogo con el diseño personalizado
+        // Crear el diàleg amb les dades de la instal·lació
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setView(dialogView);
         builder.setPositiveButton("D'acord", null);
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
 }
