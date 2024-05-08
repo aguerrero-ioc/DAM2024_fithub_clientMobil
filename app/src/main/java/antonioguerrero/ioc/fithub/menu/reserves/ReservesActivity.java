@@ -117,10 +117,10 @@ public class ReservesActivity extends BaseActivity implements ConnexioServidor.r
                 String data = classeDirigida.get(Constants.CLASSE_DATA);
                 String duracio = classeDirigida.get(Constants.CLASSE_DURACIO);
                 String ocupacio = classeDirigida.get(Constants.CLASSE_OCUPACIO);
-                classeDirigida.put(Constants.CLASSE_HORA, Utils.formatHora(hora) + " hores");
+                classeDirigida.put(Constants.CLASSE_HORA, Utils.formatHora(hora));
                 classeDirigida.put(Constants.CLASSE_DATA, Utils.formatData(data));
-                classeDirigida.put(Constants.CLASSE_DURACIO, duracio + " hora");
-                classeDirigida.put(Constants.CLASSE_OCUPACIO, ocupacio + " usuaris");
+                classeDirigida.put(Constants.CLASSE_DURACIO, duracio);
+                classeDirigida.put(Constants.CLASSE_OCUPACIO, ocupacio);
             }
 
             // Ordenar les classes dirigides filtrades per data
