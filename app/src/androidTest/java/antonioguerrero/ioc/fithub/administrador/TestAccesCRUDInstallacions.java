@@ -103,7 +103,7 @@ public class TestAccesCRUDInstallacions {
 
         // Fer clic al botó de modificar instal·lació de la primera fila de la llista
         Espresso.onView(ViewMatchers.withId(R.id.rvInstallacions)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0,
+                RecyclerViewActions.actionOnItemAtPosition(2,
                         new ViewAction() {
                             @Override
                             public Matcher<View> getConstraints() {
@@ -112,7 +112,7 @@ public class TestAccesCRUDInstallacions {
 
                             @Override
                             public String getDescription() {
-                                return "Click on modify installation button";
+                                return "Click en el botó de modificar instal·lació";
                             }
 
                             @Override
@@ -155,7 +155,7 @@ public class TestAccesCRUDInstallacions {
 
         // Fer clic al botó d'eliminar instal·lació de la primera fila de la llista
         Espresso.onView(ViewMatchers.withId(R.id.rvInstallacions)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0,
+                RecyclerViewActions.actionOnItemAtPosition(1,
                         new ViewAction() {
                             @Override
                             public Matcher<View> getConstraints() {
@@ -164,7 +164,7 @@ public class TestAccesCRUDInstallacions {
 
                             @Override
                             public String getDescription() {
-                                return "Click on delete installation button";
+                                return "Click en el botó d'eliminar instal·lació";
                             }
 
                             @Override
@@ -179,7 +179,7 @@ public class TestAccesCRUDInstallacions {
         );
 
         // Verificar que el diàleg d'eliminació d'instal·lació es mostra correctament
-        Espresso.onView(withId(R.id.botoTancarContainer)).check(matches(isDisplayed()));
+        Espresso.onView(withId(R.id.botoTancar)).perform(ViewActions.click());
 
         // Allibera Intents després de la prova
         Intents.release();

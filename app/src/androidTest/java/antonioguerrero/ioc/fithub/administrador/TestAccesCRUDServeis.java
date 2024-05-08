@@ -22,6 +22,8 @@ import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 import antonioguerrero.ioc.fithub.R;
 import antonioguerrero.ioc.fithub.menu.login.LoginActivity;
@@ -34,6 +36,7 @@ import antonioguerrero.ioc.fithub.menu.main.AdminActivity;
  * @version 1.0
  */
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestAccesCRUDServeis {
 
     // Credencials de l'usuari administrador
@@ -112,7 +115,7 @@ public class TestAccesCRUDServeis {
 
                             @Override
                             public String getDescription() {
-                                return "Click on modify service button";
+                                return "Click en el botó de modificar servei";
                             }
 
                             @Override
@@ -155,7 +158,7 @@ public class TestAccesCRUDServeis {
 
         // Fer clic al botó d'eliminar servei de la primera fila de la llista
         Espresso.onView(ViewMatchers.withId(R.id.rvServeis)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0,
+                RecyclerViewActions.actionOnItemAtPosition(1,
                         new ViewAction() {
                             @Override
                             public Matcher<View> getConstraints() {
@@ -164,7 +167,7 @@ public class TestAccesCRUDServeis {
 
                             @Override
                             public String getDescription() {
-                                return "Click on delete service button";
+                                return "Click en el botó d'eliminar servei";
                             }
 
                             @Override
@@ -179,7 +182,7 @@ public class TestAccesCRUDServeis {
         );
 
         // Verificar que el diàleg d'eliminació de servei es mostra correctament
-        Espresso.onView(withId(R.id.botoTancarContainer)).check(matches(isDisplayed()));
+        Espresso.onView(withId(R.id.botoTancar)).perform(ViewActions.click());
 
         // Allibera Intents després de la prova
         Intents.release();

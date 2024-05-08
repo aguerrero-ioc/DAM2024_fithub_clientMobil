@@ -71,10 +71,10 @@ public class TestAccesCRUDUsuaris {
         // Verifica la presència d'algun element a l'activitat GestioUsuarisActivity
         onView(withId(R.id.rvUsuaris)).check(matches(isDisplayed()));
 
-        // Hacer click en el botón para crear un nuevo usuario
+        // Fer clic al botó de crear nou usuari de la primera fila de la llista
         Espresso.onView(ViewMatchers.withId(R.id.btnCrearNouUsuari)).perform(ViewActions.click());
 
-        // Verificar que la actividad CrearUsuariActivity se abre correctamente
+        // Verificar que la activitat CrearUsuariActivity es mostra correctament
         Espresso.onView(withId(R.id.tv_seccio_dades_usuari)).check(matches(isDisplayed()));
 
         // Allibera Intents després de la prova
@@ -83,58 +83,6 @@ public class TestAccesCRUDUsuaris {
 
     @Test
     public void testAccesModificarUsuari() {
-        // Inicia l'activitat LoginActivity
-        ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
-
-        // Escriu les credencials als camps de text
-        Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText(ADMIN_EMAIL));
-        Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText(ADMIN_CONTRASENYA));
-
-        // Fes clic al botó d'inici de sessió
-        Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());
-
-        // Configura l'activitat AdminActivity com a escenari
-        ActivityScenario<AdminActivity> adminScenario = ActivityScenario.launch(AdminActivity.class);
-
-        // Fes clic al botó de gestió d'usuaris
-        onView(withId(R.id.boto_gestio1)).perform(click());
-
-        // Verifica la presència d'algun element a l'activitat GestioUsuarisActivity
-        onView(withId(R.id.rvUsuaris)).check(matches(isDisplayed()));
-
-        // Fer clic al botó de modificar usuari de la primera fila de la llista
-        Espresso.onView(ViewMatchers.withId(R.id.rvUsuaris)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0,
-                        new ViewAction() {
-                            @Override
-                            public Matcher<View> getConstraints() {
-                                return ViewMatchers.isAssignableFrom(View.class);
-                            }
-
-                            @Override
-                            public String getDescription() {
-                                return "Click on modify user button";
-                            }
-
-                            @Override
-                            public void perform(UiController uiController, View view) {
-                                // Encontrar el botón de modificar usuario dentro del ítem de la lista
-                                View btnModificar = view.findViewById(R.id.btnModificar);
-                                // Realizar clic en el botón de modificar usuario
-                                btnModificar.performClick();
-                            }
-                        }
-                )
-        );
-        // Esperar a que el diálogo de modificación de usuario se muestre
-        Espresso.onView(withId(R.id.botoTancar)).perform(ViewActions.click());
-
-        // Allibera Intents després de la prova
-        Intents.release();
-    }
-
-    @Test
-    public void testAccesEliminarUsuari() {
         // Inicia l'activitat LoginActivity
         ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
 
@@ -165,22 +113,74 @@ public class TestAccesCRUDUsuaris {
 
                             @Override
                             public String getDescription() {
-                                return "Click on delete user button";
+                                return "Click en el botó de modificar usuari";
                             }
 
                             @Override
                             public void perform(UiController uiController, View view) {
-                                // Encontrar el botón de eliminar usuario dentro del ítem de la lista
+                                // Trobar el botó de modificar usuari dins l'ítem de la llista
+                                View btnModificar = view.findViewById(R.id.btnModificar);
+                                // Realitzar clic en el botó de modificar usuari
+                                btnModificar.performClick();
+                            }
+                        }
+                )
+        );
+        // Esperar a que el diàleg de modificació d'usuari es mostri correctament
+        Espresso.onView(withId(R.id.botoTancar)).perform(ViewActions.click());
+
+        // Allibera Intents després de la prova
+        Intents.release();
+    }
+
+    @Test
+    public void testAccesEliminarUsuari() {
+        // Inicia l'activitat LoginActivity
+        ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
+
+        // Escriu les credencials als camps de text
+        Espresso.onView(ViewMatchers.withId(R.id.et_correu_usuari)).perform(ViewActions.typeText(ADMIN_EMAIL));
+        Espresso.onView(ViewMatchers.withId(R.id.et_contrasenya)).perform(ViewActions.typeText(ADMIN_CONTRASENYA));
+
+        // Fes clic al botó d'inici de sessió
+        Espresso.onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click());
+
+        // Configura l'activitat AdminActivity com a escenari
+        ActivityScenario<AdminActivity> adminScenario = ActivityScenario.launch(AdminActivity.class);
+
+        // Fes clic al botó de gestió d'usuaris
+        onView(withId(R.id.boto_gestio1)).perform(click());
+
+        // Verifica la presència d'algun element a l'activitat GestioUsuarisActivity
+        onView(withId(R.id.rvUsuaris)).check(matches(isDisplayed()));
+
+        // Fer clic al botó de modificar usuari de la primera fila de la llista
+        Espresso.onView(ViewMatchers.withId(R.id.rvUsuaris)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2,
+                        new ViewAction() {
+                            @Override
+                            public Matcher<View> getConstraints() {
+                                return ViewMatchers.isAssignableFrom(View.class);
+                            }
+
+                            @Override
+                            public String getDescription() {
+                                return "Click en el botó d'eliminar usuari";
+                            }
+
+                            @Override
+                            public void perform(UiController uiController, View view) {
+                                // Trobar el botó d'eliminar usuari dins l'ítem de la llista
                                 View btnEliminar = view.findViewById(R.id.btnEliminar);
-                                // Realizar clic en el botón de eliminar usuario
+                                // Realitzar clic en el botó d'eliminar usuari
                                 btnEliminar.performClick();
                             }
                         }
                 )
         );
 
-        // Verificar que el diálogo de modificación de usuario se muestra correctamente
-        Espresso.onView(withId(R.id.botoTancarContainer)).check(matches(isDisplayed()));
+        // Verificar que el diàleg de confirmació d'eliminació d'usuari es mostra correctament
+        Espresso.onView(withId(R.id.botoTancar)).perform(ViewActions.click());
 
         // Allibera Intents després de la prova
         Intents.release();

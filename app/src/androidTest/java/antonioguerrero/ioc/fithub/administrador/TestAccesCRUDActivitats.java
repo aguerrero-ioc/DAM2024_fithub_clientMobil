@@ -65,7 +65,7 @@ public class TestAccesCRUDActivitats {
         // Configura l'activitat AdminActivity com a escenari
         ActivityScenario<AdminActivity> adminScenario = ActivityScenario.launch(AdminActivity.class);
 
-        // Fes clic al botó de gestió d'usuaris
+        // Fes clic al botó de gestió d'activitats
         onView(withId(R.id.boto_gestio2)).perform(click());
 
         // Verifica la presència d'algun element a l'activitat GestioActivitatsActivity
@@ -82,7 +82,7 @@ public class TestAccesCRUDActivitats {
     }
 
     @Test
-    public void testAccesModificarUsuari() {
+    public void testAccesModificarActivitat() {
         // Inicia l'activitat LoginActivity
         ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
 
@@ -96,7 +96,7 @@ public class TestAccesCRUDActivitats {
         // Configura l'activitat AdminActivity com a escenari
         ActivityScenario<AdminActivity> adminScenario = ActivityScenario.launch(AdminActivity.class);
 
-        // Fes clic al botó de gestió d'usuaris
+        // Fes clic al botó de gestió d'activitats
         onView(withId(R.id.boto_gestio2)).perform(click());
 
         // Verifica la presència d'algun element a l'activitat GestioActivitatsActivity
@@ -113,12 +113,12 @@ public class TestAccesCRUDActivitats {
 
                             @Override
                             public String getDescription() {
-                                return "Click on modify user button";
+                                return "Click en el botó de modificar activitat";
                             }
 
                             @Override
                             public void perform(UiController uiController, View view) {
-                                // Trobar el botó de modificar usuari dins l'ítem de la llista
+                                // Trobar el botó de modificar activitat dins l'ítem de la llista
                                 View btnModificar = view.findViewById(R.id.btnModificar);
                                 // Realitzar clic en el botó de modificar activitat
                                 btnModificar.performClick();
@@ -134,7 +134,7 @@ public class TestAccesCRUDActivitats {
     }
 
     @Test
-    public void testAccesEliminarUsuari() {
+    public void testAccesEliminarActivitat() {
         // Inicia l'activitat LoginActivity
         ActivityScenario<LoginActivity> scenario = ActivityScenario.launch(LoginActivity.class);
 
@@ -148,14 +148,14 @@ public class TestAccesCRUDActivitats {
         // Configura l'activitat AdminActivity com a escenari
         ActivityScenario<AdminActivity> adminScenario = ActivityScenario.launch(AdminActivity.class);
 
-        // Fes clic al botó de gestió d'usuaris
+        // Fes clic al botó de gestió d'activitats
         onView(withId(R.id.boto_gestio2)).perform(click());
 
         // Verifica la presència d'algun element a l'activitat GestioActivitatsActivity
         onView(withId(R.id.rvActivitats)).check(matches(isDisplayed()));
 
         // Fer clic al botó de modificar activitat de la primera fila de la llista
-        Espresso.onView(ViewMatchers.withId(R.id.rvUsuaris)).perform(
+        Espresso.onView(ViewMatchers.withId(R.id.rvActivitats)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(2,
                         new ViewAction() {
                             @Override
@@ -165,12 +165,12 @@ public class TestAccesCRUDActivitats {
 
                             @Override
                             public String getDescription() {
-                                return "Click on delete user button";
+                                return "Click en el botó d'eliminar activitat";
                             }
 
                             @Override
                             public void perform(UiController uiController, View view) {
-                                // Trobar el botó de modificar usuari dins l'ítem de la llista
+                                // Trobar el botó de modificar activitat dins l'ítem de la llista
                                 View btnEliminar = view.findViewById(R.id.btnEliminar);
                                 // Realitzar clic en el botó de modificar activitat
                                 btnEliminar.performClick();
@@ -180,7 +180,7 @@ public class TestAccesCRUDActivitats {
         );
 
         // Verificar que el diàleg de eliminació d'activitat es mostra correctament
-        Espresso.onView(withId(R.id.botoTancarContainer)).check(matches(isDisplayed()));
+        Espresso.onView(withId(R.id.botoTancar)).perform(ViewActions.click());
 
         // Allibera Intents després de la prova
         Intents.release();

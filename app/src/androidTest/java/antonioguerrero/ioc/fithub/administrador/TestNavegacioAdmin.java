@@ -166,7 +166,7 @@ public class TestNavegacioAdmin {
         onView(withId(R.id.boto_acces_panell)).perform(click());
 
         // Fer clic a l'opció d'instal·lacions en el panell lateral
-        onView(withId(R.id.nav_installacions)).perform(click());
+        onView(withId(R.id.nav_serveis)).perform(click());
 
         // Verificar la presència d'algun element a l'activitat GestioInstallacionsActivity
         onView(withId(R.id.rvServeis)).check(matches(isDisplayed()));
